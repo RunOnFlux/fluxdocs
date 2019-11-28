@@ -1,0 +1,8 @@
+
+apiTitle: zelfluxdocs
+splitSpec: false
+codeSamples: true
+swaggerUI: true
+travis: true
+repo: zelcash/zelfluxdocs
+oasVersion: 3.0.0
