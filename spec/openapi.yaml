@@ -1,55 +1,58 @@
-# This is an **example** API to demonstrate features of OpenAPI specification.
-# It doesn't cover all OpenAPI features. For more full example check out: https://github.com/APIs-guru/petstore_extended
+# This is **ZelFlux** API documentation
 
 openapi: 3.0.0
 info:
-  version: '1.0.0' # Your API version
+  version: '0.0.1' # Your API version
   # It can be any string but it is better to use semantic versioning: http://semver.org/
   # Warning: OpenAPI require version to be string, but without quotation YAML can recognize it as number.
   
-  title: Example.com # Replace with your API title
+  title: ZelFlux # Replace with your API title
   # Keep it simple. Don't add "API" or version at the end of the string.
 
-  termsOfService: 'https://example.com/terms/' # [Optional] Replace with an URL to your ToS
   contact:
-    email: contact@example.com # [Optional] Replace with your contact email
-    url: 'http://example.com/contact' # [Optional] Replace with link to your contact form
+    email: tadeas.kmenta@zel.cash # [Optional] Replace with your contact email
   license:
-    name: Apache 2.0
-    url: 'http://www.apache.org/licenses/LICENSE-2.0.html'
+    name: GNU AGPLv3
+    url: 'https://www.gnu.org/licenses/agpl-3.0.en.html'
   x-logo:
-    url: 'https://apis.guru/openapi-template/logo.png'
+    url: 'https://raw.githubusercontent.com/zelcash/zelflux/master/ZelFront/src/assets/img/ZelNodes.svg'
   
   # Describe your API here, you can use GFM (https://guides.github.com/features/mastering-markdown) here
   description: |
-    This is an **example** API to demonstrate features of OpenAPI specification
+    This is an API documentation of calls available to be made to any ZelFlux
+    ZelFlux is completely open source and we encourage everyone to feel free and contribute :)
     # Introduction
-    This specification is intended to to be a good starting point for describing your API in 
-    [OpenAPI/Swagger format](https://github.com/OAI/OpenAPI-Specification/blob/master/versions/2.0.md).
-    It also demonstrates features of [generator-openapi-repo](https://github.com/Rebilly/generator-openapi-repo) tool and 
-    [ReDoc](https://github.com/Rebilly/ReDoc) documentation engine. So beyond the standard OpenAPI syntax we use a few 
-    [vendor extensions](https://github.com/Rebilly/ReDoc/blob/master/docs/redoc-vendor-extensions.md).
-
-    # OpenAPI Specification
-    The goal of The OpenAPI Specification is to define a standard, language-agnostic interface to REST APIs which
-    allows both humans and computers to discover and understand the capabilities of the service without access to source
-    code, documentation, or through network traffic inspection. When properly defined via OpenAPI, a consumer can 
-    understand and interact with the remote service with a minimal amount of implementation logic. Similar to what
-    interfaces have done for lower-level programming, OpenAPI removes the guesswork in calling the service.
+    ZelFlux posseses with 4 tier hiearchy level API. 
+    * Public API level - available without any permission, does not require signing
+    * User API level - user level permission, requires signing
+    * ZelTeam API level - ZelTeam level permission (an appointed Zel Team member has access to those API calls), requires signing
+    * Admin API level - Admin level permission, requires signing. ZelNode owner.
+    
+    Most calls are available via GET request with some that may require large amount of data via POST request. 
+    Websocket is currently used only for simplifying login operations and for internal ZelFlux communication
+  
 externalDocs:
-  description: Find out how to create Github repo for your OpenAPI spec.
-  url: 'https://github.com/Rebilly/generator-openapi-repo'
+  description: ZelFlux
+  url: 'https://github.com/zelcash/zelflux'
 
 # A list of tags used by the specification with additional metadata.
 # The order of the tags can be used to reflect on their order by the parsing tools.
 tags:
-  - name: Echo
-    description: Example echo operations
-  - name: User
-    description: Operations about user
+  - name: ZelFlux
+    description: Calls that interact with ZelFlux network
+  - name: ZelID
+    description: Calls that interact with ZelID and login/authentication management of ZelFlux
+  - name: ZelCash
+    description: Calls that interact with locally running ZelCash daemon
+  - name: ZelNode
+    description: Calls that interact with local ZelNode and its network
 servers:
-  - url: 'http://example.com/api/v1'
-  - url: 'https://example.com/api/v1'
+  - url: 'http://157.230.249.150:161267'
+  - url: 'http://94.177.240.7:16127'
+  - url: 'http://89.40.115.8:16127'
+  - url: 'http://94.177.241.10:16127'
+  - url: 'http://54.37.234.130:16127'
+  - url: 'http://194.182.83.182:16127'
 
 # Holds the relative paths to the individual endpoints. The path is appended to the
 # basePath in order to construct the full URL. 
