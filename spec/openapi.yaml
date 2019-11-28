@@ -11,11 +11,12 @@ info:
 
   contact:
     email: tadeas.kmenta@zel.cash # [Optional] Replace with your contact email
+    url: 'https://zelcash.github.io/zelfluxdocs/' # [Optional] Replace with link to your contact form
   license:
     name: GNU AGPLv3
     url: 'https://www.gnu.org/licenses/agpl-3.0.en.html'
   x-logo:
-    url: 'https://raw.githubusercontent.com/zelcash/zelflux/master/ZelFront/src/assets/img/ZelNodes.svg'
+    url: 'https://raw.githubusercontent.com/zelcash/zelfluxdocs/master/zelflux.png'
   
   # Describe your API here, you can use GFM (https://guides.github.com/features/mastering-markdown) here
   description: |

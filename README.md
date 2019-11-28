@@ -1,6 +1,8 @@
 # zelfluxdocs OpenAPI Specification
 [![Build Status](https://travis-ci.com/zelcash/zelfluxdocs.svg?branch=master)](https://travis-ci.com/zelcash/zelfluxdocs)
 
+[ZelFlux](https://github.com/zelcash/zelflux/)
+
 ## Links
 
 - [Reference Documentation (ReDoc)](https://zelcash.github.io/zelfluxdocs/)
