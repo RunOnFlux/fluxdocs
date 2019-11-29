@@ -78,12 +78,13 @@ paths:
                 response:
                   value: 1574994809615gj4ct52kzz695twl0l27np0ivkmvu2ow4lbtpwk2nvf2k
   '/zelid/verifylogin': # path parameter in curly braces
-    post: # documentation for GET operation for this path
+    post: # documentation for POST operation for this path
       tags:
         - Authentication
         - ZelID
       summary: Login into ZelFlux
-      description: Login into ZelFlux by submitting correct ZelID, login phrase and signature. In case of success status response, we can use supplied data (zelid, loginPhrase, signature) as zelauth header as part of api calls that require a user to be logged in. Privilage grants a
+      description: Login into ZelFlux by submitting correct ZelID, login phrase and signature. In case of success status response, we can use supplied data (zelid, loginPhrase, signature) as zelauth header as part of api calls that require a user to be logged in.
+        Additionally it is possible to listen for a response on websocket ws://{ZelNode_IP}:16127/ws/zelid/{loginPhrase}.
       operationId: verifyLogin
       security:
         - usernameHeader: []
@@ -164,7 +165,7 @@ components:
         type: string
   # Security scheme definitions that can be used across the specification.
   securitySchemes:
-    Zel ID: # security definition name (you can name it as you want)
+    ZelID: # security definition name (you can name it as you want)
       description: Zel ID is an authentication system based on Bitcoin message signing. zelidauth header consist of stringified query of zelid, signature, loginPhrase Please refer to Authentication workflow section on how to obtain correct zelidauth header. An example of a header is `zelid=1CbErtneaX2QVyUfwU7JGB7VzvPgrgc3uC&signature=H%2BZB3oSrsw6XkBxxlbwk33LEBJYvqtbMIm2kL9JzuoXMC6pSZd0lBHdnhJYzMTXv81zZQ7G%2FpkK1NvYN7cNF0GE%3D&loginPhrase=1574991374806spbcvsuwerl52tppx9dw5khuz8rew13mkq86gg8r2c`
       type: apiKey
       in: header # Where API key will be passed: header or query
