@@ -123,8 +123,8 @@ paths:
                 data:
                   message: Successfully logged in
                   zelid: 1CbErtneaX2QVyUfwU7JGB7VzvPgrgc3uC
-                  loginPhrase: 1575005453641eu7mijskjjc5201rhvvlwjt1vz7wz1fqedi5fr3bgo1h
-                  signature: H40gndhcJp4OpdM4cux4mIyPiqfxS5Kn2uSCJtSd0wCSfOZdgM+xG8c/pL8lR6XACkIpafCk2ISC0omGhcsByVs=
+                  loginPhrase: 1575012988077darschvve5ag82g8e8sgeij4sn61842ya7ovxi9r3kba
+                  signature: IAMZBB0p8aQ6A0Zt8uUKFLdWvPJlBypuczhaM6/R+s5bI72NQs/TPF1KYywvJlumMZyvLmk7JelDwaQbfTjqtSs=
                   privilage: admin
       # request body documentation
       requestBody:
@@ -134,7 +134,45 @@ paths:
               $ref: '#/components/schemas/ZelIDLogin'
         description: ZelID login object
         required: true
-        
+  '/zelid/loggedsessions': # path parameter in curly braces
+    get: # documentation for GET operation for this path
+      tags:
+        - ZelID
+      summary: Obtain all logged sessions of ZelID
+      description: Gets all currently active logged sessions in ZelFlux tied to given ZelID
+      operationId: loggedSessions
+      # security schemas applied to this operation
+      security:
+        - ZelID: []
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items: 
+                  type: object
+                  properties:
+                    zelid:
+                      type: string
+                      description: associated ZelID
+                    loginPhrase:
+                      type: string
+                      description: login phrase used for session
+              example:
+              - zelid: 1CbErtneaX2QVyUfwU7JGB7VzvPgrgc3uC
+                loginPhrase: 1566749385160npvtiku0z7yqsxgenyvzfmfrz7pyxrxvflv3sfztbc
+              - zelid: 1CbErtneaX2QVyUfwU7JGB7VzvPgrgc3uC
+                loginPhrase: 1566822581693fuuo3oi0sqdvab9h8baavc0kdawxvbwjgdbjsy5tk739m
+              - zelid: 1CbErtneaX2QVyUfwU7JGB7VzvPgrgc3uC
+                loginPhrase: 1566970790344nhd5tjwyphq4l1azf5o64axfz75b8892poo853ivbfc
+              - zelid: 1CbErtneaX2QVyUfwU7JGB7VzvPgrgc3uC
+                loginPhrase: 15673514189266fzehz9q1ujvw4fg5lsko9q6qrfji3iwfg9hkblx5dpm
+              - zelid: 1CbErtneaX2QVyUfwU7JGB7VzvPgrgc3uC
+                loginPhrase: 1575011828315mzqenqvi9ixaq0yr34g8jtvwgcs3d33cf1ies0myd
+              - zelid: 1CbErtneaX2QVyUfwU7JGB7VzvPgrgc3uC
+                loginPhrase: 1575012988077darschvve5ag82g8e8sgeij4sn61842ya7ovxi9r3kba
 # An object to hold reusable parts that can be used across the spec
 components:
   schemas:
