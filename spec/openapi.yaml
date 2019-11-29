@@ -50,6 +50,7 @@ tags:
   - name: ZelNode
     description: Calls that interact with local ZelNode and its network
 servers:
+  - url: 'https://basic2.thecorporation.club'
   - url: 'http://157.230.249.150:16127'
   - url: 'http://94.177.240.7:16127'
   - url: 'http://89.40.115.8:16127'
