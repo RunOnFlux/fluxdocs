@@ -2,7 +2,7 @@
 
 openapi: 3.0.0
 info:
-  version: '0.0.1' # Your API version
+  version: '0.0.2' # Your API version
   # It can be any string but it is better to use semantic versioning: http://semver.org/
   # Warning: OpenAPI require version to be string, but without quotation YAML can recognize it as number.
   
@@ -39,215 +39,134 @@ externalDocs:
 # A list of tags used by the specification with additional metadata.
 # The order of the tags can be used to reflect on their order by the parsing tools.
 tags:
-  - name: ZelFlux
-    description: Calls that interact with ZelFlux network
+  - name: Authentication
+    description: Calls that are neccessary to be made for correct signing into ZelFlux and obtaining zelauth header.
   - name: ZelID
     description: Calls that interact with ZelID and login/authentication management of ZelFlux
+  - name: ZelFlux
+    description: Calls that interact with ZelFlux network
   - name: ZelCash
     description: Calls that interact with locally running ZelCash daemon
   - name: ZelNode
     description: Calls that interact with local ZelNode and its network
 servers:
-  - url: 'http://157.230.249.150:161267'
+  - url: 'http://157.230.249.150:16127'
   - url: 'http://94.177.240.7:16127'
   - url: 'http://89.40.115.8:16127'
   - url: 'http://94.177.241.10:16127'
   - url: 'http://54.37.234.130:16127'
   - url: 'http://194.182.83.182:16127'
-
 # Holds the relative paths to the individual endpoints. The path is appended to the
 # basePath in order to construct the full URL. 
 paths:
-  '/users/{username}': # path parameter in curly braces
-
-    # parameters list that are used with each operation for this path
-    parameters:
-      - name: pretty_print
-        in: query
-        description: Pretty print response
-        schema:
-          type: boolean
+  '/zelid/loginphrase': # path parameter in curly braces
     get: # documentation for GET operation for this path
       tags:
-        - User
-      
-      # summary is up to 120 symbold but we recommend to be shortest as possible
-      summary: Get user by user name
-      
-      # you can use GFM in operation description too: https://guides.github.com/features/mastering-markdown
-      description: |
-        Some description of the operation. 
-        You can use `markdown` here.
-      
-      # operationId should be unique across the whole specification
-      operationId: getUserByName
-      
-      # list of parameters for the operation
-      parameters:
-        - name: username
-          in: path
-          description: The name that needs to be fetched
-          required: true
-          schema:
-            type: string
-        - name: with_email
-          in: query
-          description: Filter users without email
-          schema:
-            type: boolean
-      
-      # security schemas applied to this operation
-      security:
-        - main_auth:
-            - 'read:users' # for auth2 provide list of scopes here
-        - api_key: []
-      responses: # list of responses
-        '200':
-          description: Success
-          content:
-            application/json: # operation response mime type
-              schema: # response schema can be specified for each response
-                $ref: '#/components/schemas/User'
-              example: # response example
-                username: user1
-                email: user@example.com
-        '403':
-          description: Forbidden
-        '404':
-          description: User not found
-    # documentation for PUT operation for this path
-    put:
-      tags:
-        - User
-      summary: Updated user
-      description: This can only be done by the logged in user.
-      operationId: updateUser
-      parameters:
-        - name: username
-          in: path
-          description: The name that needs to be updated
-          required: true
-          schema:
-            type: string
-      security:
-        - main_auth:
-            - 'write:users'
+        - Authentication
+        - ZelID
+      summary: Obtain login phrase
+      description: Obtain valid Login Phrase for signing into ZelFlux. Login Phrase is at least 40 characters, first 13 characters is server timestamp and is valid for 15 minutes.
+      operationId: loginPhrase
       responses:
         '200':
           description: OK
-        '400':
-          description: Invalid user supplied
-        '404':
-          description: User not found
-      # request body documentation
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/User'
-          application/xml:
-            schema:
-              $ref: '#/components/schemas/User'
-        description: Updated user object
-        required: true
-  /echo: # path parameter in curly braces
-    post: # documentation for POST operation for this path
-      tags:
-        - Echo
-      summary: Echo test
-      description: Receive the exact message you've sent
-      operationId: echo
-      security:
-        - api_key: []
-        - basic_auth: []
-      responses:
-        '200':
-          description: OK
-          # document headers for this response
-          headers:
-            X-Rate-Limit: # Header name
-              description: calls per hour allowed by the user
-              schema: # Header schema
-                type: integer
-                format: int32
-            X-Expires-After:
-              $ref: '#/components/headers/ExpiresAfter'
           content:
             application/json:
               schema:
                 type: string
               examples:
                 response:
-                  value: Hello world!
-            application/xml:
+                  value: 1574994809615gj4ct52kzz695twl0l27np0ivkmvu2ow4lbtpwk2nvf2k
+  '/zelid/verifylogin': # path parameter in curly braces
+    post: # documentation for GET operation for this path
+      tags:
+        - Authentication
+        - ZelID
+      summary: Login into ZelFlux
+      description: Login into ZelFlux by submitting correct ZelID, login phrase and signature. In case of success status response, we can use supplied data (zelid, loginPhrase, signature) as zelauth header as part of api calls that require a user to be logged in. Privilage grants a
+      operationId: verifyLogin
+      security:
+        - usernameHeader: []
+            # parameters list that are used with each operation for this path
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
               schema:
-                type: string
-            text/csv:
-              schema:
-                type: string
+                type: object
+                properties:
+                  status: 
+                    type: string
+                  data:
+                    type: object
+                    properties:
+                      message:
+                        type: string
+                        description: explanation of status
+                      zelid:
+                        type: string
+                        description: supplied ZelID or bitcoin P2PKH address
+                      loginPhrase:
+                        type: string
+                        description: valid and active loginPhrase
+                      signature:
+                        type: string
+                        description: signature of loginPhrase signed with zelid
+                      privilege:
+                        type: string
+                        description: granted ZelFlux privilege
+                        enum: [user, zelteam, admin]
+              example:
+                status: success
+                data:
+                  message: Successfully logged in
+                  zelid: 1CbErtneaX2QVyUfwU7JGB7VzvPgrgc3uC
+                  loginPhrase: 1575005453641eu7mijskjjc5201rhvvlwjt1vz7wz1fqedi5fr3bgo1h
+                  signature: H40gndhcJp4OpdM4cux4mIyPiqfxS5Kn2uSCJtSd0wCSfOZdgM+xG8c/pL8lR6XACkIpafCk2ISC0omGhcsByVs=
+                  privilage: admin
+      # request body documentation
       requestBody:
         content:
-          application/json:
+          text/plain:
             schema:
-              type: string
-              example: Hello world!
-          application/xml:
-            schema:
-              type: string
-              example: Hello world!
-        description: Echo payload
+              $ref: '#/components/schemas/ZelIDLogin'
+        description: ZelID login object
         required: true
         
 # An object to hold reusable parts that can be used across the spec
 components:
   schemas:
-    Email:
-      description: User email address
+    signature:
+      description: Signature of signed loginPhrase with zelid
       type: string
-      format: test
-      example: john.smith@example.com
-    User:
+      example: H+ZB3oSrsw6XkBxxlbwk33LEBJYvqtbMIm2kL9JzuoXMC6pSZd0lBHdnhJYzMTXv81zZQ7G/pkK1NvYN7cNF0GE=
+    ZelIDLogin:
       type: object
       properties:
-        username:
-          description: User supplied username
+        loginPhrase:
+          description: Login Phrase. Provided by GET /zelid/loginphrase
           type: string
-          minLength: 4
-          example: John78
-        firstName:
-          description: User first name
+          minLength: 40
+          example: 1574991374806spbcvsuwerl52tppx9dw5khuz8rew13mkq86gg8r2c
+        zelid:
+          description: ZelID or any P2PKH bitcoin address
           type: string
-          minLength: 1
-          example: John
-        lastName:
-          description: User last name
-          type: string
-          minLength: 1
-          example: Smith
-        email:
-          $ref: '#/components/schemas/Email'
+          minLength: 26
+          maxLength: 35
+          example: 1CbErtneaX2QVyUfwU7JGB7VzvPgrgc3uC
+        signature:
+          $ref: '#/components/schemas/signature'
   headers:
-    ExpiresAfter:
-      description: date in UTC when token expires
+    zelidauth:
+      description: ZelID authentication header
       schema:
         type: string
-        format: date-time
   # Security scheme definitions that can be used across the specification.
   securitySchemes:
-    main_auth: # security definition name (you can name it as you want)
-      # the following options are specific to oauth2 type
-      type: oauth2 # authorization type, one of: oauth2, apiKey, http
-      flows:
-        implicit:
-          authorizationUrl: 'http://example.com/api/oauth/dialog'
-          scopes:
-            'read:users': read users info
-            'write:users': modify or remove users
-    api_key:  # security definition name (you can name it as you want)
-      type: apiKey 
-      # The following options are specific to apiKey type
+    Zel ID: # security definition name (you can name it as you want)
+      description: Zel ID is an authentication system based on Bitcoin message signing. zelidauth header consist of stringified query of zelid, signature, loginPhrase Please refer to Authentication workflow section on how to obtain correct zelidauth header. An example of a header is `zelid=1CbErtneaX2QVyUfwU7JGB7VzvPgrgc3uC&signature=H%2BZB3oSrsw6XkBxxlbwk33LEBJYvqtbMIm2kL9JzuoXMC6pSZd0lBHdnhJYzMTXv81zZQ7G%2FpkK1NvYN7cNF0GE%3D&loginPhrase=1574991374806spbcvsuwerl52tppx9dw5khuz8rew13mkq86gg8r2c`
+      type: apiKey
       in: header # Where API key will be passed: header or query
-      name: api_key # API key parameter name
-    basic_auth: # security definition name (you can name it as you want)
-      type: http
-      scheme: basic
+      name: zelidauth # API key parameter name
+    
