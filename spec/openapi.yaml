@@ -56,6 +56,7 @@ servers:
   - url: 'http://94.177.241.10:16127'
   - url: 'http://54.37.234.130:16127'
   - url: 'http://194.182.83.182:16127'
+  - url: 'https://157.230.249.150:16128'
 # Holds the relative paths to the individual endpoints. The path is appended to the
 # basePath in order to construct the full URL. 
 paths:
