@@ -73,10 +73,18 @@ paths:
           content:
             application/json:
               schema:
-                type: string
-              examples:
-                response:
-                  value: 1574994809615gj4ct52kzz695twl0l27np0ivkmvu2ow4lbtpwk2nvf2k
+                type: object
+                properties:
+                  status: 
+                    type: string
+                    description: status
+                    enum: [success, error]
+                  data:
+                    type: string
+                    description: loginphrase
+              example:
+                status: success
+                data: 1574994809615gj4ct52kzz695twl0l27np0ivkmvu2ow4lbtpwk2nvf2k
   '/zelid/verifylogin': # path parameter in curly braces
     post: # documentation for POST operation for this path
       tags:
@@ -86,6 +94,9 @@ paths:
       description: Login into ZelFlux by submitting correct ZelID, login phrase and signature. In case of success status response, we can use supplied data (zelid, loginPhrase, signature) as zelauth header as part of api calls that require a user to be logged in.
         Additionally it is possible to listen for a response on websocket ws://{ZelNode_IP}:16127/ws/zelid/{loginPhrase}.
       operationId: verifyLogin
+      security:
+        - usernameHeader: []
+            # parameters list that are used with each operation for this path
       responses:
         '200':
           description: OK
@@ -96,6 +107,8 @@ paths:
                 properties:
                   status: 
                     type: string
+                    description: status
+                    enum: [success, error]
                   data:
                     type: object
                     properties:
@@ -147,29 +160,38 @@ paths:
           content:
             application/json:
               schema:
-                type: array
-                items: 
-                  type: object
-                  properties:
-                    zelid:
-                      type: string
-                      description: associated ZelID
-                    loginPhrase:
-                      type: string
-                      description: login phrase used for session
+                type: object
+                properties:
+                  status: 
+                    type: string
+                    description: status
+                    enum: [success, error]
+                  data:
+                   type: array
+                   items: 
+                     type: object
+                     properties:
+                       zelid:
+                         type: string
+                         description: associated ZelID
+                       loginPhrase:
+                         type: string
+                         description: login phrase used for session
               example:
-              - zelid: 1CbErtneaX2QVyUfwU7JGB7VzvPgrgc3uC
-                loginPhrase: 1566749385160npvtiku0z7yqsxgenyvzfmfrz7pyxrxvflv3sfztbc
-              - zelid: 1CbErtneaX2QVyUfwU7JGB7VzvPgrgc3uC
-                loginPhrase: 1566822581693fuuo3oi0sqdvab9h8baavc0kdawxvbwjgdbjsy5tk739m
-              - zelid: 1CbErtneaX2QVyUfwU7JGB7VzvPgrgc3uC
-                loginPhrase: 1566970790344nhd5tjwyphq4l1azf5o64axfz75b8892poo853ivbfc
-              - zelid: 1CbErtneaX2QVyUfwU7JGB7VzvPgrgc3uC
-                loginPhrase: 15673514189266fzehz9q1ujvw4fg5lsko9q6qrfji3iwfg9hkblx5dpm
-              - zelid: 1CbErtneaX2QVyUfwU7JGB7VzvPgrgc3uC
-                loginPhrase: 1575011828315mzqenqvi9ixaq0yr34g8jtvwgcs3d33cf1ies0myd
-              - zelid: 1CbErtneaX2QVyUfwU7JGB7VzvPgrgc3uC
-                loginPhrase: 1575012988077darschvve5ag82g8e8sgeij4sn61842ya7ovxi9r3kba
+                status: success
+                data:
+                - zelid: 1CbErtneaX2QVyUfwU7JGB7VzvPgrgc3uC
+                  loginPhrase: 1566749385160npvtiku0z7yqsxgenyvzfmfrz7pyxrxvflv3sfztbc
+                - zelid: 1CbErtneaX2QVyUfwU7JGB7VzvPgrgc3uC
+                  loginPhrase: 1566822581693fuuo3oi0sqdvab9h8baavc0kdawxvbwjgdbjsy5tk739m
+                - zelid: 1CbErtneaX2QVyUfwU7JGB7VzvPgrgc3uC
+                  loginPhrase: 1566970790344nhd5tjwyphq4l1azf5o64axfz75b8892poo853ivbfc
+                - zelid: 1CbErtneaX2QVyUfwU7JGB7VzvPgrgc3uC
+                  loginPhrase: 15673514189266fzehz9q1ujvw4fg5lsko9q6qrfji3iwfg9hkblx5dpm
+                - zelid: 1CbErtneaX2QVyUfwU7JGB7VzvPgrgc3uC
+                  loginPhrase: 1575011828315mzqenqvi9ixaq0yr34g8jtvwgcs3d33cf1ies0myd
+                - zelid: 1CbErtneaX2QVyUfwU7JGB7VzvPgrgc3uC
+                  loginPhrase: 1575012988077darschvve5ag82g8e8sgeij4sn61842ya7ovxi9r3kba
 # An object to hold reusable parts that can be used across the spec
 components:
   schemas:
