@@ -94,9 +94,6 @@ paths:
       description: Login into ZelFlux by submitting correct ZelID, login phrase and signature. In case of success status response, we can use supplied data (zelid, loginPhrase, signature) as zelauth header as part of api calls that require a user to be logged in.
         Additionally it is possible to listen for a response on websocket ws://{ZelNode_IP}:16127/ws/zelid/{loginPhrase}.
       operationId: verifyLogin
-      security:
-        - usernameHeader: []
-            # parameters list that are used with each operation for this path
       responses:
         '200':
           description: OK
