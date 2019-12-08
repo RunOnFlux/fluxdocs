@@ -67,7 +67,7 @@ paths:
         - Authentication
         - ZelID
       summary: Obtain login phrase
-      description: Obtain valid Login Phrase for signing into ZelFlux. Login Phrase is at least 40 characters, first 13 characters is server timestamp and is valid for 15 minutes.
+      description: Obtain valid Login Phrase for signing into ZelFlux. Login Phrase is at least 40 characters, first 13 characters is server timestamp and is valid for 15 minutes. PUBLIC
       operationId: loginPhrase
       responses:
         '200':
@@ -94,7 +94,7 @@ paths:
         - ZelID
       summary: Login into ZelFlux
       description: Login into ZelFlux by submitting correct ZelID, login phrase and signature. In case of success status response, we can use supplied data (zelid, loginPhrase, signature) as zelauth header as part of api calls that require a user to be logged in.
-        Additionally it is possible to listen for a response on websocket ws://{ZelNode_IP}:16127/ws/zelid/{loginPhrase}.
+        Additionally it is possible to listen for a response on websocket ws://{ZelNode_IP}:16127/ws/zelid/{loginPhrase}. PUBLIC
       operationId: verifyLogin
       responses:
         '200':
@@ -147,8 +147,8 @@ paths:
     get: # documentation for GET operation for this path
       tags:
         - ZelID
-      summary: Obtain all logged sessions of ZelID
-      description: Gets all currently active logged sessions in ZelFlux tied to given ZelID
+      summary: Obtain all logged sessions of ZelID. 
+      description: Gets all currently active logged sessions in ZelFlux tied to given ZelID. USER
       operationId: loggedSessions
       # security schemas applied to this operation
       security:
@@ -191,6 +191,106 @@ paths:
                   loginPhrase: 1575011828315mzqenqvi9ixaq0yr34g8jtvwgcs3d33cf1ies0myd
                 - zelid: 1CbErtneaX2QVyUfwU7JGB7VzvPgrgc3uC
                   loginPhrase: 1575012988077darschvve5ag82g8e8sgeij4sn61842ya7ovxi9r3kba
+  '/zelid/logoutcurrentsession': # path parameter in curly braces
+    get: # documentation for GET operation for this path
+      tags:
+        - ZelID
+      summary: Logs out current session
+      description: This call logs out currently logged session which is determined by the supplied authentication header. USER
+      operationId: logoutCurrentSession
+      # security schemas applied to this operation
+      security:
+        - ZelID: []
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status: 
+                    type: string
+                    description: status
+                    enum: [success, error]
+                  data:
+                    type: object
+                    properties:
+                      message:
+                        type: string
+                        description: explanation of status
+              example:
+                status: success
+                data:
+                  message: Successfully logged out
+  '/zelid/logoutallsessions': # path parameter in curly braces
+    get: # documentation for GET operation for this path
+      tags:
+        - ZelID
+      summary: Logs out all sessions
+      description: This call logs out all logged sessions which are determined by the supplied authentication header. USER
+      operationId: logoutAllSession
+      # security schemas applied to this operation
+      security:
+        - ZelID: []
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status: 
+                    $ref: '#/components/schemas/status'
+                  data:
+                    type: object
+                    properties:
+                      message:
+                        type: string
+                        description: explanation of status
+              example:
+                status: success
+                data:
+                  message: Successfully logged out
+  '/zelid/loggedusers': # path parameter in curly braces
+    get: # documentation for GET operation for this path
+      tags:
+        - ZelID
+      summary: Gets information about logged users
+      description: This call gets basic infromation about currently logged sessions of all users. ADMIN
+      operationId: loggedUsers
+      # security schemas applied to this operation
+      security:
+        - ZelID: []
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status: 
+                    $ref: '#/components/schemas/status'
+                  data:
+                   type: array
+                   items: 
+                     type: object
+                     properties:
+                       zelid:
+                         type: string
+                         description: users ZelID
+                       loginPhrase:
+                         type: string
+                         description: login phrase used for session
+              example:
+                status: success
+                data:
+                - zelid: 1CbErtneaX2QVyUfwU7JGB7VzvPgrgc3uC
+                  loginPhrase: 1566749385160npvtiku0z7yqsxgenyvzfmfrz7pyxrxvflv3sfztbc
+                - zelid: 1E1NSwDHtvCziYP4CtgiDMcgvgZL64PhkR
+                  loginPhrase: 1575805361736fdk6ak6yn5lgiuebz1oumh9z8rhyw0kf744f1sk2yd43
 # An object to hold reusable parts that can be used across the spec
 components:
   schemas:
@@ -214,6 +314,29 @@ components:
           example: 1CbErtneaX2QVyUfwU7JGB7VzvPgrgc3uC
         signature:
           $ref: '#/components/schemas/signature'
+    ErrorMessage:
+      type: object
+      properties:
+        status: 
+          type: string
+          description: error
+        data:
+          type: object
+          properties:
+            code:
+              type: string
+              description: code of error
+            name:
+              type: string
+              description: name of error
+            message:
+              type: string
+              description: message of error
+    status:
+      type: string
+      description: status
+      enum: [success, error]
+      
   headers:
     zelidauth:
       description: ZelID authentication header
