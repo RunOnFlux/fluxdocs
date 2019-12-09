@@ -2,7 +2,7 @@
 
 openapi: 3.0.0
 info:
-  version: '0.0.2' # Your API version
+  version: '0.0.3' # Your API version
   # It can be any string but it is better to use semantic versioning: http://semver.org/
   # Warning: OpenAPI require version to be string, but without quotation YAML can recognize it as number.
   
@@ -44,11 +44,13 @@ tags:
   - name: ZelID
     description: Calls that interact with ZelID and login/authentication management of ZelFlux
   - name: ZelFlux
-    description: Calls that interact with ZelFlux network
+    description: Calls that interact with ZelFlux and its network
   - name: ZelCash
     description: Calls that interact with locally running ZelCash daemon
   - name: ZelNode
     description: Calls that interact with local ZelNode and its network
+  - name: ZelApps
+    description: Calls that interact with ZelApps fascilitated by local ZelFlux and ZelNode network
 servers:
   - url: 'https://basic2.thecorporation.club'
   - url: 'http://157.230.249.150:16127'
@@ -58,6 +60,7 @@ servers:
   - url: 'http://54.37.234.130:16127'
   - url: 'http://194.182.83.182:16127'
   - url: 'https://157.230.249.150:16128'
+  - url: 'http://127.0.0.1:16127'
 # Holds the relative paths to the individual endpoints. The path is appended to the
 # basePath in order to construct the full URL. 
 paths:
@@ -252,7 +255,7 @@ paths:
               example:
                 status: success
                 data:
-                  message: Successfully logged out
+                  message: Successfully logged out all sessions
   '/zelid/loggedusers': # path parameter in curly braces
     get: # documentation for GET operation for this path
       tags:
@@ -291,6 +294,320 @@ paths:
                   loginPhrase: 1566749385160npvtiku0z7yqsxgenyvzfmfrz7pyxrxvflv3sfztbc
                 - zelid: 1E1NSwDHtvCziYP4CtgiDMcgvgZL64PhkR
                   loginPhrase: 1575805361736fdk6ak6yn5lgiuebz1oumh9z8rhyw0kf744f1sk2yd43
+  '/zelid/activeloginphrases':
+    get:
+      tags:
+        - ZelID
+      summary: Lists active login phrases
+      description: This call gets a list of login phrases that are currently active (were generated less than 15 minutes ago) - phrases that have been used recently and phrases that can be used to log in.. ADMIN
+      operationId: activeLoginPhrases
+      security:
+        - ZelID: []
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status: 
+                    $ref: '#/components/schemas/status'
+                  data:
+                    type: array
+                    items: 
+                      type: object
+                      properties:
+                        loginPhrase:
+                          type: string
+                          description: active login phrase
+                        createdAt:
+                          type: timestamp
+                          description: timestamp of loginPhrase creation in server time.
+                        expireAt:
+                          type: timestamp
+                          description: expiration timestamp of loginPhrase. After this time, the loginPhrase cannot be used anymore.
+              example:
+                status: success
+                data:
+                - loginPhrase: 1575865221315yqilps02mx0e1tmf5ymtcry8mbzk4u3k3v17tdsxif6
+                  createdAt: '2019-12-09T04:20:21.315Z'
+                  expireAt: '2019-12-09T04:35:21.315Z'
+                - loginPhrase: 1575865221315yqilps02mx0e1tmf5ymtcry8mbzk4u3k3v17tdsxif6
+                  createdAt: '2019-12-09T04:20:21.315Z'
+                  expireAt: '2019-12-09T04:35:21.315Z'
+  '/zelid/logoutallusers': # path parameter in curly braces
+    get: # documentation for GET operation for this path
+      tags:
+        - ZelID
+      summary: Logs out all users
+      description: This call logs out all logged users (including zelteam, admins). ADMIN
+      operationId: logoutAllUsers
+      # security schemas applied to this operation
+      security:
+        - ZelID: []
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status: 
+                    $ref: '#/components/schemas/status'
+                  data:
+                    type: object
+                    properties:
+                      message:
+                        type: string
+                        description: explanation of status
+              example:
+                status: success
+                data:
+                  message: Successfully logged out all users
+  '/zelid/logoutspecificsession':
+    post:
+      tags:
+        - Authentication
+        - ZelID
+      summary: Logs out a specific session
+      security:
+        - ZelID: []
+      description: Logs out a specific session. Requires the knowledge of a session loginPhrase and so users level is sufficient and user cannot logout another user as he does not know the loginPhrase. Admin can logout any specific session. USER
+      operationId: logoutSpecificSession
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status: 
+                    type: string
+                    description: status
+                    enum: [success, error]
+                  data:
+                    type: object
+                    properties:
+                      message:
+                        type: string
+                        description: explanation of status
+              example:
+                status: success
+                data:
+                  message: Session successfully logged out
+      requestBody:
+        content:
+          text/plain:
+            schema:
+              type: object
+              properties:
+                loginPhrase:
+                  description: Login Phrase of session we want to log out.
+                  type: string
+                  minLength: 40
+                  example: 1574991374806spbcvsuwerl52tppx9dw5khuz8rew13mkq86gg8r2c
+        description: Object containing loginPhrase
+        required: true
+  '/zelnode/startzelcash':
+    get:
+      tags:
+        - ZelNode
+      summary: Starts ZelNodes ZelCash daemon
+      description: Tries to start ZelCash daemon running on the ZelNode the call is run against without any extra parameters. ADMIN
+      operationId: startZelCash
+      security:
+        - ZelID: []
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status: 
+                    $ref: '#/components/schemas/status'
+                  data:
+                    type: object
+                    properties:
+                      message:
+                        type: string
+                        description: explanation of status
+              example:
+                status: success
+                data:
+                  message: ZelCash successfully started
+  '/zelnode/restartzelcash':
+    get:
+      tags:
+        - ZelNode
+      summary: Restarts ZelNodes ZelCash daemon
+      description: Tries to restart ZelCash daemon running on the ZelNode the call is run against. ZelCash daemon is firstly stopped and then started without any extra parameters. ADMIN
+      operationId: restartZelCash
+      security:
+        - ZelID: []
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status: 
+                    $ref: '#/components/schemas/status'
+                  data:
+                    type: object
+                    properties:
+                      message:
+                        type: string
+                        description: explanation of status
+              example:
+                status: success
+                data:
+                  message: ZelCash successfully restarted
+  '/zelnode/reindexzelcash':
+    get:
+      tags:
+        - ZelNode
+      summary: Reindexes ZelNodes ZelCash daemon
+      description: Tries to reindex ZelCash daemon running on the ZelNode the call is run against. ZelCash daemon is firstly stopped and then started with reindex flag. ADMIN
+      operationId: reindexZelCash
+      security:
+        - ZelID: []
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status: 
+                    $ref: '#/components/schemas/status'
+                  data:
+                    type: object
+                    properties:
+                      message:
+                        type: string
+                        description: explanation of status
+              example:
+                status: success
+                data:
+                  message: ZelCash successfully reindexing
+  '/zelnode/updatezelflux':
+    get:
+      tags:
+        - ZelNode
+      summary: Updates ZelFlux to the latest version
+      description: Updates ZelFlux to the latest version available according to github master branch. ZelFlux will restart its services after the update. ZELTEAM
+      operationId: updateZelFlux
+      security:
+        - ZelID: []
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status: 
+                    $ref: '#/components/schemas/status'
+                  data:
+                    type: object
+                    properties:
+                      message:
+                        type: string
+                        description: explanation of status
+              example:
+                status: success
+                data:
+                  message: ZelFlux successfully updated
+  '/zelnode/rebuildzelfront':
+    get:
+      tags:
+        - ZelNode
+      summary: Rebuild UI - ZelFront of ZelFlux
+      description: Rebuilds ZelFront part of ZelFlux. May help resolving frontend issues. ZELTEAM
+      operationId: rebuildZelFront
+      security:
+        - ZelID: []
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status: 
+                    $ref: '#/components/schemas/status'
+                  data:
+                    type: object
+                    properties:
+                      message:
+                        type: string
+                        description: explanation of status
+              example:
+                status: success
+                data:
+                  message: ZelFlux successfully rebuilt
+  '/zelnode/updatezelcash':
+    get:
+      tags:
+        - ZelNode
+      summary: Updates ZelCash daemon
+      description: Updates the ZelCash daemon of ZelNode to the latest available version according to official Zel APT repository. ZelCash daemon is restarted with no extra parameters during this update. ZELTEAM
+      operationId: updateZelCash
+      security:
+        - ZelID: []
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status: 
+                    $ref: '#/components/schemas/status'
+                  data:
+                    type: object
+                    properties:
+                      message:
+                        type: string
+                        description: explanation of status
+              example:
+                status: success
+                data:
+                  message: ZelCash successfully updated
+  '/zelflux/version':
+    get:
+      tags:
+        - ZelFlux
+      summary: Gets version of ZelFlux
+      description: Gets version of ZelFlux running on the ZelNode the call is run against as it is in package.json. ZELTEAM
+      operationId: getZelFluxVersion
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status: 
+                    $ref: '#/components/schemas/status'
+                  data:
+                    type: string
+                    description: ZelFlux version
+              example:
+                status: success
+                data: '0.41.1'
 # An object to hold reusable parts that can be used across the spec
 components:
   schemas:
