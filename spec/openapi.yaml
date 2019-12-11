@@ -322,10 +322,10 @@ paths:
                           type: string
                           description: active login phrase
                         createdAt:
-                          type: timestamp
+                          type: string
                           description: timestamp of loginPhrase creation in server time.
                         expireAt:
-                          type: timestamp
+                          type: string
                           description: expiration timestamp of loginPhrase. After this time, the loginPhrase cannot be used anymore.
               example:
                 status: success
