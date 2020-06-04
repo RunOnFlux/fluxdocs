@@ -1,6 +1,6 @@
 openapi: 3.0.0
 info:
-  version: 0.0.3
+  version: 0.1.0
   title: ZelFlux
   contact:
     email: tadeas.kmenta@zel.cash
@@ -865,8 +865,8 @@ paths:
                             type: object
                             properties:
                               dosState:
-                                type: integer
-                                description: Numbers 1-10 in which state it's in 
+                                type: float
+                                description: Number indicating value of DOS state from 0 to infinity
                               dosMessage:
                                 type: string
                                 description: Status message or Null if no message
@@ -1104,7 +1104,7 @@ paths:
         - ZelFlux
       summary: DOS state
       description: >-
-        This will return with the DOS state that ZelFlux is in from 0-10 and if
+        This will return with the DOS state that ZelFlux is in from 0 to infinity and if
         it reaches 10 it gets banned. **PUBLIC**
       operationId: getDOSState
       responses:
@@ -8043,9 +8043,9 @@ paths:
     post:
       tags:
         - ZelCash
-      summary: Send multiple transactions at once
+      summary: Send to many receivers at once
       description: >-
-        Send multiple times. Amounts are decimal numbers with at most 8 digits
+        Send to many receivers. Amounts are decimal numbers with at most 8 digits
         of precision. **ADMIN**
       operationId: sendManyPost
       security:
@@ -8075,7 +8075,7 @@ paths:
                     not part of the transaction, just kept in your wallet.
                     (optional)
                 substractfeefromamount:
-                  type: boolean
+                  type: array
                   description: >-
                     Subtract the transaction fee equally from the output amounts
                     (optional)
@@ -8085,7 +8085,9 @@ paths:
                 t1TtEnZKBziV5LziBXr9KvrYC2HbQA91rSN: 0.0001
               minconf: 2
               comment: test api
-              substractfeefromamount: true
+              substractfeefromamount:
+                  - >-
+                    t1b4SUue7q26dADLGUyFBu57uJsKS7jc8VC
       responses:
         '200':
           description: OK
@@ -8106,9 +8108,9 @@ paths:
     get:
       tags:
         - ZelCash
-      summary: Send multiple transactions at once
+      summary: Send to many receivers at once
       description: >-
-        Send multiple times. Amounts are decimal numbers with at most 8 digits
+        Send to many receivers. Amounts are decimal numbers with at most 8 digits
         of precision. **ADMIN**
       operationId: sendMany
       security:
@@ -8149,10 +8151,11 @@ paths:
           description: Subtract the transaction fee equally from the output amounts.
           schema:
             default: false
-            type: boolean
-            enum:
-              - true
-              - false
+            type: array
+            items:
+              type: string
+              description: >-
+                An address from which fee will be equally substracted.
       responses:
         '200':
           description: OK
@@ -9627,8 +9630,18 @@ paths:
             type: string
             enum:
               - sleep
+              - parameterloading
               - createjoinsplit
+              - verifyjoinsplit
               - solveequihash
+              - verifyequihash
+              - validatelargetx
+              - trydecryptnotes
+              - trydecryptsaplingnotes
+              - incnotewitnesses
+              - incsaplingnotewitnesses
+              - connectblockslow
+              - sendtoaddress
               - loadwallet
               - listunspent
               - createsaplingspend
@@ -10430,7 +10443,7 @@ paths:
           required: true
           schema:
             type: string
-          description: File name of share file to view or download
+          description: File name of share file to view or download. Can be nested in additional folder.
           example: '?file=message.txt'
       responses:
         '200':
