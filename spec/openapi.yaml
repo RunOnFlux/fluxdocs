@@ -10,9 +10,11 @@ info:
     url: 'https://www.gnu.org/licenses/agpl-3.0.en.html'
   x-logo:
     url: 'https://raw.githubusercontent.com/zelcash/zelfluxdocs/master/zelflux.png'
-  description: >
-    This is an API documentation of calls available to be made to any ZelFlux
-
+  description: >-
+    This is an API documentation of calls available to be made to any ZelFlux.
+    <br>
+    GET Calls are available as both query and in order as path.
+    <br>
     ZelFlux is completely open source and we encourage everyone to feel free and
     contribute :)
 
@@ -513,7 +515,7 @@ paths:
         Tries to reindex ZelCash daemon running on the ZelNode the call is run
         against. ZelCash daemon is firstly stopped and then started with reindex
         flag. **ADMIN**
-      operationId: reindexZelCash
+      operationId: reindexZelCashB
       security:
         - ZelID: []
       responses:
@@ -865,7 +867,7 @@ paths:
                             type: object
                             properties:
                               dosState:
-                                type: float
+                                type: number
                                 description: Number indicating value of DOS state from 0 to infinity
                               dosMessage:
                                 type: string
@@ -3829,7 +3831,7 @@ paths:
         in our best chain. PUBLIC
       operationId: verifyTxOutProof
       parameters:
-        - in: path
+        - in: query
           name: proof
           required: true
           schema:
@@ -4750,7 +4752,7 @@ paths:
                     Raw locktime. Non-0 value also locktime-activates inputs.
                     (optional)
                 expiryheight:
-                  type: integer
+                  type: string
                   default: Nextblockheight+20
                   description: Expiry height of transaction (optional)
             example:
@@ -6351,7 +6353,7 @@ paths:
 
             Example:
             - `set`=`<alias>`&`lockwallet`=`false`
-        - in: path
+        - in: query
           name: alias
           required: true
           schema:
@@ -8076,9 +8078,11 @@ paths:
                     (optional)
                 substractfeefromamount:
                   type: array
-                  description: >-
-                    Subtract the transaction fee equally from the output amounts
-                    (optional)
+                  items:
+                    type: string
+                    description: >-
+                      Subtract the transaction fee equally from the output amounts
+                      (optional)
             example:
               amounts:
                 t1b4SUue7q26dADLGUyFBu57uJsKS7jc8VC: 0.0001
@@ -8150,7 +8154,6 @@ paths:
           name: substractfeefromamount
           description: Subtract the transaction fee equally from the output amounts.
           schema:
-            default: false
             type: array
             items:
               type: string
@@ -9123,7 +9126,7 @@ paths:
           name: minconf
           schema:
             default: 1
-            type: string
+            type: integer
           description: The minimum confirmations to filter
           example: '?minconf=5'
         - in: query
@@ -9538,7 +9541,7 @@ paths:
       description: >-
         Tries to start ZelCash daemon running on the ZelNode the call is run
         against without any extra parameters. **ADMIN** **ZELTEAM**
-      operationId: startZelCash
+      operationId: startZelCashB
       security:
         - ZelID: []
       responses:
@@ -9566,7 +9569,7 @@ paths:
         Tries to restart ZelCash daemon running on the ZelNode the call is run
         against. ZelCash daemon is firstly stopped and then started without any
         extra parameters. **ADMIN** **ZELTEAM**
-      operationId: restartZelCash
+      operationId: restartZelCashB
       security:
         - ZelID: []
       responses:
@@ -9800,7 +9803,7 @@ paths:
         - ZelBench
       summary: Benchmark results
       description: Return most recent benchmark results. **PUBLIC**
-      operationId: getBenchmarks
+      operationId: getBenchmarksZelBench
       responses:
         '200':
           description: OK
@@ -9882,7 +9885,7 @@ paths:
         - ZelBench
       summary: Stop zelbench daemon
       description: This will stop the zelbench daemon. **ADMIN**
-      operationId: stop
+      operationId: stopZelBenchDaemon
       security:
         - ZelID: []
       responses:
