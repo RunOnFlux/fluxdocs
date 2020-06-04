@@ -2874,7 +2874,7 @@ paths:
                   previousblockhash: >-
                     00000057e8ef2fc394594f1f37d6f5ef7cc2ab4f2af3b6b3eaa14adb9310950b
                   nextblockhash: >-
-                    000000196832b58171a331e684f5c3df019632749a3219bfb57569d0f7601a30                
+                    000000196832b58171a331e684f5c3df019632749a3219bfb57569d0f7601a30
   /zelcash/getblockchaininfo:
     get:
       tags:
@@ -3569,48 +3569,48 @@ paths:
               example:
                 status: success
                 data:
-                  2c2a34b81eeba402270465d3dcc44d41ef31e4bf6cae5cc8e2aeea64d7fce829:
-                    size: 4284
+                  ? 2c2a34b81eeba402270465d3dcc44d41ef31e4bf6cae5cc8e2aeea64d7fce829
+                  : size: 4284
                     fee: 0.0001
                     time: 1588593142
                     height: 591102
                     startingpriority: 10000000000000000
                     currentpriority: 10000000000000000
                     depends: []
-                  5fbb025ff8a6f632b02545e353e15992e389ccd12dab2771f2d96c53c3e2382a:
-                    size: 895
+                  ? 5fbb025ff8a6f632b02545e353e15992e389ccd12dab2771f2d96c53c3e2382a
+                  : size: 895
                     fee: 0.0001
                     time: 1588593155
                     height: 591102
                     startingpriority: 10000000000000000
                     currentpriority: 10000000000000000
                     depends: []
-                  afc2f6ff2b9a546a3e0c5ba951338043f9866f23ad53622c5cc3b97ae0c89281:
-                    size: 198
+                  ? afc2f6ff2b9a546a3e0c5ba951338043f9866f23ad53622c5cc3b97ae0c89281
+                  : size: 198
                     fee: 0.0001
                     time: 1588592875
                     height: 591101
                     startingpriority: 0
                     currentpriority: 0
                     depends: []
-                  0e99affa132cfea43ad7f31923a00a4cab1ace5e7343b0e40dad346d94138fb8:
-                    size: 198
+                  ? 0e99affa132cfea43ad7f31923a00a4cab1ace5e7343b0e40dad346d94138fb8
+                  : size: 198
                     fee: 0.0001
                     time: 1588593142
                     height: 591101
                     startingpriority: 0
                     currentpriority: 0
                     depends: []
-                  f2d51d5c678ea6a27670e3552b66adda606a43b57222ab6363ea0d2001c292c9:
-                    size: 1189
+                  ? f2d51d5c678ea6a27670e3552b66adda606a43b57222ab6363ea0d2001c292c9
+                  : size: 1189
                     fee: 0.0001
                     time: 1588593018
                     height: 591102
                     startingpriority: 10000000000000000
                     currentpriority: 10000000000000000
                     depends: []
-                  5af1b85af6e0e58e1ac00c5a93c51e0a6da927cdf8f9f981159acdf55fb382d2:
-                    size: 2611
+                  ? 5af1b85af6e0e58e1ac00c5a93c51e0a6da927cdf8f9f981159acdf55fb382d2
+                  : size: 2611
                     fee: 0.0001
                     time: 1588592924
                     height: 591102
@@ -5137,7 +5137,7 @@ paths:
                     properties:
                       hex:
                         type: string
-                        description: 'The serialized, hex-encoded data for ''txid'''
+                        description: "The serialized, hex-encoded data for 'txid'"
                       txid:
                         type: string
                         description: The transaction id (same as provided)
@@ -6499,7 +6499,7 @@ paths:
           required: true
           schema:
             type: string
-          description: 'The node''s ip:port (see `/zelcash/getpeerinfo` for nodes)'
+          description: "The node's ip:port (see `/zelcash/getpeerinfo` for nodes)"
           example: '?node=188.239.61.210:16125'
         - in: query
           name: command
@@ -6570,7 +6570,7 @@ paths:
           required: true
           schema:
             type: string
-          description: 'The node''s ip:port'
+          description: "The node's ip:port"
           example: '?node=188.239.61.210:16125'
       responses:
         '200':
@@ -8090,8 +8090,8 @@ paths:
               minconf: 2
               comment: test api
               substractfeefromamount:
-                  - >-
-                    t1b4SUue7q26dADLGUyFBu57uJsKS7jc8VC
+                - >-
+                  t1b4SUue7q26dADLGUyFBu57uJsKS7jc8VC
       responses:
         '200':
           description: OK
