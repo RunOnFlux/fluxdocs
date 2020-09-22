@@ -43,7 +43,7 @@ info:
     Owner.
 
     * **AppOwnerAbove** API level - AppOwnerAbove level permission (App Owner,
-    ZelTeam, and Admin has access to these calls), requires signing. 
+    ZelTeam, and Admin has access to these calls), requires signing.
 
 
     Most calls are available via GET request with some that may require large
@@ -908,9 +908,9 @@ paths:
                     2020-09-12 01:41:43 keypool return 6
 
                     2020-09-12 01:41:47 UpdateTip: new
-                    best=00000001445f7d700c03f4815cbd3504ba4b133f33493fa0513dfb34a904c024 
-                    height=684556  log2_work=45.426889  tx=4126528 
-                    date=2020-09-12 01:40:03 progress=0.999999 
+                    best=00000001445f7d700c03f4815cbd3504ba4b133f33493fa0513dfb34a904c024
+                    height=684556  log2_work=45.426889  tx=4126528
+                    date=2020-09-12 01:40:03 progress=0.999999
                     cache=55.5MiB(15859tx)
 
                     2020-09-12 01:41:48 keypool reserve 6
@@ -1065,9 +1065,9 @@ paths:
                     4fea691828378a1cfabfe43ca29b527aea98c81a9ecb3e12a70a53d2eed2c924
 
                     2020-09-12 01:44:29 UpdateTip: new
-                    best=000000747c5d711cb2ae3187797051307b10c2732299cdc2cb8078b1cef91d7d 
-                    height=684557  log2_work=45.426889  tx=4126534 
-                    date=2020-09-12 01:43:47 progress=1.000000 
+                    best=000000747c5d711cb2ae3187797051307b10c2732299cdc2cb8078b1cef91d7d
+                    height=684557  log2_work=45.426889  tx=4126534
+                    date=2020-09-12 01:43:47 progress=1.000000
                     cache=55.5MiB(15862tx)
 
                     2020-09-12 01:44:29 Zelnode found nothing to do:
@@ -1576,7 +1576,7 @@ paths:
 
                     2020-09-12T00:23:57.695Z          {}
 
-                    2020-09-12T00:24:04.521Z         
+                    2020-09-12T00:24:04.521Z
                     {"code":-28,"name":"Error","message":"Activating best
                     chain..."}
 
@@ -5829,7 +5829,7 @@ paths:
           required: true
           description: >
             Json object or url encoded json. The key is the Zelcash address, the
-            value is the ZEL amount.. 
+            value is the ZEL amount..
 
 
             Url encoded example:
