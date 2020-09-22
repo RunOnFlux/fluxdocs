@@ -1,14 +1,29 @@
 {
   "name": "zelfluxdocs",
   "version": "1.0.0",
-  "dependencies": {
-    "swagger-repo": "^2.0.0-rc.15"
+  "author": "Zel Foundation",
+  "license": "GNU AGPLv3",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/zelcash/zelfluxcods.git"
   },
-  "private": true,
+  "description": "ZelCore Wallet",
+  "contributors": [
+    {
+      "name": "dk808"
+    },
+    {
+      "name": "Tadeas Kmenta",
+      "email": "tadeas@zel.network"
+    }
+  ],
   "scripts": {
     "start": "swagger-repo serve",
     "build": "swagger-repo build -o web_deploy",
     "test": "swagger-repo validate",
     "gh-pages": "swagger-repo gh-pages"
+  },
+  "dependencies": {
+    "swagger-repo": "^2.0.0-rc.15"
   }
 }
