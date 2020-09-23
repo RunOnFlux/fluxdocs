@@ -78,6 +78,7 @@ tags:
   - name: Explorer
     description: Calls that interact with locally running explorer
 servers:
+  - url: 'https://1.api.fluxos.network'
   - url: 'http://167.86.116.11:16127'
   - url: 'http://95.217.72.235:16127'
   - url: 'http://47.22.47.182:16127'
