@@ -1,8 +1,8 @@
 
-apiTitle: zelfluxdocs
+apiTitle: fluxdocs
 splitSpec: false
 codeSamples: true
 swaggerUI: true
 travis: true
-repo: zelcash/zelfluxdocs
+repo: runonflux/fluxdocs
 oasVersion: 3.0.0

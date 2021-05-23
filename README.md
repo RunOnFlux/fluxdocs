@@ -1,13 +1,13 @@
-# zelfluxdocs OpenAPI Specification
-[![Build Status](https://travis-ci.com/zelcash/zelfluxdocs.svg?branch=master)](https://travis-ci.com/zelcash/zelfluxdocs)
+# Flux documentation OpenAPI Specification
+[![Build Status](https://travis-ci.com/runonflux/fluxdocs.svg?branch=master)](https://travis-ci.com/runonflux/fluxdocs)
 
-[ZelFlux](https://github.com/zelcash/zelflux/)
+[Flux](https://github.com/runonflux/flux/)
 
 ## Links
 
-- [Reference Documentation (ReDoc)](https://zelcash.github.io/zelfluxdocs/)
-- [SwaggerUI](https://zelcash.github.io/zelfluxdocs/swagger-ui/)
-- OpenAPI Raw Files: [JSON](https://zelcash.github.io/zelfluxdocs/openapi.json) [YAML](https://zelcash.github.io/zelfluxdocs/openapi.yaml)
+- [Reference Documentation (ReDoc)](https://docs.ruonnflux.io)
+- [SwaggerUI](https://docs.ruonnflux.io/swagger-ui/)
+- OpenAPI Raw Files: [JSON](https://docs.ruonnflux.io/openapi.json) [YAML](https://docs.runonflux.io/openapi.yaml)
 
 **Warning:** All above links are updated only after Travis CI finishes deployment
 
