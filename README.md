@@ -5,9 +5,9 @@
 
 ## Links
 
-- [Reference Documentation (ReDoc)](https://docs.ruonnflux.io)
-- [SwaggerUI](https://docs.ruonnflux.io/swagger-ui/)
-- OpenAPI Raw Files: [JSON](https://docs.ruonnflux.io/openapi.json) [YAML](https://docs.runonflux.io/openapi.yaml)
+- [Reference Documentation (ReDoc)](https://docs.runonflux.io)
+- [SwaggerUI](https://docs.runonflux.io/swagger-ui/)
+- OpenAPI Raw Files: [JSON](https://docs.runonflux.io/openapi.json) [YAML](https://docs.runonflux.io/openapi.yaml)
 
 **Warning:** All above links are updated only after Travis CI finishes deployment
 
