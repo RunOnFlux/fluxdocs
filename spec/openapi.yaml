@@ -1,6 +1,6 @@
 openapi: 3.0.0
 info:
-  version: 0.2.0
+  version: 0.3.0
   title: Flux
   contact:
     email: tadeas@zel.network
@@ -51,6 +51,17 @@ info:
 
     Websocket is currently used only for simplifying login operations and for
     internal Flux communication.
+
+    # Getting Started with the API
+
+    * **1. Install Zelcore Wallet:** The Zelcore wallet is required for signing messages. Please install this if not already installed.
+
+    * **2. Create Zelcore Account:** A Zelcore wallet account is required for signing messages. Please register an account if you don't already have one.
+
+    * **3. Obtain API Authentication Credentials:** Follow the Authentication section of this API documentation in order to set up your credentials for using the rest of the API. You will need to use your Zelcore wallet for parts of this process.
+
+    * **4. Set Up Authentication Credentials in Header:** Set up your zelidauth credentials in your header. If you are using variables, the signature value may need to be URLencoded.
+
 externalDocs:
   description: Flux
   url: 'https://github.com/runonflux/flux'
@@ -144,6 +155,17 @@ paths:
         for a response on websocket.
         ws://{Flux_IP}:16127/ws/id/{loginPhrase}. **Public**
       operationId: verifyLogin
+      requestBody:
+        content:
+          text/plain:
+            schema:
+              $ref: '#/components/schemas/ZelIDLogin'
+            example:
+              loginPhrase: 1575012988077darschvve5ag82g8e8sgeij4sn61842ya7ovxi9r3kba
+              zelid: 1CbErtneaX2QVyUfwU7JGB7VzvPgrgc3uC
+              signature: IAMZBB0p8aQ6A0Zt8uUKFLdWvPJlBypuczhaM6/R+s5bI72NQs/TPF1KYywvJlumMZyvLmk7JelDwaQbfTjqtSs=
+        description: ZelID login object
+        required: true
       responses:
         '200':
           description: OK
@@ -189,13 +211,6 @@ paths:
                   signature: >-
                     IAMZBB0p8aQ6A0Zt8uUKFLdWvPJlBypuczhaM6/R+s5bI72NQs/TPF1KYywvJlumMZyvLmk7JelDwaQbfTjqtSs=
                   privilage: admin
-      requestBody:
-        content:
-          text/plain:
-            schema:
-              $ref: '#/components/schemas/ZelIDLogin'
-        description: ZelID login object
-        required: true
   /id/providesign:
     post:
       tags:
@@ -480,39 +495,6 @@ paths:
                 status: success
                 data:
                   message: Successfully logged out all users
-  /id/adjustcruxid:
-    get:
-      tags:
-        - ID
-      summary: Adjust CruxID
-      description: This will add/update your CruxID. **Admin**
-      operationId: adjustCruxID
-      security:
-        - ZelID: []
-      parameters:
-        - in: query
-          name: cruxid
-          required: true
-          schema:
-            type: string
-          description: CruxID
-          example: dk808@zel.crux
-      responses:
-        '200':
-          description: OK
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  status:
-                    $ref: '#/components/schemas/status'
-                  data:
-                    $ref: '#/components/schemas/statusmessage'
-              example:
-                status: success
-                data:
-                  message: CruxID adjusted
   /id/logoutspecificsession:
     post:
       tags:
@@ -527,6 +509,21 @@ paths:
         another user as he does not know the loginPhrase. Admin can logout any
         specific session. **User**
       operationId: logoutSpecificSession
+      requestBody:
+        content:
+          text/plain:
+            schema:
+              type: object
+              properties:
+                loginPhrase:
+                  description: Login Phrase of session we want to log out.
+                  type: string
+                  minLength: 40
+                  example: 1574991374806spbcvsuwerl52tppx9dw5khuz8rew13mkq86gg8r2c
+            example:
+              loginPhrase: 1575012988077darschvve5ag82g8e8sgeij4sn61842ya7ovxi9r3kba
+        description: Object containing loginPhrase
+        required: true
       responses:
         '200':
           description: OK
@@ -543,19 +540,49 @@ paths:
                 status: success
                 data:
                   message: Session successfully logged out
+  /id/checkprivilege:
+    post:
+      tags:
+        - ZelID
+      summary: Checks the privilege level of user
+      security:
+        - ZelID: []
+      description: >-
+        Checks the privilege level of the user. The 5 levels are public, user, admin, flux team and app owner. **User**
+      operationId: checkLoggedUser
       requestBody:
         content:
           text/plain:
             schema:
               type: object
               properties:
-                loginPhrase:
-                  description: Login Phrase of session we want to log out.
+                zelid:
                   type: string
-                  minLength: 40
-                  example: 1574991374806spbcvsuwerl52tppx9dw5khuz8rew13mkq86gg8r2c
-        description: Object containing loginPhrase
+                  description: ZelID
+                signature:
+                  type: string
+                  description: Signature of signed loginPhrase with ZelID
+            example:
+              zelid: 1CbErtneaX2QVyUfwU7JGB7VzvPgrgc3uC
+              signature: IAMZBB0p8aQ6A0Zt8uUKFLdWvPJlBypuczhaM6/R+s5bI72NQs/TPF1KYywvJlumMZyvLmk7JelDwaQbfTjqtSs=
+        description: Object containing privilege level
         required: true
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    $ref: '#/components/schemas/status'
+                  data:
+                    $ref: '#/components/schemas/statusmessage'
+              example:
+                status: success
+                data:
+                  message: admin
   /flux/startdaemon:
     get:
       tags:
@@ -2526,6 +2553,431 @@ paths:
                   message: |-
                     Rule added
                     Rule added (v6)
+  # To be confirmed if CruxID is still relevant and if it is to be replaced.
+  /flux/adjustcruxid:
+    get:
+      tags:
+        - Flux
+      summary: Adjust CruxID
+      description: This will add/update your CruxID. **Admin**
+      operationId: adjustCruxID
+      security:
+        - ZelID: []
+      parameters:
+        - in: query
+          name: cruxid
+          required: true
+          schema:
+            type: string
+          description: CruxID
+          example: dk808@zel.crux
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    $ref: '#/components/schemas/status'
+                  data:
+                    $ref: '#/components/schemas/statusmessage'
+              example:
+                status: success
+                data:
+                  message: CruxID adjusted
+  /flux/nodetier:
+    get:
+      tags:
+        - Flux
+      summary: Node Tier
+      description: This call will display the tier of the node. **Public**
+      operationId: getNodeTier
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    $ref: '#/components/schemas/status'
+                  data:
+                    type: string
+                    description: Node Tier
+              example:
+                status: success
+                data: cumulus
+  # This appears to be a duplicate of /flux/zelid - to be confirmed if this is to be removed or if it has a specific purpose.
+  /flux/id:
+    get:
+      tags:
+        - Flux
+      summary: ZelID
+      description: This call will display the user's ZelID. **Public**
+      operationId: getFluxZelID
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    $ref: '#/components/schemas/status'
+                  data:
+                    type: string
+                    description: ZelID
+              example:
+                status: success
+                data: 1CcoEkKQZcwUXPSps4bZJDjUM3mqe9bNXf
+  /flux/kadena:
+    get:
+      tags:
+        - Flux
+      summary: Kadena Info
+      description: This call will display the user's Kadena address and chain ID. **Public**
+      operationId: getFluxKadena
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    $ref: '#/components/schemas/status'
+                  data:
+                    type: string
+                    description: Kadena address and chain ID
+              example:
+                status: success
+                data: kadena:k:7a1529b3a07fate32d75684ab20bdde61545d60f1c6bcbf2489fef857a316652?chainid=0
+  /flux/adjustkadena:
+    get:
+      tags:
+        - Flux
+      summary: Adjust Kadena Account
+      description: Essentially rebuilds flux - use with caution! **Admin**
+      operationId: adjustKadenaAccount
+      security:
+        - ZelID: []
+      parameters:
+        - in: query
+          name: account
+          required: true
+          schema:
+            type: string
+          description: Kadena Account
+          example: k:7a1529b3a07fate32d75684ab20bdde61545d60f1c6bcbf2489fef857a316652
+        - in: query
+          name: chainid
+          required: true
+          schema:
+            type: string
+          description: Kadena ChainID
+          example: 0
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    $ref: '#/components/schemas/status'
+                  data:
+                    $ref: '#/components/schemas/statusmessage'
+              example:
+                status: success
+                data:
+                  message: Kadena account adjusted
+  /flux/startbenchmark:
+    get:
+      tags:
+        - Flux
+      summary: Start Benchmark
+      description: This call will start the benchmark which tests the hardware specifications and performance. **AdminAndFluxTeam**
+      operationId: startBenchmark
+      security:
+        - ZelID: []
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    $ref: '#/components/schemas/status'
+                  data:
+                    type: string
+                    description: Start performance benchmark
+              example:
+                status: success
+                data:
+                  message: Benchamrk successfully started
+  /flux/restartbenchmark:
+    get:
+      tags:
+        - Flux
+      summary: Restart Benchmark
+      description: This call will restart the benchmark which tests the hardware specifications and performance. **AdminAndFluxTeam**
+      operationId: startBenchmark
+      security:
+        - ZelID: []
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    $ref: '#/components/schemas/status'
+                  data:
+                    type: string
+                    description: Restart performance benchmark
+              example:
+                status: success
+                data:
+                  message: Benchamrk successfully restarted
+  /flux/softupdateflux:
+    get:
+      tags:
+        - Flux
+      summary: Soft Update Flux
+      description: This call will perform a soft update of Flux. **AdminAndFluxTeam**
+      operationId: softUpdateFlux
+      security:
+        - ZelID: []
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    $ref: '#/components/schemas/status'
+                  data:
+                    type: string
+                    description: Perform a soft update of Flux
+              example:
+                status: success
+                data:
+                  message: Flux successfully updated using soft method
+  /flux/softupdatefluxinstall:
+    get:
+      tags:
+        - Flux
+      summary: Install Flux
+      description: This call will install Flux. **AdminAndFluxTeam**
+      operationId: softUpdateFluxInstall
+      security:
+        - ZelID: []
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    $ref: '#/components/schemas/status'
+                  data:
+                    type: string
+                    description: Install Flux
+              example:
+                status: success
+                data:
+                  message: Flux successfully updated softly with installation
+  /flux/warnlog:
+    get:
+      tags:
+        - Flux
+      summary: Warning Log
+      description: This call returns the Flux warning log. **AdminAndFluxTeam**
+      operationId: fluxWarnLog
+      security:
+        - ZelID: []
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: string
+                description: Warning log
+              example:
+                2022-01-23T15:23:33.638Z          Daemon not yet synced. Flux discovery is awaiting.
+                2022-01-23T15:25:33.655Z          Node not confirmed. Flux discovery is awaiting.
+                2022-01-23T15:27:33.869Z          Unexpected token B in JSON at position 0
+                2022-01-23T15:29:34.535Z          Flux IP not detected. Flux discovery is awaiting.
+  /flux/debuglog:
+    get:
+      tags:
+        - Flux
+      summary: Debug Log
+      description: This call returns the Flux debug log. **AdminAndFluxTeam**
+      operationId: fluxDebugLog
+      security:
+        - ZelID: []
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: string
+                description: Debug log
+              example:
+                2022-01-23T15:23:33.049Z          Flux running on port 16127!
+                2022-01-23T15:23:33.051Z          Initiating MongoDB connection
+                2022-01-23T15:23:33.075Z          Flux Home running on port 16126!
+                2022-01-23T15:23:33.106Z          DB connected
+                2022-01-23T15:23:33.106Z          Preparing local database...
+                2022-01-23T15:23:33.471Z          Local database prepared
+                2022-01-23T15:23:33.472Z          Preparing temporary database...
+                2022-01-23T15:23:33.505Z          Temporary database prepared
+                2022-01-23T15:23:33.505Z          Preparing Flux Apps locations
+                2022-01-23T15:23:33.554Z          Flux Apps locations prepared
+                2022-01-23T15:23:33.571Z          Firewalls checked
+                2022-01-23T15:23:33.572Z          Connections polling prepared
+                2022-01-23T15:23:33.580Z          Flux Daemon Info Service Started
+                2022-01-23T15:23:33.619Z          Flux checks operational
+                2022-01-23T15:23:33.638Z          Daemon not yet synced. Flux discovery is awaiting.
+                2022-01-23T15:23:33.639Z          Flux Discovery started
+  /flux/infolog:
+    get:
+      tags:
+        - Flux
+      summary: Info Log
+      description: This call returns the Flux info log. **AdminAndFluxTeam**
+      operationId: fluxInfoLog
+      security:
+        - ZelID: []
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: string
+                description: Info log
+              example:
+                2022-01-23T15:23:33.047Z          Flux running on port 16127!
+                2022-01-23T15:23:33.050Z          Initiating MongoDB connection
+                2022-01-23T15:23:33.071Z          Flux Home running on port 16126!
+                2022-01-23T15:23:33.105Z          DB connected
+                2022-01-23T15:23:33.106Z          Preparing local database...
+                2022-01-23T15:23:33.431Z          Local database prepared
+                2022-01-23T15:23:33.472Z          Preparing temporary database...
+                2022-01-23T15:23:33.505Z          Temporary database prepared
+                2022-01-23T15:23:33.505Z          Preparing Flux Apps locations
+                2022-01-23T15:23:33.554Z          Flux Apps locations prepared
+                2022-01-23T15:23:33.571Z          Firewalls checked
+  /flux/tailwarnlog:
+    get:
+      tags:
+        - Flux
+      summary: Tail Warn Log
+      description: This call returns the Flux tail warn log. **AdminAndFluxTeam**
+      operationId: tailFluxWarnLog
+      security:
+        - ZelID: []
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: string
+                description: Tail warn log
+              example:
+                status: success
+                data:
+                  message:
+                    2022-01-23T16:44:33.266Z          Message received from outgoing peer 167.86.116.93 but is not an originating node of 043adf786dbfc86b8ca741deb589c75b5aa05e99416af5489a6407683c3ef88d30eab6b5cfab869d8def357c46db6bf553b4cb17104219065a17519a8a2596da92.\n
+                    2022-01-23T16:44:34.856Z          Message received from outgoing peer 167.86.121.80 but is not an originating node of 043d50eb6288db8991a893d00014a0c9bf3ca4baac923eee2e65fae746b5ef41ccd26508ca5e8ef2f0092fc22cd7306b4c1da900eca5f27ee995786f58f6254c79.\n
+                    2022-01-23T16:44:36.225Z          Message received from incoming peer ::ffff:194.163.176.204 but is not an originating node of 042dd35e0ccf4df99b63768a974b16f6b00fe8cf087320db13942689230ad3a8817f5d98dc0deb8b899a6794cc7ec7771295b54782c8ad52c07c8cedebe83772f5.
+  /flux/taildebuglog:
+    get:
+      tags:
+        - Flux
+      summary: Tail Debug Log
+      description: This call returns the Flux tail debug log. **AdminAndFluxTeam**
+      operationId: tailFluxDebugLog
+      security:
+        - ZelID: []
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: string
+                description: Tail debug log
+              example:
+                status: success
+                data:
+                  message:
+                    2022-01-23T17:02:21.941Z          Transaction c70cd93576c5717621f75ca9509c113266a0e19559b61784443845c6cb4865d0 1 not found in database. Falling back to blockchain data\n
+                    2022-01-23T17:02:22.327Z          Transaction 8a6118a60b845250d747f66ecb2eb702eb7ed29c7567745788f9e81d4c3a0f3a 1 not found in database. Falling back to blockchain data\n
+                    2022-01-23T17:02:22.470Z          Transaction 04b86bbc7a3cd64752032f29d6ef6f6f859bfe86ac5026ecc8d5e8dfa7c29160 0 not found in database. Falling back to blockchain data\n
+  /flux/tailinfolog:
+    get:
+      tags:
+        - Flux
+      summary: Tail Info Log
+      description: This call returns the Flux tail info log. **AdminAndFluxTeam**
+      operationId: tailFluxInfoLog
+      security:
+        - ZelID: []
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: string
+                description: Tail info log
+              example:
+                status: success
+                data:
+                  message:
+                    2022-01-23T17:02:23.458Z          Transaction 03dcc45f7c265d73db3e53c98a94c1a52841ac10c7774c6a1942fb602bd7712c 1 not found in database. Falling back to blockchain data\n
+                    2022-01-23T17:02:23.600Z          Transaction e141049a8de186b718313343bb08f0341c6273eccd424a4b4d5c5bee599ad713 0 not found in database. Falling back to blockchain data\n
+                    2022-01-23T17:02:23.793Z          Transaction 5e59328a1f97ee3335b23ac550236cdcc022bea86cc78e3dddf0674e2d0fd129 0 not found in database. Falling back to blockchain data\n
+  /flux/backendfolder:
+    get:
+      tags:
+        - Flux
+      summary: Local Folder Location
+      description: This call returns the local folder location for Flux. **AdminAndFluxTeam**
+      operationId: fluxBackendFolder
+      security:
+        - ZelID: []
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: string
+                description: Backend folder location
+              example:
+                status: success
+                data: /home/username/zelflux/ZelBack/
   /daemon/help:
     get:
       tags:
