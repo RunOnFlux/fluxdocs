@@ -2984,7 +2984,7 @@ paths:
         - Daemon
       summary: RPC list
       description: >-
-        Gets list of RPC for the Zelcash daemon or if command query is used it
+        Gets list of RPC for the Flux daemon or if command query is used it
         will respond with the help info for that specified call. **Public**
       operationId: help
       parameters:
@@ -3361,9 +3361,9 @@ paths:
     get:
       tags:
         - Daemon
-      summary: Zelcash daemon info
+      summary: Flux daemon info
       description: >-
-        Returns an object containing various state info for the Zelcash daemon.
+        Returns an object containing various state info for the Flux daemon.
         **Public**
       operationId: getInfo
       responses:
@@ -3564,8 +3564,8 @@ paths:
     get:
       tags:
         - Daemon
-      summary: Deterministic ZelNode list
-      description: View deterministic list of ZelNodes by rank. **Public**
+      summary: Deterministic FluxNode list
+      description: View deterministic list of FluxNodes by rank. **Public**
       operationId: viewDeterministicZelNodeList
       parameters:
         - in: query
@@ -3604,40 +3604,40 @@ paths:
                           description: Output index
                         ip:
                           type: string
-                          description: Ip address of ZelNode server
+                          description: Ip address of FluxNode server
                         network:
                           type: string
                           description: 'Network type (IPv4, IPv6, onion)'
                         added_height:
                           type: integer
-                          description: Block height ZelNode was added to list
+                          description: Block height FluxNode was added to list
                         confirmed_height:
                           type: integer
-                          description: Block height ZelNode was confirmed by the network
+                          description: Block height FluxNode was confirmed by the network
                         last_confirmed_height:
                           type: integer
-                          description: Latest block height network confirmed the ZelNode
+                          description: Latest block height network confirmed the FluxNode
                         last_paid_height:
                           type: integer
-                          description: Block the ZelNode was last paid
+                          description: Block the FluxNode was last paid
                         tier:
                           type: string
-                          description: Tier of ZelNode
+                          description: Tier of FluxNode
                         payment_address:
                           type: string
                           description: Address where rewards are paid
                         pubkey:
                           type: string
-                          description: Zelnode public key used for message broadcasting
+                          description: Fluxnode public key used for message broadcasting
                         activesince:
                           type: integer
-                          description: Active time of ZelNode in epoch
+                          description: Active time of FluxNode in epoch
                         lastpaid:
                           type: integer
                           description: Last paid time in epoch
                         rank:
                           type: integer
-                          description: Rank of ZelNode
+                          description: Rank of FluxNode
               example:
                 status: success
                 data:
@@ -3742,7 +3742,7 @@ paths:
         - Daemon
       summary: Flux node count
       description: >-
-        Returns a count of ZelNodes and enabled ZelNodes categorized by tiers.
+        Returns a count of FluxNodes and enabled FluxNodes categorized by tiers.
         **Public**
       operationId: getZelNodeCount
       responses:
@@ -3797,7 +3797,7 @@ paths:
     get:
       tags:
         - Daemon
-      summary: ZelNode DOS list
+      summary: FluxNode DOS list
       description: Get a list of all zelnodes in the DOS list. **Public**
       operationId: getDOSList
       responses:
@@ -3844,8 +3844,8 @@ paths:
     get:
       tags:
         - Daemon
-      summary: ZelNode start list
-      description: Get a list of all zelnodes in the start list. **Public**
+      summary: FluxNode start list
+      description: Get a list of all Fluxnodes in the start list. **Public**
       operationId: getStartList
       responses:
         '200':
@@ -3937,13 +3937,13 @@ paths:
                 data:
                   SPORK_1_ZELNODE_PAYMENT_ENFORCEMENT: 4070908800
                   SPORK_2_ZELNODE_UPGRADE_VOTE_ENFORCEMENT: 4070908800
-  /daemon/zelnodecurrentwinner:
+  /daemon/fluxcurrentwinner:
     get:
       tags:
         - Daemon
       summary: Current list of winners
       description: Gets a list of current ZelNode winners. **Public**
-      operationId: zelNodeCurrentWinner
+      operationId: FluxNodeCurrentWinner
       responses:
         '200':
           description: OK
@@ -3962,25 +3962,25 @@ paths:
                         properties:
                           collateral:
                             type: string
-                            description: Collateral txid and output index of ZelNode
+                            description: Collateral txid and output index of FluxNode
                           ip:
                             type: string
-                            description: Ip address of ZelNode
+                            description: Ip address of FluxNode
                           added_height:
                             type: integer
-                            description: Block height ZelNode was added
+                            description: Block height FluxNode was added
                           confirmed_height:
                             type: integer
-                            description: Block height ZelNode was confirmed
+                            description: Block height FluxNode was confirmed
                           last_confirmed_height:
                             type: integer
-                            description: Block height ZelNode was last confirmed
+                            description: Block height FluxNode was last confirmed
                           last_paid_height:
                             type: integer
-                            description: Block height ZelNode was last paid
+                            description: Block height FluxNode was last paid
                           tier:
                             type: string
-                            description: ZelNode tier
+                            description: FluxNode tier
                           payment_address:
                             type: string
                             description: Payment address
@@ -3989,25 +3989,25 @@ paths:
                         properties:
                           collateral:
                             type: string
-                            description: Collateral txid and output index of ZelNode
+                            description: Collateral txid and output index of FluxNode
                           ip:
                             type: string
-                            description: Ip address of ZelNode
+                            description: Ip address of FluxNode
                           added_height:
                             type: integer
-                            description: Block height ZelNode was added
+                            description: Block height FluxNode was added
                           confirmed_height:
                             type: integer
-                            description: Block height ZelNode was confirmed
+                            description: Block height FluxNode was confirmed
                           last_confirmed_height:
                             type: integer
-                            description: Block height ZelNode was last confirmed
+                            description: Block height FluxNode was last confirmed
                           last_paid_height:
                             type: integer
-                            description: Block height ZelNode was last paid
+                            description: Block height FluxNode was last paid
                           tier:
                             type: string
-                            description: ZelNode tier
+                            description: FluxNode tier
                           payment_address:
                             type: string
                             description: Payment address
@@ -4016,25 +4016,25 @@ paths:
                         properties:
                           collateral:
                             type: string
-                            description: Collateral txid and output index of ZelNode
+                            description: Collateral txid and output index of FluxNode
                           ip:
                             type: string
-                            description: Ip address of ZelNode
+                            description: Ip address of FluxNode
                           added_height:
                             type: integer
-                            description: Block height ZelNode was added
+                            description: Block height FluxNode was added
                           confirmed_height:
                             type: integer
-                            description: Block height ZelNode was confirmed
+                            description: Block height FluxNode was confirmed
                           last_confirmed_height:
                             type: integer
-                            description: Block height ZelNode was last confirmed
+                            description: Block height FluxNode was last confirmed
                           last_paid_height:
                             type: integer
-                            description: Block height ZelNode was last paid
+                            description: Block height FluxNode was last paid
                           tier:
                             type: string
-                            description: ZelNode tier
+                            description: FluxNode tier
                           payment_address:
                             type: string
                             description: Payment address
@@ -4208,10 +4208,10 @@ paths:
                               description: Status of pool monitor
                             chainValue:
                               type: number
-                              description: Pool value of ZEL
+                              description: Pool value of FLUX
                             chainValueZat:
                               type: integer
-                              description: Pool value of ZEL
+                              description: Pool value of FLUX
                             valueDelta:
                               type: integer
                               description: Delta value
@@ -4941,7 +4941,7 @@ paths:
                             description: Transaction size in bytes
                           fee:
                             type: integer
-                            description: Transaction fee in ZEL
+                            description: Transaction fee in FLUX
                           time:
                             type: integer
                             description: >-
@@ -5075,7 +5075,7 @@ paths:
                         description: The number of confirmations
                       value:
                         type: number
-                        description: The transaction value in ZEL
+                        description: The transaction value in FLUX
                       scriptPubKey:
                         type: object
                         properties:
@@ -5286,7 +5286,7 @@ paths:
                     properties:
                       miner:
                         type: integer
-                        description: The mining reward amount in ZEL
+                        description: The mining reward amount in FLUX
               example:
                 status: success
                 data:
@@ -5493,19 +5493,19 @@ paths:
                         description: The height of the next block
                       basic_zelnode_address:
                         type: string
-                        description: ZEL address
+                        description: FLUX address
                       basic_zelnode_payout:
                         type: integer
                         description: Amount
                       super_zelnode_address:
                         type: string
-                        description: ZEL address
+                        description: FLUX address
                       super_zelnode_payout:
                         type: integer
                         description: Amount
                       bamf_zelnode_address:
                         type: string
-                        description: ZEL address
+                        description: FLUX address
                       bamf_zelnode_payout:
                         type: integer
                         description: Amount
@@ -6613,10 +6613,10 @@ paths:
                         $ref: '#/components/schemas/joinsplit'
                       valueBalance:
                         type: number
-                        description: The balance value of ZEL
+                        description: The balance value of FLUX
                       valueBalanceZat:
                         type: integer
-                        description: The balance value of ZEL
+                        description: The balance value of FLUX
                       vShieldedSpend:
                         $ref: '#/components/schemas/shieldedspend'
                       vShieldedOutput:
@@ -6919,11 +6919,11 @@ paths:
                   type: integer
                   description: >-
                     The number of required signatures out of the n keys or
-                    addresses. Followed by Zel addresses in array of strings.
+                    addresses. Followed by Flux addresses in array of strings.
                 keys:
                   type: array
                   description: >-
-                    Array of keys which are Zelcash addresses or hex-encoded
+                    Array of keys which are Flux addresses or hex-encoded
                     public keys
                   items:
                     type: string
@@ -6973,7 +6973,7 @@ paths:
           name: keys
           required: true
           description: >
-            A json array of keys which are Zelcash addresses or hex-encoded
+            A json array of keys which are Flux addresses or hex-encoded
             public keys.
 
 
@@ -7080,7 +7080,7 @@ paths:
       tags:
         - Daemon
       summary: Info of the Zelcash address
-      description: Return information about the given Zelcash address. **Public**
+      description: Return information about the given Flux address. **Public**
       operationId: validateAddress
       parameters:
         - in: query
@@ -7088,7 +7088,7 @@ paths:
           required: true
           schema:
             type: string
-          description: Zelcash address to validate
+          description: Flux address to validate
           example: t1N6mLX2A64QsyuLbYkfPZSrkLF86hxuuFe
       responses:
         '200':
@@ -7110,7 +7110,7 @@ paths:
                           only property returned.
                       address:
                         type: string
-                        description: The Zelcash address validated
+                        description: The Flux address validated
                       scriptPubKey:
                         type: string
                         description: The hex encoded scriptPubKey generated by the address
@@ -7163,7 +7163,7 @@ paths:
               properties:
                 zelcashaddress:
                   type: string
-                  description: The Zelcash address to use for the signature
+                  description: The Flux address to use for the signature
                 signature:
                   type: string
                   description: The signature provided by the signer in base 64 encoding
@@ -7203,7 +7203,7 @@ paths:
           required: true
           schema:
             type: string
-          description: The Zelcash address to use for the signature
+          description: The Flux address to use for the signature
           example: t1N6mLX2A64QsyuLbYkfPZSrkLF86hxuuFe
         - in: query
           name: signature
@@ -7280,7 +7280,7 @@ paths:
                     properties:
                       amount:
                         type: number
-                        description: The transaction amount in ZEL
+                        description: The transaction amount in FLUX
                       confirmations:
                         type: number
                         description: The number of confirmations
@@ -7331,7 +7331,7 @@ paths:
                               description: 'The category, either send or receive'
                             amount:
                               type: number
-                              description: The amount in ZEL
+                              description: The amount in FLUX
                             vout:
                               type: integer
                               description: The vout value
@@ -7463,9 +7463,9 @@ paths:
         - Daemon
       summary: Bench status
       description: >-
-        This will return the status of the node, what zelbenchd determined the
+        This will return the status of the node, what fluxbenchd determined the
         tier the server could pass for, and if Flux backend is connected. If
-        any one of these return a negative result the ZelNode will fail to
+        any one of these return a negative result the FluxNode will fail to
         confirm. **Public**
       operationId: getBenchStatus
       responses:
@@ -7548,8 +7548,8 @@ paths:
         - Daemon
       summary: Reindex ZelCash daemon
       description: >-
-        Tries to reindex ZelCash daemon running on the ZelNode the call is run
-        against. ZelCash daemon is firstly stopped and then started with reindex
+        Tries to reindex Flux daemon running on the FluxNode the call is run
+        against. Flux daemon is firstly stopped and then started with reindex
         flag. **Admin**
       operationId: reindexZelCash
       security:
@@ -7575,7 +7575,7 @@ paths:
       tags:
         - Daemon
       summary: Stop ZelCash daemon
-      description: This will stop the ZelCash daemon from running. **Admin**
+      description: This will stop the Flux daemon from running. **Admin**
       operationId: stop
       security:
         - ZelID: []
@@ -7599,8 +7599,8 @@ paths:
     get:
       tags:
         - Daemon
-      summary: Create zelnode private key
-      description: Create a new zelnode private key. **Admin**
+      summary: Create fluxnode private key
+      description: Create a new fluxnode private key. **Admin**
       operationId: createZelNodeKey
       security:
         - ZelID: []
@@ -7616,7 +7616,7 @@ paths:
                     $ref: '#/components/schemas/status'
                   data:
                     type: string
-                    description: Zelnode private key
+                    description: Fluxnode private key
               example:
                 status: success
                 data: 5JwVKe7UH986ncSL2jG9KdUY2AuZUTDAkTsp4TZoGWdD5cLLiFR
@@ -7624,7 +7624,7 @@ paths:
     get:
       tags:
         - Daemon
-      summary: The zelnode conf file
+      summary: The fluxnode conf file
       description: >-
         View zelnode conf file in JSON format, this will return empty for most
         unless running a hot wallet. **Admin**
@@ -7651,7 +7651,7 @@ paths:
                           description: Alias name
                         status:
                           type: string
-                          description: Status of zelnode
+                          description: Status of fluxnode
                         collateral:
                           type: string
                           description: Collateral txid and output index
@@ -7663,13 +7663,13 @@ paths:
                           description: Output index
                         privateKey:
                           type: string
-                          description: Zelnode private key
+                          description: Fluxnode private key
                         address:
                           type: string
-                          description: Ip address of zelnode server and port
+                          description: Ip address of fluxnode server and port
                         ip:
                           type: string
-                          description: Ip address of zelnode server
+                          description: Ip address of fluxnode server
                         network:
                           type: string
                           description: 'Network type (IPv4, IPv6, onion)'
@@ -7724,7 +7724,7 @@ paths:
     get:
       tags:
         - Daemon
-      summary: Zelnode transaction outputs
+      summary: Fluxnode transaction outputs
       description: Print all zelnode transaction outputs. **Admin**
       operationId: getZelNodeOutputs
       security:
@@ -7760,10 +7760,10 @@ paths:
     get:
       tags:
         - Daemon
-      summary: Start ZelNode commmand
+      summary: Start FluxNode commmand
       description: >-
-        Attempts to start one or more ZelNode. This call will only work if
-        running a hot ZelNode which is highly not recommended. It is a control
+        Attempts to start one or more FluxNode. This call will only work if
+        running a hot FluxNode which is highly not recommended. It is a control
         wallet function so basically your wallet containing the collateral
         funds. **Admin**
       operationId: startZelNode
@@ -7775,7 +7775,7 @@ paths:
           required: true
           schema:
             type: string
-          description: Specify which set of ZelNode(s) to start.
+          description: Specify which set of FluxNode(s) to start.
           example: alias
         - in: query
           name: lockwallet
@@ -7795,7 +7795,7 @@ paths:
           required: true
           schema:
             type: string
-          description: Zelnode alias. Required if using 'alias' as the set.
+          description: FluxNode alias. Required if using 'alias' as the set.
           example: Super1
       responses:
         '200':
@@ -7822,8 +7822,8 @@ paths:
         - Daemon
       summary: Start zelnode command
       description: >-
-        Attempts to start one zelnode. Same as the `/daemon/startzelnode` call
-        this call will only work if running a hot ZelNode which is highly not
+        Attempts to start one fluxnode. Same as the `/daemon/startzelnode` call
+        this call will only work if running a hot FluxNode which is highly not
         recommended. It is a control wallet function so basically your wallet
         containing the collateral funds.  **Admin**
       operationId: startDeterministicZelNode
@@ -8388,7 +8388,7 @@ paths:
       summary: Add multisig address to the wallet
       description: >-
         Add a nrequired-to-sign multisignature address to the wallet. Each key
-        is a Zelcash address or hex-encoded public key. **Admin**
+        is a Flux address or hex-encoded public key. **Admin**
       operationId: addMultiSigAddressPost
       security:
         - ZelID: []
@@ -8406,12 +8406,12 @@ paths:
                     addresses
                 keysobject:
                   description: >-
-                    A json array of Zelcash addresses or hex-encoded public
+                    A json array of Flux addresses or hex-encoded public
                     keys.
                   type: array
                   items:
                     type: string
-                    description: Zelcash address or hex-encoded public key
+                    description: Flux address or hex-encoded public key
             example:
               'n': 2
               keysobject:
@@ -8439,7 +8439,7 @@ paths:
       summary: Add multisig address to the wallet
       description: >-
         Add a nrequired-to-sign multisignature address to the wallet. Each key
-        is a Zelcash address or hex-encoded public key. **Admin**
+        is a Flux address or hex-encoded public key. **Admin**
       operationId: addmultisigaddress
       security:
         - ZelID: []
@@ -8455,7 +8455,7 @@ paths:
           name: keysobject
           required: true
           description: |
-            A json array of Zelcash addresses or hex-encoded public keys.
+            A json array of Flux addresses or hex-encoded public keys.
 
             Example:
             - `keysobject`=`[<"address">, <"address">]`
@@ -8626,7 +8626,7 @@ paths:
         - Daemon
       summary: Get new change address
       description: >-
-        Returns a new Zelcash address, for receiving change. This is for use
+        Returns a new Flux address, for receiving change. This is for use
         with raw transactions, NOT normal use. **Admin**
       operationId: getRawChangeAddress
       security:
@@ -8653,7 +8653,7 @@ paths:
         - Daemon
       summary: Total received by the address
       description: >-
-        Returns the total amount received by the given Zelcash address in
+        Returns the total amount received by the given Flux address in
         transactions with at least minconf confirmations. **Admin**
       operationId: getReceivedByAddress
       security:
@@ -8664,7 +8664,7 @@ paths:
           required: true
           schema:
             type: string
-          description: The Zelcash address for transactions
+          description: The Flux address for transactions
           example: t1dC6WNjqcJX8VFcdRp1MyJ7eB4MSQs83FR
         - in: query
           name: minconf
@@ -8741,13 +8741,13 @@ paths:
                         description: The wallet version
                       balance:
                         type: number
-                        description: The total confirmed balance of the wallet in ZEL
+                        description: The total confirmed balance of the wallet in FLUX
                       unconfirmed_balance:
                         type: number
                         description: The wallet version
                       immature_balance:
                         type: number
-                        description: The total unconfirmed balance of the wallet in ZEL
+                        description: The total unconfirmed balance of the wallet in FLUX
                       txcount:
                         type: integer
                         description: The total number of transactions in the wallet
@@ -8761,7 +8761,7 @@ paths:
                         description: How many new keys are pre-generated
                       paytxfee:
                         type: number
-                        description: 'The transaction fee configuration, set in ZEL/kB'
+                        description: 'The transaction fee configuration, set in FLUX/kB'
                       seedfp:
                         type: string
                         description: The BLAKE2b-256 hash of the HD seed
@@ -8795,7 +8795,7 @@ paths:
           required: true
           schema:
             type: string
-          description: The Zelcash address
+          description: The Flux address
           example: t1dC6WNjqcJX8VFcdRp1MyJ7eB4MSQs83FR
         - in: query
           name: label
@@ -9087,7 +9087,7 @@ paths:
                             account is ""
                         amount:
                           type: number
-                          description: The total amount in ZEL received by the address
+                          description: The total amount in FLUX received by the address
                         confirmations:
                           type: integer
                           description: >-
@@ -9559,7 +9559,7 @@ paths:
           required: true
           description: >-
             A json object with addresses and amounts. The zelcash address is the
-            key, the numeric amount in ZEL is the value.
+            key, the numeric amount in FLUX is the value.
           schema:
             type: object
             properties:
@@ -9613,7 +9613,7 @@ paths:
     post:
       tags:
         - Daemon
-      summary: Send Zel to an address
+      summary: Send Flux to an address
       description: Send an amount to a given address. **Admin**
       operationId: sendToAddressPost
       security:
@@ -9627,10 +9627,10 @@ paths:
               properties:
                 zelcashaddress:
                   type: string
-                  description: The zelcash address to send to
+                  description: The flux address to send to
                 amount:
                   type: number
-                  description: The amount in ZEL to send
+                  description: The amount in FLUX to send
                 comment:
                   type: string
                   description: >-
@@ -9675,7 +9675,7 @@ paths:
     get:
       tags:
         - Daemon
-      summary: Send Zel to an address
+      summary: Send Flux to an address
       description: Send an amount to a given address. **Admin**
       operationId: sendToAddress
       security:
@@ -9686,14 +9686,14 @@ paths:
           required: true
           schema:
             type: string
-            description: The zelcash address to send to
+            description: The flux address to send to
           example: t1QSE45jkZ9docBDFh4yEV91fgZgESp5hZN
         - in: query
           name: amount
           required: true
           schema:
             type: number
-          description: The amount in ZEL to send
+          description: The amount in FLUX to send
           example: 0.001
         - in: query
           name: comment
@@ -9722,7 +9722,7 @@ paths:
               - false
           description: >-
             The fee will be deducted from the amount being sent if set to true
-            and the recipient will receive less Zelcash than you enter in the
+            and the recipient will receive less Flux than you enter in the
             amount field.
       responses:
         '200':
@@ -9756,7 +9756,7 @@ paths:
           required: true
           schema:
             type: number
-          description: The transaction fee in ZEL/kB rounded to the nearest 0.00000001
+          description: The transaction fee in FLUX/kB rounded to the nearest 0.00000001
           example: 0.00001
       responses:
         '200':
@@ -9947,7 +9947,7 @@ paths:
           required: true
           schema:
             type: string
-          description: Zel address
+          description: Flux address
           example: >-
             zcQNG88SQVQTuqGKdeDDhVRCXkHeR3Vv5BqeBBaYziyN48FpJM2buK1YmQtpKoVkwrM2vvhCdrVofkdLc8QYeSLyiAkQB1u
         - in: query
@@ -10004,13 +10004,13 @@ paths:
                         description: Whether or not migration is enabled
                       unmigrated_amount:
                         type: number
-                        description: The total amount of unmigrated ZEL
+                        description: The total amount of unmigrated FLUX
                       unfinalized_migrated_amount:
                         type: number
-                        description: The total amount of unfinalized ZEL
+                        description: The total amount of unfinalized FLUX
                       finalized_migrated_amount:
                         type: number
-                        description: The total amount of finalized ZEL
+                        description: The total amount of finalized FLUX
                       finalized_migration_transactions:
                         type: integer
                         description: >-
@@ -10705,7 +10705,7 @@ paths:
                         description: The taddr or zaddr to send the funds from
                       amount:
                         type: number
-                        description: The numeric amount in ZEL is the value
+                        description: The numeric amount in FLUX is the value
                       memo:
                         type: string
                         description: >-
@@ -10777,7 +10777,7 @@ paths:
 
             - `address`: `<receiving address>`
 
-            - `amount`: `<zel amount>`
+            - `amount`: `<flux amount>`
 
 
             Url encoded example:
@@ -10795,7 +10795,7 @@ paths:
                   description: The taddr or zaddr to send the funds from
                 amount:
                   type: number
-                  description: The numeric amount in ZEL is the value
+                  description: The numeric amount in FLUX is the value
                 memo:
                   type: string
                   description: >-
@@ -10849,7 +10849,7 @@ paths:
         blockchain reaches a height equal to 499 modulo 500. The transaction
         amounts are picked according to the random distribution specified in ZIP
         308. The migration will end once the wallet’s sprout balance is below
-        0.01 ZEL. **Admin**
+        0.01 FLUX. **Admin**
       operationId: zSetMigration
       security:
         - ZelID: []
@@ -10972,7 +10972,7 @@ paths:
         - Daemon
       summary: Start ZelCash daemon
       description: >-
-        Tries to start ZelCash daemon running on the ZelNode the call is run
+        Tries to start Flux daemon running on the FluxNode the call is run
         against without any extra parameters. **AdminAndFluxTeam**
       operationId: startdaemonB
       security:
@@ -10999,8 +10999,8 @@ paths:
         - Daemon
       summary: Restart ZelCash daemon
       description: >-
-        Tries to restart ZelCash daemon running on the ZelNode the call is run
-        against. ZelCash daemon is firstly stopped and then started without any
+        Tries to restart Flux daemon running on the FluxNode the call is run
+        against. Flux daemon is firstly stopped and then started without any
         extra parameters. **AdminAndFluxTeam**
       operationId: restartdaemonB
       security:
@@ -11170,9 +11170,9 @@ paths:
     get:
       tags:
         - Benchmark
-      summary: Zelbench status
+      summary: Fluxbench status
       description: >-
-        This will return the status of the node, what ZelBenchd determined the
+        This will return the status of the node, what FluxBenchd determined the
         tier the server could pass for, and if Flux backend is connected. If
         any one of these return a negative result the ZelNode will fail to
         confirm. **Public**
@@ -11199,8 +11199,8 @@ paths:
     get:
       tags:
         - Benchmark
-      summary: Zelbench calls
-      description: This will return with a list of calls for ZelBench. **Public**
+      summary: Fluxbench calls
+      description: This will return with a list of calls for FluxBench. **Public**
       operationId: zelBenchHelp
       responses:
         '200':
@@ -11265,8 +11265,8 @@ paths:
     get:
       tags:
         - Benchmark
-      summary: Zelbench status
-      description: This will return with the zelbench status of the zelnode. **Public**
+      summary: Fluxbench status
+      description: This will return with the fluxbench status of the fluxnode. **Public**
       operationId: zelBenchGetInfo
       responses:
         '200':
@@ -11289,9 +11289,9 @@ paths:
     get:
       tags:
         - Benchmark
-      summary: Restart ZelBench daemon
+      summary: Restart FluxBench daemon
       description: >-
-        This will restart the ZelBench daemon and start bench process.
+        This will restart the FluxBench daemon and start bench process.
         **AdminAndFluxTeam**
       operationId: restartNodeBenchmarks
       security:
@@ -11316,8 +11316,8 @@ paths:
     get:
       tags:
         - Benchmark
-      summary: Stop zelbench daemon
-      description: This will stop the zelbench daemon. **Admin**
+      summary: Stop fluxbench daemon
+      description: This will stop the fluxbench daemon. **Admin**
       operationId: stopbenchmarkaemon
       security:
         - ZelID: []
@@ -11341,8 +11341,8 @@ paths:
     post:
       tags:
         - Benchmark
-      summary: Sign ZelNode transaction
-      description: Command to get ZelBenchd to sign a ZelNode broadcast. **Admin**
+      summary: Sign FluxNode transaction
+      description: Command to get FluxBenchd to sign a FluxNode broadcast. **Admin**
       operationId: signZelNodeTransactionPost
       security:
         - ZelID: []
@@ -11355,7 +11355,7 @@ paths:
               properties:
                 hexstring:
                   type: string
-                  description: The hex encoded ZelNode broadcast message
+                  description: The hex encoded FluxNode broadcast message
             example:
               hexstring: >-
                 0500000004566e906c6df24b00ca710cecbbea166a29b9098456bed212207fea66f433ba4500000000ba33bd5e01182ebd5e010f3131362e3230332e3233372e323530411b27b3e254a9f3248d88039a0f062e0d634e130bd34a9e4a1cb27d7aa6ce975cee251be9af6864a1a4a9e9d5fc2b28a07af8bab36a73f912c59ef844a69fa03f5f411c7f47ba609b2c0eb91268b446b31899ce66f90fa1375aab29692f1b252a53a9883120e10c646292486365608dc806c43e2d49b66afdd150a6a7f60b6b2392a83b
@@ -11381,8 +11381,8 @@ paths:
     get:
       tags:
         - Benchmark
-      summary: Sign ZelNode transaction
-      description: Command to get ZelBenchd to sign a ZelNode broadcast. **Admin**
+      summary: Sign FluxNode transaction
+      description: Command to get FluxBenchd to sign a FluxNode broadcast. **Admin**
       operationId: signZelNodeTransaction
       security:
         - ZelID: []
@@ -11896,8 +11896,8 @@ paths:
     get:
       tags:
         - Apps
-      summary: Zelflux's usage
-      description: Will return amount of cpu resource zelflux is using. **Public**
+      summary: Flux's usage
+      description: Will return amount of cpu resource flux is using. **Public**
       operationId: zelFluxUsage
       responses:
         '200':
@@ -11919,8 +11919,8 @@ paths:
     get:
       tags:
         - Apps
-      summary: Zelflux's usage of resources
-      description: Will return data of resource zelflux is using. **Public**
+      summary: Flux's usage of resources
+      description: Will return data of resource flux is using. **Public**
       operationId: zelappsResources
       responses:
         '200':
@@ -11945,7 +11945,7 @@ paths:
       tags:
         - Apps
       summary: Registration Info
-      description: Zelapps registration info. **Public**
+      description: Fluxapps registration info. **Public**
       operationId: registrationInformation
       responses:
         '200':
@@ -11966,19 +11966,19 @@ paths:
                         properties:
                           cpu:
                             type: integer
-                            description: Zel amount per 0.1 cpu core
+                            description: FLUX amount per 0.1 cpu core
                           ram:
                             type: integer
-                            description: Zel amount per 100 mb
+                            description: FLUX amount per 100 mb
                           hdd:
                             type: number
-                            description: Zel amount per 1 gb
+                            description: FLUX amount per 1 gb
                       address:
                         type: string
                         description: Apps registration address
                       epochstart:
                         type: integer
-                        description: Zelapps epoch blockheight start
+                        description: Fluxapps epoch blockheight start
                       portMin:
                         type: integer
                         description: Min number in port range
@@ -12147,7 +12147,7 @@ paths:
                           description: Block height of transaction
                         valueSat:
                           type: integer
-                          description: Zel sat value of payment amount
+                          description: Flux sat value of payment amount
               example:
                 status: success
                 data:
@@ -12500,7 +12500,7 @@ paths:
                     $ref: '#/components/schemas/status'
                   data:
                     type: string
-                    description: Zel amount
+                    description: FLUX amount
               example:
                 status: success
                 data: 1.6
@@ -12509,7 +12509,7 @@ paths:
       tags:
         - Apps
       summary: Starts app
-      description: This will start the zelapp. **AppOwnerAbove**
+      description: This will start the fluxapp. **AppOwnerAbove**
       operationId: zelAppStart
       security:
         - ZelID: []
@@ -12762,7 +12762,7 @@ paths:
       tags:
         - Apps
       summary: App's log
-      description: This will fetch the logs of a zelapp. **AppOwnerAbove**
+      description: This will fetch the logs of a fluxapp. **AppOwnerAbove**
       operationId: zelAppLogs
       security:
         - ZelID: []
@@ -14353,8 +14353,8 @@ paths:
     get:
       tags:
         - Explorer
-      summary: View ZelNode transactions
-      description: View a filtered list of the ZelNode's transactions. **Public**
+      summary: View FluxNode transactions
+      description: View a filtered list of the FluxNode's transactions. **Public**
       operationId: getFilteredZelNodeTxs
       parameters:
         - in: query
@@ -14391,10 +14391,10 @@ paths:
                         description: Update type number
                       ip:
                         type: string
-                        description: Ip of zelnode's server
+                        description: Ip of fluxnode's server
                       benchTier:
                         type: string
-                        description: Zelnode tier
+                        description: Fluxnode tier
                       collateralHash:
                         type: string
                         description: Collateral tx hash
@@ -14403,7 +14403,7 @@ paths:
                         description: Collateral tx output index
                       zelAddress:
                         type: string
-                        description: Zel address
+                        description: Flux address
                       lockedAmount:
                         type: integer
                         description: Locked amount in satoshi value
@@ -14467,10 +14467,10 @@ paths:
                           description: Block height of transaction
                         address:
                           type: string
-                          description: Zel address
+                          description: Flux address
                         satoshis:
                           type: integer
-                          description: Value of Zel in satoshi
+                          description: Value of Flux in satoshi
                         scriptPubKey:
                           type: string
                           description: Script public key
@@ -14509,7 +14509,7 @@ paths:
           required: true
           schema:
             type: string
-          description: Zel address to look up tx history
+          description: Flux address to look up tx history
           example: t1edbnsYnGXxyYNt4kJJPhZktDWNaKwkznY
       responses:
         '200':
@@ -14579,7 +14579,7 @@ paths:
                     $ref: '#/components/schemas/status'
                   data:
                     type: integer
-                    description: Zel balance in satoshi value
+                    description: Flux balance in satoshi value
               example:
                 status: success
                 data: 7089180145154
@@ -14615,7 +14615,7 @@ paths:
       tags:
         - Explorer
       summary: Reindex collection
-      description: Drop ZelCash collection and recreate it. **AdminAndFluxTeam**
+      description: Drop Flux collection and recreate it. **AdminAndFluxTeam**
       operationId: reindexExplorer
       security:
         - ZelID: []
@@ -14640,7 +14640,7 @@ paths:
       tags:
         - Explorer
       summary: Restart block processing
-      description: Restarts ZelCash collection. **AdminAndFluxTeam**
+      description: Restarts Flux collection. **AdminAndFluxTeam**
       operationId: restartBlockProcessing
       security:
         - ZelID: []
@@ -14665,7 +14665,7 @@ paths:
       tags:
         - Explorer
       summary: Stops block processing
-      description: Stops ZelCash collection. **AdminAndFluxTeam**
+      description: Stops Flux collection. **AdminAndFluxTeam**
       operationId: stopBlockProcessing
       security:
         - ZelID: []
@@ -15436,10 +15436,10 @@ components:
           description: How many new keys are pre-generated
         paytxfee:
           type: number
-          description: The transaction fee set at ZEL/kB
+          description: The transaction fee set at FLUX/kB
         relayfee:
           type: number
-          description: Minimum relay fee for non-free transactions in ZEL/kB
+          description: Minimum relay fee for non-free transactions in FLUX/kB
         errors:
           type: string
           description: Any error messages
@@ -15448,7 +15448,7 @@ components:
       properties:
         status:
           type: string
-          description: ZelNode status
+          description: FluxNode status
         collateral:
           type: string
           description: Collateral transaction
@@ -15460,40 +15460,40 @@ components:
           description: Collateral transaction output index number
         ip:
           type: string
-          description: ZelNode network address
+          description: FluxNode network address
         network:
           type: string
           description: 'Network type (IPv4, IPv6, onion)'
         added_height:
           type: integer
-          description: Block height when ZelNode was added
+          description: Block height when FluxNode was added
         confirmed_height:
           type: integer
-          description: Block height when ZelNode was confirmed
+          description: Block height when FluxNode was confirmed
         last_confirmed_height:
           type: integer
-          description: Last block height when ZelNode was confirmed
+          description: Last block height when FluxNode was confirmed
         last_paid_height:
           type: integer
-          description: Last block height when ZelNode was paid
+          description: Last block height when FluxNode was paid
         tier:
           type: string
           description: Tier (BASIC/SUPER/BAMF)
         payment_address:
           type: string
-          description: ZEL address for ZelNode payments
+          description: FLUX address for ZelNode payments
         pubkey:
           type: string
-          description: ZelNode public key used for message broadcasting
+          description: FluxNode public key used for message broadcasting
         activesince:
           type: integer
           description: >-
-            The time in seconds since epoch (Jan 1 1970 GMT) ZelNode has been
+            The time in seconds since epoch (Jan 1 1970 GMT) FluxNode has been
             active
         lastpaid:
           type: integer
           description: >-
-            The time in seconds since epoch (Jan 1 1970 GMT) ZelNode was last
+            The time in seconds since epoch (Jan 1 1970 GMT) FluxNode was last
             paid
     zoperationstatus:
       type: array
