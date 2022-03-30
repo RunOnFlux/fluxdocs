@@ -11414,13 +11414,13 @@ paths:
                   tier: BASIC
                   hex: >-
                     0500000004566e906c6df24b00ca710cecbbea166a29b9098456bed212207fea66f433ba4500000000ba33bd5e014d3cbd5e010f3131362e3230332e3233372e323530411b27b3e254a9f3248d88039a0f062e0d634e130bd34a9e4a1cb27d7aa6ce975cee251be9af6864a1a4a9e9d5fc2b28a07af8bab36a73f912c59ef844a69fa03f5f411b38e0e02dfece0ba3b7aae0afdcea7c70c9ea28b11317763f12092214086059e74d542cada464f3ee2c655011c53f6f18c0aa484bff8ce36926c6b295eb9287ff
-  /zelapps/listrunningzelapps:
+  /apps/listrunningapps:
     get:
       tags:
         - Apps
       summary: list running apps
       description: List and info of running apps. **Public**
-      operationId: listRunningZelApps
+      operationId: listRunningApps
       responses:
         '200':
           description: OK
@@ -11486,13 +11486,13 @@ paths:
                         Mode: ''
                         RW: true
                         Propagation: rprivate
-  /zelapps/listallzelapps:
+  /apps/listallapps:
     get:
       tags:
         - Apps
       summary: list all apps
       description: List and info of all apps. **Public**
-      operationId: listAllZelApps
+      operationId: listAllApps
       responses:
         '200':
           description: OK
@@ -11558,13 +11558,13 @@ paths:
                         Mode: ''
                         RW: true
                         Propagation: rprivate
-  /zelapps/listzelappsimages:
+  /apps/listappsimages:
     get:
       tags:
         - Apps
       summary: List of images
-      description: List of zelapps images installed. **Public**
-      operationId: listZelAppsImages
+      description: List of apps images installed. **Public**
+      operationId: listAppsImages
       responses:
         '200':
           description: OK
@@ -11648,13 +11648,13 @@ paths:
                     SharedSize: -1
                     Size: 85515870
                     VirtualSize: 85515870
-  /zelapps/installedzelapps:
+  /apps/installedapps:
     get:
       tags:
         - Apps
       summary: installed apps
       description: Info of installed apps. **Public**
-      operationId: installedZelApps
+      operationId: installedApps
       responses:
         '200':
           description: OK
@@ -11729,13 +11729,13 @@ paths:
                       - 0/0
                     containerPort: 7396
                     containerData: /config
-  /zelapps/availablezelapps:
+  /apps/availableapps:
     get:
       tags:
         - Apps
       summary: available apps
       description: Info of available apps. **Public**
-      operationId: availableZelApps
+      operationId: availableApps
       responses:
         '200':
           description: OK
@@ -11866,13 +11866,13 @@ paths:
                     containerData: /config
                     signature: todo
                     txid: todo
-  /zelapps/zelshare/getfile:
+  /apps/fluxshare/getfile:
     get:
       tags:
         - Apps
       summary: Share files
       description: Call to retrieve share file. **Public**
-      operationId: zelShareFile
+      operationId: fluxShareFile
       parameters:
         - in: query
           name: file
@@ -11892,13 +11892,13 @@ paths:
                 type: string
                 format: binary
               example: Hello world
-  /zelapps/zelfluxusage:
+  /apps/fluxusage:
     get:
       tags:
         - Apps
       summary: Flux's usage
       description: Will return amount of cpu resource flux is using. **Public**
-      operationId: zelFluxUsage
+      operationId: FluxUsage
       responses:
         '200':
           description: OK
@@ -11915,13 +11915,13 @@ paths:
               example:
                 status: success
                 data: 0.20717773
-  /zelapps/zelappsresources:
+  /apps/appsresources:
     get:
       tags:
         - Apps
       summary: Flux's usage of resources
       description: Will return data of resource flux is using. **Public**
-      operationId: zelappsResources
+      operationId: appsResources
       responses:
         '200':
           description: OK
@@ -11933,19 +11933,19 @@ paths:
                   status:
                     $ref: '#/components/schemas/status'
                   data:
-                    $ref: '#/components/schemas/zelappsresources'
+                    $ref: '#/components/schemas/appsresources'
               example:
                 status: success
                 data:
                   zelAppsCpusLocked: 0
                   zelAppsRamLocked: 0
                   zelAppsHddLocked: 0
-  /zelapps/registrationinformation:
+  /apps/registrationinformation:
     get:
       tags:
         - Apps
       summary: Registration Info
-      description: Fluxapps registration info. **Public**
+      description: Apps registration info. **Public**
       operationId: registrationInformation
       responses:
         '200':
@@ -12032,13 +12032,13 @@ paths:
                     probability: 20
                     delay: 300
                   blocksLasting: 22000
-  /zelapps/temporarymessages:
+  /apps/temporarymessages:
     get:
       tags:
         - Apps
       summary: Temporary registration info
       description: Temporary registration info that will expire after 1 hour. **Public**
-      operationId: getZelAppsTemporaryMessages
+      operationId: getAppsTemporaryMessages
       responses:
         '200':
           description: OK
@@ -12055,7 +12055,7 @@ paths:
                       type: object
                       properties:
                         zelAppSpecifications:
-                          $ref: '#/components/schemas/zelappspecification'
+                          $ref: '#/components/schemas/appspecification'
                         type:
                           type: string
                           description: Message type
@@ -12080,7 +12080,7 @@ paths:
               example:
                 status: success
                 data:
-                  zelAppSpecifications:
+                  AppSpecifications:
                     version: 1
                     name: Mario
                     description: InfiniteMario
@@ -12104,7 +12104,7 @@ paths:
                     G+zhabQa3xQWnINoxkOU8L0eod4OEddwmi1JYFoFf53GJ2yq0698jNzaXZtUiDfhWL30d6cJVDUnkO65DjCU/C4=
                   receivedAt: '2020-09-16T23:25:19.634Z'
                   expiredAt: '2020-09-17T00:25:19.634Z'
-  /zelapps/permanentmessages:
+  /apps/permanentmessages:
     get:
       tags:
         - Apps
@@ -12112,7 +12112,7 @@ paths:
       description: >-
         Registration info of apps that have been stored to the database.
         **Public**
-      operationId: getZelAppsPermanentMessages
+      operationId: getAppsPermanentMessages
       responses:
         '200':
           description: OK
@@ -12151,7 +12151,7 @@ paths:
               example:
                 status: success
                 data:
-                  - zelAppSpecifications:
+                  - AppSpecifications:
                       version: 1
                       name: TetrisTest
                       description: Tetris is awesome
@@ -12175,13 +12175,13 @@ paths:
                       885f11f8a44cf1ac9673fb5c745688a95715295e3c3d0d69517a17ab652f8780
                     height: 645719
                     valueSat: 2800000000
-  /zelapps/globalappsspecifications:
+  /apps/globalappsspecifications:
     get:
       tags:
         - Apps
       summary: Global app specs
       description: List of global app specifications. **Public**
-      operationId: getGlobalZelAppsSpecifications
+      operationId: getGlobalAppsSpecifications
       responses:
         '200':
           description: OK
@@ -12216,7 +12216,7 @@ paths:
                     repotag: 'promasu/cryptpad:latest'
                     tiered: false
                     version: 1
-  /zelapps/appspecifications:
+  /apps/appspecifications:
     get:
       tags:
         - Apps
@@ -12244,7 +12244,7 @@ paths:
                   data:
                     type: array
                     items:
-                      $ref: '#/components/schemas/zelappname'
+                      $ref: '#/components/schemas/appname'
               example:
                 status: success
                 data:
@@ -12265,7 +12265,7 @@ paths:
                     repotag: 'promasu/cryptpad:latest'
                     tiered: false
                     version: 1
-  /zelapps/appowner:
+  /apps/appowner:
     get:
       tags:
         - Apps
@@ -12296,13 +12296,13 @@ paths:
               example:
                 status: success
                 data: 1CbErtneaX2QVyUfwU7JGB7VzvPgrgc3uC
-  /zelapps/hashes:
+  /apps/hashes:
     get:
       tags:
         - Apps
       summary: Application Hash info
       description: Get list of app hashes and related info. **Public**
-      operationId: getZelAppHashes
+      operationId: getAppHashes
       responses:
         '200':
           description: OK
@@ -12350,7 +12350,7 @@ paths:
                       c9a1a06bc0ff4786607dff32df4b820aedd5e3ca9803fbb29bb0ffb10e170e42
                     value: 4500000000
                     message: true
-  /zelapps/location:
+  /apps/location:
     get:
       tags:
         - Apps
@@ -12358,7 +12358,7 @@ paths:
       description: >-
         This will return data regarding the location of app specified.
         **Public**
-      operationId: getZelAppsLocation
+      operationId: getAppsLocation
       parameters:
         - in: query
           name: zelapp
@@ -12394,7 +12394,7 @@ paths:
                     expireAt: '2020-09-19T10:10:09.069Z'
                     hash: >-
                       6055e9bef2fbd01c3561c4c1f87ba816921b51b6012d76a2f2b78efe8d3a0f8e
-  /zelapps/locations:
+  /apps/locations:
     get:
       tags:
         - Apps
@@ -12402,7 +12402,7 @@ paths:
       description: >-
         This will return a list of known apps on the network and it's locations
         data. **Public**
-      operationId: getZelAppsLocations
+      operationId: getAppsLocations
       responses:
         '200':
           description: OK
@@ -12440,7 +12440,7 @@ paths:
                     broadcastedAt: '2020-09-19T09:24:12.428Z'
                     expireAt: '2020-09-19T10:29:12.428Z'
                     hash: ahashofappmessage
-  /zelapps/calculateprice:
+  /apps/calculateprice:
     post:
       tags:
         - Apps
@@ -12504,13 +12504,13 @@ paths:
               example:
                 status: success
                 data: 1.6
-  /zelapps/zelappstart:
+  /apps/appstart:
     get:
       tags:
         - Apps
       summary: Starts app
       description: This will start the fluxapp. **AppOwnerAbove**
-      operationId: zelAppStart
+      operationId: AppStart
       security:
         - ZelID: []
       parameters:
@@ -12537,13 +12537,13 @@ paths:
               example:
                 status: success
                 data: ZelApp zelFoldingAtHome successfully started.
-  /zelapps/zelappstop:
+  /apps/appstop:
     get:
       tags:
         - Apps
       summary: Stops app
       description: This will stop the zelapp. **AppOwnerAbove**
-      operationId: zelAppStop
+      operationId: AppStop
       security:
         - ZelID: []
       parameters:
@@ -12570,13 +12570,13 @@ paths:
               example:
                 status: success
                 data: ZelApp zelFoldingAtHome successfully stopped.
-  /zelapps/zelapprestart:
+  /apps/apprestart:
     get:
       tags:
         - Apps
       summary: Restarts app
       description: This will restart the zelapp. **AppOwnerAbove**
-      operationId: zelAppRestart
+      operationId: AppRestart
       security:
         - ZelID: []
       parameters:
@@ -12603,7 +12603,7 @@ paths:
               example:
                 status: success
                 data: ZelApp zelFoldingAtHome successfully restarted.
-  /zelapps/zelapppause:
+  /apps/apppause:
     get:
       tags:
         - Apps
@@ -12636,13 +12636,13 @@ paths:
               example:
                 status: success
                 data: ZelApp zelFoldingAtHome successfully paused.
-  /zelapps/zelappunpause:
+  /apps/appunpause:
     get:
       tags:
         - Apps
       summary: Unpause app
       description: This will unpause the zelapp. **AppOwnerAbove**
-      operationId: zelAppUnpause
+      operationId: AppUnpause
       security:
         - ZelID: []
       parameters:
@@ -12669,13 +12669,13 @@ paths:
               example:
                 status: success
                 data: ZelApp zelFoldingAtHome successfully unpaused.
-  /zelapps/zelapptop:
+  /apps/apptop:
     get:
       tags:
         - Apps
       summary: List of running processes
       description: Display the running processes of a container. **AppOwnerAbove**
-      operationId: zelAppTop
+      operationId: AppTop
       security:
         - ZelID: []
       parameters:
@@ -12757,13 +12757,13 @@ paths:
                     - TTY
                     - TIME
                     - CMD
-  /zelapps/zelapplog:
+  /apps/applog:
     get:
       tags:
         - Apps
       summary: App's log
       description: This will fetch the logs of a fluxapp. **AppOwnerAbove**
-      operationId: zelAppLogs
+      operationId: AppLogs
       security:
         - ZelID: []
       parameters:
@@ -12868,13 +12868,13 @@ paths:
 
                   21:12:16:******************************* System
                   ********************************
-  /zelapps/zelappinspect:
+  /apps/appinspect:
     get:
       tags:
         - Apps
       summary: Info of the app
       description: Displays detailed info of the container. **AppOwnerAbove**
-      operationId: zelAppInspect
+      operationId: AppInspect
       security:
         - ZelID: []
       parameters:
@@ -13717,7 +13717,7 @@ paths:
                         GlobalIPv6PrefixLen: 0
                         MacAddress: '02.34:ac:11:01:06'
                         DriverOpts: null
-  /zelapps/zelappstats:
+  /apps/appstats:
     get:
       tags:
         - Apps
@@ -13725,7 +13725,7 @@ paths:
       description: Returns containers resource usage. **AppOwnerAbove**
       externalDocs:
         url: 'https://docs.docker.com/engine/api/v1.40/#operation/ContainerStats'
-      operationId: zelAppStats
+      operationId: AppStats
       security:
         - ZelID: []
       parameters:
@@ -13838,7 +13838,7 @@ paths:
                     tx_packets: 2264232
                     tx_errors: 0
                     tx_dropped: 0
-  /zelapps/zelappchanges:
+  /apps/appchanges:
     get:
       tags:
         - Apps
@@ -13855,7 +13855,7 @@ paths:
         - `1 = Added`
 
         - `2 = Deleted`
-      operationId: zelAppChanges
+      operationId: AppChanges
       security:
         - ZelID: []
       parameters:
@@ -13895,13 +13895,13 @@ paths:
                 status: success
                 data:
                   - null
-  /zelapps/zelappexec:
+  /apps/appexec:
     post:
       tags:
         - Apps
       summary: Run a command in the container
       description: Run new commands inside running containers. **AppOwner**
-      operationId: zelAppExec
+      operationId: AppExec
       security:
         - ZelID: []
       requestBody:
@@ -13937,7 +13937,7 @@ paths:
                 type: string
                 description: Output depends on the command
               example: 'Sun Sep 20 10:18:38 UTC 2020'
-  /zelapps/zelappremove:
+  /apps/appremove:
     get:
       tags:
         - Apps
@@ -13945,12 +13945,12 @@ paths:
       description: >-
         This will stop, clean data, close port, and remove the container.
         **AdminAndFluxTeam**
-      operationId: removeZelAppLocally
+      operationId: Appremove
       security:
         - ZelID: []
       parameters:
         - in: query
-          name: zelapp
+          name: app
           required: true
           schema:
             type: string
@@ -13971,8 +13971,8 @@ paths:
                     description: Status of the cleanup in progress
               example:
                 status: success
-                data: ZelApp zelFoldingAtHome was successfuly removed
-  /zelapps/installtemporarylocalapp:
+                data: App zelFoldingAtHome was successfuly removed
+  /apps/installtemporarylocalapp:
     get:
       tags:
         - Apps
@@ -14004,8 +14004,8 @@ paths:
                 $ref: '#/components/schemas/streamdata'
               example:
                 status: success
-                data: ZelApp zelFoldingAtHomeB successfully started.
-  /zelapps/createzelfluxnetwork:
+                data: App zelFoldingAtHomeB successfully started.
+  /apps/createfluxnetwork:
     get:
       tags:
         - Apps
@@ -14030,14 +14030,14 @@ paths:
               example:
                 status: success
                 data: Flux Network already exists.
-  /zelapps/rescanglobalappsinformation:
+  /apps/rescanglobalappsinformation:
     get:
       tags:
         - Apps
       summary: Rescan and update global ZelApps info database
       description: >-
-        Rescans global zelapps permanent messages since selected blockheight and
-        updates global zelapps information database. **AdminAndFluxTeam**
+        Rescans global apps permanent messages since selected blockheight and
+        updates global apps information database. **AdminAndFluxTeam**
       operationId: rescanGlobalAppsInformationAPI
       security:
         - ZelID: []
@@ -14076,13 +14076,13 @@ paths:
                 status: success
                 data:
                   message: Rescan successful
-  /zelapps/reindexglobalappsinformation:
+  /apps/reindexglobalappsinformation:
     get:
       tags:
         - Apps
-      summary: Reindex zelappsinformation collection and rebuild
+      summary: Reindex appsinformation collection and rebuild
       description: >-
-        This will drop zelappslocations collection, recreate indexes, and
+        This will drop appslocations collection, recreate indexes, and
         rebuild incoming messages. **AdminAndFluxTeam**
       operationId: reindexGlobalAppsInformationAPI
       security:
@@ -14103,13 +14103,13 @@ paths:
                 status: success
                 data:
                   message: Reindex successful
-  /zelapps/reindexglobalappslocation:
+  /apps/reindexglobalappslocation:
     get:
       tags:
         - Apps
-      summary: Reindex zelappslocations collection and rebuild
+      summary: Reindex appslocations collection and rebuild
       description: >-
-        Function that drops information about running zelapps and rebuilds
+        Function that drops information about running apps and rebuilds
         indexes. **AdminAndFluxTeam**
       operationId: reindexGlobalAppsLocationAPI
       security:
@@ -14130,7 +14130,7 @@ paths:
                 status: success
                 data:
                   message: Reindex successful
-  /zelapps/checkdockerexistance:
+  /apps/checkdockerexistance:
     post:
       tags:
         - Apps
@@ -14169,7 +14169,7 @@ paths:
                 status: success
                 data:
                   message: Repotag is accessible
-  /zelapps/zelappregister:
+  /apps/appregister:
     post:
       tags:
         - Apps
@@ -14188,7 +14188,7 @@ paths:
 
         -
         `zelappregister1{"version":1,"name":"Mario","description":"InfiniteMario","repotag":"bharathshetty4/supermario:latest","owner":"1FLUX1AHpR35EiPHH4HUMsWzugTaj1Gp6M","port":31000,"enviromentParameters":[],"commands":[],"containerPort":8600,"containerData":"/tmp","cpu":0.1,"ram":100,"hdd":1,"tiered":false}1600255247532`
-      operationId: registerZelAppGlobalyApi
+      operationId: Appregister
       security:
         - ZelID: []
       requestBody:
@@ -14199,7 +14199,7 @@ paths:
               type: object
               properties:
                 zelAppSpecification:
-                  $ref: '#/components/schemas/zelappspecification'
+                  $ref: '#/components/schemas/appspecification'
                 timestamp:
                   type: integer
                   description: Current timestamp in epoch/unix
@@ -14259,7 +14259,7 @@ paths:
                 status: success
                 data: >-
                   a7a5b90b25ccc0a8379ec960c103103390369d1d6d18f88281372b944531dc23
-  /zelapps/zelappupdate:
+  /apps/appupdate:
     post:
       tags:
         - Apps
@@ -14278,7 +14278,7 @@ paths:
 
         -
         `zelappregister1{"version":1,"name":"Mario","description":"InfiniteMario","repotag":"bharathshetty4/supermario:latest","owner":"1FLUX1AHpR35EiPHH4HUMsWzugTaj1Gp6M","port":31000,"enviromentParameters":[],"commands":[],"containerPort":8600,"containerData":"/tmp","cpu":0.1,"ram":100,"hdd":1,"tiered":false}1600255247532`
-      operationId: updateZelAppGlobalyApi
+      operationId: updateAppGlobalyApi
       security:
         - ZelID: []
       requestBody:
@@ -14288,8 +14288,8 @@ paths:
             schema:
               type: object
               properties:
-                zelAppSpecification:
-                  $ref: '#/components/schemas/zelappspecification'
+                AppSpecification:
+                  $ref: '#/components/schemas/appspecification'
                 timestamp:
                   type: integer
                   description: Current timestamp in epoch/unix
@@ -14303,7 +14303,7 @@ paths:
                   type: integer
                   description: Message version
             example:
-              zelAppSpecification:
+              AppSpecification:
                 version: 1
                 name: Mario
                 description: InfiniteMario
@@ -14330,7 +14330,7 @@ paths:
               timestamp: 1600255247532
               signature: >-
                 Gz6XXaBOCutFDRS2Fn9oTdM6quAEU2ppulO+X0NKJRs0Zsv7nbs5LlyLfln+qBEB0/rnehDRm0iM8X/CDl80ToU=
-              type: zelappupdate
+              type: appupdate
               version: 1
       responses:
         '200':
