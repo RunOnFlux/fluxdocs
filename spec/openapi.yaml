@@ -14349,7 +14349,7 @@ paths:
                 status: success
                 data: >-
                   a7a5b90b25ccc0a8379ec960c103103390369d1d6d18f88281372b944531dc23
-  /explorer/zelnodetxs:
+  /explorer/fluxtxs:
     get:
       tags:
         - Explorer
@@ -14850,7 +14850,7 @@ components:
           type: array
           items:
             type: string
-            description: Zelcash address
+            description: Flux address
         p2sh:
           type: string
           description: Script address
@@ -14904,10 +14904,10 @@ components:
           $ref: '#/components/schemas/joinsplit'
         valueBalance:
           type: number
-          description: The balance value of ZEL
+          description: The balance value of FLUX
         valueBalanceZat:
           type: number
-          description: The balance value of ZEL
+          description: The balance value of FLUX
         vShieldedSpend:
           $ref: '#/components/schemas/shieldedspend'
         vShieldedOutput:
