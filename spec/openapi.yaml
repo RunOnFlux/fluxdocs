@@ -1,104 +1,102 @@
 openapi: 3.0.0
 info:
-  version: 0.1.0
-  title: ZelFlux
+  version: 0.3.0
+  title: Flux
   contact:
-    email: tadeas.kmenta@zel.cash
-    url: 'https://zelcash.github.io/zelfluxdocs/'
+    email: tadeas@zel.network
+    url: 'https://docs.runonflux.io'
   license:
     name: GNU AGPLv3
     url: 'https://www.gnu.org/licenses/agpl-3.0.en.html'
   x-logo:
-    url: 'https://raw.githubusercontent.com/zelcash/zelfluxdocs/master/zelflux.png'
+    url: 'https://raw.githubusercontent.com/runonflux/fluxdocs/master/flux.jpg'
   description: >-
-    This is an API documentation of calls available to be made to any ZelFlux.
+    This is an API documentation of calls available to be made to any Flux.
     <br>
     GET Calls are available as both query and in order as path.
     <br>
-    ZelFlux is completely open source and we encourage everyone to feel free and
+    Flux is completely open source and we encourage everyone to feel free and
     contribute :)
     <br>
-    Further questions or support join and ask in our [discord](https://discord.io/zel)
+    Further questions or support join and ask in our [discord](https://discord.io/runonflux)
 
 
     # Introduction
 
-    ZelFlux possesses a 5 tier hiearchy level API.
+    Flux possesses a 5 tier hiearchy level API.
 
     * **Public** API level - Available without any permission, does not require
     signing.
 
     * **User** API level - User level permission, requires signing.
 
-    * **ZelTeam** API level - ZelTeam level permission (an appointed Zel Team
+    * **FluxTeam** API level - FluxTeam level permission (an appointed Flux Team
     member has access to those API calls), requires signing.
 
-    * **Admin** API level - Admin level permission, requires signing. ZelNode
+    * **Admin** API level - Admin level permission, requires signing. Flux
     owner.
 
-    * **AdminAndZelTeam** API level permission (Admin and ZelTeam has access to
+    * **AdminAndFluxTeam** API level permission (Admin and Flux Team has access to
     these calls), requires signing.
 
     * **AppOwner** API level - AppOwner level permission, requires signing. App
     Owner.
 
     * **AppOwnerAbove** API level - AppOwnerAbove level permission (App Owner,
-    ZelTeam, and Admin has access to these calls), requires signing.
+    FluxTeam, and Admin has access to these calls), requires signing.
 
 
     Most calls are available via GET request with some that may require large
     amount of data via POST request.
 
     Websocket is currently used only for simplifying login operations and for
-    internal ZelFlux communication.
+    internal Flux communication.
+
+    # Getting Started with the API
+
+    * **1. Install Zelcore Wallet:** The Zelcore wallet is required for signing messages. Please install this if not already installed.
+
+    * **2. Create Zelcore Account:** A Zelcore wallet account is required for signing messages. Please register an account if you don't already have one.
+
+    * **3. Obtain API Authentication Credentials:** Follow the Authentication section of this API documentation in order to set up your credentials for using the rest of the API. You will need to use your Zelcore wallet for parts of this process.
+
+    * **4. Set Up Authentication Credentials in Header:** Set up your zelidauth credentials in your header. If you are using variables, the signature value may need to be URLencoded.
+
 externalDocs:
-  description: ZelFlux
-  url: 'https://github.com/zelcash/zelflux'
+  description: Flux
+  url: 'https://github.com/runonflux/flux'
 tags:
   - name: Authentication
     description: >-
-      Calls that are neccessary to be made for correct signing into ZelFlux and
+      Calls that are neccessary to be made for correct signing into Flux and
       obtaining zelauth header.
-  - name: ZelID
+  - name: ID
     description: >-
-      Calls that interact with ZelID and login/authentication management of
-      ZelFlux
-  - name: ZelFlux
-    description: Calls that interact with ZelFlux and its network
-  - name: ZelCash
-    description: Calls that interact with locally running ZelCash daemon
-  - name: ZelBench
-    description: Calls that interact with locally running ZelBench daemon
-  - name: ZelNode
-    description: Calls that interact with local ZelNode and its network
-  - name: ZelApps
+      Calls that interact with Identity via ZelID and login/authentication 
+      management of Flux
+  - name: Daemon
+    description: Calls that interact with locally running Flux daemon
+  - name: Benchmark
+    description: Calls that interact with locally running Benchmark daemon
+  - name: Flux
+    description: Calls that interact with Flux and its network
+  - name: Apps
     description: >-
-      Calls that interact with ZelApps fascilitated by local ZelFlux and ZelNode
+      Calls that interact with Apps fascilitated by local Flux and Flux
       network
   - name: Explorer
     description: Calls that interact with locally running explorer
 servers:
-  - url: 'https://1.api.fluxos.network'
-  - url: 'http://167.86.116.11:16127'
-  - url: 'http://95.217.72.235:16127'
-  - url: 'http://47.22.47.182:16127'
-  - url: 'http://47.22.47.181:16127'
-  - url: 'http://95.216.115.243:16127'
-  - url: 'http://193.188.15.253:16127'
-  - url: 'http://193.188.15.254:16127'
-  - url: 'http://193.188.15.243:16127'
-  - url: 'http://167.86.81.87:16127'
-  - url: 'http://47.22.47.174:16127'
-  - url: 'http://62.171.181.156:16127'
+  - url: 'https://api.runonflux.io'
 paths:
-  /zelid/loginphrase:
+  /id/loginphrase:
     get:
       tags:
         - Authentication
-        - ZelID
+        - ID
       summary: Obtain login phrase
       description: >-
-        Obtain valid Login Phrase for signing into ZelFlux. Login Phrase is at
+        Obtain valid Login Phrase for signing into Flux. Login Phrase is at
         least 40 characters, first 13 characters is server timestamp and is
         valid for 15 minutes. **Public**
       operationId: loginPhrase
@@ -118,12 +116,12 @@ paths:
               example:
                 status: success
                 data: 1574994809615gj4ct52kzz695twl0l27np0ivkmvu2ow4lbtpwk2nvf2k
-  /zelid/emergencyphrase:
+  /id/emergencyphrase:
     get:
       tags:
-        - ZelID
+        - ID
       summary: Obtain emergency login phrase
-      description: Obtain emergency Login Phrase for signing into ZelFlux. **Public**
+      description: Obtain emergency Login Phrase for signing into Flux. **Public**
       operationId: emergencyLoginPhrase
       responses:
         '200':
@@ -141,22 +139,33 @@ paths:
               example:
                 status: success
                 data: 1587939091067l06vdyv5wtl80q5aj0npi3vyyig869ogf7o7jxfpu68r
-  /zelid/verifylogin:
+  /id/verifylogin:
     post:
       tags:
         - Authentication
-        - ZelID
-      summary: Login into ZelFlux
+        - ID
+      summary: Login into Flux
       description: >-
-        Login into ZelFlux by submitting correct ZelID, login phrase and
+        Login into Flux by submitting correct ZelID, login phrase and
         signature. Note that to get the signature of the signed message you
         would need to do the signing on Zelcore or your BTC wallet. If success
         status response is returned, we can use the supplied data(zelid,
         loginPhrase, signature) as zelauth header as part of api calls that
         require a user to be logged in. Additionally it is possible to listen
         for a response on websocket.
-        ws://{ZelNode_IP}:16127/ws/zelid/{loginPhrase}. **Public**
+        ws://{Flux_IP}:16127/ws/id/{loginPhrase}. **Public**
       operationId: verifyLogin
+      requestBody:
+        content:
+          text/plain:
+            schema:
+              $ref: '#/components/schemas/ZelIDLogin'
+            example:
+              loginPhrase: 1575012988077darschvve5ag82g8e8sgeij4sn61842ya7ovxi9r3kba
+              zelid: 1CbErtneaX2QVyUfwU7JGB7VzvPgrgc3uC
+              signature: IAMZBB0p8aQ6A0Zt8uUKFLdWvPJlBypuczhaM6/R+s5bI72NQs/TPF1KYywvJlumMZyvLmk7JelDwaQbfTjqtSs=
+        description: ZelID login object
+        required: true
       responses:
         '200':
           description: OK
@@ -188,10 +197,10 @@ paths:
                         description: signature of loginPhrase signed with zelid
                       privilege:
                         type: string
-                        description: granted ZelFlux privilege
+                        description: granted Flux privilege
                         enum:
                           - user
-                          - zelteam
+                          - fluxteam
                           - admin
               example:
                 status: success
@@ -202,18 +211,11 @@ paths:
                   signature: >-
                     IAMZBB0p8aQ6A0Zt8uUKFLdWvPJlBypuczhaM6/R+s5bI72NQs/TPF1KYywvJlumMZyvLmk7JelDwaQbfTjqtSs=
                   privilage: admin
-      requestBody:
-        content:
-          text/plain:
-            schema:
-              $ref: '#/components/schemas/ZelIDLogin'
-        description: ZelID login object
-        required: true
-  /zelid/providesign:
+  /id/providesign:
     post:
       tags:
         - Authentication
-        - ZelID
+        - ID
       summary: Provide Signature
       description: >-
         Provide requested signature from signed message to return data.
@@ -233,7 +235,7 @@ paths:
                   type: string
                   description: >-
                     Login phrase message that was provided by GET
-                    /zelid/loginphrase
+                    /id/loginphrase
                 signature:
                   type: string
                   description: Signature of signed loginPhrase with ZelID
@@ -279,13 +281,13 @@ paths:
                   createdAt: '2020-09-12T11:28:28.457Z'
                   expiredAt: '2020-09-12T11:43:28.457Z'
                   _id: 5f6cb0bcb7e30e24063e1777
-  /zelid/loggedsessions:
+  /id/loggedsessions:
     get:
       tags:
-        - ZelID
+        - ID
       summary: Obtain all logged sessions of ZelID.
       description: >-
-        Gets all currently active logged sessions in ZelFlux tied to given
+        Gets all currently active logged sessions in Flux tied to given
         ZelID. **User**
       operationId: loggedSessions
       security:
@@ -326,10 +328,10 @@ paths:
                     loginPhrase: 1575011828315mzqenqvi9ixaq0yr34g8jtvwgcs3d33cf1ies0myd
                   - zelid: 1CbErtneaX2QVyUfwU7JGB7VzvPgrgc3uC
                     loginPhrase: 1575012988077darschvve5ag82g8e8sgeij4sn61842ya7ovxi9r3kba
-  /zelid/logoutcurrentsession:
+  /id/logoutcurrentsession:
     get:
       tags:
-        - ZelID
+        - ID
       summary: Logs out current session
       description: >-
         This call logs out currently logged session which is determined by the
@@ -353,10 +355,10 @@ paths:
                 status: success
                 data:
                   message: Successfully logged out
-  /zelid/logoutallsessions:
+  /id/logoutallsessions:
     get:
       tags:
-        - ZelID
+        - ID
       summary: Logs out all sessions
       description: >-
         This call logs out all logged sessions which are determined by the
@@ -380,10 +382,10 @@ paths:
                 status: success
                 data:
                   message: Successfully logged out all sessions
-  /zelid/loggedusers:
+  /id/loggedusers:
     get:
       tags:
-        - ZelID
+        - ID
       summary: Gets information about logged users
       description: >-
         This call gets basic infromation about currently logged sessions of all
@@ -419,10 +421,10 @@ paths:
                     loginPhrase: 1566749385160npvtiku0z7yqsxgenyvzfmfrz7pyxrxvflv3sfztbc
                   - zelid: 1E1NSwDHtvCziYP4CtgiDMcgvgZL64PhkR
                     loginPhrase: 1575805361736fdk6ak6yn5lgiuebz1oumh9z8rhyw0kf744f1sk2yd43
-  /zelid/activeloginphrases:
+  /id/activeloginphrases:
     get:
       tags:
-        - ZelID
+        - ID
       summary: Lists active login phrases
       description: >-
         This call gets a list of login phrases that are currently active (were
@@ -466,13 +468,13 @@ paths:
                   - loginPhrase: 1575865221315yqilps02mx0e1tmf5ymtcry8mbzk4u3k3v17tdsxif6
                     createdAt: '2019-12-09T04:20:21.315Z'
                     expireAt: '2019-12-09T04:35:21.315Z'
-  /zelid/logoutallusers:
+  /id/logoutallusers:
     get:
       tags:
-        - ZelID
+        - ID
       summary: Logs out all users
       description: >-
-        This call logs out all logged users (including zelteam, admins).
+        This call logs out all logged users (including fluxteam, admins).
         **Admin**
       operationId: logoutAllUsers
       security:
@@ -493,40 +495,7 @@ paths:
                 status: success
                 data:
                   message: Successfully logged out all users
-  /zelid/adjustcruxid:
-    get:
-      tags:
-        - ZelID
-      summary: Adjust CruxID
-      description: This will add/update your CruxID. **Admin**
-      operationId: adjustCruxID
-      security:
-        - ZelID: []
-      parameters:
-        - in: query
-          name: cruxid
-          required: true
-          schema:
-            type: string
-          description: CruxID
-          example: dk808@zel.crux
-      responses:
-        '200':
-          description: OK
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  status:
-                    $ref: '#/components/schemas/status'
-                  data:
-                    $ref: '#/components/schemas/statusmessage'
-              example:
-                status: success
-                data:
-                  message: CruxID adjusted
-  /zelid/logoutspecificsession:
+  /id/logoutspecificsession:
     post:
       tags:
         - Authentication
@@ -540,6 +509,21 @@ paths:
         another user as he does not know the loginPhrase. Admin can logout any
         specific session. **User**
       operationId: logoutSpecificSession
+      requestBody:
+        content:
+          text/plain:
+            schema:
+              type: object
+              properties:
+                loginPhrase:
+                  description: Login Phrase of session we want to log out.
+                  type: string
+                  minLength: 40
+                  example: 1574991374806spbcvsuwerl52tppx9dw5khuz8rew13mkq86gg8r2c
+            example:
+              loginPhrase: 1575012988077darschvve5ag82g8e8sgeij4sn61842ya7ovxi9r3kba
+        description: Object containing loginPhrase
+        required: true
       responses:
         '200':
           description: OK
@@ -556,28 +540,58 @@ paths:
                 status: success
                 data:
                   message: Session successfully logged out
+  /id/checkprivilege:
+    post:
+      tags:
+        - ZelID
+      summary: Checks the privilege level of user
+      security:
+        - ZelID: []
+      description: >-
+        Checks the privilege level of the user. The 5 levels are public, user, admin, flux team and app owner. **User**
+      operationId: checkLoggedUser
       requestBody:
         content:
           text/plain:
             schema:
               type: object
               properties:
-                loginPhrase:
-                  description: Login Phrase of session we want to log out.
+                zelid:
                   type: string
-                  minLength: 40
-                  example: 1574991374806spbcvsuwerl52tppx9dw5khuz8rew13mkq86gg8r2c
-        description: Object containing loginPhrase
+                  description: ZelID
+                signature:
+                  type: string
+                  description: Signature of signed loginPhrase with ZelID
+            example:
+              zelid: 1CbErtneaX2QVyUfwU7JGB7VzvPgrgc3uC
+              signature: IAMZBB0p8aQ6A0Zt8uUKFLdWvPJlBypuczhaM6/R+s5bI72NQs/TPF1KYywvJlumMZyvLmk7JelDwaQbfTjqtSs=
+        description: Object containing privilege level
         required: true
-  /zelnode/startzelcash:
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    $ref: '#/components/schemas/status'
+                  data:
+                    $ref: '#/components/schemas/statusmessage'
+              example:
+                status: success
+                data:
+                  message: admin
+  /flux/startdaemon:
     get:
       tags:
-        - ZelNode
-      summary: Starts ZelNodes ZelCash daemon
+        - Flux
+      summary: Starts Flux daemon
       description: >-
-        Tries to start ZelCash daemon running on the ZelNode the call is run
+        Tries to start Flux daemon running on the Flux node the call is run
         against without any extra parameters. **Admin**
-      operationId: startZelCash
+      operationId: startdaemon
       security:
         - ZelID: []
       responses:
@@ -596,16 +610,16 @@ paths:
                 status: success
                 data:
                   message: ZelCash successfully started
-  /zelnode/restartzelcash:
+  /flux/restartdaemon:
     get:
       tags:
-        - ZelNode
-      summary: Restarts ZelNodes ZelCash daemon
+        - Flux
+      summary: Restarts Flux daemon
       description: >-
-        Tries to restart ZelCash daemon running on the ZelNode the call is run
-        against. ZelCash daemon is firstly stopped and then started without any
+        Tries to restart Flux daemon running on the Flux node the call is run
+        against. Flux daemon is firstly stopped and then started without any
         extra parameters. **Admin**
-      operationId: restartZelCash
+      operationId: restartdaemon
       security:
         - ZelID: []
       responses:
@@ -623,14 +637,14 @@ paths:
               example:
                 status: success
                 data:
-                  message: ZelCash successfully restarted
-  /zelnode/reindexzelcash:
+                  message: Daemon successfully restarted
+  /flux/reindexdaemon:
     get:
       tags:
-        - ZelNode
-      summary: Reindexes ZelNodes ZelCash daemon
+        - Flux
+      summary: Reindexes Flux daemon
       description: >-
-        Tries to reindex ZelCash daemon running on the ZelNode the call is run
+        Tries to reindex ZelCash daemon running on the Flux node the call is run
         against. ZelCash daemon is firstly stopped and then started with reindex
         flag. **Admin**
       operationId: reindexZelCashB
@@ -652,16 +666,16 @@ paths:
                 status: success
                 data:
                   message: ZelCash successfully reindexing
-  /zelnode/updatezelflux:
+  /flux/udpateflux:
     get:
       tags:
-        - ZelNode
-      summary: Updates ZelFlux to the latest version
+        - Flux
+      summary: Updates Flux to the latest version
       description: >-
-        Updates ZelFlux to the latest version available according to github
-        master branch. ZelFlux will restart its services after the update.
-        **AdminAndZelTeam**
-      operationId: updateZelFlux
+        Updates Flux to the latest version available according to github
+        master branch. Flux will restart its services after the update.
+        **AdminAndFluxTeam**
+      operationId: updateFlux
       security:
         - ZelID: []
       responses:
@@ -679,19 +693,19 @@ paths:
               example:
                 status: success
                 data:
-                  message: ZelFlux successfully updating
-  /zelnode/hardupdatezelflux:
+                  message: Flux successfully updating
+  /flux/hardupdateflux:
     get:
       tags:
-        - ZelNode
+        - Flux
       summary: Perform hard update to the latest version
       description: >-
         Hard updates to latest version by removing node_modules and
         package-lock.json before executing git reset --hard and git pull. This
-        may resolve any issues that may arise from ZelFlux not being able to
-        update using the `GET /zelnode/updatezelflux` call. ZelFlux will restart
-        its services after the update. **AdminAndZelTeam**
-      operationId: hardUpdateZelFlux
+        may resolve any issues that may arise from Flux not being able to
+        update using the `GET /flux/updateflux` call. Flux will restart
+        its services after the update. **AdminAndFluxTeam**
+      operationId: hardUpdateFlux
       security:
         - ZelID: []
       responses:
@@ -709,15 +723,15 @@ paths:
               example:
                 status: success
                 data:
-                  message: ZelFlux successfully updating
-  /zelnode/rebuildzelfront:
+                  message: Flux successfully updating
+  /flux/rebuildhome:
     get:
       tags:
-        - ZelNode
-      summary: Rebuild UI - ZelFront of ZelFlux
+        - Flux
+      summary: Rebuild UI - Home of Flux
       description: >-
-        Rebuilds ZelFront part of ZelFlux. May help resolving frontend issues.
-        **AdminAndZelTeam**
+        Rebuilds Home part of Flux. May help resolving frontend issues.
+        **AdminAndFluxTeam**
       operationId: rebuildZelFront
       security:
         - ZelID: []
@@ -736,17 +750,17 @@ paths:
               example:
                 status: success
                 data:
-                  message: ZelFlux successfully rebuilt
-  /zelnode/updatezelcash:
+                  message: Flux successfully rebuilt
+  /flux/updatedaemon:
     get:
       tags:
-        - ZelNode
-      summary: Updates ZelCash daemon
+        - Flux
+      summary: Updates Flux daemon
       description: >-
-        Updates the ZelCash daemon of ZelNode to the latest available version
-        according to official Zel APT repository. ZelCash daemon is restarted
-        with no extra parameters during this update. **AdminAndZelTeam**
-      operationId: updateZelCash
+        Updates the Flux daemon of Flux node to the latest available version
+        according to official Flux APT repository. Flux daemon is restarted
+        with no extra parameters during this update. **AdminAndFluxTeam**
+      operationId: updateDaemon
       security:
         - ZelID: []
       responses:
@@ -764,17 +778,17 @@ paths:
               example:
                 status: success
                 data:
-                  message: ZelCash successfully updated
-  /zelnode/updatezelbench:
+                  message: Daemon successfully updated
+  /flux/updatebenchmark:
     get:
       tags:
-        - ZelNode
-      summary: Updates Zelbench daemon
+        - Flux
+      summary: Updates Benchmark daemon
       description: >-
-        Updates the ZelBench daemon of ZelNode to the latest available version
-        according to official Zel APT repository. ZelBench daemon is restarted
-        with no extra parameters during this update. **AdminAndZelTeam**
-      operationId: updateZelBench
+        Updates the Benchmark daemon of Flux node to the latest available version
+        according to official Zel APT repository. Benchmark daemon is restarted
+        with no extra parameters during this update. **AdminAndFluxTeam**
+      operationId: updateBenchmark
       security:
         - ZelID: []
       responses:
@@ -792,15 +806,15 @@ paths:
               example:
                 status: success
                 data:
-                  message: ZelBench successfully updated
-  /zelnode/zelcashdebug:
+                  message: Benchmark successfully updated
+  /flux/daemondebug:
     get:
       tags:
-        - ZelNode
+        - Flux
       summary: Returns with the ZelCash debug log
       description: >-
         Returns with the debug log located in ZelCash data directory.
-        **AdminAndZelTeam**
+        **AdminAndFluxTeam**
       operationId: zelcashDebug
       security:
         - ZelID: []
@@ -836,15 +850,15 @@ paths:
                 16 2020-05-09 11:27:34 HTTP: starting 4 worker threads
                 2020-05-09 11:27:34 Using wallet wallet.dat 2020-05-09 11:27:34
                 init message: Verifying wallet...
-  /zelnode/zelbenchdebug:
+  /flux/benchmarkdebug:
     get:
       tags:
-        - ZelNode
-      summary: Returns with the ZelBench debug log
+        - Flux
+      summary: Returns with the Benchmark debug log
       description: >-
-        Returns with the debug log located in zelbenchmark directory.
-        **AdminAndZelTeam**
-      operationId: zelbenchDebug
+        Returns with the debug log located in fluxbenchmark directory.
+        **AdminAndFluxTeam**
+      operationId: benchmarkDebuf
       security:
         - ZelID: []
       responses:
@@ -864,7 +878,7 @@ paths:
                 [::]:16225 2020-05-13 16:59:02 Bound to 0.0.0.0:16225 2020-05-13
                 16:59:02 init message: Done loading 2020-05-13 16:59:02 Starting
                 Zelnodes Benchmarking Thread 2020-05-13 16:59:03 Path:
-                /home/zel/zelflux/ZelBack 2020-05-13 16:59:03 ---ZelFlux usage:
+                /home/zel/zelflux/ZelBack 2020-05-13 16:59:03 ---Flux usage:
                 0.23012 2020-05-13 16:59:03 ---package evaluator system setup
                 starting 2020-05-13 16:59:03 ---package evaluator already
                 installed 2020-05-13 16:59:03 ---package evaluator found
@@ -877,14 +891,14 @@ paths:
                 ---Finished computer specs test 2020-05-13 16:59:08 ---Starting
                 package evaluator test 2020-05-13 16:59:29 ---Found eps v1:
                 157.185 2020-05-13 16:59:29 ---Finished package evaluator test
-  /zelnode/tailzelcashdebug:
+  /flux/taildaemondebug:
     get:
       tags:
-        - ZelNode
+        - Flux
       summary: Returns last lines of ZelCash debug log
       description: >-
         Returns last 100 lines known in the ZelCash debug log.
-        **AdminAndZelTeam**
+        **AdminAndFluxTeam**
       operationId: tailZelCashDebug
       security:
         - ZelID: []
@@ -1140,14 +1154,14 @@ paths:
                     2020-09-12 01:44:49 keypool reserve 6
 
                     2020-09-12 01:44:49 keypool return 6
-  /zelnode/tailzelbenchdebug:
+  /flux/tailbenchmarkdebug:
     get:
       tags:
-        - ZelNode
+        - Flux
       summary: Returns last lines of ZelBench debug log
       description: >-
         Returns last 100 lines known in the ZelBench debug log.
-        **AdminAndZelTeam**
+        **AdminAndFluxTeam**
       operationId: tailZelBenchDebug
       security:
         - ZelID: []
@@ -1200,7 +1214,7 @@ paths:
 
                     2020-09-12 00:24:10 Path: /home/zel/zelflux/ZelBack
 
-                    2020-09-12 00:25:10 ---ZelFlux usage: 0.44897
+                    2020-09-12 00:25:10 ---Flux usage: 0.44897
 
                     2020-09-12 00:25:10 ---package evaluator system setup
                     starting
@@ -1237,7 +1251,7 @@ paths:
 
                     2020-09-12 00:55:46 Path: /home/zel/zelflux/ZelBack
 
-                    2020-09-12 00:55:46 ---ZelFlux usage: 0.16616
+                    2020-09-12 00:55:46 ---Flux usage: 0.16616
 
                     2020-09-12 00:55:46 ---package evaluator system setup
                     starting
@@ -1274,7 +1288,7 @@ paths:
 
                     2020-09-12 01:25:57 Path: /home/zel/zelflux/ZelBack
 
-                    2020-09-12 01:25:57 ---ZelFlux usage: 0.21791
+                    2020-09-12 01:25:57 ---Flux usage: 0.21791
 
                     2020-09-12 01:25:57 ---package evaluator system setup
                     starting
@@ -1311,7 +1325,7 @@ paths:
 
                     2020-09-12 01:56:08 Path: /home/zel/zelflux/ZelBack
 
-                    2020-09-12 01:56:08 ---ZelFlux usage: 0.19594
+                    2020-09-12 01:56:08 ---Flux usage: 0.19594
 
                     2020-09-12 01:56:08 ---package evaluator system setup
                     starting
@@ -1343,14 +1357,14 @@ paths:
                     2020-09-12 01:56:28 ---Found eps v1: 167.138
 
                     2020-09-12 01:56:28 ---Finished package evaluator test
-  /zelnode/zelfluxerrorlog:
+  /flux/errorlog:
     get:
       tags:
-        - ZelNode
-      summary: Returns with the ZelFlux error log
+        - Flux
+      summary: Returns with the Flux error log
       description: >-
         Returns with the error log located in zelflux directory.
-        **AdminAndZelTeam**
+        **AdminAndFluxTeam**
       operationId: zelfluxErrorLog
       security:
         - ZelID: []
@@ -1390,14 +1404,14 @@ paths:
                 2020-05-14T14:50:10.807Z
                 {"code":-28,"name":"Error","message":"Loading zelnode payment
                 cache..."} 2020-05-14T16:19:39.197Z          {}
-  /zelnode/tailzelfluxerrorlog:
+  /flux/tailerrorlog:
     get:
       tags:
-        - ZelNode
-      summary: Returns last lines of ZelFlux error log
+        - Flux
+      summary: Returns last lines of Flux error log
       description: >-
-        Returns last 100 lines known in the ZelFlux error log.
-        **AdminAndZelTeam**
+        Returns last 100 lines known in the Flux error log.
+        **AdminAndFluxTeam**
       operationId: tailFluxErrorLog
       security:
         - ZelID: []
@@ -1618,13 +1632,13 @@ paths:
                     2020-09-12T02:01:12.047Z          {}
 
                     2020-09-12T02:15:22.973Z          {}
-  /zelflux/info:
+  /flux/info:
     get:
       tags:
-        - ZelFlux
+        - Flux
       summary: Combined info
       description: Combined info of statuses. **Public**
-      operationId: getZelFluxInfo
+      operationId: getFluxInfo
       responses:
         '200':
           description: OK
@@ -1642,7 +1656,7 @@ paths:
                         type: object
                         properties:
                           info:
-                            $ref: '#/components/schemas/zelcashgetinfo'
+                            $ref: '#/components/schemas/daemongetinfo'
                       zelnode:
                         type: object
                         properties:
@@ -1815,13 +1829,13 @@ paths:
                       zelAppsCpusLocked: 1
                       zelAppsRamLocked: 1000
                       zelAppsHddLocked: 15
-  /zelflux/timezone:
+  /flux/timezone:
     get:
       tags:
-        - ZelFlux
-      summary: ZelFlux timezone
+        - Flux
+      summary: Flux timezone
       description: This will return with the timezone of the server. **Public**
-      operationId: getZelFluxTimezone
+      operationId: getFluxTimezone
       responses:
         '200':
           description: OK
@@ -1838,15 +1852,15 @@ paths:
               example:
                 status: success
                 data: Europe/Berlin
-  /zelflux/version:
+  /flux/version:
     get:
       tags:
-        - ZelFlux
-      summary: Gets version of ZelFlux
+        - Flux
+      summary: Gets version of Flux
       description: >-
-        Gets version of ZelFlux running on the ZelNode the call is run against
+        Gets version of Flux running on the Flux node the call is run against
         as it is in package.json. **Public**
-      operationId: getZelFluxVersion
+      operationId: getFluxVersion
       responses:
         '200':
           description: OK
@@ -1863,15 +1877,15 @@ paths:
               example:
                 status: success
                 data: 0.41.1
-  /zelflux/ip:
+  /flux/ip:
     get:
       tags:
-        - ZelFlux
-      summary: ZelFlux IP
+        - Flux
+      summary: Flux IP
       description: >-
-        This will return with the IP address of the server that ZelFlux is on.
+        This will return with the IP address of the server that Flux is on.
         **Public**
-      operationId: getZelFluxIP
+      operationId: getFluxIP
       responses:
         '200':
           description: OK
@@ -1888,13 +1902,13 @@ paths:
               example:
                 status: success
                 data: 49.12.8.215
-  /zelflux/zelid:
+  /flux/zelid:
     get:
       tags:
-        - ZelFlux
+        - Flux
       summary: Admin's ZelID
       description: This will return with the admin's ZelID. **Public**
-      operationId: getZelFluxZelID
+      operationId: getFluxZelID
       responses:
         '200':
           description: OK
@@ -1911,13 +1925,13 @@ paths:
               example:
                 status: success
                 data: 1CcoEkKQZcwUXPSps4bZJDjUM3mqe9bNXf
-  /zelflux/cruxid:
+  /flux/cruxid:
     get:
       tags:
-        - ZelFlux
+        - Flux
       summary: Admin's CruxID
       description: This will return with the admin's CruxID. **Public**
-      operationId: getZelFluxCruxID
+      operationId: getFluxCruxID
       responses:
         '200':
           description: OK
@@ -1934,13 +1948,13 @@ paths:
               example:
                 status: success
                 data: dk808@zel.crux
-  /zelflux/dosstate:
+  /flux/dosstate:
     get:
       tags:
-        - ZelFlux
+        - Flux
       summary: DOS state
       description: >-
-        This will return with the DOS state that ZelFlux is in from 0 to
+        This will return with the DOS state that Flux is in from 0 to
         infinity and if it reaches 10 it gets banned. **Public**
       operationId: getDOSState
       responses:
@@ -1968,10 +1982,10 @@ paths:
                 data:
                   dosState: 0
                   dosMessage: null
-  /zelflux/connectedpeers:
+  /flux/connectedpeers:
     get:
       tags:
-        - ZelFlux
+        - Flux
       summary: Gets IP's of connected peers
       description: Gets list of IP addresses of outgoing connected peers. **Public**
       operationId: connectedPeers
@@ -1997,10 +2011,10 @@ paths:
                   - 164.68.127.146
                   - 188.239.61.176
                   - 89.187.128.108
-  /zelflux/connectedpeersinfo:
+  /flux/connectedpeersinfo:
     get:
       tags:
-        - ZelFlux
+        - Flux
       summary: Gets info of connected peers
       description: >-
         Gets list of ip addresses and rtt of the outgoing connected peers.
@@ -2040,10 +2054,10 @@ paths:
                     rtt: 202
                   - ip: 89.187.128.108
                     rtt: 214
-  /zelflux/incomingconnections:
+  /flux/incomingconnections:
     get:
       tags:
-        - ZelFlux
+        - Flux
       summary: List of incoming connections
       description: Gets list of IP addresses of incoming connected peers. **Public**
       operationId: incomingConnections
@@ -2071,10 +2085,10 @@ paths:
                   - '::ffff:193.188.15.254'
                   - '::ffff:62.171.188.152'
                   - '::ffff:164.68.125.203'
-  /zelflux/incomingconnectionsinfo:
+  /flux/incomingconnectionsinfo:
     get:
       tags:
-        - ZelFlux
+        - Flux
       summary: Gets info of incoming connections
       description: Gets list of ip addresses and rtt of incoming connections. **Public**
       operationId: incomingConnectionsInfo
@@ -2116,13 +2130,13 @@ paths:
                     rtt: 194
                   - ip: '::ffff:164.68.125.203'
                     rtt: 205
-  /zelflux/checkfluxavailability:
+  /flux/checkfluxavailability:
     get:
       tags:
-        - ZelFlux
-      summary: Check availability of ZelFlux
+        - Flux
+      summary: Check availability of Flux
       description: >-
-        Check if ZelFlux is reachable and available using IP of the ZelFlux's
+        Check if Flux is reachable and available using IP of the Flux's
         server. **Public**
       operationId: checkFluxAvailability
       parameters:
@@ -2149,10 +2163,10 @@ paths:
                 status: sucess
                 data:
                   message: Asking Flux is available
-  /zelflux/checkcommunication:
+  /flux/checkcommunication:
     get:
       tags:
-        - ZelFlux
+        - Flux
       summary: Check incoming/outgoing peers
       description: Check if there is enough incoming/outgoing peers. **Public**
       operationId: isCommunicationEstablished
@@ -2172,12 +2186,12 @@ paths:
                 status: success
                 data:
                   message: Communication to Flux network is properly established
-  /zelflux/broadcastmessage:
+  /flux/broadcastmessage:
     post:
       tags:
-        - ZelFlux
+        - Flux
       summary: Broadcast message to peers
-      description: Broadcast data message to peers that are connected. **AdminAndZelTeam**
+      description: Broadcast data message to peers that are connected. **AdminAndFluxTeam**
       operationId: broadcastMessageFromUserPost
       security:
         - ZelID: []
@@ -2208,12 +2222,12 @@ paths:
               example:
                 status: success
                 data:
-                  message: Message successfully broadcasted to ZelFlux network
+                  message: Message successfully broadcasted to Flux network
     get:
       tags:
-        - ZelFlux
+        - Flux
       summary: Broadcast message to peers
-      description: Broadcast data message to peers that are connected. **AdminAndZelTeam**
+      description: Broadcast data message to peers that are connected. **AdminAndFluxTeam**
       security:
         - ZelID: []
       parameters:
@@ -2240,15 +2254,15 @@ paths:
               example:
                 status: success
                 data:
-                  message: Message successfully broadcasted to ZelFlux network
-  /zelflux/broadcastmessagetooutgoing:
+                  message: Message successfully broadcasted to Flux network
+  /flux/broadcastmessagetooutgoing:
     post:
       tags:
-        - ZelFlux
+        - Flux
       summary: Broadcast message to outgoing peers
       description: >-
         Broadcast data message to peers on outgoing connections.
-        **AdminAndZelTeam**
+        **AdminAndFluxTeam**
       operationId: broadcastMessageToOutgoingFromUserPost
       security:
         - ZelID: []
@@ -2279,14 +2293,14 @@ paths:
               example:
                 status: success
                 data:
-                  message: Message successfully broadcasted to ZelFlux network
+                  message: Message successfully broadcasted to Flux network
     get:
       tags:
-        - ZelFlux
+        - Flux
       summary: Broadcast message to outgoing peers
       description: >-
         Broadcast data message to peers on outgoing connections.
-        **AdminAndZelTeam**
+        **AdminAndFluxTeam**
       operationId: broadcastMessageToOutgoingFromUser
       security:
         - ZelID: []
@@ -2313,15 +2327,15 @@ paths:
               example:
                 status: success
                 data:
-                  message: Message successfully broadcasted to ZelFlux network
-  /zelflux/broadcastmessagetoincoming:
+                  message: Message successfully broadcasted to Flux network
+  /flux/broadcastmessagetoincoming:
     post:
       tags:
-        - ZelFlux
+        - Flux
       summary: Broadcast message to incoming peers
       description: >-
         Broadcast data message to peers on incoming connections.
-        **AdminAndZelTeam**
+        **AdminAndFluxTeam**
       operationId: broadcastMessageToIncomingFromUserPost
       security:
         - ZelID: []
@@ -2352,14 +2366,14 @@ paths:
               example:
                 status: success
                 data:
-                  message: Message successfully broadcasted to ZelFlux network
+                  message: Message successfully broadcasted to Flux network
     get:
       tags:
-        - ZelFlux
+        - Flux
       summary: Broadcast message to incoming peers
       description: >-
         Broadcast data message to peers on incoming connections.
-        **AdminAndZelTeam**
+        **AdminAndFluxTeam**
       operationId: broadcastMessageToIncomingFromUser
       security:
         - ZelID: []
@@ -2386,15 +2400,15 @@ paths:
               example:
                 status: success
                 data:
-                  message: Message successfully broadcasted to ZelFlux network
-  /zelflux/addpeer:
+                  message: Message successfully broadcasted to Flux network
+  /flux/addpeer:
     get:
       tags:
-        - ZelFlux
+        - Flux
       summary: Add peer option
       description: >-
         This call gives option to add peers to outgoing connections.
-        **AdminAndZelTeam**
+        **AdminAndFluxTeam**
       operationId: addPeer
       security:
         - ZelID: []
@@ -2422,14 +2436,14 @@ paths:
                 status: success
                 data:
                   message: Outgoing connection to 49.12.8.215 initiated
-  /zelflux/removepeer:
+  /flux/removepeer:
     get:
       tags:
-        - ZelFlux
+        - Flux
       summary: Remove peer option
       description: >-
         This call does exact opposite of add and removes/drops a outgoing
-        connected peer. **AdminAndZelTeam**
+        connected peer. **AdminAndFluxTeam**
       operationId: removePeer
       security:
         - ZelID: []
@@ -2457,12 +2471,12 @@ paths:
                 status: success
                 data:
                   message: Outgoing connection to 49.12.8.215 closed
-  /zelflux/removeincomingpeer:
+  /flux/removeincomingpeer:
     get:
       tags:
-        - ZelFlux
+        - Flux
       summary: Remove incoming peer
-      description: Remove a incoming connected peer. **AdminAndZelTeam**
+      description: Remove a incoming connected peer. **AdminAndFluxTeam**
       operationId: removeIncomingPeer
       security:
         - ZelID: []
@@ -2490,14 +2504,14 @@ paths:
                 status: success
                 data:
                   message: Incoming connection to 49.12.8.215 closed
-  /zelflux/allowport:
+  /flux/allowport:
     get:
       tags:
-        - ZelFlux
+        - Flux
       summary: Open port on server
       description: >-
         This will open a port on the server and adding it to the firewall rules.
-        **AdminAndZelTeam**
+        **AdminAndFluxTeam**
       operationId: allowPortApi
       security:
         - ZelID: []
@@ -2539,13 +2553,438 @@ paths:
                   message: |-
                     Rule added
                     Rule added (v6)
-  /zelcash/help:
+  # To be confirmed if CruxID is still relevant and if it is to be replaced.
+  /flux/adjustcruxid:
     get:
       tags:
-        - ZelCash
+        - Flux
+      summary: Adjust CruxID
+      description: This will add/update your CruxID. **Admin**
+      operationId: adjustCruxID
+      security:
+        - ZelID: []
+      parameters:
+        - in: query
+          name: cruxid
+          required: true
+          schema:
+            type: string
+          description: CruxID
+          example: dk808@zel.crux
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    $ref: '#/components/schemas/status'
+                  data:
+                    $ref: '#/components/schemas/statusmessage'
+              example:
+                status: success
+                data:
+                  message: CruxID adjusted
+  /flux/nodetier:
+    get:
+      tags:
+        - Flux
+      summary: Node Tier
+      description: This call will display the tier of the node. **Public**
+      operationId: getNodeTier
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    $ref: '#/components/schemas/status'
+                  data:
+                    type: string
+                    description: Node Tier
+              example:
+                status: success
+                data: cumulus
+  # This appears to be a duplicate of /flux/zelid - to be confirmed if this is to be removed or if it has a specific purpose.
+  /flux/id:
+    get:
+      tags:
+        - Flux
+      summary: ZelID
+      description: This call will display the user's ZelID. **Public**
+      operationId: getFluxZelID
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    $ref: '#/components/schemas/status'
+                  data:
+                    type: string
+                    description: ZelID
+              example:
+                status: success
+                data: 1CcoEkKQZcwUXPSps4bZJDjUM3mqe9bNXf
+  /flux/kadena:
+    get:
+      tags:
+        - Flux
+      summary: Kadena Info
+      description: This call will display the user's Kadena address and chain ID. **Public**
+      operationId: getFluxKadena
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    $ref: '#/components/schemas/status'
+                  data:
+                    type: string
+                    description: Kadena address and chain ID
+              example:
+                status: success
+                data: kadena:k:7a1529b3a07fate32d75684ab20bdde61545d60f1c6bcbf2489fef857a316652?chainid=0
+  /flux/adjustkadena:
+    get:
+      tags:
+        - Flux
+      summary: Adjust Kadena Account
+      description: Essentially rebuilds flux - use with caution! **Admin**
+      operationId: adjustKadenaAccount
+      security:
+        - ZelID: []
+      parameters:
+        - in: query
+          name: account
+          required: true
+          schema:
+            type: string
+          description: Kadena Account
+          example: k:7a1529b3a07fate32d75684ab20bdde61545d60f1c6bcbf2489fef857a316652
+        - in: query
+          name: chainid
+          required: true
+          schema:
+            type: string
+          description: Kadena ChainID
+          example: 0
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    $ref: '#/components/schemas/status'
+                  data:
+                    $ref: '#/components/schemas/statusmessage'
+              example:
+                status: success
+                data:
+                  message: Kadena account adjusted
+  /flux/startbenchmark:
+    get:
+      tags:
+        - Flux
+      summary: Start Benchmark
+      description: This call will start the benchmark which tests the hardware specifications and performance. **AdminAndFluxTeam**
+      operationId: startBenchmark
+      security:
+        - ZelID: []
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    $ref: '#/components/schemas/status'
+                  data:
+                    type: string
+                    description: Start performance benchmark
+              example:
+                status: success
+                data:
+                  message: Benchamrk successfully started
+  /flux/restartbenchmark:
+    get:
+      tags:
+        - Flux
+      summary: Restart Benchmark
+      description: This call will restart the benchmark which tests the hardware specifications and performance. **AdminAndFluxTeam**
+      operationId: startBenchmark
+      security:
+        - ZelID: []
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    $ref: '#/components/schemas/status'
+                  data:
+                    type: string
+                    description: Restart performance benchmark
+              example:
+                status: success
+                data:
+                  message: Benchamrk successfully restarted
+  /flux/softupdateflux:
+    get:
+      tags:
+        - Flux
+      summary: Soft Update Flux
+      description: This call will perform a soft update of Flux. **AdminAndFluxTeam**
+      operationId: softUpdateFlux
+      security:
+        - ZelID: []
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    $ref: '#/components/schemas/status'
+                  data:
+                    type: string
+                    description: Perform a soft update of Flux
+              example:
+                status: success
+                data:
+                  message: Flux successfully updated using soft method
+  /flux/softupdatefluxinstall:
+    get:
+      tags:
+        - Flux
+      summary: Install Flux
+      description: This call will install Flux. **AdminAndFluxTeam**
+      operationId: softUpdateFluxInstall
+      security:
+        - ZelID: []
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    $ref: '#/components/schemas/status'
+                  data:
+                    type: string
+                    description: Install Flux
+              example:
+                status: success
+                data:
+                  message: Flux successfully updated softly with installation
+  /flux/warnlog:
+    get:
+      tags:
+        - Flux
+      summary: Warning Log
+      description: This call returns the Flux warning log. **AdminAndFluxTeam**
+      operationId: fluxWarnLog
+      security:
+        - ZelID: []
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: string
+                description: Warning log
+              example:
+                2022-01-23T15:23:33.638Z          Daemon not yet synced. Flux discovery is awaiting.
+                2022-01-23T15:25:33.655Z          Node not confirmed. Flux discovery is awaiting.
+                2022-01-23T15:27:33.869Z          Unexpected token B in JSON at position 0
+                2022-01-23T15:29:34.535Z          Flux IP not detected. Flux discovery is awaiting.
+  /flux/debuglog:
+    get:
+      tags:
+        - Flux
+      summary: Debug Log
+      description: This call returns the Flux debug log. **AdminAndFluxTeam**
+      operationId: fluxDebugLog
+      security:
+        - ZelID: []
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: string
+                description: Debug log
+              example:
+                2022-01-23T15:23:33.049Z          Flux running on port 16127!
+                2022-01-23T15:23:33.051Z          Initiating MongoDB connection
+                2022-01-23T15:23:33.075Z          Flux Home running on port 16126!
+                2022-01-23T15:23:33.106Z          DB connected
+                2022-01-23T15:23:33.106Z          Preparing local database...
+                2022-01-23T15:23:33.471Z          Local database prepared
+                2022-01-23T15:23:33.472Z          Preparing temporary database...
+                2022-01-23T15:23:33.505Z          Temporary database prepared
+                2022-01-23T15:23:33.505Z          Preparing Flux Apps locations
+                2022-01-23T15:23:33.554Z          Flux Apps locations prepared
+                2022-01-23T15:23:33.571Z          Firewalls checked
+                2022-01-23T15:23:33.572Z          Connections polling prepared
+                2022-01-23T15:23:33.580Z          Flux Daemon Info Service Started
+                2022-01-23T15:23:33.619Z          Flux checks operational
+                2022-01-23T15:23:33.638Z          Daemon not yet synced. Flux discovery is awaiting.
+                2022-01-23T15:23:33.639Z          Flux Discovery started
+  /flux/infolog:
+    get:
+      tags:
+        - Flux
+      summary: Info Log
+      description: This call returns the Flux info log. **AdminAndFluxTeam**
+      operationId: fluxInfoLog
+      security:
+        - ZelID: []
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: string
+                description: Info log
+              example:
+                2022-01-23T15:23:33.047Z          Flux running on port 16127!
+                2022-01-23T15:23:33.050Z          Initiating MongoDB connection
+                2022-01-23T15:23:33.071Z          Flux Home running on port 16126!
+                2022-01-23T15:23:33.105Z          DB connected
+                2022-01-23T15:23:33.106Z          Preparing local database...
+                2022-01-23T15:23:33.431Z          Local database prepared
+                2022-01-23T15:23:33.472Z          Preparing temporary database...
+                2022-01-23T15:23:33.505Z          Temporary database prepared
+                2022-01-23T15:23:33.505Z          Preparing Flux Apps locations
+                2022-01-23T15:23:33.554Z          Flux Apps locations prepared
+                2022-01-23T15:23:33.571Z          Firewalls checked
+  /flux/tailwarnlog:
+    get:
+      tags:
+        - Flux
+      summary: Tail Warn Log
+      description: This call returns the Flux tail warn log. **AdminAndFluxTeam**
+      operationId: tailFluxWarnLog
+      security:
+        - ZelID: []
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: string
+                description: Tail warn log
+              example:
+                status: success
+                data:
+                  message:
+                    2022-01-23T16:44:33.266Z          Message received from outgoing peer 167.86.116.93 but is not an originating node of 043adf786dbfc86b8ca741deb589c75b5aa05e99416af5489a6407683c3ef88d30eab6b5cfab869d8def357c46db6bf553b4cb17104219065a17519a8a2596da92.\n
+                    2022-01-23T16:44:34.856Z          Message received from outgoing peer 167.86.121.80 but is not an originating node of 043d50eb6288db8991a893d00014a0c9bf3ca4baac923eee2e65fae746b5ef41ccd26508ca5e8ef2f0092fc22cd7306b4c1da900eca5f27ee995786f58f6254c79.\n
+                    2022-01-23T16:44:36.225Z          Message received from incoming peer ::ffff:194.163.176.204 but is not an originating node of 042dd35e0ccf4df99b63768a974b16f6b00fe8cf087320db13942689230ad3a8817f5d98dc0deb8b899a6794cc7ec7771295b54782c8ad52c07c8cedebe83772f5.
+  /flux/taildebuglog:
+    get:
+      tags:
+        - Flux
+      summary: Tail Debug Log
+      description: This call returns the Flux tail debug log. **AdminAndFluxTeam**
+      operationId: tailFluxDebugLog
+      security:
+        - ZelID: []
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: string
+                description: Tail debug log
+              example:
+                status: success
+                data:
+                  message:
+                    2022-01-23T17:02:21.941Z          Transaction c70cd93576c5717621f75ca9509c113266a0e19559b61784443845c6cb4865d0 1 not found in database. Falling back to blockchain data\n
+                    2022-01-23T17:02:22.327Z          Transaction 8a6118a60b845250d747f66ecb2eb702eb7ed29c7567745788f9e81d4c3a0f3a 1 not found in database. Falling back to blockchain data\n
+                    2022-01-23T17:02:22.470Z          Transaction 04b86bbc7a3cd64752032f29d6ef6f6f859bfe86ac5026ecc8d5e8dfa7c29160 0 not found in database. Falling back to blockchain data\n
+  /flux/tailinfolog:
+    get:
+      tags:
+        - Flux
+      summary: Tail Info Log
+      description: This call returns the Flux tail info log. **AdminAndFluxTeam**
+      operationId: tailFluxInfoLog
+      security:
+        - ZelID: []
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: string
+                description: Tail info log
+              example:
+                status: success
+                data:
+                  message:
+                    2022-01-23T17:02:23.458Z          Transaction 03dcc45f7c265d73db3e53c98a94c1a52841ac10c7774c6a1942fb602bd7712c 1 not found in database. Falling back to blockchain data\n
+                    2022-01-23T17:02:23.600Z          Transaction e141049a8de186b718313343bb08f0341c6273eccd424a4b4d5c5bee599ad713 0 not found in database. Falling back to blockchain data\n
+                    2022-01-23T17:02:23.793Z          Transaction 5e59328a1f97ee3335b23ac550236cdcc022bea86cc78e3dddf0674e2d0fd129 0 not found in database. Falling back to blockchain data\n
+  /flux/backendfolder:
+    get:
+      tags:
+        - Flux
+      summary: Local Folder Location
+      description: This call returns the local folder location for Flux. **AdminAndFluxTeam**
+      operationId: fluxBackendFolder
+      security:
+        - ZelID: []
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: string
+                description: Backend folder location
+              example:
+                status: success
+                data: /home/username/zelflux/ZelBack/
+  /daemon/help:
+    get:
+      tags:
+        - Daemon
       summary: RPC list
       description: >-
-        Gets list of RPC for the Zelcash daemon or if command query is used it
+        Gets list of RPC for the Flux daemon or if command query is used it
         will respond with the help info for that specified call. **Public**
       operationId: help
       parameters:
@@ -2595,9 +3034,9 @@ paths:
 
                   getbenchstatus
 
-                  startzelbenchd
+                  startbenchmark
 
-                  stopzelbenchd
+                  stopbenchmark
 
 
                   == Blockchain ==
@@ -2918,13 +3357,13 @@ paths:
                   zelnodedebug
 
                   znsync "status|reset"
-  /zelcash/getinfo:
+  /daemon/getinfo:
     get:
       tags:
-        - ZelCash
-      summary: Zelcash daemon info
+        - Daemon
+      summary: Flux daemon info
       description: >-
-        Returns an object containing various state info for the Zelcash daemon.
+        Returns an object containing various state info for the Flux daemon.
         **Public**
       operationId: getInfo
       responses:
@@ -2938,7 +3377,7 @@ paths:
                   status:
                     $ref: '#/components/schemas/status'
                   data:
-                    $ref: '#/components/schemas/zelcashgetinfo'
+                    $ref: '#/components/schemas/daemongetinfo'
               example:
                 status: success
                 data:
@@ -2957,12 +3396,12 @@ paths:
                   paytxfee: 0
                   relayfee: 0.000001
                   errors: ''
-  /zelcash/getzelnodestatus:
+  /daemon/getzelnodestatus:
     get:
       tags:
-        - ZelCash
-      summary: ZelNode status
-      description: Returns an object containing various state of the ZelNode. **Public**
+        - Daemon
+      summary: Flux node status
+      description: Returns an object containing various state of the Flux node. **Public**
       operationId: getZelNodeStatus
       responses:
         '200':
@@ -2998,12 +3437,12 @@ paths:
                     0485c289e6df683ac2af0ce514260a20cc5a631336fee6bbcb897694134c5a5ad2a5d918f99d70a60c0cb30c705a8c5440f1cbca08e6d3f037320f40751c50555c
                   activesince: 1586334448
                   lastpaid: 1588014482
-  /zelcash/listzelnodes:
+  /daemon/listzelnodes:
     get:
       tags:
-        - ZelCash
-      summary: ZelNode list
-      description: Gets a ranked list of Zelnodes. **Public**
+        - Daemon
+      summary: Flux node list
+      description: Gets a ranked list of Flux nodes. **Public**
       operationId: listZelNodes
       responses:
         '200':
@@ -3025,34 +3464,34 @@ paths:
                           description: Collateral txid and output index
                         ip:
                           type: string
-                          description: Ip address of ZelNode server
+                          description: Ip address of Flux server
                         added_height:
                           type: integer
-                          description: Block height ZelNode was added to list
+                          description: Block height Flux node was added to list
                         confirmed_height:
                           type: integer
-                          description: Block height ZelNode was confirmed by the network
+                          description: Block height Flux node was confirmed by the network
                         last_confirmed_height:
                           type: integer
-                          description: Latest block height network confirmed the ZelNode
+                          description: Latest block height network confirmed the Flux node
                         last_paid_height:
                           type: integer
-                          description: Block the ZelNode was last paid
+                          description: Block the Flux node was last paid
                         tier:
                           type: string
-                          description: Tier of ZelNode
+                          description: Tier of Flux node
                         payment_address:
                           type: string
                           description: Address where rewards are paid
                         activesince:
                           type: integer
-                          description: Active time of ZelNode in epoch
+                          description: Active time of Flux node in epoch
                         lastpaid:
                           type: integer
                           description: Last paid time in epoch
                         rank:
                           type: integer
-                          description: Rank of ZelNode
+                          description: Rank of Flux node
               example:
                 status: success
                 data:
@@ -3121,12 +3560,12 @@ paths:
                     activesince: 1587582537
                     lastpaid: 1588222759
                     rank: 0
-  /zelcash/viewdeterministiczelnodelist:
+  /daemon/viewdeterministiczelnodelist:
     get:
       tags:
-        - ZelCash
-      summary: Deterministic ZelNode list
-      description: View deterministic list of ZelNodes by rank. **Public**
+        - Daemon
+      summary: Deterministic FluxNode list
+      description: View deterministic list of FluxNodes by rank. **Public**
       operationId: viewDeterministicZelNodeList
       parameters:
         - in: query
@@ -3165,40 +3604,40 @@ paths:
                           description: Output index
                         ip:
                           type: string
-                          description: Ip address of ZelNode server
+                          description: Ip address of FluxNode server
                         network:
                           type: string
                           description: 'Network type (IPv4, IPv6, onion)'
                         added_height:
                           type: integer
-                          description: Block height ZelNode was added to list
+                          description: Block height FluxNode was added to list
                         confirmed_height:
                           type: integer
-                          description: Block height ZelNode was confirmed by the network
+                          description: Block height FluxNode was confirmed by the network
                         last_confirmed_height:
                           type: integer
-                          description: Latest block height network confirmed the ZelNode
+                          description: Latest block height network confirmed the FluxNode
                         last_paid_height:
                           type: integer
-                          description: Block the ZelNode was last paid
+                          description: Block the FluxNode was last paid
                         tier:
                           type: string
-                          description: Tier of ZelNode
+                          description: Tier of FluxNode
                         payment_address:
                           type: string
                           description: Address where rewards are paid
                         pubkey:
                           type: string
-                          description: Zelnode public key used for message broadcasting
+                          description: Fluxnode public key used for message broadcasting
                         activesince:
                           type: integer
-                          description: Active time of ZelNode in epoch
+                          description: Active time of FluxNode in epoch
                         lastpaid:
                           type: integer
                           description: Last paid time in epoch
                         rank:
                           type: integer
-                          description: Rank of ZelNode
+                          description: Rank of FluxNode
               example:
                 status: success
                 data:
@@ -3297,13 +3736,13 @@ paths:
                     activesince: 1587582537
                     lastpaid: 1588222759
                     rank: 0
-  /zelcash/getzelnodecount:
+  /daemon/getzelnodecount:
     get:
       tags:
-        - ZelCash
-      summary: ZelNode count
+        - Daemon
+      summary: Flux node count
       description: >-
-        Returns a count of ZelNodes and enabled ZelNodes categorized by tiers.
+        Returns a count of FluxNodes and enabled FluxNodes categorized by tiers.
         **Public**
       operationId: getZelNodeCount
       responses:
@@ -3321,28 +3760,28 @@ paths:
                     properties:
                       total:
                         type: number
-                        description: Total number of ZelNodes
+                        description: Total number of Flux nodes
                       stable:
                         type: number
-                        description: Number of stable ZelNodes
+                        description: Number of stable Flux nodes
                       basic-enabled:
                         type: number
-                        description: Basic ZelNode count
+                        description: Basic Flux node count
                       super-enabled:
                         type: number
-                        description: Super ZelNode count
+                        description: Super Flux node count
                       bamf-enabled:
                         type: number
-                        description: Bamf ZelNode count
+                        description: Bamf Flux node count
                       ipv4:
                         type: number
-                        description: ZelNodes on ipv4
+                        description: Flux nodes on ipv4
                       ipv6:
                         type: number
-                        description: ZelNodes on ipv6
+                        description: Flux nodes on ipv6
                       onion:
                         type: string
-                        description: ZelNodes on tor
+                        description: Flux nodes on tor
               example:
                 status: success
                 data:
@@ -3354,11 +3793,11 @@ paths:
                   ipv4: 692
                   ipv6: 0
                   onion: 0
-  /zelcash/getdoslist:
+  /daemon/getdoslist:
     get:
       tags:
-        - ZelCash
-      summary: ZelNode DOS list
+        - Daemon
+      summary: FluxNode DOS list
       description: Get a list of all zelnodes in the DOS list. **Public**
       operationId: getDOSList
       responses:
@@ -3401,12 +3840,12 @@ paths:
                     added_height: 644302
                     payment_address: t1LJAkTUAHcJZ535mqJmFwHtMTrEaQBSNf1
                     eligible_in: 35
-  /zelcash/getstartlist:
+  /daemon/getstartlist:
     get:
       tags:
-        - ZelCash
-      summary: ZelNode start list
-      description: Get a list of all zelnodes in the start list. **Public**
+        - Daemon
+      summary: FluxNode start list
+      description: Get a list of all Fluxnodes in the start list. **Public**
       operationId: getStartList
       responses:
         '200':
@@ -3449,10 +3888,10 @@ paths:
                     added_height: 684078
                     payment_address: t1TosdpcFNWAaJ8kNmc1LNWbVKh6ob4Tvri
                     expires_in: 9
-  /zelcash/spork:
+  /daemon/spork:
     get:
       tags:
-        - ZelCash
+        - Daemon
       summary: Spork info
       description: Return spork values or their active state. **Public**
       operationId: spork
@@ -3498,13 +3937,13 @@ paths:
                 data:
                   SPORK_1_ZELNODE_PAYMENT_ENFORCEMENT: 4070908800
                   SPORK_2_ZELNODE_UPGRADE_VOTE_ENFORCEMENT: 4070908800
-  /zelcash/zelnodecurrentwinner:
+  /daemon/fluxcurrentwinner:
     get:
       tags:
-        - ZelCash
+        - Daemon
       summary: Current list of winners
       description: Gets a list of current ZelNode winners. **Public**
-      operationId: zelNodeCurrentWinner
+      operationId: FluxNodeCurrentWinner
       responses:
         '200':
           description: OK
@@ -3523,25 +3962,25 @@ paths:
                         properties:
                           collateral:
                             type: string
-                            description: Collateral txid and output index of ZelNode
+                            description: Collateral txid and output index of FluxNode
                           ip:
                             type: string
-                            description: Ip address of ZelNode
+                            description: Ip address of FluxNode
                           added_height:
                             type: integer
-                            description: Block height ZelNode was added
+                            description: Block height FluxNode was added
                           confirmed_height:
                             type: integer
-                            description: Block height ZelNode was confirmed
+                            description: Block height FluxNode was confirmed
                           last_confirmed_height:
                             type: integer
-                            description: Block height ZelNode was last confirmed
+                            description: Block height FluxNode was last confirmed
                           last_paid_height:
                             type: integer
-                            description: Block height ZelNode was last paid
+                            description: Block height FluxNode was last paid
                           tier:
                             type: string
-                            description: ZelNode tier
+                            description: FluxNode tier
                           payment_address:
                             type: string
                             description: Payment address
@@ -3550,25 +3989,25 @@ paths:
                         properties:
                           collateral:
                             type: string
-                            description: Collateral txid and output index of ZelNode
+                            description: Collateral txid and output index of FluxNode
                           ip:
                             type: string
-                            description: Ip address of ZelNode
+                            description: Ip address of FluxNode
                           added_height:
                             type: integer
-                            description: Block height ZelNode was added
+                            description: Block height FluxNode was added
                           confirmed_height:
                             type: integer
-                            description: Block height ZelNode was confirmed
+                            description: Block height FluxNode was confirmed
                           last_confirmed_height:
                             type: integer
-                            description: Block height ZelNode was last confirmed
+                            description: Block height FluxNode was last confirmed
                           last_paid_height:
                             type: integer
-                            description: Block height ZelNode was last paid
+                            description: Block height FluxNode was last paid
                           tier:
                             type: string
-                            description: ZelNode tier
+                            description: FluxNode tier
                           payment_address:
                             type: string
                             description: Payment address
@@ -3577,25 +4016,25 @@ paths:
                         properties:
                           collateral:
                             type: string
-                            description: Collateral txid and output index of ZelNode
+                            description: Collateral txid and output index of FluxNode
                           ip:
                             type: string
-                            description: Ip address of ZelNode
+                            description: Ip address of FluxNode
                           added_height:
                             type: integer
-                            description: Block height ZelNode was added
+                            description: Block height FluxNode was added
                           confirmed_height:
                             type: integer
-                            description: Block height ZelNode was confirmed
+                            description: Block height FluxNode was confirmed
                           last_confirmed_height:
                             type: integer
-                            description: Block height ZelNode was last confirmed
+                            description: Block height FluxNode was last confirmed
                           last_paid_height:
                             type: integer
-                            description: Block height ZelNode was last paid
+                            description: Block height FluxNode was last paid
                           tier:
                             type: string
-                            description: ZelNode tier
+                            description: FluxNode tier
                           payment_address:
                             type: string
                             description: Payment address
@@ -3635,10 +4074,10 @@ paths:
                     last_paid_height: 590594
                     tier: BAMF
                     payment_address: t1dDaoT2WDv5M5gTdx7CzLgXEQSEeqVkryw
-  /zelcash/getbestblockhash:
+  /daemon/getbestblockhash:
     get:
       tags:
-        - ZelCash
+        - Daemon
       summary: Block hash of tip on longest chain
       description: >-
         Returns the hash of the best (tip) block in the longest block chain.
@@ -3661,10 +4100,10 @@ paths:
                 status: success
                 data: >-
                   00000045ee2d11311976f420b0d753dc7a6e2800a36cf07f6ec1572699737ab6
-  /zelcash/getblock:
+  /daemon/getblock:
     get:
       tags:
-        - ZelCash
+        - Daemon
       summary: Get block data
       description: >-
         Gets block data using block height or block hash you specify to get info
@@ -3769,10 +4208,10 @@ paths:
                               description: Status of pool monitor
                             chainValue:
                               type: number
-                              description: Pool value of ZEL
+                              description: Pool value of FLUX
                             chainValueZat:
                               type: integer
-                              description: Pool value of ZEL
+                              description: Pool value of FLUX
                             valueDelta:
                               type: integer
                               description: Delta value
@@ -3831,10 +4270,10 @@ paths:
                     00000057e8ef2fc394594f1f37d6f5ef7cc2ab4f2af3b6b3eaa14adb9310950b
                   nextblockhash: >-
                     000000196832b58171a331e684f5c3df019632749a3219bfb57569d0f7601a30
-  /zelcash/getblockchaininfo:
+  /daemon/getblockchaininfo:
     get:
       tags:
-        - ZelCash
+        - Daemon
       summary: Blockchain info
       description: >-
         Returns an object containing various state info regarding block chain
@@ -4042,14 +4481,14 @@ paths:
                       name: Kamata
                       activationheight: 558000
                       status: active
-                      info: 'Zel Kamata Upgrade, Deterministic ZelNodes and ZelFlux'
+                      info: 'Zel Kamata Upgrade, Deterministic ZelNodes and Flux'
                   consensus:
                     chaintip: 76b809bb
                     nextblock: 76b809bb
-  /zelcash/getblockcount:
+  /daemon/getblockcount:
     get:
       tags:
-        - ZelCash
+        - Daemon
       summary: Current block count
       description: Returns the number of blocks in the best valid block chain. **Public**
       operationId: getBlockCount
@@ -4069,10 +4508,10 @@ paths:
               example:
                 status: success
                 data: 590823
-  /zelcash/getblockhash:
+  /daemon/getblockhash:
     get:
       tags:
-        - ZelCash
+        - Daemon
       summary: Get block's hash
       description: Returns hash of block in best-block-chain at index provided. **Public**
       operationId: getBlockHash
@@ -4101,10 +4540,10 @@ paths:
                 status: success
                 data: >-
                   000000234b617194f3faff69ee62f0dde0115f2007c3b42e38eaba80c786a5e5
-  /zelcash/getblockheader:
+  /daemon/getblockheader:
     get:
       tags:
-        - ZelCash
+        - Daemon
       summary: Block header info
       description: Returns an Object with information about blockheader. **Public**
       operationId: getBlockHeader
@@ -4215,10 +4654,10 @@ paths:
                     00000099767337bdf22bdbb7354509a9ed760298facbdcd40339b96590f85e26
                   nextblockhash: >-
                     0000009370f976e1d8be1634d291832039803836e951804e965af9066e18bde7
-  /zelcash/getchaintips:
+  /daemon/getchaintips:
     get:
       tags:
-        - ZelCash
+        - Daemon
       summary: List of known chain tips
       description: >-
         Return information about all known tips in the block tree, including the
@@ -4401,10 +4840,10 @@ paths:
                       000000640166be87a0d70d474389c934972ef0eca75977dae80e27a179fe16fc
                     branchlen: 1
                     status: valid-fork
-  /zelcash/getdifficulty:
+  /daemon/getdifficulty:
     get:
       tags:
-        - ZelCash
+        - Daemon
       summary: Proof of work difficulty
       description: >-
         Returns the proof-of-work difficulty as a multiple of the minimum
@@ -4426,10 +4865,10 @@ paths:
               example:
                 status: success
                 data: 2572.645186022886
-  /zelcash/getmempoolinfo:
+  /daemon/getmempoolinfo:
     get:
       tags:
-        - ZelCash
+        - Daemon
       summary: Memory pool info
       description: Returns details on the active state of the TX memory pool. **Public**
       operationId: getMempoolInfo
@@ -4461,10 +4900,10 @@ paths:
                   size: 0
                   bytes: 0
                   usage: 0
-  /zelcash/getrawmempool:
+  /daemon/getrawmempool:
     get:
       tags:
-        - ZelCash
+        - Daemon
       summary: Transaction ids in memory pool
       description: >-
         Returns all transaction ids in memory pool as a json array of string.
@@ -4502,7 +4941,7 @@ paths:
                             description: Transaction size in bytes
                           fee:
                             type: integer
-                            description: Transaction fee in ZEL
+                            description: Transaction fee in FLUX
                           time:
                             type: integer
                             description: >-
@@ -4575,10 +5014,10 @@ paths:
                     startingpriority: 10000000000000000
                     currentpriority: 10000000000000000
                     depends: []
-  /zelcash/gettxout:
+  /daemon/gettxout:
     get:
       tags:
-        - ZelCash
+        - Daemon
       summary: Transaction IDs in memory pool
       description: >-
         Returns all transaction ids in memory pool as a json array of string.
@@ -4636,7 +5075,7 @@ paths:
                         description: The number of confirmations
                       value:
                         type: number
-                        description: The transaction value in ZEL
+                        description: The transaction value in FLUX
                       scriptPubKey:
                         type: object
                         properties:
@@ -4680,10 +5119,10 @@ paths:
                       - t1XZNzdMMDZ4QPRD2a6hHWQ4Mog3HF9mCMp
                   version: 4
                   coinbase: true
-  /zelcash/gettxoutproof:
+  /daemon/gettxoutproof:
     get:
       tags:
-        - ZelCash
+        - Daemon
       summary: Hex-encoded proof of transaction
       description: >-
         Returns a hex-encoded proof that "txid" was included in a block.
@@ -4722,10 +5161,10 @@ paths:
                 status: success
                 data: >-
                   04000000e6f6eb7762f7970a06ad119590ba1882a30e290e3f6837cc64960f1b70000000fde035a9548fe35311b0212323eeeb9844c9ab093b24982d397fd94ab68f68725f44c0da150b3d68af0671dc272b007c4354a03d63298b00ad7700d4b818f70a4d0ab05eaca2001e0001b8750000000000000000000000000000000000000000000000003eae1205340a77b45fde07253220864115fe31c3a77f1e84b358edafad9929200de7c90f8d38878f423f9dc35266b6fd8280e56d3615b988540100000001fde035a9548fe35311b0212323eeeb9844c9ab093b24982d397fd94ab68f68720101
-  /zelcash/gettxoutsetinfo:
+  /daemon/gettxoutsetinfo:
     get:
       tags:
-        - ZelCash
+        - Daemon
       summary: Unspent transaction output set info
       description: Returns statistics about the unspent transaction output set. **Public**
       operationId: getTxOutSetInfo
@@ -4775,10 +5214,10 @@ paths:
                   hash_serialized: >-
                     151a45f9f10274ebc622877355f6c64a5ae6a8561c186d2028cb32127d3bf093
                   total_amount: 99020653.199865
-  /zelcash/verifytxoutproof:
+  /daemon/verifytxoutproof:
     get:
       tags:
-        - ZelCash
+        - Daemon
       summary: Verifies a proof
       description: >-
         Verifies that a proof points to a transaction in a block, returning the
@@ -4814,10 +5253,10 @@ paths:
                 data:
                   - >-
                     72688fb64ad97f392d98243b09abc94498ebee232321b01153e38f54a935e0fd
-  /zelcash/getblocksubsidy:
+  /daemon/getblocksubsidy:
     get:
       tags:
-        - ZelCash
+        - Daemon
       summary: Block reward
       description: >-
         Returns block subsidy reward, taking into account the mining slow start
@@ -4847,15 +5286,15 @@ paths:
                     properties:
                       miner:
                         type: integer
-                        description: The mining reward amount in ZEL
+                        description: The mining reward amount in FLUX
               example:
                 status: success
                 data:
                   miner: 150
-  /zelcash/getblocktemplate:
+  /daemon/getblocktemplate:
     get:
       tags:
-        - ZelCash
+        - Daemon
       summary: Data to construct a block
       description: It returns data needed to construct a block to work on. **Public**
       operationId: getBlockTemplate
@@ -5054,19 +5493,19 @@ paths:
                         description: The height of the next block
                       basic_zelnode_address:
                         type: string
-                        description: ZEL address
+                        description: FLUX address
                       basic_zelnode_payout:
                         type: integer
                         description: Amount
                       super_zelnode_address:
                         type: string
-                        description: ZEL address
+                        description: FLUX address
                       super_zelnode_payout:
                         type: integer
                         description: Amount
                       bamf_zelnode_address:
                         type: string
-                        description: ZEL address
+                        description: FLUX address
                       bamf_zelnode_payout:
                         type: integer
                         description: Amount
@@ -5126,10 +5565,10 @@ paths:
                   super_zelnode_payout: 937500000
                   bamf_zelnode_address: t1R1ssbaVXMZqbG8iwaD57xCS2w92pJefkw
                   bamf_zelnode_payout: 2250000000
-  /zelcash/getlocalsolps:
+  /daemon/getlocalsolps:
     get:
       tags:
-        - ZelCash
+        - Daemon
       summary: Average solutions per second
       description: >-
         Returns the average local solutions per second since this node was
@@ -5151,10 +5590,10 @@ paths:
               example:
                 status: success
                 data: 0
-  /zelcash/getmininginfo:
+  /daemon/getmininginfo:
     get:
       tags:
-        - ZelCash
+        - Daemon
       summary: Mining related info
       description: Returns a json object containing mining-related information. **Public**
       operationId: getMiningInfo
@@ -5234,10 +5673,10 @@ paths:
                   testnet: false
                   chain: main
                   generate: false
-  /zelcash/getnetworkhashps:
+  /daemon/getnetworkhashps:
     get:
       tags:
-        - ZelCash
+        - Daemon
       summary: Estimated network solutions
       description: >-
         Returns the estimated network solutions per second based on the last n
@@ -5276,10 +5715,10 @@ paths:
               example:
                 status: success
                 data: 189503
-  /zelcash/getnetworksolps:
+  /daemon/getnetworksolps:
     get:
       tags:
-        - ZelCash
+        - Daemon
       summary: Estimated network solutions
       description: >-
         Returns the estimated network solutions per second based on the last n
@@ -5318,10 +5757,10 @@ paths:
               example:
                 status: success
                 data: 189503
-  /zelcash/getconnectioncount:
+  /daemon/getconnectioncount:
     get:
       tags:
-        - ZelCash
+        - Daemon
       summary: Connection count
       description: The peer connection count. **Public**
       operationId: getConnectionCount
@@ -5341,10 +5780,10 @@ paths:
               example:
                 status: success
                 data: 22
-  /zelcash/getdeprecationinfo:
+  /daemon/getdeprecationinfo:
     get:
       tags:
-        - ZelCash
+        - Daemon
       summary: Deprecation info
       description: >-
         Returns an object containing current version and deprecation block
@@ -5380,10 +5819,10 @@ paths:
                   version: 4000150
                   subversion: '/MagicBean:4.0.1/'
                   deprecationheight: 951040
-  /zelcash/getnettotals:
+  /daemon/getnettotals:
     get:
       tags:
-        - ZelCash
+        - Daemon
       summary: Network traffic info
       description: >-
         Returns information about network traffic, including bytes in, bytes
@@ -5417,10 +5856,10 @@ paths:
                   totalbytesrecv: 27003767
                   totalbytessent: 115073751
                   timemillis: 1588626897371
-  /zelcash/getnetworkinfo:
+  /daemon/getnetworkinfo:
     get:
       tags:
-        - ZelCash
+        - Daemon
       summary: Info regarding P2P network
       description: >-
         Returns an object containing various state info regarding P2P
@@ -5530,10 +5969,10 @@ paths:
                       port: 16125
                       score: 1433
                   warnings: ''
-  /zelcash/getpeerinfo:
+  /daemon/getpeerinfo:
     get:
       tags:
-        - ZelCash
+        - Daemon
       summary: Peer info
       description: >-
         Returns data about each connected network node as a json array of
@@ -5667,10 +6106,10 @@ paths:
                     synced_blocks: 591801
                     inflight: []
                     whitelisted: false
-  /zelcash/listbanned:
+  /daemon/listbanned:
     get:
       tags:
-        - ZelCash
+        - Daemon
       summary: Ban list
       description: List all banned IPs/Subnets. **Public**
       operationId: listBanned
@@ -5706,10 +6145,10 @@ paths:
                     banned_until: 1588737698
                   - address: 62.171.166.168/255.255.255.255
                     banned_until: 1588745015
-  /zelcash/createrawtransaction:
+  /daemon/createrawtransaction:
     post:
       tags:
-        - ZelCash
+        - Daemon
       summary: Create hex-encoded raw transaction
       description: >-
         Create a transaction spending the given inputs and sending to the given
@@ -5780,7 +6219,7 @@ paths:
                   0400008085202f89019f36a42d171392adcfba8686bef8efb6aa9645dd4044cde753864ed54fb025420000000000feffffff0180608d9e020000001976a91404e2699cec5f44280540fb752c7660aa3ba857cc88ac01000000fb0809000000000000000000000000
     get:
       tags:
-        - ZelCash
+        - Daemon
       summary: Create hex-encoded raw transaction
       description: >-
         Create a transaction spending the given inputs and sending to the given
@@ -5877,10 +6316,10 @@ paths:
                 status: success
                 data: >-
                   0400008085202f89019f36a42d171392adcfba8686bef8efb6aa9645dd4044cde753864ed54fb025420000000000feffffff0180608d9e020000001976a91404e2699cec5f44280540fb752c7660aa3ba857cc88ac01000000fb0809000000000000000000000000
-  /zelcash/decoderawtransaction:
+  /daemon/decoderawtransaction:
     post:
       tags:
-        - ZelCash
+        - Daemon
       summary: Decoded info of the hex-encoded transaction
       description: >-
         Return a JSON object representing the serialized, hex-encoded
@@ -5951,7 +6390,7 @@ paths:
                   vShieldedOutput: []
     get:
       tags:
-        - ZelCash
+        - Daemon
       summary: Decoded info of the hex-encoded transaction
       description: >-
         Return a JSON object representing the serialized, hex-encoded
@@ -6016,10 +6455,10 @@ paths:
                   valueBalanceZat: 0
                   vShieldedSpend: []
                   vShieldedOutput: []
-  /zelcash/decodescript:
+  /daemon/decodescript:
     post:
       tags:
-        - ZelCash
+        - Daemon
       summary: Decode hex script
       description: Decode a hex-encoded script. **Public**
       operationId: decodeScriptPost
@@ -6060,7 +6499,7 @@ paths:
                   p2sh: t3U9WHvndqz58mHBX168iveW5E4xMdeBkWw
     get:
       tags:
-        - ZelCash
+        - Daemon
       summary: Decode hex script
       description: Decode a hex-encoded script. **Public**
       operationId: decodeScript
@@ -6095,10 +6534,10 @@ paths:
                   addresses:
                     - t1JKRwXGfKTGfPV1z48rvoLyabk31z3xwHa
                   p2sh: t3U9WHvndqz58mHBX168iveW5E4xMdeBkWw
-  /zelcash/getrawtransaction:
+  /daemon/getrawtransaction:
     get:
       tags:
-        - ZelCash
+        - Daemon
       summary: Get raw transaction data
       description: >-
         Gets raw transaction data from the txid, if verbose=0 then only hex data
@@ -6174,10 +6613,10 @@ paths:
                         $ref: '#/components/schemas/joinsplit'
                       valueBalance:
                         type: number
-                        description: The balance value of ZEL
+                        description: The balance value of FLUX
                       valueBalanceZat:
                         type: integer
-                        description: The balance value of ZEL
+                        description: The balance value of FLUX
                       vShieldedSpend:
                         $ref: '#/components/schemas/shieldedspend'
                       vShieldedOutput:
@@ -6286,10 +6725,10 @@ paths:
                   confirmations: 403
                   time: 1588282383
                   blocktime: 1588282383
-  /zelcash/fundrawtransaction:
+  /daemon/fundrawtransaction:
     post:
       tags:
-        - ZelCash
+        - Daemon
       summary: Add inputs to a transaction
       description: >-
         Add inputs to a transaction until it has enough in value to meet its out
@@ -6332,7 +6771,7 @@ paths:
                   fee: 0.00000245
     get:
       tags:
-        - ZelCash
+        - Daemon
       summary: Add inputs to a transaction
       description: >-
         Add inputs to a transaction until it has enough in value to meet its out
@@ -6369,10 +6808,10 @@ paths:
                     0400008085202f8901ab719872dfea1b4f594049722a92efafa4695322d2c08654aafe98c6546066360000000000ffffffff0240420f00000000001976a9142e5db3157a9783c6208019323f2c3a02610826a988accb9de605000000001976a91496b7e557775f02097632e7f4a4e6157a77ec6a8088ac00000000a60a09000000000000000000000000
                   changepos: 1
                   fee: 0.00000245
-  /zelcash/sendrawtransaction:
+  /daemon/sendrawtransaction:
     post:
       tags:
-        - ZelCash
+        - Daemon
       summary: Send raw transaction
       description: >-
         Submits raw transaction (serialized, hex-encoded) to local node and
@@ -6416,7 +6855,7 @@ paths:
                   381bfe56a049208ff90356153f024395b7a74b5ec470d639dd7e6ffa4487b2fe
     get:
       tags:
-        - ZelCash
+        - Daemon
       summary: Send raw transaction
       description: >-
         Submits raw transaction (serialized, hex-encoded) to local node and
@@ -6460,10 +6899,10 @@ paths:
                 status: success
                 data: >-
                   381bfe56a049208ff90356153f024395b7a74b5ec470d639dd7e6ffa4487b2fe
-  /zelcash/createmultisig:
+  /daemon/createmultisig:
     post:
       tags:
-        - ZelCash
+        - Daemon
       summary: Create multi-sig address
       description: >-
         Creates a multi-signature address with n signature of n keys required.
@@ -6480,11 +6919,11 @@ paths:
                   type: integer
                   description: >-
                     The number of required signatures out of the n keys or
-                    addresses. Followed by Zel addresses in array of strings.
+                    addresses. Followed by Flux addresses in array of strings.
                 keys:
                   type: array
                   description: >-
-                    Array of keys which are Zelcash addresses or hex-encoded
+                    Array of keys which are Flux addresses or hex-encoded
                     public keys
                   items:
                     type: string
@@ -6514,7 +6953,7 @@ paths:
                     52210353b1620689dc80w0d9b634616ec8566f80e22fec5edd1c8edf64a8a07babc41f2103450768e972919f7c82ca85d904daf1d3d5beabd25230aca4f363aecfa912457895cd
     get:
       tags:
-        - ZelCash
+        - Daemon
       summary: Create multi-sig address
       description: >-
         Creates a multi-signature address with n signature of n keys required.
@@ -6534,7 +6973,7 @@ paths:
           name: keys
           required: true
           description: >
-            A json array of keys which are Zelcash addresses or hex-encoded
+            A json array of keys which are Flux addresses or hex-encoded
             public keys.
 
 
@@ -6564,10 +7003,10 @@ paths:
                   address: t3Sia7BaQ6cYYxj31PJWfxhwZwZozNzk9N7
                   redeemScript: >-
                     52210353b1620689dc80w0d9b634616ec8566f80e22fec5edd1c8edf64a8a07babc41f2103450768e972919f7c82ca85d904daf1d3d5beabd25230aca4f363aecfa912457895cd
-  /zelcash/estimatefee:
+  /daemon/estimatefee:
     get:
       tags:
-        - ZelCash
+        - Daemon
       summary: Estimate fee nblocks
       description: >-
         Estimates the approximate fee per kilobyte needed for a transaction to
@@ -6600,10 +7039,10 @@ paths:
               example:
                 status: success
                 data: -1
-  /zelcash/estimatepriority:
+  /daemon/estimatepriority:
     get:
       tags:
-        - ZelCash
+        - Daemon
       summary: Estimate priority nblocks
       description: >-
         Estimates the approximate priority a zero-fee transaction needs to begin
@@ -6636,12 +7075,12 @@ paths:
               example:
                 status: success
                 data: 0
-  /zelcash/validateaddress:
+  /daemon/validateaddress:
     get:
       tags:
-        - ZelCash
+        - Daemon
       summary: Info of the Zelcash address
-      description: Return information about the given Zelcash address. **Public**
+      description: Return information about the given Flux address. **Public**
       operationId: validateAddress
       parameters:
         - in: query
@@ -6649,7 +7088,7 @@ paths:
           required: true
           schema:
             type: string
-          description: Zelcash address to validate
+          description: Flux address to validate
           example: t1N6mLX2A64QsyuLbYkfPZSrkLF86hxuuFe
       responses:
         '200':
@@ -6671,7 +7110,7 @@ paths:
                           only property returned.
                       address:
                         type: string
-                        description: The Zelcash address validated
+                        description: The Flux address validated
                       scriptPubKey:
                         type: string
                         description: The hex encoded scriptPubKey generated by the address
@@ -6708,10 +7147,10 @@ paths:
                     036b6a136ce869a0b400548a9126f06d96181ee974ff1c7f5a5e54e39b7f66be05
                   iscompressed: true
                   account: ''
-  /zelcash/verifymessage:
+  /daemon/verifymessage:
     post:
       tags:
-        - ZelCash
+        - Daemon
       summary: Verify a message
       description: Verify a signed message. **Public**
       operationId: verifyMessagePost
@@ -6724,7 +7163,7 @@ paths:
               properties:
                 zelcashaddress:
                   type: string
-                  description: The Zelcash address to use for the signature
+                  description: The Flux address to use for the signature
                 signature:
                   type: string
                   description: The signature provided by the signer in base 64 encoding
@@ -6754,7 +7193,7 @@ paths:
                 data: true
     get:
       tags:
-        - ZelCash
+        - Daemon
       summary: Verify a message
       description: Verify a signed message. **Public**
       operationId: verifyMessage
@@ -6764,7 +7203,7 @@ paths:
           required: true
           schema:
             type: string
-          description: The Zelcash address to use for the signature
+          description: The Flux address to use for the signature
           example: t1N6mLX2A64QsyuLbYkfPZSrkLF86hxuuFe
         - in: query
           name: signature
@@ -6797,10 +7236,10 @@ paths:
               example:
                 status: success
                 data: true
-  /zelcash/gettransaction:
+  /daemon/gettransaction:
     get:
       tags:
-        - ZelCash
+        - Daemon
       summary: Information about in-wallet transaction
       description: Get detailed information about in-wallet transaction. **Public**
       operationId: getTransaction
@@ -6841,7 +7280,7 @@ paths:
                     properties:
                       amount:
                         type: number
-                        description: The transaction amount in ZEL
+                        description: The transaction amount in FLUX
                       confirmations:
                         type: number
                         description: The number of confirmations
@@ -6892,7 +7331,7 @@ paths:
                               description: 'The category, either send or receive'
                             amount:
                               type: number
-                              description: The amount in ZEL
+                              description: The amount in FLUX
                             vout:
                               type: integer
                               description: The vout value
@@ -6927,10 +7366,10 @@ paths:
                       size: 244
                   hex: >-
                     0400008085202f8901fb81c640b6231d12a538a2cf59637d268ced324b300aaf99f0b00814f585e216000000006a4730440220353c7289e7d67585411016dd0472fb752c22160d9962f0551e58bb183a984bc8022005109fef7d31921a44b2fdf841b15869810497ff3e53df936d66a0650581f02b01210330bf3e5792efc2f011d9cb322f984617bb4a63d8ca751771febe5fc585ac9fcdffffffff0200e1f505000000001976a9142e5db3157a9783c6208019323f2c3a02610826a988ac399e42c7070000001976a914548c1a1bc9e10e79a5b6d27a44393240f41c175188ac00000000ca0c09000000000000000000000000
-  /zelcash/zvalidateaddress:
+  /daemon/zvalidateaddress:
     get:
       tags:
-        - ZelCash
+        - Daemon
       summary: Information about given z address
       description: Return information about the given z address. **Public**
       operationId: zValidateAddress
@@ -6987,10 +7426,10 @@ paths:
                   diversifiedtransmissionkey: >-
                     6cb0022a5910c5a2f1339cdae3b8609656c7e502f1843140469507e7f88b185c
                   ismine: true
-  /zelcash/getbenchmarks:
+  /daemon/getbenchmarks:
     get:
       tags:
-        - ZelCash
+        - Daemon
       summary: Benchmark results
       description: Return most recent benchmark results. **Public**
       operationId: getBenchmarks
@@ -7018,15 +7457,15 @@ paths:
                   hdd: 51.23081207275391
                   dd_write: 706.22802734375
                   eps: 163.5512084960938
-  /zelcash/getbenchstatus:
+  /daemon/getbenchstatus:
     get:
       tags:
-        - ZelCash
+        - Daemon
       summary: Bench status
       description: >-
-        This will return the status of the node, what zelbenchd determined the
-        tier the server could pass for, and if ZelFlux backend is connected. If
-        any one of these return a negative result the ZelNode will fail to
+        This will return the status of the node, what fluxbenchd determined the
+        tier the server could pass for, and if Flux backend is connected. If
+        any one of these return a negative result the FluxNode will fail to
         confirm. **Public**
       operationId: getBenchStatus
       responses:
@@ -7047,10 +7486,10 @@ paths:
                   status: online
                   benchmarking: BASIC
                   zelback: connected
-  /zelcash/prioritisetransaction:
+  /daemon/prioritisetransaction:
     get:
       tags:
-        - ZelCash
+        - Daemon
       summary: Priortise a transaction
       description: >-
         Accepts the transaction into mined blocks at a higher (or lower)
@@ -7103,14 +7542,14 @@ paths:
               example:
                 status: success
                 data: true
-  /zelcash/reindexzelcash:
+  /daemon/reindexzelcash:
     get:
       tags:
-        - ZelCash
+        - Daemon
       summary: Reindex ZelCash daemon
       description: >-
-        Tries to reindex ZelCash daemon running on the ZelNode the call is run
-        against. ZelCash daemon is firstly stopped and then started with reindex
+        Tries to reindex Flux daemon running on the FluxNode the call is run
+        against. Flux daemon is firstly stopped and then started with reindex
         flag. **Admin**
       operationId: reindexZelCash
       security:
@@ -7131,12 +7570,12 @@ paths:
                 status: success
                 data:
                   message: ZelCash successfully reindexing
-  /zelcash/stop:
+  /daemon/stop:
     get:
       tags:
-        - ZelCash
+        - Daemon
       summary: Stop ZelCash daemon
-      description: This will stop the ZelCash daemon from running. **Admin**
+      description: This will stop the Flux daemon from running. **Admin**
       operationId: stop
       security:
         - ZelID: []
@@ -7156,12 +7595,12 @@ paths:
               example:
                 status: success
                 data: Stop Zelcash server
-  /zelcash/createzelnodekey:
+  /daemon/createzelnodekey:
     get:
       tags:
-        - ZelCash
-      summary: Create zelnode private key
-      description: Create a new zelnode private key. **Admin**
+        - Daemon
+      summary: Create fluxnode private key
+      description: Create a new fluxnode private key. **Admin**
       operationId: createZelNodeKey
       security:
         - ZelID: []
@@ -7177,15 +7616,15 @@ paths:
                     $ref: '#/components/schemas/status'
                   data:
                     type: string
-                    description: Zelnode private key
+                    description: Fluxnode private key
               example:
                 status: success
                 data: 5JwVKe7UH986ncSL2jG9KdUY2AuZUTDAkTsp4TZoGWdD5cLLiFR
-  /zelcash/listzelnodeconf:
+  /daemon/listzelnodeconf:
     get:
       tags:
-        - ZelCash
-      summary: The zelnode conf file
+        - Daemon
+      summary: The fluxnode conf file
       description: >-
         View zelnode conf file in JSON format, this will return empty for most
         unless running a hot wallet. **Admin**
@@ -7212,7 +7651,7 @@ paths:
                           description: Alias name
                         status:
                           type: string
-                          description: Status of zelnode
+                          description: Status of fluxnode
                         collateral:
                           type: string
                           description: Collateral txid and output index
@@ -7224,13 +7663,13 @@ paths:
                           description: Output index
                         privateKey:
                           type: string
-                          description: Zelnode private key
+                          description: Fluxnode private key
                         address:
                           type: string
-                          description: Ip address of zelnode server and port
+                          description: Ip address of fluxnode server and port
                         ip:
                           type: string
-                          description: Ip address of zelnode server
+                          description: Ip address of fluxnode server
                         network:
                           type: string
                           description: 'Network type (IPv4, IPv6, onion)'
@@ -7281,11 +7720,11 @@ paths:
                     payment_address: UNKNOWN
                     activesince: 0
                     lastpaid: 0
-  /zelcash/getzelnodeoutputs:
+  /daemon/getzelnodeoutputs:
     get:
       tags:
-        - ZelCash
-      summary: Zelnode transaction outputs
+        - Daemon
+      summary: Fluxnode transaction outputs
       description: Print all zelnode transaction outputs. **Admin**
       operationId: getZelNodeOutputs
       security:
@@ -7317,14 +7756,14 @@ paths:
                   - txhash: >-
                       cee4c36d22609004d286bd83bebf1f28feb33dd6e4889c6c400766253942c1af
                     outputidx: 0
-  /zelcash/startzelnode:
+  /daemon/startzelnode:
     get:
       tags:
-        - ZelCash
-      summary: Start ZelNode commmand
+        - Daemon
+      summary: Start FluxNode commmand
       description: >-
-        Attempts to start one or more ZelNode. This call will only work if
-        running a hot ZelNode which is highly not recommended. It is a control
+        Attempts to start one or more FluxNode. This call will only work if
+        running a hot FluxNode which is highly not recommended. It is a control
         wallet function so basically your wallet containing the collateral
         funds. **Admin**
       operationId: startZelNode
@@ -7336,7 +7775,7 @@ paths:
           required: true
           schema:
             type: string
-          description: Specify which set of ZelNode(s) to start.
+          description: Specify which set of FluxNode(s) to start.
           example: alias
         - in: query
           name: lockwallet
@@ -7356,7 +7795,7 @@ paths:
           required: true
           schema:
             type: string
-          description: Zelnode alias. Required if using 'alias' as the set.
+          description: FluxNode alias. Required if using 'alias' as the set.
           example: Super1
       responses:
         '200':
@@ -7377,14 +7816,14 @@ paths:
                   detail:
                     - result: failed
                       error: could not find alias in config. Verify with list-conf.
-  /zelcash/startdeterministiczelnode:
+  /daemon/startdeterministiczelnode:
     get:
       tags:
-        - ZelCash
+        - Daemon
       summary: Start zelnode command
       description: >-
-        Attempts to start one zelnode. Same as the `/zelcash/startzelnode` call
-        this call will only work if running a hot ZelNode which is highly not
+        Attempts to start one fluxnode. Same as the `/daemon/startzelnode` call
+        this call will only work if running a hot FluxNode which is highly not
         recommended. It is a control wallet function so basically your wallet
         containing the collateral funds.  **Admin**
       operationId: startDeterministicZelNode
@@ -7431,10 +7870,10 @@ paths:
                     - alias: Basic1
                       result: failed
                       error: could not find alias in config. Verify with list-conf.
-  /zelcash/verifychain:
+  /daemon/verifychain:
     get:
       tags:
-        - ZelCash
+        - Daemon
       summary: Verify blockchain data
       description: Verifies blockchain database. **Admin**
       operationId: verifyChain
@@ -7480,10 +7919,10 @@ paths:
               example:
                 status: success
                 data: true
-  /zelcash/addnode:
+  /daemon/addnode:
     get:
       tags:
-        - ZelCash
+        - Daemon
       summary: 'Add, remove, or try to connect a node'
       description: >-
         Attempts to add or remove a node from the addnode list. Or try a
@@ -7497,7 +7936,7 @@ paths:
           required: true
           schema:
             type: string
-          description: 'The node''s ip:port (see `/zelcash/getpeerinfo` for nodes)'
+          description: 'The node''s ip:port (see `/daemon/getpeerinfo` for nodes)'
           example: '188.239.61.210:16125'
         - in: query
           name: command
@@ -7529,10 +7968,10 @@ paths:
               example:
                 status: success
                 data: null
-  /zelcash/clearbanned:
+  /daemon/clearbanned:
     get:
       tags:
-        - ZelCash
+        - Daemon
       summary: Clear banned IP's
       description: Clear all banned IP's. **Admin**
       operationId: clearBanned
@@ -7553,10 +7992,10 @@ paths:
               example:
                 status: success
                 data: null
-  /zelcash/disconnectnode:
+  /daemon/disconnectnode:
     get:
       tags:
-        - ZelCash
+        - Daemon
       summary: Disconnect a node
       description: Immediately disconnects from the specified node. **Admin**
       operationId: disconnectNode
@@ -7585,10 +8024,10 @@ paths:
               example:
                 status: success
                 data: null
-  /zelcash/getaddednodeinfo:
+  /daemon/getaddednodeinfo:
     get:
       tags:
-        - ZelCash
+        - Daemon
       summary: Info of added node/nodes
       description: >-
         Returns information about the given added node, or all added nodes(note
@@ -7666,10 +8105,10 @@ paths:
                     addresses:
                       - address: '206.189.0.55:16125'
                         connected: outbound
-  /zelcash/setban:
+  /daemon/setban:
     get:
       tags:
-        - ZelCash
+        - Daemon
       summary: Add or remove a IP from banned list
       description: Attempts add or remove a IP/Subnet from the banned list. **Admin**
       operationId: setBan
@@ -7738,10 +8177,10 @@ paths:
               example:
                 status: success
                 data: null
-  /zelcash/signrawtransaction:
+  /daemon/signrawtransaction:
     post:
       tags:
-        - ZelCash
+        - Daemon
       summary: Sign raw transaction
       description: >-
         Sign inputs for raw transaction (serialized, hex-encoded). The second
@@ -7834,7 +8273,7 @@ paths:
                   complete: true
     get:
       tags:
-        - ZelCash
+        - Daemon
       summary: Sign raw transaction
       description: >-
         Sign inputs for raw transaction (serialized, hex-encoded). The second
@@ -7942,14 +8381,14 @@ paths:
                   hex: >-
                     0400008085202f8901ab719872dfea1b4f594049722a92efafa4695322d2c08654aafe98c654606636000000006b483045022100e5f02014419280a5c1ed1f94513e8e2bee83f6341863b304fe093dea897f4aa20220022a6e6004dbf1305197f4053bd9dd59e21abd23a31d0188d079eb72cab84e990121036b6a136ce869a0b400548a9126f06d96181ee974ff1c7f5a5e54e39b7f66be05ffffffff0140420f00000000001976a9142e5db3157a9783c6208019323f2c3a02610826a988ac00000000a60a09000000000000000000000000
                   complete: true
-  /zelcash/addmultisigaddress:
+  /daemon/addmultisigaddress:
     post:
       tags:
-        - ZelCash
+        - Daemon
       summary: Add multisig address to the wallet
       description: >-
         Add a nrequired-to-sign multisignature address to the wallet. Each key
-        is a Zelcash address or hex-encoded public key. **Admin**
+        is a Flux address or hex-encoded public key. **Admin**
       operationId: addMultiSigAddressPost
       security:
         - ZelID: []
@@ -7967,12 +8406,12 @@ paths:
                     addresses
                 keysobject:
                   description: >-
-                    A json array of Zelcash addresses or hex-encoded public
+                    A json array of Flux addresses or hex-encoded public
                     keys.
                   type: array
                   items:
                     type: string
-                    description: Zelcash address or hex-encoded public key
+                    description: Flux address or hex-encoded public key
             example:
               'n': 2
               keysobject:
@@ -7996,11 +8435,11 @@ paths:
                 data: t3Sia7BaQ6cYYxj31PJWfxhwZwZozNzk9N7
     get:
       tags:
-        - ZelCash
+        - Daemon
       summary: Add multisig address to the wallet
       description: >-
         Add a nrequired-to-sign multisignature address to the wallet. Each key
-        is a Zelcash address or hex-encoded public key. **Admin**
+        is a Flux address or hex-encoded public key. **Admin**
       operationId: addmultisigaddress
       security:
         - ZelID: []
@@ -8016,7 +8455,7 @@ paths:
           name: keysobject
           required: true
           description: |
-            A json array of Zelcash addresses or hex-encoded public keys.
+            A json array of Flux addresses or hex-encoded public keys.
 
             Example:
             - `keysobject`=`[<"address">, <"address">]`
@@ -8042,10 +8481,10 @@ paths:
               example:
                 status: success
                 data: t3Sia7BaQ6cYYxj31PJWfxhwZwZozNzk9N7
-  /zelcash/backupwallet:
+  /daemon/backupwallet:
     get:
       tags:
-        - ZelCash
+        - Daemon
       summary: Backup wallet to destination file
       description: Safely copies wallet.dat to destination filename. **Admin**
       operationId: backupWallet
@@ -8077,10 +8516,10 @@ paths:
               example:
                 status: success
                 data: /home/zel/backup/walletbackup
-  /zelcash/dumpprivkey:
+  /daemon/dumpprivkey:
     get:
       tags:
-        - ZelCash
+        - Daemon
       summary: Get private key of a t-addr
       description: Reveals the private key corresponding to t-addr. **Admin**
       operationId: dumpPrivKey
@@ -8110,10 +8549,10 @@ paths:
               example:
                 status: success
                 data: KyqvmC4mDgxwnKjfGYPVt1wonwog4kZ8oA8WsL5yr7vE2X5phxwx
-  /zelcash/getbalance:
+  /daemon/getbalance:
     get:
       tags:
-        - ZelCash
+        - Daemon
       summary: Total balance of wallet
       description: Returns the server's total available balance. **Admin**
       operationId: getBalance
@@ -8156,10 +8595,10 @@ paths:
               example:
                 status: success
                 data: 0
-  /zelcash/getnewaddress:
+  /daemon/getnewaddress:
     get:
       tags:
-        - ZelCash
+        - Daemon
       summary: Get new address
       description: Returns a new Zelcash address for receiving payments. **Admin**
       operationId: getNewAddress
@@ -8181,13 +8620,13 @@ paths:
               example:
                 status: success
                 data: t1LGoWfLf66bpJC84zWmUVcw1bkW9kFgnyQ
-  /zelcash/getrawchangeaddress:
+  /daemon/getrawchangeaddress:
     get:
       tags:
-        - ZelCash
+        - Daemon
       summary: Get new change address
       description: >-
-        Returns a new Zelcash address, for receiving change. This is for use
+        Returns a new Flux address, for receiving change. This is for use
         with raw transactions, NOT normal use. **Admin**
       operationId: getRawChangeAddress
       security:
@@ -8208,13 +8647,13 @@ paths:
               example:
                 status: success
                 data: t1dC6WNjqcJX8VFcdRp1MyJ7eB4MSQs83FR
-  /zelcash/getreceivedbyaddress:
+  /daemon/getreceivedbyaddress:
     get:
       tags:
-        - ZelCash
+        - Daemon
       summary: Total received by the address
       description: >-
-        Returns the total amount received by the given Zelcash address in
+        Returns the total amount received by the given Flux address in
         transactions with at least minconf confirmations. **Admin**
       operationId: getReceivedByAddress
       security:
@@ -8225,7 +8664,7 @@ paths:
           required: true
           schema:
             type: string
-          description: The Zelcash address for transactions
+          description: The Flux address for transactions
           example: t1dC6WNjqcJX8VFcdRp1MyJ7eB4MSQs83FR
         - in: query
           name: minconf
@@ -8250,10 +8689,10 @@ paths:
               example:
                 status: success
                 data: 0
-  /zelcash/getunconfirmedbalance:
+  /daemon/getunconfirmedbalance:
     get:
       tags:
-        - ZelCash
+        - Daemon
       summary: Get total unconfirmed balance
       description: Returns the server's total unconfirmed balance. **Admin**
       operationId: getUnconfirmedBalance
@@ -8275,10 +8714,10 @@ paths:
               example:
                 status: success
                 data: 0
-  /zelcash/getwalletinfo:
+  /daemon/getwalletinfo:
     get:
       tags:
-        - ZelCash
+        - Daemon
       summary: Get various info of the wallet
       description: Returns an object containing various wallet state info. **Admin**
       operationId: getWalletInfo
@@ -8302,13 +8741,13 @@ paths:
                         description: The wallet version
                       balance:
                         type: number
-                        description: The total confirmed balance of the wallet in ZEL
+                        description: The total confirmed balance of the wallet in FLUX
                       unconfirmed_balance:
                         type: number
                         description: The wallet version
                       immature_balance:
                         type: number
-                        description: The total unconfirmed balance of the wallet in ZEL
+                        description: The total unconfirmed balance of the wallet in FLUX
                       txcount:
                         type: integer
                         description: The total number of transactions in the wallet
@@ -8322,7 +8761,7 @@ paths:
                         description: How many new keys are pre-generated
                       paytxfee:
                         type: number
-                        description: 'The transaction fee configuration, set in ZEL/kB'
+                        description: 'The transaction fee configuration, set in FLUX/kB'
                       seedfp:
                         type: string
                         description: The BLAKE2b-256 hash of the HD seed
@@ -8339,10 +8778,10 @@ paths:
                   paytxfee: 0
                   seedfp: >-
                     2b800c3e5439562748d8d875e116c3f88364112eb18647529b147d2f69a80ce5
-  /zelcash/importaddress:
+  /daemon/importaddress:
     get:
       tags:
-        - ZelCash
+        - Daemon
       summary: Import address to watch
       description: >-
         Adds an address or script (in hex) that can be watched as if it were in
@@ -8356,7 +8795,7 @@ paths:
           required: true
           schema:
             type: string
-          description: The Zelcash address
+          description: The Flux address
           example: t1dC6WNjqcJX8VFcdRp1MyJ7eB4MSQs83FR
         - in: query
           name: label
@@ -8391,10 +8830,10 @@ paths:
               example:
                 status: success
                 data: null
-  /zelcash/importprivkey:
+  /daemon/importprivkey:
     get:
       tags:
-        - ZelCash
+        - Daemon
       summary: Import private key to the wallet
       description: >-
         Adds a private key (as returned by dumpprivkey) to your wallet.
@@ -8443,10 +8882,10 @@ paths:
               example:
                 status: success
                 data: null
-  /zelcash/importwallet:
+  /daemon/importwallet:
     get:
       tags:
-        - ZelCash
+        - Daemon
       summary: Import private keys from the dump file
       description: Imports taddr keys from a wallet dump file. **Admin**
       operationId: importWallet
@@ -8475,10 +8914,10 @@ paths:
               example:
                 status: success
                 data: null
-  /zelcash/keypoolrefill:
+  /daemon/keypoolrefill:
     get:
       tags:
-        - ZelCash
+        - Daemon
       summary: Refill keypool
       description: >-
         Fills the keypool with more keys. Rarely used as not many will come
@@ -8509,10 +8948,10 @@ paths:
               example:
                 status: success
                 data: null
-  /zelcash/listaddressgroupings:
+  /daemon/listaddressgroupings:
     get:
       tags:
-        - ZelCash
+        - Daemon
       summary: A list of addresses that have been used and known to the public
       description: >-
         Lists groups of addresses which have had their common ownership made
@@ -8545,10 +8984,10 @@ paths:
                   - - - t1T83Nj5ai9n32SMYZMFtqBAnNU3opMisGg
                       - 53.16539081
                       - ''
-  /zelcash/listlockunspent:
+  /daemon/listlockunspent:
     get:
       tags:
-        - ZelCash
+        - Daemon
       summary: List of unspendable outputs
       description: Returns list of temporarily unspendable outputs. **Admin**
       operationId: listLockUnspent
@@ -8581,10 +9020,10 @@ paths:
                   - txid: >-
                       15430c14500cd505798902e2f1ce3c19251f3599954e7dfb57c19f8763530860
                     vout: 0
-  /zelcash/listreceivedbyaddress:
+  /daemon/listreceivedbyaddress:
     get:
       tags:
-        - ZelCash
+        - Daemon
       summary: List of balances
       description: List balances by receiving address. **Admin**
       operationId: listReceivedByAddress
@@ -8648,7 +9087,7 @@ paths:
                             account is ""
                         amount:
                           type: number
-                          description: The total amount in ZEL received by the address
+                          description: The total amount in FLUX received by the address
                         confirmations:
                           type: integer
                           description: >-
@@ -8685,10 +9124,10 @@ paths:
                         fd1e3c162a3d858bd6f53ba59d4fca0854c0843fdab692c7af6da1113ca30fb2
                       - >-
                         0f249e4bd193182526dab806fe552dba5d16a864a32803455b2d6c769f19ecb2
-  /zelcash/listsinceblock:
+  /daemon/listsinceblock:
     get:
       tags:
-        - ZelCash
+        - Daemon
       summary: List of transactions since block (blockhash)
       description: >-
         Get all transactions in blocks since block [blockhash], or all
@@ -8761,10 +9200,10 @@ paths:
                       size: 245
                   lastblock: >-
                     000000b288eaf9eb45e0beb1d1e271530741e41a235068e95856bcdd57ed3e2c
-  /zelcash/listtransactions:
+  /daemon/listtransactions:
     get:
       tags:
-        - ZelCash
+        - Daemon
       summary: List of recent transactions
       description: >-
         Returns up to count most recent transactions skipping the first from
@@ -8829,10 +9268,10 @@ paths:
                   timereceived: 1589158522
                   vJoinSplit: []
                   size: 245
-  /zelcash/listunspent:
+  /daemon/listunspent:
     get:
       tags:
-        - ZelCash
+        - Daemon
       summary: Returns objects of unspent transactions
       description: >-
         Returns array of unspent transaction outputs with between minconf and
@@ -8934,10 +9373,10 @@ paths:
                   amount: 10.53093108
                   confirmations: 342
                   spendable: true
-  /zelcash/lockunspent:
+  /daemon/lockunspent:
     get:
       tags:
-        - ZelCash
+        - Daemon
       summary: Updates list of temporarily unspendable outputs
       description: >-
         Temporarily lock (unlock=false) or unlock (unlock=true) specified
@@ -9002,10 +9441,10 @@ paths:
               example:
                 status: success
                 data: true
-  /zelcash/rescanblockchain:
+  /daemon/rescanblockchain:
     get:
       tags:
-        - ZelCash
+        - Daemon
       summary: Rescans blockchain for transactions
       description: >-
         Rescans the blockchain looking for transactions that belong to this
@@ -9037,10 +9476,10 @@ paths:
               example:
                 status: success
                 data: Rescan Completed
-  /zelcash/sendmany:
+  /daemon/sendmany:
     post:
       tags:
-        - ZelCash
+        - Daemon
       summary: Send to many receivers at once
       description: >-
         Send to many receivers. Amounts are decimal numbers with at most 8
@@ -9106,7 +9545,7 @@ paths:
                   fe196c167d679737c716f06b66ca7249be0476b7a086c7736a38f050eab62169
     get:
       tags:
-        - ZelCash
+        - Daemon
       summary: Send to many receivers at once
       description: >-
         Send to many receivers. Amounts are decimal numbers with at most 8
@@ -9120,7 +9559,7 @@ paths:
           required: true
           description: >-
             A json object with addresses and amounts. The zelcash address is the
-            key, the numeric amount in ZEL is the value.
+            key, the numeric amount in FLUX is the value.
           schema:
             type: object
             properties:
@@ -9170,11 +9609,11 @@ paths:
                 status: success
                 data: >-
                   a7a6d8c1c4e155cf94af58ea1e4a8e3ddd7cc4cb1bc4d86242c1118bdf9469f2
-  /zelcash/sendtoaddress:
+  /daemon/sendtoaddress:
     post:
       tags:
-        - ZelCash
-      summary: Send Zel to an address
+        - Daemon
+      summary: Send Flux to an address
       description: Send an amount to a given address. **Admin**
       operationId: sendToAddressPost
       security:
@@ -9188,10 +9627,10 @@ paths:
               properties:
                 zelcashaddress:
                   type: string
-                  description: The zelcash address to send to
+                  description: The flux address to send to
                 amount:
                   type: number
-                  description: The amount in ZEL to send
+                  description: The amount in FLUX to send
                 comment:
                   type: string
                   description: >-
@@ -9235,8 +9674,8 @@ paths:
                   bbb0f5de68db9c661e11ec38c6e0cc99a1e1d202b64dc69d5a58d665dc4b5b19
     get:
       tags:
-        - ZelCash
-      summary: Send Zel to an address
+        - Daemon
+      summary: Send Flux to an address
       description: Send an amount to a given address. **Admin**
       operationId: sendToAddress
       security:
@@ -9247,14 +9686,14 @@ paths:
           required: true
           schema:
             type: string
-            description: The zelcash address to send to
+            description: The flux address to send to
           example: t1QSE45jkZ9docBDFh4yEV91fgZgESp5hZN
         - in: query
           name: amount
           required: true
           schema:
             type: number
-          description: The amount in ZEL to send
+          description: The amount in FLUX to send
           example: 0.001
         - in: query
           name: comment
@@ -9283,7 +9722,7 @@ paths:
               - false
           description: >-
             The fee will be deducted from the amount being sent if set to true
-            and the recipient will receive less Zelcash than you enter in the
+            and the recipient will receive less Flux than you enter in the
             amount field.
       responses:
         '200':
@@ -9302,10 +9741,10 @@ paths:
                 status: success
                 data: >-
                   bbb0f5de68db9c661e11ec38c6e0cc99a1e1d202b64dc69d5a58d665dc4b5b19
-  /zelcash/settxfee:
+  /daemon/settxfee:
     get:
       tags:
-        - ZelCash
+        - Daemon
       summary: Set transaction fee
       description: This will restart the zelcash daemon. **Admin**
       operationId: setTxFee
@@ -9317,7 +9756,7 @@ paths:
           required: true
           schema:
             type: number
-          description: The transaction fee in ZEL/kB rounded to the nearest 0.00000001
+          description: The transaction fee in FLUX/kB rounded to the nearest 0.00000001
           example: 0.00001
       responses:
         '200':
@@ -9335,10 +9774,10 @@ paths:
               example:
                 status: success
                 data: true
-  /zelcash/signmessage:
+  /daemon/signmessage:
     post:
       tags:
-        - ZelCash
+        - Daemon
       summary: Sign a message
       description: Sign a message with the private key of a t-addr. **Admin**
       operationId: signMessagePost
@@ -9379,7 +9818,7 @@ paths:
                   H5j8AoJ+8VaEEJGgw846hSPQoq42X9yiLwn/Nab1pASBFcw8rj5k8J9xpKr1VzepMEOF2ProYxVsQ9i7xalH4Sk=
     get:
       tags:
-        - ZelCash
+        - Daemon
       summary: Sign a message
       description: Sign a message with the private key of a t-addr. **Admin**
       operationId: signMessage
@@ -9417,10 +9856,10 @@ paths:
                 status: success
                 data: >-
                   H5j8AoJ+8VaEEJGgw846hSPQoq42X9yiLwn/Nab1pASBFcw8rj5k8J9xpKr1VzepMEOF2ProYxVsQ9i7xalH4Sk=
-  /zelcash/zexportkey:
+  /daemon/zexportkey:
     get:
       tags:
-        - ZelCash
+        - Daemon
       summary: Reveal z-addr private key
       description: Reveals the zkey corresponding to zaddr. **Admin**
       operationId: zExportKey
@@ -9452,10 +9891,10 @@ paths:
                 status: success
                 data: >-
                   secret-extended-key-main1qdg0nnspqqqqpqxh3quajk7fux5njuukqs3caqrhcx6cvm0f47ftlktlkm76a0pxfara7jntype360dacdzftzm8vjpqn6ytsduud40r63t3nnal0n8qp687hcje7rmp334v8zlua38f7r8emrtl2x5zjmeh97rky0j6tugr0m6qt8dxmduyawfcgjyt3v5x84753ywffwnjtsf58kfnjhdfrx3k9wgnjm7vgv7d20826s5lapfaljhpeufvsl98zf50het6a3wyj7c0xm9p7
-  /zelcash/zexportviewingkey:
+  /daemon/zexportviewingkey:
     get:
       tags:
-        - ZelCash
+        - Daemon
       summary: Reveal z-addr viewing key
       description: >-
         Reveals the viewing key corresponding to zaddr. Only works with sprout
@@ -9489,10 +9928,10 @@ paths:
                 status: success
                 data: >-
                   ZiVKeT3VBMzNRzA6hzaYzd3d7ebcsaR9iRkhYC8nRwrVYnMZGwPCz62UJMHZnjbPURAaKqDhazDWHies6HMcHmazQUUd4R3TH
-  /zelcash/zgetbalance:
+  /daemon/zgetbalance:
     get:
       tags:
-        - ZelCash
+        - Daemon
       summary: Returns the balance of a taddr or zaddr
       description: >-
         Returns the balance of a taddr or zaddr belonging to the node's wallet.
@@ -9508,7 +9947,7 @@ paths:
           required: true
           schema:
             type: string
-          description: Zel address
+          description: Flux address
           example: >-
             zcQNG88SQVQTuqGKdeDDhVRCXkHeR3Vv5BqeBBaYziyN48FpJM2buK1YmQtpKoVkwrM2vvhCdrVofkdLc8QYeSLyiAkQB1u
         - in: query
@@ -9534,10 +9973,10 @@ paths:
               example:
                 status: success
                 data: 0
-  /zelcash/zgetmigrationstatus:
+  /daemon/zgetmigrationstatus:
     get:
       tags:
-        - ZelCash
+        - Daemon
       summary: Returns status info of the sprout to sapling migration
       description: >-
         Returns information about the status of the Sprout to Sapling migration.
@@ -9565,13 +10004,13 @@ paths:
                         description: Whether or not migration is enabled
                       unmigrated_amount:
                         type: number
-                        description: The total amount of unmigrated ZEL
+                        description: The total amount of unmigrated FLUX
                       unfinalized_migrated_amount:
                         type: number
-                        description: The total amount of unfinalized ZEL
+                        description: The total amount of unfinalized FLUX
                       finalized_migrated_amount:
                         type: number
-                        description: The total amount of finalized ZEL
+                        description: The total amount of finalized FLUX
                       finalized_migration_transactions:
                         type: integer
                         description: >-
@@ -9593,10 +10032,10 @@ paths:
                   finalized_migrated_amount: 0
                   finalized_migration_transactions: 0
                   migration_txids: []
-  /zelcash/zgetnewaddress:
+  /daemon/zgetnewaddress:
     get:
       tags:
-        - ZelCash
+        - Daemon
       summary: Create new shielded address
       description: Returns a new shielded address for receiving payments. **Admin**
       operationId: zGetNewAddress
@@ -9633,10 +10072,10 @@ paths:
                 status: success
                 data: >-
                   za1kqwgkln5azfnnzfps0vc44ucwynstxk9k79z6nunwq0pnh4rjuww5kgy02c9wvfmdkxkxndlvdd
-  /zelcash/zgetoperationresult:
+  /daemon/zgetoperationresult:
     get:
       tags:
-        - ZelCash
+        - Daemon
       summary: Get operation result
       description: >-
         Retrieve the result and status of an operation which has finished, and
@@ -9691,10 +10130,10 @@ paths:
                           amount: 0.001
                     minconf: 1
                     fee: 0.0001
-  /zelcash/zgetoperationstatus:
+  /daemon/zgetoperationstatus:
     get:
       tags:
-        - ZelCash
+        - Daemon
       summary: Get operation status
       description: >-
         Get operation status and any associated result or error data.  The
@@ -9749,10 +10188,10 @@ paths:
                           amount: 0.001
                     minconf: 1
                     fee: 0.0001
-  /zelcash/zgettotalbalance:
+  /daemon/zgettotalbalance:
     get:
       tags:
-        - ZelCash
+        - Daemon
       summary: Get total balance of wallet
       description: Return the total value of funds stored in the node's wallet. **Admin**
       operationId: zGetTotalBalance
@@ -9807,10 +10246,10 @@ paths:
                   transparent: 0.09999476
                   private: 0
                   total: 0.09999476
-  /zelcash/zimportkey:
+  /daemon/zimportkey:
     get:
       tags:
-        - ZelCash
+        - Daemon
       summary: Import zaddress private key
       description: Adds a zkey to your wallet. **Admin**
       operationId: zImportKey
@@ -9860,10 +10299,10 @@ paths:
               example:
                 status: success
                 data: null
-  /zelcash/zimportviewingkey:
+  /daemon/zimportviewingkey:
     get:
       tags:
-        - ZelCash
+        - Daemon
       summary: Import zaddress viewing key
       description: Adds a viewing key to your wallet. **Admin**
       operationId: zImportViewingKey
@@ -9910,10 +10349,10 @@ paths:
               example:
                 status: success
                 data: null
-  /zelcash/zimportwallet:
+  /daemon/zimportwallet:
     get:
       tags:
-        - ZelCash
+        - Daemon
       summary: Import wallet from export file
       description: Imports taddr and zaddr keys from a wallet export file. **Admin**
       operationId: zImportWallet
@@ -9942,10 +10381,10 @@ paths:
               example:
                 status: success
                 data: null
-  /zelcash/zlistaddresses:
+  /daemon/zlistaddresses:
     get:
       tags:
-        - ZelCash
+        - Daemon
       summary: Get list of all shielded addresses
       description: >-
         Returns the list of Sprout and Sapling shielded addresses belonging to
@@ -9988,10 +10427,10 @@ paths:
                     za1j9fkv2p20t5pvzkxz5wnhxnwkf9mc7hmes9x4qfsy8z2zaq38fwpvny07lf4ynpul0gsq8d790v
                   - >-
                     za1kqwgkln5azfnnzfps0vc44ucwynstxk9k79z6nunwq0pnh4rjuww5kgy02c9wvfmdkxkxndlvdd
-  /zelcash/zlistoperationids:
+  /daemon/zlistoperationids:
     get:
       tags:
-        - ZelCash
+        - Daemon
       summary: Get list of operation ids
       description: >-
         Returns the list of operation ids currently known to the wallet.
@@ -10019,10 +10458,10 @@ paths:
                 data:
                   - opid-6869eaa7-722f-4991-9a6e-fd6b4c388755
                   - opid-bdf41571-3a20-4a00-bbf2-d4e9ddbb3375
-  /zelcash/zlistreceivedbyaddress:
+  /daemon/zlistreceivedbyaddress:
     get:
       tags:
-        - ZelCash
+        - Daemon
       summary: List of amounts received by zaddr
       description: >-
         Return a list of amounts received by a zaddr belonging to the node's
@@ -10104,10 +10543,10 @@ paths:
                       f600000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
                     outindex: 0
                     change: false
-  /zelcash/zlistunspent:
+  /daemon/zlistunspent:
     get:
       tags:
-        - ZelCash
+        - Daemon
       summary: List of unspent shielded notes
       description: >-
         Returns array of unspent shielded notes with between minconf and maxconf
@@ -10229,10 +10668,10 @@ paths:
                     memo: >-
                       f600000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
                     change: false
-  /zelcash/zsendmany:
+  /daemon/zsendmany:
     post:
       tags:
-        - ZelCash
+        - Daemon
       summary: Send multiple transactions
       description: >-
         Send multiple times. Amounts are decimal numbers with at most 8 digits
@@ -10266,7 +10705,7 @@ paths:
                         description: The taddr or zaddr to send the funds from
                       amount:
                         type: number
-                        description: The numeric amount in ZEL is the value
+                        description: The numeric amount in FLUX is the value
                       memo:
                         type: string
                         description: >-
@@ -10307,7 +10746,7 @@ paths:
                 data: opid-e3f36550-d5cc-419d-b39c-5e822ed1e3b8
     get:
       tags:
-        - ZelCash
+        - Daemon
       summary: Send multiple transactions
       description: >-
         Send multiple times. Amounts are decimal numbers with at most 8 digits
@@ -10338,7 +10777,7 @@ paths:
 
             - `address`: `<receiving address>`
 
-            - `amount`: `<zel amount>`
+            - `amount`: `<flux amount>`
 
 
             Url encoded example:
@@ -10356,7 +10795,7 @@ paths:
                   description: The taddr or zaddr to send the funds from
                 amount:
                   type: number
-                  description: The numeric amount in ZEL is the value
+                  description: The numeric amount in FLUX is the value
                 memo:
                   type: string
                   description: >-
@@ -10394,10 +10833,10 @@ paths:
               example:
                 status: success
                 data: opid-6869eaa7-722f-4991-9a6e-fd6b4c388755
-  /zelcash/zsetmigration:
+  /daemon/zsetmigration:
     get:
       tags:
-        - ZelCash
+        - Daemon
       summary: Migrate funds to a sapling adress
       description: >-
         When enabled the Sprout to Sapling migration will attempt to migrate all
@@ -10410,7 +10849,7 @@ paths:
         blockchain reaches a height equal to 499 modulo 500. The transaction
         amounts are picked according to the random distribution specified in ZIP
         308. The migration will end once the wallet’s sprout balance is below
-        0.01 ZEL. **Admin**
+        0.01 FLUX. **Admin**
       operationId: zSetMigration
       security:
         - ZelID: []
@@ -10439,10 +10878,10 @@ paths:
               example:
                 status: success
                 data: null
-  /zelcash/zshieldcoinbase:
+  /daemon/zshieldcoinbase:
     get:
       tags:
-        - ZelCash
+        - Daemon
       summary: Shield coinbase
       description: >-
         Shield transparent coinbase funds by sending to a shielded zaddr. This
@@ -10527,15 +10966,15 @@ paths:
                   shieldingUTXOs: 206
                   shieldingValue: 3285
                   opid: opid-55742ed9-021c-4fa7-9cd4-2d96843d1476
-  /zelcash/start:
+  /daemon/start:
     get:
       tags:
-        - ZelCash
+        - Daemon
       summary: Start ZelCash daemon
       description: >-
-        Tries to start ZelCash daemon running on the ZelNode the call is run
-        against without any extra parameters. **AdminAndZelTeam**
-      operationId: startZelCashB
+        Tries to start Flux daemon running on the FluxNode the call is run
+        against without any extra parameters. **AdminAndFluxTeam**
+      operationId: startdaemonB
       security:
         - ZelID: []
       responses:
@@ -10554,16 +10993,16 @@ paths:
                 status: success
                 data:
                   message: ZelCash successfully started
-  /zelcash/restart:
+  /daemon/restart:
     get:
       tags:
-        - ZelCash
+        - Daemon
       summary: Restart ZelCash daemon
       description: >-
-        Tries to restart ZelCash daemon running on the ZelNode the call is run
-        against. ZelCash daemon is firstly stopped and then started without any
-        extra parameters. **AdminAndZelTeam**
-      operationId: restartZelCashB
+        Tries to restart Flux daemon running on the FluxNode the call is run
+        against. Flux daemon is firstly stopped and then started without any
+        extra parameters. **AdminAndFluxTeam**
+      operationId: restartdaemonB
       security:
         - ZelID: []
       responses:
@@ -10582,14 +11021,14 @@ paths:
                 status: success
                 data:
                   message: ZelCash successfully restarted
-  /zelcash/ping:
+  /daemon/ping:
     get:
       tags:
-        - ZelCash
+        - Daemon
       summary: Ping request to measure ping time
       description: >-
         Requests that a ping be sent to all other nodes, to measure ping time.
-        **AdminAndZelTeam**
+        **AdminAndFluxTeam**
       operationId: ping
       security:
         - ZelID: []
@@ -10608,14 +11047,14 @@ paths:
               example:
                 status: success
                 data: null
-  /zelcash/zcbenchmark:
+  /daemon/zcbenchmark:
     get:
       tags:
-        - ZelCash
+        - Daemon
       summary: Run benchmark of selected type and samplecount times
       description: >-
         Runs a benchmark of the selected type and samplecount times, returning
-        the running times of each sample. **AdminAndZelTeam**
+        the running times of each sample. **AdminAndFluxTeam**
       operationId: zcBenchmark
       security:
         - ZelID: []
@@ -10677,13 +11116,13 @@ paths:
                 data:
                   - runningtime: 0.636
                   - runningtime: 0.652
-  /zelcash/startzelbenchd:
+  /daemon/startbenchmark:
     get:
       tags:
-        - ZelCash
-      summary: Start ZelBench daemon
-      description: Start ZelBench daemon. **AdminAndZelTeam**
-      operationId: startZelBenchD
+        - Daemon
+      summary: Start Benchmark daemon
+      description: Start Benchmark daemon. **AdminAndFluxTeam**
+      operationId: startbenchmark
       security:
         - ZelID: []
       responses:
@@ -10702,13 +11141,13 @@ paths:
               example:
                 status: success
                 data: Starting process
-  /zelcash/stopzelbenchd:
+  /daemon/stopbenchmark:
     get:
       tags:
-        - ZelCash
-      summary: Stop ZelBench daemon
-      description: Stop ZelBench daemon. **AdminAndZelTeam**
-      operationId: stopZelBenchD
+        - Daemon
+      summary: Stop Benchmark daemon
+      description: Stop Benchmark daemon. **AdminAndFluxTeam**
+      operationId: stopbenchmark
       security:
         - ZelID: []
       responses:
@@ -10727,14 +11166,14 @@ paths:
               example:
                 status: success
                 data: Stopping process
-  /zelbench/getstatus:
+  /benchmark/getstatus:
     get:
       tags:
-        - ZelBench
-      summary: Zelbench status
+        - Benchmark
+      summary: Fluxbench status
       description: >-
-        This will return the status of the node, what ZelBenchd determined the
-        tier the server could pass for, and if ZelFlux backend is connected. If
+        This will return the status of the node, what FluxBenchd determined the
+        tier the server could pass for, and if Flux backend is connected. If
         any one of these return a negative result the ZelNode will fail to
         confirm. **Public**
       operationId: getStatus
@@ -10756,12 +11195,12 @@ paths:
                   status: online
                   benchmarking: SUPER
                   zelback: connected
-  /zelbench/help:
+  /benchmark/help:
     get:
       tags:
-        - ZelBench
-      summary: Zelbench calls
-      description: This will return with a list of calls for ZelBench. **Public**
+        - Benchmark
+      summary: Fluxbench calls
+      description: This will return with a list of calls for FluxBench. **Public**
       operationId: zelBenchHelp
       responses:
         '200':
@@ -10791,10 +11230,10 @@ paths:
                   == Zelnode ==
                   getbenchmarks
                   getinfo
-  /zelbench/getbenchmarks:
+  /benchmark/getbenchmarks:
     get:
       tags:
-        - ZelBench
+        - Benchmark
       summary: Benchmark results
       description: Return most recent benchmark results. **Public**
       operationId: getBenchmarksZelBench
@@ -10822,12 +11261,12 @@ paths:
                   hdd: 400.0308227539062
                   ddwrite: 290.239013671875
                   eps: 259.3544006347656
-  /zelbench/getinfo:
+  /benchmark/getinfo:
     get:
       tags:
-        - ZelBench
-      summary: Zelbench status
-      description: This will return with the zelbench status of the zelnode. **Public**
+        - Benchmark
+      summary: Fluxbench status
+      description: This will return with the fluxbench status of the fluxnode. **Public**
       operationId: zelBenchGetInfo
       responses:
         '200':
@@ -10846,14 +11285,14 @@ paths:
                 data:
                   version: 1.3.1
                   rpcport: 16224
-  /zelbench/restartnodebenchmarks:
+  /benchmark/restartnodebenchmarks:
     get:
       tags:
-        - ZelBench
-      summary: Restart ZelBench daemon
+        - Benchmark
+      summary: Restart FluxBench daemon
       description: >-
-        This will restart the ZelBench daemon and start bench process.
-        **AdminAndZelTeam**
+        This will restart the FluxBench daemon and start bench process.
+        **AdminAndFluxTeam**
       operationId: restartNodeBenchmarks
       security:
         - ZelID: []
@@ -10873,13 +11312,13 @@ paths:
               example:
                 status: success
                 data: Benchmarks will restart in the next couple minutes
-  /zelbench/stop:
+  /benchmark/stop:
     get:
       tags:
-        - ZelBench
-      summary: Stop zelbench daemon
-      description: This will stop the zelbench daemon. **Admin**
-      operationId: stopZelBenchDaemon
+        - Benchmark
+      summary: Stop fluxbench daemon
+      description: This will stop the fluxbench daemon. **Admin**
+      operationId: stopbenchmarkaemon
       security:
         - ZelID: []
       responses:
@@ -10898,12 +11337,12 @@ paths:
               example:
                 status: success
                 data: Zelbench server stopping
-  /zelbench/signzelnodetransaction:
+  /benchmark/signzelnodetransaction:
     post:
       tags:
-        - ZelBench
-      summary: Sign ZelNode transaction
-      description: Command to get ZelBenchd to sign a ZelNode broadcast. **Admin**
+        - Benchmark
+      summary: Sign FluxNode transaction
+      description: Command to get FluxBenchd to sign a FluxNode broadcast. **Admin**
       operationId: signZelNodeTransactionPost
       security:
         - ZelID: []
@@ -10916,7 +11355,7 @@ paths:
               properties:
                 hexstring:
                   type: string
-                  description: The hex encoded ZelNode broadcast message
+                  description: The hex encoded FluxNode broadcast message
             example:
               hexstring: >-
                 0500000004566e906c6df24b00ca710cecbbea166a29b9098456bed212207fea66f433ba4500000000ba33bd5e01182ebd5e010f3131362e3230332e3233372e323530411b27b3e254a9f3248d88039a0f062e0d634e130bd34a9e4a1cb27d7aa6ce975cee251be9af6864a1a4a9e9d5fc2b28a07af8bab36a73f912c59ef844a69fa03f5f411c7f47ba609b2c0eb91268b446b31899ce66f90fa1375aab29692f1b252a53a9883120e10c646292486365608dc806c43e2d49b66afdd150a6a7f60b6b2392a83b
@@ -10941,9 +11380,9 @@ paths:
                     0500000004566e906c6df24b00ca710cecbbea166a29b9098456bed212207fea66f433ba4500000000ba33bd5e014d3cbd5e010f3131362e3230332e3233372e323530411b27b3e254a9f3248d88039a0f062e0d634e130bd34a9e4a1cb27d7aa6ce975cee251be9af6864a1a4a9e9d5fc2b28a07af8bab36a73f912c59ef844a69fa03f5f411b38e0e02dfece0ba3b7aae0afdcea7c70c9ea28b11317763f12092214086059e74d542cada464f3ee2c655011c53f6f18c0aa484bff8ce36926c6b295eb9287ff
     get:
       tags:
-        - ZelBench
-      summary: Sign ZelNode transaction
-      description: Command to get ZelBenchd to sign a ZelNode broadcast. **Admin**
+        - Benchmark
+      summary: Sign FluxNode transaction
+      description: Command to get FluxBenchd to sign a FluxNode broadcast. **Admin**
       operationId: signZelNodeTransaction
       security:
         - ZelID: []
@@ -10975,13 +11414,13 @@ paths:
                   tier: BASIC
                   hex: >-
                     0500000004566e906c6df24b00ca710cecbbea166a29b9098456bed212207fea66f433ba4500000000ba33bd5e014d3cbd5e010f3131362e3230332e3233372e323530411b27b3e254a9f3248d88039a0f062e0d634e130bd34a9e4a1cb27d7aa6ce975cee251be9af6864a1a4a9e9d5fc2b28a07af8bab36a73f912c59ef844a69fa03f5f411b38e0e02dfece0ba3b7aae0afdcea7c70c9ea28b11317763f12092214086059e74d542cada464f3ee2c655011c53f6f18c0aa484bff8ce36926c6b295eb9287ff
-  /zelapps/listrunningzelapps:
+  /apps/listrunningapps:
     get:
       tags:
-        - ZelApps
+        - Apps
       summary: list running apps
       description: List and info of running apps. **Public**
-      operationId: listRunningZelApps
+      operationId: listRunningApps
       responses:
         '200':
           description: OK
@@ -11047,13 +11486,13 @@ paths:
                         Mode: ''
                         RW: true
                         Propagation: rprivate
-  /zelapps/listallzelapps:
+  /apps/listallapps:
     get:
       tags:
-        - ZelApps
+        - Apps
       summary: list all apps
       description: List and info of all apps. **Public**
-      operationId: listAllZelApps
+      operationId: listAllApps
       responses:
         '200':
           description: OK
@@ -11119,13 +11558,13 @@ paths:
                         Mode: ''
                         RW: true
                         Propagation: rprivate
-  /zelapps/listzelappsimages:
+  /apps/listappsimages:
     get:
       tags:
-        - ZelApps
+        - Apps
       summary: List of images
-      description: List of zelapps images installed. **Public**
-      operationId: listZelAppsImages
+      description: List of apps images installed. **Public**
+      operationId: listAppsImages
       responses:
         '200':
           description: OK
@@ -11209,13 +11648,13 @@ paths:
                     SharedSize: -1
                     Size: 85515870
                     VirtualSize: 85515870
-  /zelapps/installedzelapps:
+  /apps/installedapps:
     get:
       tags:
-        - ZelApps
+        - Apps
       summary: installed apps
       description: Info of installed apps. **Public**
-      operationId: installedZelApps
+      operationId: installedApps
       responses:
         '200':
           description: OK
@@ -11290,13 +11729,13 @@ paths:
                       - 0/0
                     containerPort: 7396
                     containerData: /config
-  /zelapps/availablezelapps:
+  /apps/availableapps:
     get:
       tags:
-        - ZelApps
+        - Apps
       summary: available apps
       description: Info of available apps. **Public**
-      operationId: availableZelApps
+      operationId: availableApps
       responses:
         '200':
           description: OK
@@ -11427,13 +11866,13 @@ paths:
                     containerData: /config
                     signature: todo
                     txid: todo
-  /zelapps/zelshare/getfile:
+  /apps/fluxshare/getfile:
     get:
       tags:
-        - ZelApps
+        - Apps
       summary: Share files
       description: Call to retrieve share file. **Public**
-      operationId: zelShareFile
+      operationId: fluxShareFile
       parameters:
         - in: query
           name: file
@@ -11453,13 +11892,13 @@ paths:
                 type: string
                 format: binary
               example: Hello world
-  /zelapps/zelfluxusage:
+  /apps/fluxusage:
     get:
       tags:
-        - ZelApps
-      summary: Zelflux's usage
-      description: Will return amount of cpu resource zelflux is using. **Public**
-      operationId: zelFluxUsage
+        - Apps
+      summary: Flux's usage
+      description: Will return amount of cpu resource flux is using. **Public**
+      operationId: FluxUsage
       responses:
         '200':
           description: OK
@@ -11476,13 +11915,13 @@ paths:
               example:
                 status: success
                 data: 0.20717773
-  /zelapps/zelappsresources:
+  /apps/appsresources:
     get:
       tags:
-        - ZelApps
-      summary: Zelflux's usage of resources
-      description: Will return data of resource zelflux is using. **Public**
-      operationId: zelappsResources
+        - Apps
+      summary: Flux's usage of resources
+      description: Will return data of resource flux is using. **Public**
+      operationId: appsResources
       responses:
         '200':
           description: OK
@@ -11494,19 +11933,19 @@ paths:
                   status:
                     $ref: '#/components/schemas/status'
                   data:
-                    $ref: '#/components/schemas/zelappsresources'
+                    $ref: '#/components/schemas/appsresources'
               example:
                 status: success
                 data:
                   zelAppsCpusLocked: 0
                   zelAppsRamLocked: 0
                   zelAppsHddLocked: 0
-  /zelapps/registrationinformation:
+  /apps/registrationinformation:
     get:
       tags:
-        - ZelApps
+        - Apps
       summary: Registration Info
-      description: Zelapps registration info. **Public**
+      description: Apps registration info. **Public**
       operationId: registrationInformation
       responses:
         '200':
@@ -11527,19 +11966,19 @@ paths:
                         properties:
                           cpu:
                             type: integer
-                            description: Zel amount per 0.1 cpu core
+                            description: FLUX amount per 0.1 cpu core
                           ram:
                             type: integer
-                            description: Zel amount per 100 mb
+                            description: FLUX amount per 100 mb
                           hdd:
                             type: number
-                            description: Zel amount per 1 gb
+                            description: FLUX amount per 1 gb
                       address:
                         type: string
                         description: Apps registration address
                       epochstart:
                         type: integer
-                        description: Zelapps epoch blockheight start
+                        description: Fluxapps epoch blockheight start
                       portMin:
                         type: integer
                         description: Min number in port range
@@ -11593,13 +12032,13 @@ paths:
                     probability: 20
                     delay: 300
                   blocksLasting: 22000
-  /zelapps/temporarymessages:
+  /apps/temporarymessages:
     get:
       tags:
-        - ZelApps
+        - Apps
       summary: Temporary registration info
       description: Temporary registration info that will expire after 1 hour. **Public**
-      operationId: getZelAppsTemporaryMessages
+      operationId: getAppsTemporaryMessages
       responses:
         '200':
           description: OK
@@ -11616,7 +12055,7 @@ paths:
                       type: object
                       properties:
                         zelAppSpecifications:
-                          $ref: '#/components/schemas/zelappspecification'
+                          $ref: '#/components/schemas/appspecification'
                         type:
                           type: string
                           description: Message type
@@ -11641,7 +12080,7 @@ paths:
               example:
                 status: success
                 data:
-                  zelAppSpecifications:
+                  AppSpecifications:
                     version: 1
                     name: Mario
                     description: InfiniteMario
@@ -11665,15 +12104,15 @@ paths:
                     G+zhabQa3xQWnINoxkOU8L0eod4OEddwmi1JYFoFf53GJ2yq0698jNzaXZtUiDfhWL30d6cJVDUnkO65DjCU/C4=
                   receivedAt: '2020-09-16T23:25:19.634Z'
                   expiredAt: '2020-09-17T00:25:19.634Z'
-  /zelapps/permanentmessages:
+  /apps/permanentmessages:
     get:
       tags:
-        - ZelApps
+        - Apps
       summary: Permanent registration info
       description: >-
         Registration info of apps that have been stored to the database.
         **Public**
-      operationId: getZelAppsPermanentMessages
+      operationId: getAppsPermanentMessages
       responses:
         '200':
           description: OK
@@ -11708,11 +12147,11 @@ paths:
                           description: Block height of transaction
                         valueSat:
                           type: integer
-                          description: Zel sat value of payment amount
+                          description: Flux sat value of payment amount
               example:
                 status: success
                 data:
-                  - zelAppSpecifications:
+                  - AppSpecifications:
                       version: 1
                       name: TetrisTest
                       description: Tetris is awesome
@@ -11736,13 +12175,13 @@ paths:
                       885f11f8a44cf1ac9673fb5c745688a95715295e3c3d0d69517a17ab652f8780
                     height: 645719
                     valueSat: 2800000000
-  /zelapps/globalappsspecifications:
+  /apps/globalappsspecifications:
     get:
       tags:
-        - ZelApps
+        - Apps
       summary: Global app specs
       description: List of global app specifications. **Public**
-      operationId: getGlobalZelAppsSpecifications
+      operationId: getGlobalAppsSpecifications
       responses:
         '200':
           description: OK
@@ -11777,10 +12216,10 @@ paths:
                     repotag: 'promasu/cryptpad:latest'
                     tiered: false
                     version: 1
-  /zelapps/appspecifications:
+  /apps/appspecifications:
     get:
       tags:
-        - ZelApps
+        - Apps
       summary: Global app specs of app specified
       description: This will return app specifications of the queried app. **Public**
       operationId: getApplicationSpecificationAPI
@@ -11805,7 +12244,7 @@ paths:
                   data:
                     type: array
                     items:
-                      $ref: '#/components/schemas/zelappname'
+                      $ref: '#/components/schemas/appname'
               example:
                 status: success
                 data:
@@ -11826,10 +12265,10 @@ paths:
                     repotag: 'promasu/cryptpad:latest'
                     tiered: false
                     version: 1
-  /zelapps/appowner:
+  /apps/appowner:
     get:
       tags:
-        - ZelApps
+        - Apps
       summary: App owner's ZelID
       description: This will return the ZelID of the owner of the app specified. **Public**
       operationId: getApplicationOwnerAPI
@@ -11857,13 +12296,13 @@ paths:
               example:
                 status: success
                 data: 1CbErtneaX2QVyUfwU7JGB7VzvPgrgc3uC
-  /zelapps/hashes:
+  /apps/hashes:
     get:
       tags:
-        - ZelApps
+        - Apps
       summary: Application Hash info
       description: Get list of app hashes and related info. **Public**
-      operationId: getZelAppHashes
+      operationId: getAppHashes
       responses:
         '200':
           description: OK
@@ -11911,15 +12350,15 @@ paths:
                       c9a1a06bc0ff4786607dff32df4b820aedd5e3ca9803fbb29bb0ffb10e170e42
                     value: 4500000000
                     message: true
-  /zelapps/location:
+  /apps/location:
     get:
       tags:
-        - ZelApps
+        - Apps
       summary: Info regarding app location
       description: >-
         This will return data regarding the location of app specified.
         **Public**
-      operationId: getZelAppsLocation
+      operationId: getAppsLocation
       parameters:
         - in: query
           name: zelapp
@@ -11955,15 +12394,15 @@ paths:
                     expireAt: '2020-09-19T10:10:09.069Z'
                     hash: >-
                       6055e9bef2fbd01c3561c4c1f87ba816921b51b6012d76a2f2b78efe8d3a0f8e
-  /zelapps/locations:
+  /apps/locations:
     get:
       tags:
-        - ZelApps
+        - Apps
       summary: List of app locations
       description: >-
         This will return a list of known apps on the network and it's locations
         data. **Public**
-      operationId: getZelAppsLocations
+      operationId: getAppsLocations
       responses:
         '200':
           description: OK
@@ -12001,10 +12440,10 @@ paths:
                     broadcastedAt: '2020-09-19T09:24:12.428Z'
                     expireAt: '2020-09-19T10:29:12.428Z'
                     hash: ahashofappmessage
-  /zelapps/calculateprice:
+  /apps/calculateprice:
     post:
       tags:
-        - ZelApps
+        - Apps
       summary: Calculate price of app
       description: >-
         Calculate price by sending request with specs required for app you are
@@ -12061,17 +12500,17 @@ paths:
                     $ref: '#/components/schemas/status'
                   data:
                     type: string
-                    description: Zel amount
+                    description: FLUX amount
               example:
                 status: success
                 data: 1.6
-  /zelapps/zelappstart:
+  /apps/appstart:
     get:
       tags:
-        - ZelApps
+        - Apps
       summary: Starts app
-      description: This will start the zelapp. **AppOwnerAbove**
-      operationId: zelAppStart
+      description: This will start the fluxapp. **AppOwnerAbove**
+      operationId: AppStart
       security:
         - ZelID: []
       parameters:
@@ -12098,13 +12537,13 @@ paths:
               example:
                 status: success
                 data: ZelApp zelFoldingAtHome successfully started.
-  /zelapps/zelappstop:
+  /apps/appstop:
     get:
       tags:
-        - ZelApps
+        - Apps
       summary: Stops app
       description: This will stop the zelapp. **AppOwnerAbove**
-      operationId: zelAppStop
+      operationId: AppStop
       security:
         - ZelID: []
       parameters:
@@ -12131,13 +12570,13 @@ paths:
               example:
                 status: success
                 data: ZelApp zelFoldingAtHome successfully stopped.
-  /zelapps/zelapprestart:
+  /apps/apprestart:
     get:
       tags:
-        - ZelApps
+        - Apps
       summary: Restarts app
       description: This will restart the zelapp. **AppOwnerAbove**
-      operationId: zelAppRestart
+      operationId: AppRestart
       security:
         - ZelID: []
       parameters:
@@ -12164,10 +12603,10 @@ paths:
               example:
                 status: success
                 data: ZelApp zelFoldingAtHome successfully restarted.
-  /zelapps/zelapppause:
+  /apps/apppause:
     get:
       tags:
-        - ZelApps
+        - Apps
       summary: Pause app
       description: This will pause the zelapp. **AppOwnerAbove**
       operationId: zelAppPause
@@ -12197,13 +12636,13 @@ paths:
               example:
                 status: success
                 data: ZelApp zelFoldingAtHome successfully paused.
-  /zelapps/zelappunpause:
+  /apps/appunpause:
     get:
       tags:
-        - ZelApps
+        - Apps
       summary: Unpause app
       description: This will unpause the zelapp. **AppOwnerAbove**
-      operationId: zelAppUnpause
+      operationId: AppUnpause
       security:
         - ZelID: []
       parameters:
@@ -12230,13 +12669,13 @@ paths:
               example:
                 status: success
                 data: ZelApp zelFoldingAtHome successfully unpaused.
-  /zelapps/zelapptop:
+  /apps/apptop:
     get:
       tags:
-        - ZelApps
+        - Apps
       summary: List of running processes
       description: Display the running processes of a container. **AppOwnerAbove**
-      operationId: zelAppTop
+      operationId: AppTop
       security:
         - ZelID: []
       parameters:
@@ -12318,13 +12757,13 @@ paths:
                     - TTY
                     - TIME
                     - CMD
-  /zelapps/zelapplog:
+  /apps/applog:
     get:
       tags:
-        - ZelApps
+        - Apps
       summary: App's log
-      description: This will fetch the logs of a zelapp. **AppOwnerAbove**
-      operationId: zelAppLogs
+      description: This will fetch the logs of a fluxapp. **AppOwnerAbove**
+      operationId: AppLogs
       security:
         - ZelID: []
       parameters:
@@ -12429,13 +12868,13 @@ paths:
 
                   21:12:16:******************************* System
                   ********************************
-  /zelapps/zelappinspect:
+  /apps/appinspect:
     get:
       tags:
-        - ZelApps
+        - Apps
       summary: Info of the app
       description: Displays detailed info of the container. **AppOwnerAbove**
-      operationId: zelAppInspect
+      operationId: AppInspect
       security:
         - ZelID: []
       parameters:
@@ -13278,15 +13717,15 @@ paths:
                         GlobalIPv6PrefixLen: 0
                         MacAddress: '02.34:ac:11:01:06'
                         DriverOpts: null
-  /zelapps/zelappstats:
+  /apps/appstats:
     get:
       tags:
-        - ZelApps
+        - Apps
       summary: App stats based on resource usage
       description: Returns containers resource usage. **AppOwnerAbove**
       externalDocs:
         url: 'https://docs.docker.com/engine/api/v1.40/#operation/ContainerStats'
-      operationId: zelAppStats
+      operationId: AppStats
       security:
         - ZelID: []
       parameters:
@@ -13399,10 +13838,10 @@ paths:
                     tx_packets: 2264232
                     tx_errors: 0
                     tx_dropped: 0
-  /zelapps/zelappchanges:
+  /apps/appchanges:
     get:
       tags:
-        - ZelApps
+        - Apps
       summary: Container changes
       description: >-
         Data of changes made to container. If no changes it will return a null
@@ -13416,7 +13855,7 @@ paths:
         - `1 = Added`
 
         - `2 = Deleted`
-      operationId: zelAppChanges
+      operationId: AppChanges
       security:
         - ZelID: []
       parameters:
@@ -13456,13 +13895,13 @@ paths:
                 status: success
                 data:
                   - null
-  /zelapps/zelappexec:
+  /apps/appexec:
     post:
       tags:
-        - ZelApps
+        - Apps
       summary: Run a command in the container
       description: Run new commands inside running containers. **AppOwner**
-      operationId: zelAppExec
+      operationId: AppExec
       security:
         - ZelID: []
       requestBody:
@@ -13498,20 +13937,20 @@ paths:
                 type: string
                 description: Output depends on the command
               example: 'Sun Sep 20 10:18:38 UTC 2020'
-  /zelapps/zelappremove:
+  /apps/appremove:
     get:
       tags:
-        - ZelApps
+        - Apps
       summary: Clean and remove container
       description: >-
         This will stop, clean data, close port, and remove the container.
-        **AdminAndZelTeam**
-      operationId: removeZelAppLocally
+        **AdminAndFluxTeam**
+      operationId: Appremove
       security:
         - ZelID: []
       parameters:
         - in: query
-          name: zelapp
+          name: app
           required: true
           schema:
             type: string
@@ -13532,15 +13971,15 @@ paths:
                     description: Status of the cleanup in progress
               example:
                 status: success
-                data: ZelApp zelFoldingAtHome was successfuly removed
-  /zelapps/installtemporarylocalapp:
+                data: App zelFoldingAtHome was successfuly removed
+  /apps/installtemporarylocalapp:
     get:
       tags:
-        - ZelApps
+        - Apps
       summary: Install local app
       description: >-
         Register, install, and run app specified in query param.
-        **AdminAndZelTeam**
+        **AdminAndFluxTeam**
 
 
         _Note: Below example of response is last bit of a continuous stream of
@@ -13565,14 +14004,14 @@ paths:
                 $ref: '#/components/schemas/streamdata'
               example:
                 status: success
-                data: ZelApp zelFoldingAtHomeB successfully started.
-  /zelapps/createzelfluxnetwork:
+                data: App zelFoldingAtHomeB successfully started.
+  /apps/createfluxnetwork:
     get:
       tags:
-        - ZelApps
+        - Apps
       summary: Create flux network
-      description: This will create flux network if none is detected. **AdminAndZelTeam**
-      operationId: createZelFluxNetwork
+      description: This will create flux network if none is detected. **AdminAndFluxTeam**
+      operationId: createFluxNetwork
       security:
         - ZelID: []
       responses:
@@ -13591,14 +14030,14 @@ paths:
               example:
                 status: success
                 data: Flux Network already exists.
-  /zelapps/rescanglobalappsinformation:
+  /apps/rescanglobalappsinformation:
     get:
       tags:
-        - ZelApps
+        - Apps
       summary: Rescan and update global ZelApps info database
       description: >-
-        Rescans global zelapps permanent messages since selected blockheight and
-        updates global zelapps information database. **AdminAndZelTeam**
+        Rescans global apps permanent messages since selected blockheight and
+        updates global apps information database. **AdminAndFluxTeam**
       operationId: rescanGlobalAppsInformationAPI
       security:
         - ZelID: []
@@ -13637,14 +14076,14 @@ paths:
                 status: success
                 data:
                   message: Rescan successful
-  /zelapps/reindexglobalappsinformation:
+  /apps/reindexglobalappsinformation:
     get:
       tags:
-        - ZelApps
-      summary: Reindex zelappsinformation collection and rebuild
+        - Apps
+      summary: Reindex appsinformation collection and rebuild
       description: >-
-        This will drop zelappslocations collection, recreate indexes, and
-        rebuild incoming messages. **AdminAndZelTeam**
+        This will drop appslocations collection, recreate indexes, and
+        rebuild incoming messages. **AdminAndFluxTeam**
       operationId: reindexGlobalAppsInformationAPI
       security:
         - ZelID: []
@@ -13664,14 +14103,14 @@ paths:
                 status: success
                 data:
                   message: Reindex successful
-  /zelapps/reindexglobalappslocation:
+  /apps/reindexglobalappslocation:
     get:
       tags:
-        - ZelApps
-      summary: Reindex zelappslocations collection and rebuild
+        - Apps
+      summary: Reindex appslocations collection and rebuild
       description: >-
-        Function that drops information about running zelapps and rebuilds
-        indexes. **AdminAndZelTeam**
+        Function that drops information about running apps and rebuilds
+        indexes. **AdminAndFluxTeam**
       operationId: reindexGlobalAppsLocationAPI
       security:
         - ZelID: []
@@ -13691,10 +14130,10 @@ paths:
                 status: success
                 data:
                   message: Reindex successful
-  /zelapps/checkdockerexistance:
+  /apps/checkdockerexistance:
     post:
       tags:
-        - ZelApps
+        - Apps
       summary: Checks Docker Hub for image
       description: This will check Docker Hub and verify image is available. **User**
       operationId: checkDockerAccessibility
@@ -13730,10 +14169,10 @@ paths:
                 status: success
                 data:
                   message: Repotag is accessible
-  /zelapps/zelappregister:
+  /apps/appregister:
     post:
       tags:
-        - ZelApps
+        - Apps
       summary: App registration
       description: >-
         This call is to provide required info to register app on Flux. **User**
@@ -13749,7 +14188,7 @@ paths:
 
         -
         `zelappregister1{"version":1,"name":"Mario","description":"InfiniteMario","repotag":"bharathshetty4/supermario:latest","owner":"1FLUX1AHpR35EiPHH4HUMsWzugTaj1Gp6M","port":31000,"enviromentParameters":[],"commands":[],"containerPort":8600,"containerData":"/tmp","cpu":0.1,"ram":100,"hdd":1,"tiered":false}1600255247532`
-      operationId: registerZelAppGlobalyApi
+      operationId: Appregister
       security:
         - ZelID: []
       requestBody:
@@ -13760,7 +14199,7 @@ paths:
               type: object
               properties:
                 zelAppSpecification:
-                  $ref: '#/components/schemas/zelappspecification'
+                  $ref: '#/components/schemas/appspecification'
                 timestamp:
                   type: integer
                   description: Current timestamp in epoch/unix
@@ -13820,10 +14259,10 @@ paths:
                 status: success
                 data: >-
                   a7a5b90b25ccc0a8379ec960c103103390369d1d6d18f88281372b944531dc23
-  /zelapps/zelappupdate:
+  /apps/appupdate:
     post:
       tags:
-        - ZelApps
+        - Apps
       summary: App update
       description: >-
         This call is to provide required info to update app on Flux. **User**
@@ -13839,7 +14278,7 @@ paths:
 
         -
         `zelappregister1{"version":1,"name":"Mario","description":"InfiniteMario","repotag":"bharathshetty4/supermario:latest","owner":"1FLUX1AHpR35EiPHH4HUMsWzugTaj1Gp6M","port":31000,"enviromentParameters":[],"commands":[],"containerPort":8600,"containerData":"/tmp","cpu":0.1,"ram":100,"hdd":1,"tiered":false}1600255247532`
-      operationId: updateZelAppGlobalyApi
+      operationId: updateAppGlobalyApi
       security:
         - ZelID: []
       requestBody:
@@ -13849,8 +14288,8 @@ paths:
             schema:
               type: object
               properties:
-                zelAppSpecification:
-                  $ref: '#/components/schemas/zelappspecification'
+                AppSpecification:
+                  $ref: '#/components/schemas/appspecification'
                 timestamp:
                   type: integer
                   description: Current timestamp in epoch/unix
@@ -13864,7 +14303,7 @@ paths:
                   type: integer
                   description: Message version
             example:
-              zelAppSpecification:
+              AppSpecification:
                 version: 1
                 name: Mario
                 description: InfiniteMario
@@ -13891,7 +14330,7 @@ paths:
               timestamp: 1600255247532
               signature: >-
                 Gz6XXaBOCutFDRS2Fn9oTdM6quAEU2ppulO+X0NKJRs0Zsv7nbs5LlyLfln+qBEB0/rnehDRm0iM8X/CDl80ToU=
-              type: zelappupdate
+              type: appupdate
               version: 1
       responses:
         '200':
@@ -13910,12 +14349,12 @@ paths:
                 status: success
                 data: >-
                   a7a5b90b25ccc0a8379ec960c103103390369d1d6d18f88281372b944531dc23
-  /explorer/zelnodetxs:
+  /explorer/fluxtxs:
     get:
       tags:
         - Explorer
-      summary: View ZelNode transactions
-      description: View a filtered list of the ZelNode's transactions. **Public**
+      summary: View FluxNode transactions
+      description: View a filtered list of the FluxNode's transactions. **Public**
       operationId: getFilteredZelNodeTxs
       parameters:
         - in: query
@@ -13952,10 +14391,10 @@ paths:
                         description: Update type number
                       ip:
                         type: string
-                        description: Ip of zelnode's server
+                        description: Ip of fluxnode's server
                       benchTier:
                         type: string
-                        description: Zelnode tier
+                        description: Fluxnode tier
                       collateralHash:
                         type: string
                         description: Collateral tx hash
@@ -13964,7 +14403,7 @@ paths:
                         description: Collateral tx output index
                       zelAddress:
                         type: string
-                        description: Zel address
+                        description: Flux address
                       lockedAmount:
                         type: integer
                         description: Locked amount in satoshi value
@@ -14028,10 +14467,10 @@ paths:
                           description: Block height of transaction
                         address:
                           type: string
-                          description: Zel address
+                          description: Flux address
                         satoshis:
                           type: integer
-                          description: Value of Zel in satoshi
+                          description: Value of Flux in satoshi
                         scriptPubKey:
                           type: string
                           description: Script public key
@@ -14070,7 +14509,7 @@ paths:
           required: true
           schema:
             type: string
-          description: Zel address to look up tx history
+          description: Flux address to look up tx history
           example: t1edbnsYnGXxyYNt4kJJPhZktDWNaKwkznY
       responses:
         '200':
@@ -14140,7 +14579,7 @@ paths:
                     $ref: '#/components/schemas/status'
                   data:
                     type: integer
-                    description: Zel balance in satoshi value
+                    description: Flux balance in satoshi value
               example:
                 status: success
                 data: 7089180145154
@@ -14176,7 +14615,7 @@ paths:
       tags:
         - Explorer
       summary: Reindex collection
-      description: Drop ZelCash collection and recreate it. **AdminAndZelTeam**
+      description: Drop Flux collection and recreate it. **AdminAndFluxTeam**
       operationId: reindexExplorer
       security:
         - ZelID: []
@@ -14201,7 +14640,7 @@ paths:
       tags:
         - Explorer
       summary: Restart block processing
-      description: Restarts ZelCash collection. **AdminAndZelTeam**
+      description: Restarts Flux collection. **AdminAndFluxTeam**
       operationId: restartBlockProcessing
       security:
         - ZelID: []
@@ -14226,7 +14665,7 @@ paths:
       tags:
         - Explorer
       summary: Stops block processing
-      description: Stops ZelCash collection. **AdminAndZelTeam**
+      description: Stops Flux collection. **AdminAndFluxTeam**
       operationId: stopBlockProcessing
       security:
         - ZelID: []
@@ -14251,7 +14690,7 @@ paths:
       tags:
         - Explorer
       summary: Rescan explorer
-      description: Rescan explorer from selected block height. **AdminAndZelTeam**
+      description: Rescan explorer from selected block height. **AdminAndFluxTeam**
       operationId: rescanExplorer
       security:
         - ZelID: []
@@ -14290,7 +14729,7 @@ components:
       type: object
       properties:
         loginPhrase:
-          description: Login Phrase. Provided by GET /zelid/loginphrase.
+          description: Login Phrase. Provided by GET /id/loginphrase.
           type: string
           minLength: 40
           example: 1574991374806spbcvsuwerl52tppx9dw5khuz8rew13mkq86gg8r2c
@@ -14376,7 +14815,7 @@ components:
           description: Tier server passed for BASIC/SUPER/BAMF
         zelback:
           type: string
-          description: Status of ZelFlux backend
+          description: Status of Flux backend
     benchinfo:
       type: object
       properties:
@@ -14411,7 +14850,7 @@ components:
           type: array
           items:
             type: string
-            description: Zelcash address
+            description: Flux address
         p2sh:
           type: string
           description: Script address
@@ -14465,10 +14904,10 @@ components:
           $ref: '#/components/schemas/joinsplit'
         valueBalance:
           type: number
-          description: The balance value of ZEL
+          description: The balance value of FLUX
         valueBalanceZat:
           type: number
-          description: The balance value of ZEL
+          description: The balance value of FLUX
         vShieldedSpend:
           $ref: '#/components/schemas/shieldedspend'
         vShieldedOutput:
@@ -14954,7 +15393,7 @@ components:
         hddbamf:
           type: integer
           description: Storage space in GB
-    zelcashgetinfo:
+    daemongetinfo:
       type: object
       properties:
         version:
@@ -14997,10 +15436,10 @@ components:
           description: How many new keys are pre-generated
         paytxfee:
           type: number
-          description: The transaction fee set at ZEL/kB
+          description: The transaction fee set at FLUX/kB
         relayfee:
           type: number
-          description: Minimum relay fee for non-free transactions in ZEL/kB
+          description: Minimum relay fee for non-free transactions in FLUX/kB
         errors:
           type: string
           description: Any error messages
@@ -15009,7 +15448,7 @@ components:
       properties:
         status:
           type: string
-          description: ZelNode status
+          description: FluxNode status
         collateral:
           type: string
           description: Collateral transaction
@@ -15021,40 +15460,40 @@ components:
           description: Collateral transaction output index number
         ip:
           type: string
-          description: ZelNode network address
+          description: FluxNode network address
         network:
           type: string
           description: 'Network type (IPv4, IPv6, onion)'
         added_height:
           type: integer
-          description: Block height when ZelNode was added
+          description: Block height when FluxNode was added
         confirmed_height:
           type: integer
-          description: Block height when ZelNode was confirmed
+          description: Block height when FluxNode was confirmed
         last_confirmed_height:
           type: integer
-          description: Last block height when ZelNode was confirmed
+          description: Last block height when FluxNode was confirmed
         last_paid_height:
           type: integer
-          description: Last block height when ZelNode was paid
+          description: Last block height when FluxNode was paid
         tier:
           type: string
           description: Tier (BASIC/SUPER/BAMF)
         payment_address:
           type: string
-          description: ZEL address for ZelNode payments
+          description: FLUX address for ZelNode payments
         pubkey:
           type: string
-          description: ZelNode public key used for message broadcasting
+          description: FluxNode public key used for message broadcasting
         activesince:
           type: integer
           description: >-
-            The time in seconds since epoch (Jan 1 1970 GMT) ZelNode has been
+            The time in seconds since epoch (Jan 1 1970 GMT) FluxNode has been
             active
         lastpaid:
           type: integer
           description: >-
-            The time in seconds since epoch (Jan 1 1970 GMT) ZelNode was last
+            The time in seconds since epoch (Jan 1 1970 GMT) FluxNode was last
             paid
     zoperationstatus:
       type: array
@@ -15280,7 +15719,7 @@ components:
   securitySchemes:
     ZelID:
       description: >-
-        Zel ID is an authentication system based on Bitcoin message signing.
+        ZelID is an authentication system based on Bitcoin message signing.
         zelidauth header consist of stringified query of zelid, signature,
         loginPhrase Please refer to Authentication workflow section on how to
         obtain correct zelidauth header. An example of a header is

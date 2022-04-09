@@ -1,13 +1,13 @@
 {
-  "name": "zelfluxdocs",
-  "version": "1.0.0",
-  "author": "Zel Foundation",
+  "name": "fluxdocs",
+  "version": "1.1.0",
+  "author": "Flux Foundation",
   "license": "GNU AGPLv3",
   "repository": {
     "type": "git",
-    "url": "git://github.com/zelcash/zelfluxcods.git"
+    "url": "git://github.com/runonflux/fluxdocs.git"
   },
-  "description": "ZelCore Wallet",
+  "description": "Flux documentation",
   "contributors": [
     {
       "name": "dk808"
