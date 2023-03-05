@@ -12361,7 +12361,7 @@ paths:
       operationId: getAppsLocation
       parameters:
         - in: query
-          name: zelapp
+          name: appname
           required: true
           schema:
             type: string
@@ -12768,7 +12768,7 @@ paths:
         - ZelID: []
       parameters:
         - in: query
-          name: zelapp
+          name: appname
           required: true
           schema:
             type: string
