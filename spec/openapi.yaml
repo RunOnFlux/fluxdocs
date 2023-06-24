@@ -613,7 +613,7 @@ paths:
               example:
                 status: success
                 data:
-                  message: ZelCash successfully started
+                  message: Flux successfully started
   /flux/restartdaemon:
     get:
       tags:
@@ -648,10 +648,10 @@ paths:
         - Flux
       summary: Reindexes Flux daemon
       description: >-
-        Tries to reindex ZelCash daemon running on the Flux node the call is run
-        against. ZelCash daemon is firstly stopped and then started with reindex
+        Tries to reindex Flux daemon running on the Flux node the call is run
+        against. Flux daemon is firstly stopped and then started with reindex
         flag. **Admin**
-      operationId: reindexZelCashB
+      operationId: reindexFluxB
       security:
         - ZelID: []
       responses:
@@ -669,7 +669,7 @@ paths:
               example:
                 status: success
                 data:
-                  message: ZelCash successfully reindexing
+                  message: Flux successfully reindexing
   /flux/udpateflux:
     get:
       tags:
@@ -815,11 +815,11 @@ paths:
     get:
       tags:
         - Flux
-      summary: Returns with the ZelCash debug log
+      summary: Returns with the Flux debug log
       description: >-
-        Returns with the debug log located in ZelCash data directory.
+        Returns with the debug log located in Flux data directory.
         **AdminAndFluxTeam**
-      operationId: zelcashDebug
+      operationId: fluxDebug
       security:
         - ZelID: []
       responses:
@@ -831,23 +831,23 @@ paths:
                 type: string
                 description: Debug log
               example: >-
-                2020-05-09 11:27:30 Zelcash version v4.0.1-32bd16d-dirty
+                2020-05-09 11:27:30 Flux version v4.0.1-32bd16d-dirty
                 (2020-03-20 19:05:39 +0000) 2020-05-09 11:27:30 AppInit2:
                 parameter interaction: -externalip set -> setting -discover=0
                 2020-05-09 11:27:30 Using BerkeleyDB version Berkeley DB 6.2.23:
                 (March 28, 2016) 2020-05-09 11:27:30 Default data directory
-                /home/zel/.zelcash 2020-05-09 11:27:30 Using data directory
-                /home/zel/.zelcash/ 2020-05-09 11:27:30 Using config file
-                /home/zel/.zelcash/zelcash.conf 2020-05-09 11:27:30 Using at
+                /home/user/.flux 2020-05-09 11:27:30 Using data directory
+                /home/user/.flux/ 2020-05-09 11:27:30 Using config file
+                /home/user/.flux/flux.conf 2020-05-09 11:27:30 Using at
                 most 256 connections (1024 file descriptors available)
                 2020-05-09 11:27:30 Using 2 threads for script verification
                 2020-05-09 11:27:30 scheduler thread start 2020-05-09 11:27:30
                 Loading Sapling (Spend) parameters from
-                /home/zel/.zcash-params/sapling-spend.params 2020-05-09 11:27:30
+                /home/user/.zcash-params/sapling-spend.params 2020-05-09 11:27:30
                 Loading Sapling (Output) parameters from
-                /home/zel/.zcash-params/sapling-output.params 2020-05-09
+                /home/user/.zcash-params/sapling-output.params 2020-05-09
                 11:27:30 Loading Sapling (Sprout Groth16) parameters from
-                /home/zel/.zcash-params/sprout-groth16.params 2020-05-09
+                /home/user/.zcash-params/sprout-groth16.params 2020-05-09
                 11:27:34 Loaded Sapling parameters in 4.129045s seconds.
                 2020-05-09 11:27:34 Binding RPC on address 0.0.0.0 port 16124
                 failed. 2020-05-09 11:27:34 HTTP: creating work queue of depth
@@ -882,7 +882,7 @@ paths:
                 [::]:16225 2020-05-13 16:59:02 Bound to 0.0.0.0:16225 2020-05-13
                 16:59:02 init message: Done loading 2020-05-13 16:59:02 Starting
                 Zelnodes Benchmarking Thread 2020-05-13 16:59:03 Path:
-                /home/zel/zelflux/ZelBack 2020-05-13 16:59:03 ---Flux usage:
+                /home/user/flux/ZelBack 2020-05-13 16:59:03 ---Flux usage:
                 0.23012 2020-05-13 16:59:03 ---package evaluator system setup
                 starting 2020-05-13 16:59:03 ---package evaluator already
                 installed 2020-05-13 16:59:03 ---package evaluator found
@@ -899,11 +899,11 @@ paths:
     get:
       tags:
         - Flux
-      summary: Returns last lines of ZelCash debug log
+      summary: Returns last lines of Flux debug log
       description: >-
-        Returns last 100 lines known in the ZelCash debug log.
+        Returns last 100 lines known in the Flux debug log.
         **AdminAndFluxTeam**
-      operationId: tailZelCashDebug
+      operationId: tailFluxDebug
       security:
         - ZelID: []
       responses:
@@ -1216,7 +1216,7 @@ paths:
 
                     2020-09-12 00:24:09 Starting Zelnodes Benchmarking Thread
 
-                    2020-09-12 00:24:10 Path: /home/zel/zelflux/ZelBack
+                    2020-09-12 00:24:10 Path: /home/user/flux/ZelBack
 
                     2020-09-12 00:25:10 ---Flux usage: 0.44897
 
@@ -1253,7 +1253,7 @@ paths:
 
                     2020-09-12 00:55:45 ---Restarting benchmarks
 
-                    2020-09-12 00:55:46 Path: /home/zel/zelflux/ZelBack
+                    2020-09-12 00:55:46 Path: /home/user/flux/ZelBack
 
                     2020-09-12 00:55:46 ---Flux usage: 0.16616
 
@@ -1290,7 +1290,7 @@ paths:
 
                     2020-09-12 01:25:56 ---Restarting benchmarks
 
-                    2020-09-12 01:25:57 Path: /home/zel/zelflux/ZelBack
+                    2020-09-12 01:25:57 Path: /home/user/flux/ZelBack
 
                     2020-09-12 01:25:57 ---Flux usage: 0.21791
 
@@ -1327,7 +1327,7 @@ paths:
 
                     2020-09-12 01:56:07 ---Restarting benchmarks
 
-                    2020-09-12 01:56:08 Path: /home/zel/zelflux/ZelBack
+                    2020-09-12 01:56:08 Path: /home/user/flux/ZelBack
 
                     2020-09-12 01:56:08 ---Flux usage: 0.19594
 
@@ -1367,9 +1367,9 @@ paths:
         - Flux
       summary: Returns with the Flux error log
       description: >-
-        Returns with the error log located in zelflux directory.
+        Returns with the error log located in flux directory.
         **AdminAndFluxTeam**
-      operationId: zelfluxErrorLog
+      operationId: fluxErrorLog
       security:
         - ZelID: []
       responses:
@@ -1656,17 +1656,17 @@ paths:
                   data:
                     type: object
                     properties:
-                      zelcash:
+                      daemon:
                         type: object
                         properties:
                           info:
                             $ref: '#/components/schemas/daemongetinfo'
-                      zelnode:
+                      node:
                         type: object
                         properties:
                           status:
                             $ref: '#/components/schemas/zelnodestatus'
-                      zelbench:
+                      benchmark:
                         type: object
                         properties:
                           info:
@@ -1675,7 +1675,7 @@ paths:
                             $ref: '#/components/schemas/benchstatus'
                           bench:
                             $ref: '#/components/schemas/getbenchmarks'
-                      zelflux:
+                      flux:
                         type: object
                         properties:
                           version:
@@ -1710,11 +1710,11 @@ paths:
                           runningapps:
                             $ref: '#/components/schemas/containerinfo'
                           resources:
-                            $ref: '#/components/schemas/zelappsresources'
+                            $ref: '#/components/schemas/appsresources'
               example:
                 status: success
                 data:
-                  zelcash:
+                  daemon:
                     info:
                       version: 4000150
                       protocolversion: 170016
@@ -1731,7 +1731,7 @@ paths:
                       paytxfee: 0
                       relayfee: 0.000001
                       errors: ''
-                  zelnode:
+                  node:
                     status:
                       status: CONFIRMED
                       collateral: >-
@@ -1752,7 +1752,7 @@ paths:
                         049a8a290ecb831f7d23b82c3d9fc9fdd029e5c7b0832044480b96d36b785a8c680c4fcc832c885b6f376495ee884ae1137fc156f7102efbddb9900d45fe1787ff
                       activesince: '1588098076'
                       lastpaid: '1588504103'
-                  zelbench:
+                  benchmark:
                     info:
                       version: 1.3.1
                       rpcport: 16224
@@ -1770,7 +1770,7 @@ paths:
                       hdd: 200.0308074951172
                       ddwrite: 308.4692077636719
                       eps: 220.1355895996094
-                  zelflux:
+                  flux:
                     version: 0.58.2
                     ip: 167.86.81.87
                     zelid: 1K6nyw2VjV6jEN1f1CkbKn9htWnYkQabbR
@@ -1803,10 +1803,10 @@ paths:
                         State: running
                         Status: Up 9 days
                         HostConfig:
-                          NetworkMode: zelfluxDockerNetwork
+                          NetworkMode: fluxDockerNetwork
                         NetworkSettings:
                           Networks:
-                            zelfluxDockerNetwork:
+                            fluxDockerNetwork:
                               IPAMConfig: null
                               Links: null
                               Aliases: null
@@ -1824,7 +1824,7 @@ paths:
                               DriverOpts: null
                         Mounts:
                           - Type: bind
-                            Source: /home/zel/zelflux/ZelApps/zelFoldingAtHome
+                            Source: /home/user/flux/ZelApps/zelFoldingAtHome
                             Destination: /config
                             Mode: ''
                             RW: true
@@ -1877,10 +1877,10 @@ paths:
                     $ref: '#/components/schemas/status'
                   data:
                     type: string
-                    description: Zelflux version
+                    description: Flux version
               example:
                 status: success
-                data: 0.41.1
+                data: 4.1.0
   /flux/ip:
     get:
       tags:
@@ -2981,7 +2981,7 @@ paths:
                 description: Backend folder location
               example:
                 status: success
-                data: /home/username/zelflux/ZelBack/
+                data: /home/username/flux/ZelBack/
   /daemon/help:
     get:
       tags:
@@ -3183,9 +3183,9 @@ paths:
 
                   estimatepriority nblocks
 
-                  validateaddress "zelcashaddress"
+                  validateaddress "fluxaddress"
 
-                  verifymessage "zelcashaddress" "signature" "message"
+                  verifymessage "fluxaddress" "signature" "message"
 
                   z_validateaddress "zaddr"
 
@@ -3202,7 +3202,7 @@ paths:
 
                   encryptwallet "passphrase"
 
-                  getaccount "zelcashaddress"
+                  getaccount "fluxaddress"
 
                   getaccountaddress "account"
 
@@ -3216,7 +3216,7 @@ paths:
 
                   getreceivedbyaccount "account" ( minconf )
 
-                  getreceivedbyaddress "zelcashaddress" ( minconf )
+                  getreceivedbyaddress "fluxaddress" ( minconf )
 
                   gettransaction "txid" ( includeWatchonly )
 
@@ -3226,7 +3226,7 @@ paths:
 
                   importaddress "address" ( "label" rescan )
 
-                  importprivkey "zelcashprivkey" ( "label" rescan )
+                  importprivkey "fluxprivkey" ( "label" rescan )
 
                   importwallet "filename"
 
@@ -3255,16 +3255,16 @@ paths:
 
                   rescanblockchain (start_height)
 
-                  sendfrom "fromaccount" "tozelcashaddress" amount ( minconf
+                  sendfrom "fromaccount" "tofluxaddress" amount ( minconf
                   "comment" "comment-to" )
 
                   sendmany "fromaccount" {"address":amount,...} ( minconf
                   "comment" ["address",...] )
 
-                  sendtoaddress "zelcashaddress" amount ( "comment" "comment-to"
+                  sendtoaddress "fluxaddress" amount ( "comment" "comment-to"
                   subtractfeefromamount )
 
-                  setaccount "zelcashaddress" "account"
+                  setaccount "fluxaddress" "account"
 
                   settxfee amount
 
@@ -4342,10 +4342,10 @@ paths:
                               description: Monitor status
                             chainValue:
                               type: number
-                              description: Value of ZEL
+                              description: Value of FLUX
                             chainValueZat:
                               type: integer
-                              description: Value of ZEL
+                              description: Value of FLUX
                       softforks:
                         type: array
                         items:
@@ -5924,7 +5924,7 @@ paths:
                               description: Does proxy randomize credentials?
                       relayfee:
                         type: number
-                        description: Minimum relay fee for non-free transactions in ZEL/kB
+                        description: Minimum relay fee for non-free transactions in FLUX/kB
                       localaddresses:
                         type: array
                         items:
@@ -6272,8 +6272,8 @@ paths:
           name: addresses
           required: true
           description: >
-            Json object or url encoded json. The key is the Zelcash address, the
-            value is the ZEL amount..
+            Json object or url encoded json. The key is the Flux address, the
+            value is the FLUX amount..
 
 
             Url encoded example:
@@ -6931,7 +6931,7 @@ paths:
                     public keys
                   items:
                     type: string
-                    description: ZelCash address or hex-encoded public key
+                    description: Flux address or hex-encoded public key
             example:
               'n': 2
               keys:
@@ -7083,7 +7083,7 @@ paths:
     get:
       tags:
         - Daemon
-      summary: Info of the Zelcash address
+      summary: Info of the Flux address
       description: Return information about the given Flux address. **Public**
       operationId: validateAddress
       parameters:
@@ -7329,7 +7329,7 @@ paths:
                                 transaction, can be "" for the default account
                             address:
                               type: string
-                              description: The Zelcash address involved in the transaction
+                              description: The Flux address involved in the transaction
                             category:
                               type: string
                               description: 'The category, either send or receive'
@@ -7546,16 +7546,16 @@ paths:
               example:
                 status: success
                 data: true
-  /daemon/reindexzelcash:
+  /daemon/reindex:
     get:
       tags:
         - Daemon
-      summary: Reindex ZelCash daemon
+      summary: Reindex Flux daemon
       description: >-
         Tries to reindex Flux daemon running on the FluxNode the call is run
         against. Flux daemon is firstly stopped and then started with reindex
         flag. **Admin**
-      operationId: reindexZelCash
+      operationId: reindexFlux
       security:
         - ZelID: []
       responses:
@@ -7573,12 +7573,12 @@ paths:
               example:
                 status: success
                 data:
-                  message: ZelCash successfully reindexing
+                  message: Flux successfully reindexing
   /daemon/stop:
     get:
       tags:
         - Daemon
-      summary: Stop ZelCash daemon
+      summary: Stop Flux daemon
       description: This will stop the Flux daemon from running. **Admin**
       operationId: stop
       security:
@@ -7598,7 +7598,7 @@ paths:
                     description: Explanation of status
               example:
                 status: success
-                data: Stop Zelcash server
+                data: Stop Flux server
   /daemon/createzelnodekey:
     get:
       tags:
@@ -8087,7 +8087,7 @@ paths:
                             properties:
                               address:
                                 type: string
-                                description: The Zelcash server host and port
+                                description: The Flux server host and port
                               connected:
                                 type: string
                                 description: 'Connection, inbound or outbound'
@@ -8519,7 +8519,7 @@ paths:
                     description: The full path of the destination file
               example:
                 status: success
-                data: /home/zel/backup/walletbackup
+                data: /home/user/backup/walletbackup
   /daemon/dumpprivkey:
     get:
       tags:
@@ -8604,7 +8604,7 @@ paths:
       tags:
         - Daemon
       summary: Get new address
-      description: Returns a new Zelcash address for receiving payments. **Admin**
+      description: Returns a new Flux address for receiving payments. **Admin**
       operationId: getNewAddress
       security:
         - ZelID: []
@@ -8689,7 +8689,7 @@ paths:
                     $ref: '#/components/schemas/status'
                   data:
                     type: number
-                    description: The total amount in ZEL received at this address
+                    description: The total amount in FLUX received at this address
               example:
                 status: success
                 data: 0
@@ -9308,7 +9308,7 @@ paths:
             items:
               type: string
           description: |
-            A json array of Zelcash addresses to filter.
+            A json array of Flux addresses to filter.
 
             Examples:
             - `addresses`=`["taadr", "taddr"]`
@@ -9355,7 +9355,7 @@ paths:
                           description: The script key
                         amount:
                           type: number
-                          description: The transaction amount in ZEL
+                          description: The transaction amount in FLUX
                         confirmations:
                           type: integer
                           description: The number of confirmations
@@ -9385,7 +9385,7 @@ paths:
       description: >-
         Temporarily lock (unlock=false) or unlock (unlock=true) specified
         transaction outputs. A locked transaction output will not be chosen by
-        automatic coin selection, when spending Zelcash. Locks are stored in
+        automatic coin selection, when spending Flux. Locks are stored in
         memory only. Nodes start with zero locked outputs, and the locked output
         list is always cleared (by virtue of process exit) when a node stops or
         fails. **Admin**
@@ -9501,8 +9501,8 @@ paths:
                 amounts:
                   type: object
                   description: >-
-                    A json object with addresses and amounts. The zelcash
-                    address is the key, the numeric amount in ZEL is the value.
+                    A json object with addresses and amounts. The Flux
+                    address is the key, the numeric amount in FLUX is the value.
                 minconf:
                   type: integer
                   default: 1
@@ -9562,7 +9562,7 @@ paths:
           name: amounts
           required: true
           description: >-
-            A json object with addresses and amounts. The zelcash address is the
+            A json object with addresses and amounts. The Flux address is the
             key, the numeric amount in FLUX is the value.
           schema:
             type: object
@@ -9750,7 +9750,7 @@ paths:
       tags:
         - Daemon
       summary: Set transaction fee
-      description: This will restart the zelcash daemon. **Admin**
+      description: This will restart the Flux daemon. **Admin**
       operationId: setTxFee
       security:
         - ZelID: []
@@ -10974,7 +10974,7 @@ paths:
     get:
       tags:
         - Daemon
-      summary: Start ZelCash daemon
+      summary: Start Flux daemon
       description: >-
         Tries to start Flux daemon running on the FluxNode the call is run
         against without any extra parameters. **AdminAndFluxTeam**
@@ -10996,12 +10996,12 @@ paths:
               example:
                 status: success
                 data:
-                  message: ZelCash successfully started
+                  message: Flux successfully started
   /daemon/restart:
     get:
       tags:
         - Daemon
-      summary: Restart ZelCash daemon
+      summary: Restart Flux daemon
       description: >-
         Tries to restart Flux daemon running on the FluxNode the call is run
         against. Flux daemon is firstly stopped and then started without any
@@ -11024,7 +11024,7 @@ paths:
               example:
                 status: success
                 data:
-                  message: ZelCash successfully restarted
+                  message: Flux successfully restarted
   /daemon/ping:
     get:
       tags:
@@ -11464,10 +11464,10 @@ paths:
                     State: running
                     Status: Up 5 days
                     HostConfig:
-                      NetworkMode: zelfluxDockerNetwork
+                      NetworkMode: fluxDockerNetwork
                     NetworkSettings:
                       Networks:
-                        zelfluxDockerNetwork:
+                        fluxDockerNetwork:
                           IPAMConfig: null
                           Links: null
                           Aliases: null
@@ -11485,7 +11485,7 @@ paths:
                           DriverOpts: null
                     Mounts:
                       - Type: bind
-                        Source: /home/zel/zelflux/ZelApps/zelFoldingAtHome
+                        Source: /home/user/flux/ZelApps/zelFoldingAtHome
                         Destination: /config
                         Mode: ''
                         RW: true
@@ -11536,10 +11536,10 @@ paths:
                     State: running
                     Status: Up 5 days
                     HostConfig:
-                      NetworkMode: zelfluxDockerNetwork
+                      NetworkMode: fluxDockerNetwork
                     NetworkSettings:
                       Networks:
-                        zelfluxDockerNetwork:
+                        fluxDockerNetwork:
                           IPAMConfig: null
                           Links: null
                           Aliases: null
@@ -11557,7 +11557,7 @@ paths:
                           DriverOpts: null
                     Mounts:
                       - Type: bind
-                        Source: /home/zel/zelflux/ZelApps/zelFoldingAtHome
+                        Source: /home/user/flux/ZelApps/zelFoldingAtHome
                         Destination: /config
                         Mode: ''
                         RW: true
@@ -12134,7 +12134,7 @@ paths:
                       type: object
                       properties:
                         zelAppSpecifications:
-                          $ref: '#/components/schemas/zelappspecification'
+                          $ref: '#/components/schemas/appspecification'
                         hash:
                           type: string
                           description: Message hash
@@ -12200,7 +12200,7 @@ paths:
                   data:
                     type: array
                     items:
-                      $ref: '#/components/schemas/zelappname'
+                      $ref: '#/components/schemas/appname'
               example:
                 status: success
                 data:
@@ -12383,7 +12383,7 @@ paths:
                   status:
                     $ref: '#/components/schemas/status'
                   data:
-                    $ref: '#/components/schemas/zelappslocation'
+                    $ref: '#/components/schemas/appslocation'
               example:
                 status: success
                 data:
@@ -12419,7 +12419,7 @@ paths:
                   status:
                     $ref: '#/components/schemas/status'
                   data:
-                    $ref: '#/components/schemas/zelappslocation'
+                    $ref: '#/components/schemas/appslocation'
               example:
                 status: success
                 data:
@@ -13490,8 +13490,8 @@ paths:
                               Information about all networks that the container
                               is connected to
                             properties:
-                              zelfluxDockerNetwork:
-                                $ref: '#/components/schemas/zelfluxnetwork'
+                              fluxDockerNetwork:
+                                $ref: '#/components/schemas/fluxnetwork'
               example:
                 status: success
                 data:
@@ -13536,12 +13536,12 @@ paths:
                   ExecIDs: null
                   HostConfig:
                     Binds:
-                      - '/home/zel/zelflux/ZelApps/zelFoldingAtHome:/config'
+                      - '/home/user/flux/ZelApps/zelFoldingAtHome:/config'
                     ContainerIDFile: ''
                     LogConfig:
                       Type: json-file
                       Config: {}
-                    NetworkMode: zelfluxDockerNetwork
+                    NetworkMode: fluxDockerNetwork
                     PortBindings:
                       7396/tcp:
                         - HostIp: ''
@@ -13640,7 +13640,7 @@ paths:
                     Name: overlay2
                   Mounts:
                     - Type: bind
-                      Source: /home/zel/zelflux/ZelApps/zelFoldingAtHome
+                      Source: /home/user/flux/ZelApps/zelFoldingAtHome
                       Destination: /config
                       Mode: ''
                       RW: true
@@ -13705,7 +13705,7 @@ paths:
                     IPv6Gateway: ''
                     MacAddress: ''
                     Networks:
-                      zelfluxDockerNetwork:
+                      fluxDockerNetwork:
                         IPAMConfig: null
                         Links: null
                         Aliases:
@@ -14967,16 +14967,16 @@ components:
         properties:
           vpub_old:
             type: number
-            description: Public input value of ZEL
+            description: Public input value of FLUX
           vpub_oldZat:
             type: integer
-            description: Public input value of ZEL in satoshis
+            description: Public input value of FLUX in satoshis
           vpub_new:
             type: number
-            description: Public output of ZEL
+            description: Public output of FLUX
           vpub_newZat:
             type: integer
-            description: Public output of ZEL in satoshis
+            description: Public output of FLUX in satoshis
           anchor:
             type: string
             description: Merkle root of note commitment tree
@@ -15022,7 +15022,7 @@ components:
           address:
             type: string
             description: >-
-              The Zelcash address of the transaction. Not present for move
+              The Flux address of the transaction. Not present for move
               transactions (category = move)
           category:
             type: string
@@ -15032,7 +15032,7 @@ components:
           amount:
             type: number
             description: >-
-              The amount in ZEL. This is negative for the 'send' category, and
+              The amount in FLUX. This is negative for the 'send' category, and
               for the 'move' category for moves outbound. It is positive for the
               'receive' category, and for the 'move' category for inbound funds.
           vout:
@@ -15195,13 +15195,13 @@ components:
         properties:
           value:
             type: number
-            description: The value in ZEL
+            description: The value in FLUX
           valueZat:
             type: integer
-            description: The value in ZEL
+            description: The value in FLUX
           valueSat:
             type: integer
-            description: The value in ZEL
+            description: The value in FLUX
           'n':
             type: integer
             description: Index
@@ -15224,13 +15224,13 @@ components:
                 type: array
                 items:
                   type: string
-                  description: ZEL addresses
+                  description: FLUX addresses
     walletconflicts:
       type: array
       items:
         type: object
         description: If conflicts array of objects will return.
-    zelappslocation:
+    appslocation:
       type: array
       items:
         type: object
@@ -15250,7 +15250,7 @@ components:
           hash:
             type: string
             description: App hash
-    zelappname:
+    appname:
       type: object
       properties:
         name:
@@ -15305,7 +15305,7 @@ components:
         version:
           type: integer
           description: Message version
-    zelappsresources:
+    appsresources:
       type: object
       properties:
         zelAppsCpusLocked:
@@ -15317,7 +15317,7 @@ components:
         zelAppsHddLocked:
           type: integer
           description: Amount of disk space app is using
-    zelappspecification:
+    appspecification:
       type: object
       properties:
         version:
@@ -15412,7 +15412,7 @@ components:
           description: The wallet version
         balance:
           type: number
-          description: The total Zelcash balance of the wallet
+          description: The total Flux balance of the wallet
         blocks:
           type: integer
           description: The current number of blocks processed in the server
@@ -15631,8 +15631,8 @@ components:
                       type: object
                       description: Configuration for a network endpoint.
                       properties:
-                        zelfluxDockerNetwork:
-                          $ref: '#/components/schemas/zelfluxnetwork'
+                        fluxDockerNetwork:
+                          $ref: '#/components/schemas/fluxnetwork'
                 Mounts:
                   $ref: '#/components/schemas/mounts'
     mounts:
@@ -15672,7 +15672,7 @@ components:
             description: >-
               A propagation mode with the value [r]private, [r]shared, or
               [r]slave.
-    zelfluxnetwork:
+    fluxnetwork:
       type: object
       properties:
         IPAMConfig:
