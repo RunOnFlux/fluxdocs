@@ -2614,14 +2614,13 @@ paths:
               example:
                 status: success
                 data: cumulus
-  # This appears to be a duplicate of /flux/zelid - to be confirmed if this is to be removed or if it has a specific purpose.
   /flux/id:
     get:
       tags:
         - Flux
-      summary: ZelID
-      description: This call will display the user's ZelID. **Public**
-      operationId: getFluxZelID
+      summary: Admin's ZelID
+      description: This will return with the admin's ZelID. **Public**
+      operationId: getFluxID
       responses:
         '200':
           description: OK
@@ -2707,7 +2706,7 @@ paths:
         - Flux
       summary: Start Benchmark
       description: This call will start the benchmark which tests the hardware specifications and performance. **AdminAndFluxTeam**
-      operationId: startBenchmark
+      operationId: fluxstartBenchmark
       security:
         - ZelID: []
       responses:
@@ -2733,7 +2732,7 @@ paths:
         - Flux
       summary: Restart Benchmark
       description: This call will restart the benchmark which tests the hardware specifications and performance. **AdminAndFluxTeam**
-      operationId: startBenchmark
+      operationId: fluxrestartbenchmark
       security:
         - ZelID: []
       responses:
@@ -11126,7 +11125,7 @@ paths:
         - Daemon
       summary: Start Benchmark daemon
       description: Start Benchmark daemon. **AdminAndFluxTeam**
-      operationId: startbenchmark
+      operationId: daemonstartbenchmark
       security:
         - ZelID: []
       responses:
