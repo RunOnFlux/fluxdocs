@@ -72,7 +72,7 @@ tags:
       obtaining zelauth header.
   - name: ID
     description: >-
-      Calls that interact with Identity via ZelID and login/authentication 
+      Calls that interact with Identity via ZelID (BTC/ETH address) and login/authentication 
       management of Flux
   - name: Daemon
     description: Calls that interact with locally running Flux daemon
@@ -86,6 +86,10 @@ tags:
       network
   - name: Explorer
     description: Calls that interact with locally running explorer
+  - name: Syncthing
+    description: Calls that interact with Syncthing service
+  - name: Fluxshare
+    description: Calls that interact with Fluxshare service
 servers:
   - url: 'https://api.runonflux.io'
 paths:
@@ -148,7 +152,7 @@ paths:
       description: >-
         Login into Flux by submitting correct ZelID, login phrase and
         signature. Note that to get the signature of the signed message you
-        would need to do the signing on Zelcore or your BTC wallet. If success
+        would need to do the signing on Zelcore or your BTC wallet or your ETH wallet. If success
         status response is returned, we can use the supplied data(zelid,
         loginPhrase, signature) as zelauth header as part of api calls that
         require a user to be logged in. Additionally it is possible to listen
@@ -188,13 +192,13 @@ paths:
                         description: explanation of status
                       zelid:
                         type: string
-                        description: supplied ZelID or bitcoin P2PKH address
+                        description: supplied ZelID or bitcoin P2PKH address or ethereum address
                       loginPhrase:
                         type: string
                         description: valid and active loginPhrase
                       signature:
                         type: string
-                        description: signature of loginPhrase signed with zelid
+                        description: signature of loginPhrase signed with zelid/btc/eth address
                       privilege:
                         type: string
                         description: granted Flux privilege
@@ -230,7 +234,7 @@ paths:
               properties:
                 address:
                   type: string
-                  description: ZelID or any P2PKH Bitcoin address
+                  description: ZelID or any P2PKH Bitcoin address or Ethereum address
                 message:
                   type: string
                   description: >-
@@ -238,7 +242,7 @@ paths:
                     /id/loginphrase
                 signature:
                   type: string
-                  description: Signature of signed loginPhrase with ZelID
+                  description: Signature of signed loginPhrase with zelid/btc/eth address
             example:
               address: 1CbErtneaX2QVyUfwU7JGB7VzvPgrgc3uC
               message: 1575012988077darschvve5ag82g8e8sgeij4sn61842ya7ovxi9r3kba
@@ -262,7 +266,7 @@ paths:
                         description: Signature of signed loginPhrase with ZelID
                       identifier:
                         type: string
-                        description: ZelID or any P2PKH Bitcoin address
+                        description: ZelID or any P2PKH Bitcoin address or Ethereum address
                       createdAt:
                         type: string
                         description: Start date and time of vaild message
@@ -11870,6 +11874,7 @@ paths:
     get:
       tags:
         - Apps
+        - Fluxshare
       summary: Share files
       description: Call to retrieve share file. **Public**
       operationId: fluxShareFile
@@ -14734,7 +14739,7 @@ components:
           minLength: 40
           example: 1574991374806spbcvsuwerl52tppx9dw5khuz8rew13mkq86gg8r2c
         zelid:
-          description: ZelID or any P2PKH bitcoin address.
+          description: ZelID or any P2PKH bitcoin address or ethereum address
           type: string
           minLength: 26
           maxLength: 35
@@ -15719,7 +15724,7 @@ components:
   securitySchemes:
     ZelID:
       description: >-
-        ZelID is an authentication system based on Bitcoin message signing.
+        ZelID is an authentication system based on Bitcoin message signing and Ethereum personal sign.
         zelidauth header consist of stringified query of zelid, signature,
         loginPhrase Please refer to Authentication workflow section on how to
         obtain correct zelidauth header. An example of a header is
