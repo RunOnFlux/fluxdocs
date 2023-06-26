@@ -1,9 +1,9 @@
 openapi: 3.0.0
 info:
-  version: 0.3.0
+  version: 0.4.0
   title: Flux
   contact:
-    email: tadeas@zel.network
+    email: tadeas@runonflux.io
     url: 'https://docs.runonflux.io'
   license:
     name: GNU AGPLv3
@@ -790,7 +790,7 @@ paths:
       summary: Updates Benchmark daemon
       description: >-
         Updates the Benchmark daemon of Flux node to the latest available version
-        according to official Zel APT repository. Benchmark daemon is restarted
+        according to official Flux APT repository. Benchmark daemon is restarted
         with no extra parameters during this update. **AdminAndFluxTeam**
       operationId: updateBenchmark
       security:
@@ -1701,7 +1701,7 @@ paths:
                               dosMessage:
                                 type: string
                                 description: Status message or Null if no message
-                      zelapps:
+                      apps:
                         type: object
                         properties:
                           fluxusage:
@@ -1759,7 +1759,7 @@ paths:
                     status:
                       status: online
                       benchmarking: NIMMBUS
-                      zelback: connected
+                      flux: connected
                     bench:
                       ipaddress: 167.86.81.87
                       status: NIMMBUS
@@ -1778,13 +1778,13 @@ paths:
                     dos:
                       dosState: 0
                       dosMessage: null
-                  zelapps:
+                  apps:
                     fluxusage: '2.84624023'
                     runningapps:
                       - Id: >-
                           3502b57e324ce8a278700e5bb700c60a5d3256f45d22a07d53c970b41fceec6e
                         Names:
-                          - /zelFoldingAtHome
+                          - /fluxFoldingAtHome
                         Image: 'yurinnick/folding-at-home:latest'
                         ImageID: >-
                           sha256:ec31bf7fa749ec82c38191a83a325fa12689bfd3f4c05a0527e603c9aa9475f2
@@ -1824,15 +1824,15 @@ paths:
                               DriverOpts: null
                         Mounts:
                           - Type: bind
-                            Source: /home/user/flux/ZelApps/zelFoldingAtHome
+                            Source: /home/user/flux/ZelApps/fluxFoldingAtHome
                             Destination: /config
                             Mode: ''
                             RW: true
                             Propagation: rprivate
                     resources:
-                      zelAppsCpusLocked: 1
-                      zelAppsRamLocked: 1000
-                      zelAppsHddLocked: 15
+                      appsCpusLocked: 1
+                      appsRamLocked: 1000
+                      appsHddLocked: 15
   /flux/timezone:
     get:
       tags:
@@ -4484,7 +4484,7 @@ paths:
                       name: Kamata
                       activationheight: 558000
                       status: active
-                      info: 'Zel Kamata Upgrade, Deterministic FluxNodes and Flux'
+                      info: 'Flux Kamata Upgrade, Deterministic FluxNodes and Flux'
                   consensus:
                     chaintip: 76b809bb
                     nextblock: 76b809bb
@@ -6970,7 +6970,7 @@ paths:
             type: integer
           description: >-
             The number of required signatures out of the n keys or addresses.
-            Followed by Zel addresses in array of strings.
+            Followed by Flux addresses in array of strings.
           example: 2
         - in: query
           name: keys
@@ -7087,7 +7087,7 @@ paths:
       operationId: validateAddress
       parameters:
         - in: query
-          name: zelcashaddress
+          name: fluxaddress
           required: true
           schema:
             type: string
@@ -7164,7 +7164,7 @@ paths:
             schema:
               type: object
               properties:
-                zelcashaddress:
+                fluxaddress:
                   type: string
                   description: The Flux address to use for the signature
                 signature:
@@ -7174,7 +7174,7 @@ paths:
                   type: string
                   description: The message that was signed
             example:
-              zelcashadress: t1N6mLX2A64QsyuLbYkfPZSrkLF86hxuuFe
+              fluxadress: t1N6mLX2A64QsyuLbYkfPZSrkLF86hxuuFe
               signature: >-
                 H5j8AoJ+8VaEEJGgw846hSPQoq42X9yiLwn/Nab1pASBFcw8rj5k8J9xpKr1VzepMEOF2ProYxVsQ9i7xalH4Sk=
               message: helloworld
@@ -7202,7 +7202,7 @@ paths:
       operationId: verifyMessage
       parameters:
         - in: query
-          name: zelcashaddress
+          name: fluxaddress
           required: true
           schema:
             type: string
@@ -7488,7 +7488,7 @@ paths:
                 data:
                   status: online
                   benchmarking: CUMULUS
-                  zelback: connected
+                  flux: connected
   /daemon/prioritisetransaction:
     get:
       tags:
@@ -8093,17 +8093,17 @@ paths:
               example:
                 status: success
                 data:
-                  - addednode: explorer.zel.cash
+                  - addednode: explorer.runonflux.io
                     connected: true
                     addresses:
                       - address: '159.65.254.184:16125'
                         connected: outbound
-                  - addednode: explorer2.zel.cash
+                  - addednode: explorer2.runonflux.io
                     connected: true
                     addresses:
                       - address: '80.211.207.17:16125'
                         connected: outbound
-                  - addednode: explorer.zel.zelcore.io
+                  - addednode: explorer.flux.zelcore.io
                     connected: true
                     addresses:
                       - address: '206.189.0.55:16125'
@@ -8594,7 +8594,7 @@ paths:
                     $ref: '#/components/schemas/status'
                   data:
                     type: number
-                    description: Zel balance
+                    description: Flux balance
               example:
                 status: success
                 data: 0
@@ -8619,7 +8619,7 @@ paths:
                     $ref: '#/components/schemas/status'
                   data:
                     type: string
-                    description: Zel address
+                    description: Flux address
               example:
                 status: success
                 data: t1LGoWfLf66bpJC84zWmUVcw1bkW9kFgnyQ
@@ -8646,7 +8646,7 @@ paths:
                     $ref: '#/components/schemas/status'
                   data:
                     type: string
-                    description: Zel address
+                    description: Flux address
               example:
                 status: success
                 data: t1dC6WNjqcJX8VFcdRp1MyJ7eB4MSQs83FR
@@ -8663,7 +8663,7 @@ paths:
         - ZelID: []
       parameters:
         - in: query
-          name: zelcashaddress
+          name: fluxaddress
           required: true
           schema:
             type: string
@@ -8846,7 +8846,7 @@ paths:
         - ZelID: []
       parameters:
         - in: query
-          name: zelcashprivkey
+          name: fluxprivkey
           required: true
           schema:
             type: string
@@ -8977,7 +8977,7 @@ paths:
                     type: array
                     items:
                       type: string
-                      description: 'Zel address, balance, and label'
+                      description: 'Flux address, balance, and label'
               example:
                 status: success
                 data:
@@ -9343,7 +9343,7 @@ paths:
                           description: True if txout is a coinbase transaction output
                         address:
                           type: string
-                          description: The Zel address
+                          description: The Flux address
                         account:
                           type: string
                           description: >-
@@ -9586,7 +9586,7 @@ paths:
           description: >-
             A comment used to store what the transaction is for. This is not
             part of the transaction, just kept in your wallet.
-          example: Pay Zel Foundation
+          example: Pay Flux Foundation
         - in: query
           name: substractfeefromamount
           description: Subtract the transaction fee equally from the output amounts.
@@ -9628,7 +9628,7 @@ paths:
             schema:
               type: object
               properties:
-                zelcashaddress:
+                fluxaddress:
                   type: string
                   description: The flux address to send to
                 amount:
@@ -9653,7 +9653,7 @@ paths:
                     Subtract the transaction fee equally from the output
                     amounts. (optional)
             example:
-              zelcashaddress: t1QSE45jkZ9docBDFh4yEV91fgZgESp5hZN
+              fluxaddress: t1QSE45jkZ9docBDFh4yEV91fgZgESp5hZN
               amount: 0.001
               comment: Test api
               commentto: self
@@ -9685,7 +9685,7 @@ paths:
         - ZelID: []
       parameters:
         - in: query
-          name: zelcashaddress
+          name: fluxaddress
           required: true
           schema:
             type: string
@@ -11197,14 +11197,14 @@ paths:
                 data:
                   status: online
                   benchmarking: NIMMBUS
-                  zelback: connected
+                  flux: connected
   /benchmark/help:
     get:
       tags:
         - Benchmark
       summary: Fluxbench calls
       description: This will return with a list of calls for FluxBench. **Public**
-      operationId: zelBenchHelp
+      operationId: benchmarkHelp
       responses:
         '200':
           description: OK
@@ -11284,7 +11284,7 @@ paths:
         - Benchmark
       summary: Fluxbench status
       description: This will return with the fluxbench status of the fluxnode. **Public**
-      operationId: zelBenchGetInfo
+      operationId: benchmarkGetInfo
       responses:
         '200':
           description: OK
@@ -11353,7 +11353,7 @@ paths:
                     description: Explanation of status
               example:
                 status: success
-                data: Zelbench server stopping
+                data: Fluxbench server stopping
   /benchmark/signfluxnodetransaction:
     post:
       tags:
@@ -11456,7 +11456,7 @@ paths:
                   - Id: >-
                       9a1369a96d82e74173476d30b12ac70c7261c253433b1303737d0461c5cbedee
                     Names:
-                      - /zelFoldingAtHome
+                      - /fluxFoldingAtHome
                     Image: 'yurinnick/folding-at-home:latest'
                     ImageID: >-
                       sha256:278b92c12d772dcfd77878fbb86714fd31d1c3e651b4f81761cc10b660cdb1d6
@@ -11498,7 +11498,7 @@ paths:
                           DriverOpts: null
                     Mounts:
                       - Type: bind
-                        Source: /home/user/flux/ZelApps/zelFoldingAtHome
+                        Source: /home/user/flux/ZelApps/fluxFoldingAtHome
                         Destination: /config
                         Mode: ''
                         RW: true
@@ -11528,7 +11528,7 @@ paths:
                   - Id: >-
                       9a1369a96d82e74173476d30b12ac70c7261c253433b1303737d0461c5cbedee
                     Names:
-                      - /zelFoldingAtHome
+                      - /fluxFoldingAtHome
                     Image: 'yurinnick/folding-at-home:latest'
                     ImageID: >-
                       sha256:278b92c12d772dcfd77878fbb86714fd31d1c3e651b4f81761cc10b660cdb1d6
@@ -11570,7 +11570,7 @@ paths:
                           DriverOpts: null
                     Mounts:
                       - Type: bind
-                        Source: /home/user/flux/ZelApps/zelFoldingAtHome
+                        Source: /home/user/flux/ZelApps/fluxFoldingAtHome
                         Destination: /config
                         Mode: ''
                         RW: true
@@ -11729,7 +11729,7 @@ paths:
                 data:
                   - _id: 5ea5ded34640e92141c6ce35
                     repotag: 'yurinnick/folding-at-home:latest'
-                    name: zelFoldingAtHome
+                    name: fluxFoldingAtHome
                     port: 30000
                     cpu: 0.5
                     ram: 500
@@ -11850,7 +11850,7 @@ paths:
               example:
                 status: success
                 data:
-                  - name: zelFoldingAtHome
+                  - name: fluxFoldingAtHome
                     repotag: 'yurinnick/folding-at-home:latest'
                     owner: 1CbErtneaX2QVyUfwU7JGB7VzvPgrgc3uC
                     timestamp: 1587181519000
@@ -11955,9 +11955,9 @@ paths:
               example:
                 status: success
                 data:
-                  zelAppsCpusLocked: 0
-                  zelAppsRamLocked: 0
-                  zelAppsHddLocked: 0
+                  appsCpusLocked: 0
+                  appsRamLocked: 0
+                  appsHddLocked: 0
   /apps/registrationinformation:
     get:
       tags:
@@ -12072,7 +12072,7 @@ paths:
                     items:
                       type: object
                       properties:
-                        zelAppSpecifications:
+                        fluxAppSpecifications:
                           $ref: '#/components/schemas/appspecification'
                         type:
                           type: string
@@ -12113,7 +12113,7 @@ paths:
                     ram: 100
                     hdd: 1
                     tiered: false
-                  type: zelappregister
+                  type: fluxappregister
                   version: 1
                   hash: >-
                     a8f125e73dc5deab84d59e769511cf95e8e2664e0785737a0f7222752be42b0b
@@ -12146,7 +12146,7 @@ paths:
                     items:
                       type: object
                       properties:
-                        zelAppSpecifications:
+                        fluxAppSpecifications:
                           $ref: '#/components/schemas/appspecification'
                         hash:
                           type: string
@@ -12347,7 +12347,7 @@ paths:
                           description: Hash of app registration
                         value:
                           type: integer
-                          description: Payment of Zel value in sats
+                          description: Payment of Flux value in sats
                         message:
                           type: boolean
                           description: If message is stored or not.
@@ -12501,7 +12501,7 @@ paths:
                     If requesting tiered and set to true add key/value pairs as
                     mentioned in the note
             example:
-              name: ZelappTest
+              name: AppTest
               cpu: 0.1
               ram: 100
               hdd: 1
@@ -12538,7 +12538,7 @@ paths:
           schema:
             type: string
           description: Name/Id of app
-          example: zelFoldingAtHome
+          example: fluxFoldingAtHome
       responses:
         '200':
           description: OK
@@ -12554,13 +12554,13 @@ paths:
                     description: Explanation of status
               example:
                 status: success
-                data: ZelApp zelFoldingAtHome successfully started.
+                data: Flux App fluxFoldingAtHome successfully started.
   /apps/appstop:
     get:
       tags:
         - Apps
       summary: Stops app
-      description: This will stop the zelapp. **AppOwnerAbove**
+      description: This will stop the Flux application. **AppOwnerAbove**
       operationId: AppStop
       security:
         - ZelID: []
@@ -12571,7 +12571,7 @@ paths:
           schema:
             type: string
           description: Name/Id of app
-          example: zelFoldingAtHome
+          example: fluxFoldingAtHome
       responses:
         '200':
           description: OK
@@ -12587,13 +12587,13 @@ paths:
                     description: Explanation of status
               example:
                 status: success
-                data: ZelApp zelFoldingAtHome successfully stopped.
+                data: Flux App fluxFoldingAtHome successfully stopped.
   /apps/apprestart:
     get:
       tags:
         - Apps
       summary: Restarts app
-      description: This will restart the zelapp. **AppOwnerAbove**
+      description: This will restart the Flux application. **AppOwnerAbove**
       operationId: AppRestart
       security:
         - ZelID: []
@@ -12604,7 +12604,7 @@ paths:
           schema:
             type: string
           description: Name/Id of app
-          example: zelFoldingAtHome
+          example: fluxFoldingAtHome
       responses:
         '200':
           description: OK
@@ -12620,14 +12620,14 @@ paths:
                     description: Explanation of status
               example:
                 status: success
-                data: ZelApp zelFoldingAtHome successfully restarted.
+                data: Flux App fluxFoldingAtHome successfully restarted.
   /apps/apppause:
     get:
       tags:
         - Apps
       summary: Pause app
-      description: This will pause the zelapp. **AppOwnerAbove**
-      operationId: zelAppPause
+      description: This will pause the fluxapp. **AppOwnerAbove**
+      operationId: appsAppPause
       security:
         - ZelID: []
       parameters:
@@ -12637,7 +12637,7 @@ paths:
           schema:
             type: string
           description: Name/Id of app
-          example: zelFoldingAtHome
+          example: fluxFoldingAtHome
       responses:
         '200':
           description: OK
@@ -12653,13 +12653,13 @@ paths:
                     description: Explanation of status
               example:
                 status: success
-                data: ZelApp zelFoldingAtHome successfully paused.
+                data: Flux App fluxFoldingAtHome successfully paused.
   /apps/appunpause:
     get:
       tags:
         - Apps
       summary: Unpause app
-      description: This will unpause the zelapp. **AppOwnerAbove**
+      description: This will unpause the Flux application. **AppOwnerAbove**
       operationId: AppUnpause
       security:
         - ZelID: []
@@ -12670,7 +12670,7 @@ paths:
           schema:
             type: string
           description: Name/Id of app
-          example: zelFoldingAtHome
+          example: fluxFoldingAtHome
       responses:
         '200':
           description: OK
@@ -12686,7 +12686,7 @@ paths:
                     description: Explanation of status
               example:
                 status: success
-                data: ZelApp zelFoldingAtHome successfully unpaused.
+                data: Flux App fluxFoldingAtHome successfully unpaused.
   /apps/apptop:
     get:
       tags:
@@ -12703,7 +12703,7 @@ paths:
           schema:
             type: string
           description: Name/Id of app
-          example: zelFoldingAtHome
+          example: fluxFoldingAtHome
       responses:
         '200':
           description: OK
@@ -12791,7 +12791,7 @@ paths:
           schema:
             type: string
           description: Name/Id of app
-          example: zelFoldingAtHome
+          example: fluxFoldingAtHome
         - in: query
           name: line
           required: true
@@ -12902,7 +12902,7 @@ paths:
           schema:
             type: string
           description: Name/Id of app
-          example: zelFoldingAtHome
+          example: fluxFoldingAtHome
       responses:
         '200':
           description: OK
@@ -13539,7 +13539,7 @@ paths:
                     /var/lib/docker/containers/3cf131c856714g2s877r711931faa6622fe5aa9345fa392cbef54e5b9483c6a1/hosts
                   LogPath: >-
                     /var/lib/docker/containers/3cf131c856714g2s877r711931faa6622fe5aa9345fa392cbef54e5b9483c6a1/3cf131c856714g2s877r711931faa6622fe5aa9345fa392cbef54e5b9483c6a1-json.log
-                  Name: /zelFoldingAtHome
+                  Name: /fluxFoldingAtHome
                   RestartCount: 0
                   Driver: overlay2
                   Platform: linux
@@ -13549,7 +13549,7 @@ paths:
                   ExecIDs: null
                   HostConfig:
                     Binds:
-                      - '/home/user/flux/ZelApps/zelFoldingAtHome:/config'
+                      - '/home/user/flux/ZelApps/fluxFoldingAtHome:/config'
                     ContainerIDFile: ''
                     LogConfig:
                       Type: json-file
@@ -13653,7 +13653,7 @@ paths:
                     Name: overlay2
                   Mounts:
                     - Type: bind
-                      Source: /home/user/flux/ZelApps/zelFoldingAtHome
+                      Source: /home/user/flux/ZelApps/fluxFoldingAtHome
                       Destination: /config
                       Mode: ''
                       RW: true
@@ -13753,7 +13753,7 @@ paths:
           schema:
             type: string
           description: App name
-          example: zeldibi-UND
+          example: fluxdibi-UND
       responses:
         '200':
           description: OK
@@ -13843,7 +13843,7 @@ paths:
                     unevictable: 0
                     writeback: 0
                   limit: 209715200
-                name: /zeldibi-UND
+                name: /fluxdibi-UND
                 id: >-
                   1e2f681c8a356c0af561bcefb3a85b8dbe690487598a004fef1c4a65001e0078
                 networks:
@@ -13883,7 +13883,7 @@ paths:
           schema:
             type: string
           description: App name
-          example: zeldibi-UND
+          example: fluxdibi-UND
       responses:
         '200':
           description: OK
@@ -13973,7 +13973,7 @@ paths:
           schema:
             type: string
           description: Name/Id of app
-          example: zelFoldingAtHome
+          example: fluxFoldingAtHome
       responses:
         '200':
           description: OK
@@ -13989,7 +13989,7 @@ paths:
                     description: Status of the cleanup in progress
               example:
                 status: success
-                data: App zelFoldingAtHome was successfuly removed
+                data: App fluxFoldingAtHome was successfuly removed
   /apps/installtemporarylocalapp:
     get:
       tags:
@@ -14022,7 +14022,7 @@ paths:
                 $ref: '#/components/schemas/streamdata'
               example:
                 status: success
-                data: App zelFoldingAtHomeB successfully started.
+                data: App fluxFoldingAtHomeB successfully started.
   /apps/createfluxnetwork:
     get:
       tags:
@@ -14052,7 +14052,7 @@ paths:
     get:
       tags:
         - Apps
-      summary: Rescan and update global ZelApps info database
+      summary: Rescan and update global FluxApps info database
       description: >-
         Rescans global apps permanent messages since selected blockheight and
         updates global apps information database. **AdminAndFluxTeam**
@@ -14198,14 +14198,14 @@ paths:
 
         Note: Signature is following message signed in the format shown below
 
-        - `this.updatetype + this.version + JSON.stringify(zelAppSpecFormatted)
+        - `this.updatetype + this.version + JSON.stringify(fluxAppSpecFormatted)
         + this.timestamp`
 
 
         Example:
 
         -
-        `zelappregister1{"version":1,"name":"Mario","description":"InfiniteMario","repotag":"bharathshetty4/supermario:latest","owner":"1FLUX1AHpR35EiPHH4HUMsWzugTaj1Gp6M","port":31000,"enviromentParameters":[],"commands":[],"containerPort":8600,"containerData":"/tmp","cpu":0.1,"ram":100,"hdd":1,"tiered":false}1600255247532`
+        `fluxappregister1{"version":1,"name":"Mario","description":"InfiniteMario","repotag":"bharathshetty4/supermario:latest","owner":"1FLUX1AHpR35EiPHH4HUMsWzugTaj1Gp6M","port":31000,"enviromentParameters":[],"commands":[],"containerPort":8600,"containerData":"/tmp","cpu":0.1,"ram":100,"hdd":1,"tiered":false}1600255247532`
       operationId: Appregister
       security:
         - ZelID: []
@@ -14216,7 +14216,7 @@ paths:
             schema:
               type: object
               properties:
-                zelAppSpecification:
+                fluxAppSpecification:
                   $ref: '#/components/schemas/appspecification'
                 timestamp:
                   type: integer
@@ -14231,7 +14231,7 @@ paths:
                   type: integer
                   description: Message version
             example:
-              zelAppSpecification:
+              fluxAppSpecification:
                 version: 1
                 name: Mario
                 description: InfiniteMario
@@ -14258,7 +14258,7 @@ paths:
               timestamp: 1600255247532
               signature: >-
                 Gz6XXaBOCutFDRS2Fn9oTdM6quAEU2ppulO+X0NKJRs0Zsv7nbs5LlyLfln+qBEB0/rnehDRm0iM8X/CDl80ToU=
-              type: zelappregister
+              type: fluxappregister
               version: 1
       responses:
         '200':
@@ -14288,14 +14288,14 @@ paths:
 
         Note: Signature is following message signed in the format shown below
 
-        - `this.updatetype + this.version + JSON.stringify(zelAppSpecFormatted)
+        - `this.updatetype + this.version + JSON.stringify(fluxAppSpecFormatted)
         + this.timestamp`
 
 
         Example:
 
         -
-        `zelappregister1{"version":1,"name":"Mario","description":"InfiniteMario","repotag":"bharathshetty4/supermario:latest","owner":"1FLUX1AHpR35EiPHH4HUMsWzugTaj1Gp6M","port":31000,"enviromentParameters":[],"commands":[],"containerPort":8600,"containerData":"/tmp","cpu":0.1,"ram":100,"hdd":1,"tiered":false}1600255247532`
+        `fluxappregister1{"version":1,"name":"Mario","description":"InfiniteMario","repotag":"bharathshetty4/supermario:latest","owner":"1FLUX1AHpR35EiPHH4HUMsWzugTaj1Gp6M","port":31000,"enviromentParameters":[],"commands":[],"containerPort":8600,"containerData":"/tmp","cpu":0.1,"ram":100,"hdd":1,"tiered":false}1600255247532`
       operationId: updateAppGlobalyApi
       security:
         - ZelID: []
@@ -14380,7 +14380,7 @@ paths:
           required: true
           schema:
             type: string
-          description: 'Filter using Ip, Zel address, or Collateral hash'
+          description: 'Filter using Ip, Flux address, or Collateral hash'
           example: 47.22.47.180
       responses:
         '200':
@@ -14419,7 +14419,7 @@ paths:
                       collateralIndex:
                         type: integer
                         description: Collateral tx output index
-                      zelAddress:
+                      fluxAddress:
                         type: string
                         description: Flux address
                       lockedAmount:
@@ -14441,7 +14441,7 @@ paths:
                   collateralHash: >-
                     1216fd06c889aa3c559739f0ad6756a6a03700dd0590749a58868ad90a116f13
                   collateralIndex: 0
-                  zelAddress: t1YVyS1StV318tubSwiwMtfw9BLLo8RGwK2
+                  fluxAddress: t1YVyS1StV318tubSwiwMtfw9BLLo8RGwK2
                   lockedAmount: 2500000000000
                   height: 575023
   /explorer/utxo:
@@ -14457,7 +14457,7 @@ paths:
           required: true
           schema:
             type: string
-          description: Zel address to look up utxo's
+          description: Flux address to look up utxo's
           example: t1edbnsYnGXxyYNt4kJJPhZktDWNaKwkznY
       responses:
         '200':
@@ -14544,7 +14544,7 @@ paths:
                     properties:
                       address:
                         type: string
-                        description: Zel address
+                        description: Flux address
                       transactions:
                         type: array
                         items:
@@ -14583,7 +14583,7 @@ paths:
           required: true
           schema:
             type: string
-          description: Zel address to look up balance
+          description: Flux address to look up balance
           example: t1edbnsYnGXxyYNt4kJJPhZktDWNaKwkznY
       responses:
         '200':
@@ -15321,13 +15321,13 @@ components:
     appsresources:
       type: object
       properties:
-        zelAppsCpusLocked:
+        appsCpusLocked:
           type: number
           description: Amount of cores app is using
-        zelAppsRamLocked:
+        appsRamLocked:
           type: integer
           description: Amount of ram app is using
-        zelAppsHddLocked:
+        appsHddLocked:
           type: integer
           description: Amount of disk space app is using
     appspecification:
