@@ -1,6 +1,6 @@
 openapi: 3.0.0
 info:
-  version: 0.4.0
+  version: 0.4.1
   title: Flux
   contact:
     email: tadeas@runonflux.io
@@ -503,7 +503,7 @@ paths:
     post:
       tags:
         - Authentication
-        - ZelID
+        - ID
       summary: Logs out a specific session
       security:
         - ZelID: []
@@ -547,7 +547,7 @@ paths:
   /id/checkprivilege:
     post:
       tags:
-        - ZelID
+        - ID
       summary: Checks the privilege level of user
       security:
         - ZelID: []
