@@ -881,7 +881,7 @@ paths:
                 starting 4 worker threads 2020-05-13 16:59:02 Bound to
                 [::]:16225 2020-05-13 16:59:02 Bound to 0.0.0.0:16225 2020-05-13
                 16:59:02 init message: Done loading 2020-05-13 16:59:02 Starting
-                Zelnodes Benchmarking Thread 2020-05-13 16:59:03 Path:
+                Fluxnodes Benchmarking Thread 2020-05-13 16:59:03 Path:
                 /home/user/flux/ZelBack 2020-05-13 16:59:03 ---Flux usage:
                 0.23012 2020-05-13 16:59:03 ---package evaluator system setup
                 starting 2020-05-13 16:59:03 ---package evaluator already
@@ -1080,7 +1080,7 @@ paths:
 
                     2020-09-12 01:44:27 keypool return 6
 
-                    2020-09-12 01:44:29 remove: Remove zelnode tx from mempool
+                    2020-09-12 01:44:29 remove: Remove fluxnode tx from mempool
                     4fea691828378a1cfabfe43ca29b527aea98c81a9ecb3e12a70a53d2eed2c924
 
                     2020-09-12 01:44:29 UpdateTip: new
@@ -1089,34 +1089,34 @@ paths:
                     date=2020-09-12 01:43:47 progress=1.000000
                     cache=55.5MiB(15862tx)
 
-                    2020-09-12 01:44:29 Zelnode found nothing to do:
+                    2020-09-12 01:44:29 Fluxnode found nothing to do:
                     COutPoint(9c8af320e5, 0)
 
-                    2020-09-12 01:44:30 AcceptToMemoryPool: Adding zelnode
+                    2020-09-12 01:44:30 AcceptToMemoryPool: Adding fluxnode
                     transaction to mempool: COutPoint(a5b2a9ebbb, 0) hash:
                     928f795ecc704c3f0411512ebe3f2732f4f1d94f4dd9239147c8d6cbdf80228e
 
-                    2020-09-12 01:44:30 AcceptToMemoryPool: Adding zelnode
+                    2020-09-12 01:44:30 AcceptToMemoryPool: Adding fluxnode
                     transaction to mempool: COutPoint(87b6472d8d, 0) hash:
                     c66fada272ddd909aa20a413e8dfa8ecb9e80bdfabe06fe21ca8216923d8fab6
 
-                    2020-09-12 01:44:30 AcceptToMemoryPool: Adding zelnode
+                    2020-09-12 01:44:30 AcceptToMemoryPool: Adding fluxnode
                     transaction to mempool: COutPoint(0aed717593, 0) hash:
                     090c77f6793fffcfd876c8952b351d4e9bfe40c5795b59480730e8ae3d5edfa4
 
-                    2020-09-12 01:44:30 AcceptToMemoryPool: Adding zelnode
+                    2020-09-12 01:44:30 AcceptToMemoryPool: Adding fluxnode
                     transaction to mempool: COutPoint(805d696dda, 0) hash:
                     cb2ba22ca622332c02e5855c1d0f176606a19a59269280e800bce5bcc2b44e1c
 
-                    2020-09-12 01:44:30 AcceptToMemoryPool: Adding zelnode
+                    2020-09-12 01:44:30 AcceptToMemoryPool: Adding fluxnode
                     transaction to mempool: COutPoint(35b4698aad, 0) hash:
                     71edaec39542cc5cf13faa3e181fb98c94d0027a15f3ba90851a9f73c21c91c2
 
-                    2020-09-12 01:44:30 AcceptToMemoryPool: Adding zelnode
+                    2020-09-12 01:44:30 AcceptToMemoryPool: Adding fluxnode
                     transaction to mempool: COutPoint(49fa5b457d, 0) hash:
                     9ef9da575da26ff4dde7a9eb8b339ca0621c28b924fee46865c196b8259903ad
 
-                    2020-09-12 01:44:31 AcceptToMemoryPool: Adding zelnode
+                    2020-09-12 01:44:31 AcceptToMemoryPool: Adding fluxnode
                     transaction to mempool: COutPoint(b5bcdabfe4, 0) hash:
                     f854454ad5f32d69b91c778e88d23ec67d695a1d0791c2b97fc4c7d7dfca2220
 
@@ -1124,26 +1124,26 @@ paths:
 
                     2020-09-12 01:44:32 keypool return 6
 
-                    2020-09-12 01:44:36 AcceptToMemoryPool: Adding zelnode
+                    2020-09-12 01:44:36 AcceptToMemoryPool: Adding fluxnode
                     transaction to mempool: COutPoint(b5dd6b1a79, 0) hash:
                     cc4c40dc30e54b2ef18f4b7ece987292bac2a8248f763bcd60574d610c811c52
 
                     2020-09-12 01:44:36 keypool reserve 6\n2020-09-12 01:44:36
                     keypool return 6
 
-                    2020-09-12 01:44:36 AcceptToMemoryPool: Adding zelnode
+                    2020-09-12 01:44:36 AcceptToMemoryPool: Adding fluxnode
                     transaction to mempool: COutPoint(57f9033b47, 0) hash:
                     0218861ec9783cc45731d3fb1d87858a9d0e7b5bbc48f6d34ac01065db66e140
 
-                    2020-09-12 01:44:38 AcceptToMemoryPool: Adding zelnode
+                    2020-09-12 01:44:38 AcceptToMemoryPool: Adding fluxnode
                     transaction to mempool: COutPoint(2c122a59b8, 0) hash:
                     f071f20767d1a55783c21e4e754e7d12e18e2729f28935d1db2b13f482d82b91
 
-                    2020-09-12 01:44:38 AcceptToMemoryPool: Adding zelnode
+                    2020-09-12 01:44:38 AcceptToMemoryPool: Adding fluxnode
                     transaction to mempool: COutPoint(936393fea0, 0) hash:
                     8c623265e5e33dfad68967ff14d31d03dd4c62565e2fd97916903cefb780334a
 
-                    2020-09-12 01:44:39 AcceptToMemoryPool: Adding zelnode
+                    2020-09-12 01:44:39 AcceptToMemoryPool: Adding fluxnode
                     transaction to mempool: COutPoint(e27995065e, 0) hash:
                     ca7c2362a43ce53c0c95221e2333393724601480e14ba9b330d8fd3ecfc9c4da
 
@@ -1162,11 +1162,11 @@ paths:
     get:
       tags:
         - Flux
-      summary: Returns last lines of ZelBench debug log
+      summary: Returns last lines of Benchmark debug log
       description: >-
-        Returns last 100 lines known in the ZelBench debug log.
+        Returns last 100 lines known in the Benchmark debug log.
         **AdminAndFluxTeam**
-      operationId: tailZelBenchDebug
+      operationId: tailBenchmarkDebug
       security:
         - ZelID: []
       responses:
@@ -1214,7 +1214,7 @@ paths:
 
                     2020-09-12 00:24:09 init message: Done loading
 
-                    2020-09-12 00:24:09 Starting Zelnodes Benchmarking Thread
+                    2020-09-12 00:24:09 Starting Fluxnodes Benchmarking Thread
 
                     2020-09-12 00:24:10 Path: /home/user/flux/ZelBack
 
@@ -1387,18 +1387,18 @@ paths:
                 2020-05-13T16:58:29.181Z
                 {"code":"ECONNREFUSED","name":"Error","message":"connect
                 ECONNREFUSED 127.0.0.1:16124"} 2020-05-13T16:59:03.686Z
-                {"code":-28,"name":"Error","message":"Loading zelnode payment
+                {"code":-28,"name":"Error","message":"Loading fluxnode payment
                 cache..."} 2020-05-13T20:51:36.484Z          {}
                 2020-05-14T07:15:38.355Z          {}
                 2020-05-14T12:18:38.695Z          {} 2020-05-14T13:30:35.112Z
                 {"code":"ECONNREFUSED","name":"Error","message":"connect
                 ECONNREFUSED 127.0.0.1:16124"} 2020-05-14T13:30:35.114Z {}
                 2020-05-14T13:30:38.782Z          {} 2020-05-14T13:31:09.309Z
-                {"code":-28,"name":"Error","message":"Loading zelnode payment
+                {"code":-28,"name":"Error","message":"Loading fluxnode payment
                 cache..."} 2020-05-14T13:37:30.205Z
                 {"code":"ECONNREFUSED","name":"Error","message":"connect
                 ECONNREFUSED 127.0.0.1:16124"} 2020-05-14T13:38:10.519Z
-                {"code":-28,"name":"Error","message":"Loading zelnode payment
+                {"code":-28,"name":"Error","message":"Loading fluxnode payment
                 cache..."} 2020-05-14T13:58:08.810Z          {}
                 2020-05-14T14:49:30.295Z
                 {"code":"ECONNREFUSED","name":"Error","message":"connect
@@ -1406,7 +1406,7 @@ paths:
                 {"code":"ECONNREFUSED","name":"Error","message":"connect
                 ECONNREFUSED 127.0.0.1:16124"} 2020-05-14T14:49:32.672Z {}
                 2020-05-14T14:50:10.807Z
-                {"code":-28,"name":"Error","message":"Loading zelnode payment
+                {"code":-28,"name":"Error","message":"Loading fluxnode payment
                 cache..."} 2020-05-14T16:19:39.197Z          {}
   /flux/tailerrorlog:
     get:
@@ -1665,7 +1665,7 @@ paths:
                         type: object
                         properties:
                           status:
-                            $ref: '#/components/schemas/zelnodestatus'
+                            $ref: '#/components/schemas/fluxnodestatus'
                       benchmark:
                         type: object
                         properties:
@@ -1746,7 +1746,7 @@ paths:
                       confirmed_height: 587005
                       last_confirmed_height: 590486
                       last_paid_height: 590359
-                      tier: SUPER
+                      tier: NIMMBUS
                       payment_address: t1SiLvqFSjz2VJ5oMzv92yk1EeekSjexc6U
                       pubkey: >-
                         049a8a290ecb831f7d23b82c3d9fc9fdd029e5c7b0832044480b96d36b785a8c680c4fcc832c885b6f376495ee884ae1137fc156f7102efbddb9900d45fe1787ff
@@ -1758,11 +1758,11 @@ paths:
                       rpcport: 16224
                     status:
                       status: online
-                      benchmarking: SUPER
+                      benchmarking: NIMMBUS
                       zelback: connected
                     bench:
                       ipaddress: 167.86.81.87
-                      status: SUPER
+                      status: NIMMBUS
                       time: 1588523682
                       cores: 4
                       ram: 7.800000190734863
@@ -3323,41 +3323,41 @@ paths:
                   zcsamplejoinsplit
 
 
-                  == Zelnode ==
+                  == Fluxnode ==
 
-                  createzelnodebroadcast "command" ( "alias")
+                  createfluxnodebroadcast "command" ( "alias")
 
-                  createzelnodekey
+                  createfluxnodekey
 
-                  decodezelnodebroadcast "hexstring"
+                  decodefluxnodebroadcast "hexstring"
 
-                  getzelnodecount
+                  getfluxnodecount
 
-                  getzelnodeoutputs
+                  getfluxnodeoutputs
 
-                  getzelnodescores ( blocks )
+                  getfluxnodescores ( blocks )
 
-                  getzelnodestatus
+                  getfluxnodestatus
 
-                  getzelnodewinners ( blocks "filter" )
+                  getfluxnodewinners ( blocks "filter" )
 
-                  listzelnodeconf ( "filter" )
+                  listfluxnodeconf ( "filter" )
 
-                  listzelnodes ( "filter" )
+                  listfluxnodes ( "filter" )
 
-                  relayzelnodebroadcast "hexstring"
+                  relayfluxnodebroadcast "hexstring"
 
                   spork "name" ( value )
 
-                  startdeterministiczelnode alias_name lockwallet
+                  startdeterministicfluxnode alias_name lockwallet
 
-                  startzelnode "all|alias" lockwallet ( "alias" )
+                  startfluxnode "all|alias" lockwallet ( "alias" )
 
-                  viewdeterministiczelnodelist ( "filter" )
+                  viewdeterministicfluxnodelist ( "filter" )
 
-                  zelnodecurrentwinner
+                  fluxnodecurrentwinner
 
-                  zelnodedebug
+                  fluxnodedebug
 
                   znsync "status|reset"
   /daemon/getinfo:
@@ -3399,13 +3399,13 @@ paths:
                   paytxfee: 0
                   relayfee: 0.000001
                   errors: ''
-  /daemon/getzelnodestatus:
+  /daemon/getfluxnodestatus:
     get:
       tags:
         - Daemon
       summary: Flux node status
       description: Returns an object containing various state of the Flux node. **Public**
-      operationId: getZelNodeStatus
+      operationId: getFluxNodeStatus
       responses:
         '200':
           description: OK
@@ -3417,7 +3417,7 @@ paths:
                   status:
                     $ref: '#/components/schemas/status'
                   data:
-                    $ref: '#/components/schemas/zelnodestatus'
+                    $ref: '#/components/schemas/fluxnodestatus'
               example:
                 status: success
                 data:
@@ -3434,19 +3434,19 @@ paths:
                   confirmed_height: 572389
                   last_confirmed_height: 586403
                   last_paid_height: 586319
-                  tier: SUPER
+                  tier: NIMMBUS
                   payment_address: t1h7HLNYNmG6mZF8WC6BRLHqCib8hMqP3XC
                   pubkey: >-
                     0485c289e6df683ac2af0ce514260a20cc5a631336fee6bbcb897694134c5a5ad2a5d918f99d70a60c0cb30c705a8c5440f1cbca08e6d3f037320f40751c50555c
                   activesince: 1586334448
                   lastpaid: 1588014482
-  /daemon/listzelnodes:
+  /daemon/listfluxnodes:
     get:
       tags:
         - Daemon
       summary: Flux node list
       description: Gets a ranked list of Flux nodes. **Public**
-      operationId: listZelNodes
+      operationId: listFluxNodes
       responses:
         '200':
           description: OK
@@ -3506,7 +3506,7 @@ paths:
                     confirmed_height: 562053
                     last_confirmed_height: 588205
                     last_paid_height: 587939
-                    tier: BASIC
+                    tier: CUMULUS
                     payment_address: t1KrT6iKh384mQHwfAPcEFm3U7yFKwhmHbo
                     activesince: 1585083381
                     lastpaid: 1588210538
@@ -3519,7 +3519,7 @@ paths:
                     confirmed_height: 587669
                     last_confirmed_height: 588184
                     last_paid_height: 587940
-                    tier: BASIC
+                    tier: CUMULUS
                     payment_address: t1QEA6PepP2wS3Lg6gZDiFzRB6PfxWLYeK5
                     activesince: 1588175897
                     lastpaid: 1588210563
@@ -3532,7 +3532,7 @@ paths:
                     confirmed_height: 572581
                     last_confirmed_height: 588198
                     last_paid_height: 587986
-                    tier: SUPER
+                    tier: NIMMBUS
                     payment_address: t1a4J5u9rjrgVZLwRPSy7VPNoVVkeErNErk
                     activesince: 1586358287
                     lastpaid: 1588216950
@@ -3545,7 +3545,7 @@ paths:
                     confirmed_height: 585799
                     last_confirmed_height: 588206
                     last_paid_height: 587988
-                    tier: SUPER
+                    tier: NIMMBUS
                     payment_address: t1ZvKaPfgXJsY1DkYJ5gKwtjKFUkZcuQB2U
                     activesince: 1587952571
                     lastpaid: 1588217098
@@ -3558,25 +3558,25 @@ paths:
                     confirmed_height: 582738
                     last_confirmed_height: 588198
                     last_paid_height: 588034
-                    tier: BAMF
+                    tier: STRATUS
                     payment_address: t1bNJrZ9JwWwvroT7YUJUSDfMQ2r21vZppe
                     activesince: 1587582537
                     lastpaid: 1588222759
                     rank: 0
-  /daemon/viewdeterministiczelnodelist:
+  /daemon/viewdeterministicfluxnodelist:
     get:
       tags:
         - Daemon
       summary: Deterministic FluxNode list
       description: View deterministic list of FluxNodes by rank. **Public**
-      operationId: viewDeterministicZelNodeList
+      operationId: viewDeterministicFluxNodeList
       parameters:
         - in: query
           name: filter
           schema:
             type: string
           description: >-
-            Accepts both viewdeterministiczelnodelist/filter and
+            Accepts both viewdeterministicfluxnodelist/filter and
             ?filter=193.188.15.238. Filter query will filter list by ,txhash,
             payment address, ip, or pubkey. If ommited, full list will be
             displayed.
@@ -3656,7 +3656,7 @@ paths:
                     confirmed_height: 562053
                     last_confirmed_height: 588205
                     last_paid_height: 587939
-                    tier: BASIC
+                    tier: CUMULUS
                     payment_address: t1ZhnnTVUfgwKbmtFvmYtSb1xwPpSdJmzaY
                     pubkey: >-
                       043249d5fc0517976c8eeaaf96ce306c00687cea677be0181cdddaf8f8e044119f13258083fb0a8e98afdf57994331cd1e71958ce63b7b2d0a2dda0e095bd2a2de
@@ -3675,7 +3675,7 @@ paths:
                     confirmed_height: 587669
                     last_confirmed_height: 588184
                     last_paid_height: 587940
-                    tier: BASIC
+                    tier: CUMULUS
                     payment_address: t1WWAUFtKyytFzuXpn3Rzc6fGFndzD6xWLK
                     pubkey: >-
                       0450331d67221677cdca27c7cce40c52d3f3aae1c71a3dbf0c7322a7739bb42855246a9ab3a0b4280f20a6ebb3bf4dcc2a2290b74e533560d9c64014d8937bd1bb
@@ -3694,7 +3694,7 @@ paths:
                     confirmed_height: 572581
                     last_confirmed_height: 588198
                     last_paid_height: 587986
-                    tier: SUPER
+                    tier: NIMMBUS
                     payment_address: t1Wz3D8rTRB3xZi8WE8efgMzRwHhpg8dAWF
                     pubkey: >-
                       04e993a952569ecd6eb26eac7abdb699ca8e3f1debeaf544ef85b3c5838b74d7b30e196e917cb6e2008b2dcb9e42cafc4c93ccafb2888faea26b2e3a1a343f469a
@@ -3713,7 +3713,7 @@ paths:
                     confirmed_height: 585799
                     last_confirmed_height: 588206
                     last_paid_height: 587988
-                    tier: SUPER
+                    tier: NIMMBUS
                     payment_address: t1bXEnPZ22LRtd8WCmmKZAF2gxqaAxWysTb
                     pubkey: >-
                       04bfdff6a29281e057f10c2162db0ba98f70133fc45ccfa3cd8440a1ddc0ae30172b81f73b098cfdfe5f413a361dc422a03a31066413850ba418f3f8a2df65a4e1
@@ -3732,14 +3732,14 @@ paths:
                     confirmed_height: 582738
                     last_confirmed_height: 588198
                     last_paid_height: 588034
-                    tier: BAMF
+                    tier: STRATUS
                     payment_address: t1ZPnohxvacmT8VaJqRyZyMkvzERddQMttk
                     pubkey: >-
                       0418588b950297e955f7cc211c4d32f4f976433e8f1d4e2f2f0c4a1efd0e7a3b5167f27a0ad92ceedfa5b40862d929934a5d453f1268ee36b6ec22a7e921883454
                     activesince: 1587582537
                     lastpaid: 1588222759
                     rank: 0
-  /daemon/getzelnodecount:
+  /daemon/getfluxnodecount:
     get:
       tags:
         - Daemon
@@ -3747,7 +3747,7 @@ paths:
       description: >-
         Returns a count of FluxNodes and enabled FluxNodes categorized by tiers.
         **Public**
-      operationId: getZelNodeCount
+      operationId: getFluxNodeCount
       responses:
         '200':
           description: OK
@@ -3801,7 +3801,7 @@ paths:
       tags:
         - Daemon
       summary: FluxNode DOS list
-      description: Get a list of all zelnodes in the DOS list. **Public**
+      description: Get a list of all fluxnodes in the DOS list. **Public**
       operationId: getDOSList
       responses:
         '200':
@@ -3824,15 +3824,15 @@ paths:
                         added_height:
                           type: integer
                           description: >-
-                            Height the zelnode start transaction was added to
+                            Height the fluxnode start transaction was added to
                             the chain
                         payment_address:
                           type: string
-                          description: The payment address associated with the zelnode
+                          description: The payment address associated with the fluxnode
                         eligible_in:
                           type: integer
                           description: >-
-                            The amount of blocks before the zelnode is eligible
+                            The amount of blocks before the fluxnode is eligible
                             to be started again
               example:
                 status: success
@@ -3871,11 +3871,11 @@ paths:
                         added_height:
                           type: integer
                           description: >-
-                            Height the zelnode start transaction was added to
+                            Height the fluxnode start transaction was added to
                             the chain
                         payment_address:
                           type: string
-                          description: The payment address associated with the zelnode
+                          description: The payment address associated with the fluxnode
                         expires_in:
                           type: integer
                           description: >-
@@ -3907,7 +3907,7 @@ paths:
             Use "show" to get values or "active" to show active state. When set
             up as a spork signer, the name of the spork can be used to update
             it's value.
-          example: SPORK_1_ZELNODE_PAYMENT_ENFORCEMENT
+          example: SPORK_1_fluxnode_PAYMENT_ENFORCEMENT
         - in: query
           name: value
           schema:
@@ -3929,23 +3929,23 @@ paths:
                   data:
                     type: object
                     properties:
-                      SPORK_1_ZELNODE_PAYMENT_ENFORCEMENT:
+                      SPORK_1_fluxnode_PAYMENT_ENFORCEMENT:
                         type: integer
                         description: Name of spork and value
-                      SPORK_2_ZELNODE_UPGRADE_VOTE_ENFORCEMENT:
+                      SPORK_2_fluxnode_UPGRADE_VOTE_ENFORCEMENT:
                         type: integer
                         description: Name of spork and value
               example:
                 status: success
                 data:
-                  SPORK_1_ZELNODE_PAYMENT_ENFORCEMENT: 4070908800
-                  SPORK_2_ZELNODE_UPGRADE_VOTE_ENFORCEMENT: 4070908800
+                  SPORK_1_fluxnode_PAYMENT_ENFORCEMENT: 4070908800
+                  SPORK_2_fluxnode_UPGRADE_VOTE_ENFORCEMENT: 4070908800
   /daemon/fluxcurrentwinner:
     get:
       tags:
         - Daemon
       summary: Current list of winners
-      description: Gets a list of current ZelNode winners. **Public**
+      description: Gets a list of current FluxNode winners. **Public**
       operationId: FluxNodeCurrentWinner
       responses:
         '200':
@@ -3960,7 +3960,7 @@ paths:
                   data:
                     type: object
                     properties:
-                      BASIC Winner:
+                      CUMULUS Winner:
                         type: object
                         properties:
                           collateral:
@@ -3987,7 +3987,7 @@ paths:
                           payment_address:
                             type: string
                             description: Payment address
-                      SUPER Winner:
+                      NIMMBUS Winner:
                         type: object
                         properties:
                           collateral:
@@ -4014,7 +4014,7 @@ paths:
                           payment_address:
                             type: string
                             description: Payment address
-                      BAMF Winner:
+                      STRATUS Winner:
                         type: object
                         properties:
                           collateral:
@@ -4044,7 +4044,7 @@ paths:
               example:
                 status: success
                 data:
-                  BASIC Winner:
+                  CUMULUS Winner:
                     collateral: >-
                       COutPoint(5e6fdf0a56de71c3fcaf4091097d8feea7b3e1f966e334b7ea234a616813f934,
                       0)
@@ -4053,9 +4053,9 @@ paths:
                     confirmed_height: 589026
                     last_confirmed_height: 590742
                     last_paid_height: 590489
-                    tier: BASIC
+                    tier: CUMULUS
                     payment_address: t1VLEe6iBNGGicyiqQNzGWsZ6Z6pNZZrTyq
-                  SUPER Winner:
+                  NIMMBUS Winner:
                     collateral: >-
                       COutPoint(4da9b0320ab1a1e94662471732b722667cd68a25d5db72f18572e36f63452872,
                       0)
@@ -4064,9 +4064,9 @@ paths:
                     confirmed_height: 585222
                     last_confirmed_height: 590742
                     last_paid_height: 590538
-                    tier: SUPER
+                    tier: NIMMBUS
                     payment_address: t1WdrzqRR4gh73mPJpN3PDB9a9ZFiatP9tp
-                  BAMF Winner:
+                  STRATUS Winner:
                     collateral: >-
                       COutPoint(7f69bbb001f27177d2b60b99e3dbe3d95b82b69b8d82a21b9829ddc27af2be01,
                       0)
@@ -4075,7 +4075,7 @@ paths:
                     confirmed_height: 587649
                     last_confirmed_height: 590742
                     last_paid_height: 590594
-                    tier: BAMF
+                    tier: STRATUS
                     payment_address: t1dDaoT2WDv5M5gTdx7CzLgXEQSEeqVkryw
   /daemon/getbestblockhash:
     get:
@@ -4484,7 +4484,7 @@ paths:
                       name: Kamata
                       activationheight: 558000
                       status: active
-                      info: 'Zel Kamata Upgrade, Deterministic ZelNodes and Flux'
+                      info: 'Zel Kamata Upgrade, Deterministic FluxNodes and Flux'
                   consensus:
                     chaintip: 76b809bb
                     nextblock: 76b809bb
@@ -5494,22 +5494,22 @@ paths:
                       height:
                         type: integer
                         description: The height of the next block
-                      basic_zelnode_address:
+                      basic_fluxnode_address:
                         type: string
                         description: FLUX address
-                      basic_zelnode_payout:
+                      basic_fluxnode_payout:
                         type: integer
                         description: Amount
-                      super_zelnode_address:
+                      super_fluxnode_address:
                         type: string
                         description: FLUX address
-                      super_zelnode_payout:
+                      super_fluxnode_payout:
                         type: integer
                         description: Amount
-                      bamf_zelnode_address:
+                      bamf_fluxnode_address:
                         type: string
                         description: FLUX address
-                      bamf_zelnode_payout:
+                      bamf_fluxnode_payout:
                         type: integer
                         description: Amount
               example:
@@ -5562,12 +5562,12 @@ paths:
                   bits: 1e00c43b
                   height: 591322
                   miner_reward: 11250001000
-                  basic_zelnode_address: t1SFG7xCkwWRP4tXhZrJmq7sWDFBniaNA16
-                  basic_zelnode_payout: 562500000
-                  super_zelnode_address: t1QyvYHuxfw6MQB1nsSvDdBPcsXqWsYKYDr
-                  super_zelnode_payout: 937500000
-                  bamf_zelnode_address: t1R1ssbaVXMZqbG8iwaD57xCS2w92pJefkw
-                  bamf_zelnode_payout: 2250000000
+                  basic_fluxnode_address: t1SFG7xCkwWRP4tXhZrJmq7sWDFBniaNA16
+                  basic_fluxnode_payout: 562500000
+                  super_fluxnode_address: t1QyvYHuxfw6MQB1nsSvDdBPcsXqWsYKYDr
+                  super_fluxnode_payout: 937500000
+                  bamf_fluxnode_address: t1R1ssbaVXMZqbG8iwaD57xCS2w92pJefkw
+                  bamf_fluxnode_payout: 2250000000
   /daemon/getlocalsolps:
     get:
       tags:
@@ -7452,7 +7452,7 @@ paths:
                 status: success
                 data:
                   ipaddress: 49.12.8.215
-                  status: BASIC
+                  status: CUMULUS
                   time: 1588852143
                   cores: 2
                   ram: 3.799999952316284
@@ -7487,7 +7487,7 @@ paths:
                 status: success
                 data:
                   status: online
-                  benchmarking: BASIC
+                  benchmarking: CUMULUS
                   zelback: connected
   /daemon/prioritisetransaction:
     get:
@@ -7598,13 +7598,13 @@ paths:
               example:
                 status: success
                 data: Stop Flux server
-  /daemon/createzelnodekey:
+  /daemon/createfluxnodekey:
     get:
       tags:
         - Daemon
       summary: Create fluxnode private key
       description: Create a new fluxnode private key. **Admin**
-      operationId: createZelNodeKey
+      operationId: createFluxNodeKey
       security:
         - ZelID: []
       responses:
@@ -7623,15 +7623,15 @@ paths:
               example:
                 status: success
                 data: 5JwVKe7UH986ncSL2jG9KdUY2AuZUTDAkTsp4TZoGWdD5cLLiFR
-  /daemon/listzelnodeconf:
+  /daemon/listfluxnodeconf:
     get:
       tags:
         - Daemon
       summary: The fluxnode conf file
       description: >-
-        View zelnode conf file in JSON format, this will return empty for most
+        View fluxnode conf file in JSON format, this will return empty for most
         unless running a hot wallet. **Admin**
-      operationId: listZelNodeConf
+      operationId: listFluxNodeConf
       security:
         - ZelID: []
       responses:
@@ -7678,19 +7678,19 @@ paths:
                           description: 'Network type (IPv4, IPv6, onion)'
                         added_height:
                           type: integer
-                          description: Block height zelnode was added to list
+                          description: Block height fluxnode was added to list
                         confirmed_height:
                           type: integer
-                          description: Block height zelnode was confirmed by the network
+                          description: Block height fluxnode was confirmed by the network
                         last_confirmed_height:
                           type: integer
-                          description: Latest block height network confirmed the zelnode
+                          description: Latest block height network confirmed the fluxnode
                         last_paid_height:
                           type: integer
-                          description: Block the zelnode was last paid
+                          description: Block the fluxnode was last paid
                         tier:
                           type: string
-                          description: Tier of zelnode
+                          description: Tier of fluxnode
                         payment_address:
                           type: string
                           description: Address where rewards are paid
@@ -7723,13 +7723,13 @@ paths:
                     payment_address: UNKNOWN
                     activesince: 0
                     lastpaid: 0
-  /daemon/getzelnodeoutputs:
+  /daemon/getfluxnodeoutputs:
     get:
       tags:
         - Daemon
       summary: Fluxnode transaction outputs
-      description: Print all zelnode transaction outputs. **Admin**
-      operationId: getZelNodeOutputs
+      description: Print all fluxnode transaction outputs. **Admin**
+      operationId: getFluxNodeOutputs
       security:
         - ZelID: []
       responses:
@@ -7759,7 +7759,7 @@ paths:
                   - txhash: >-
                       cee4c36d22609004d286bd83bebf1f28feb33dd6e4889c6c400766253942c1af
                     outputidx: 0
-  /daemon/startzelnode:
+  /daemon/startfluxnode:
     get:
       tags:
         - Daemon
@@ -7769,7 +7769,7 @@ paths:
         running a hot FluxNode which is highly not recommended. It is a control
         wallet function so basically your wallet containing the collateral
         funds. **Admin**
-      operationId: startZelNode
+      operationId: startFluxNode
       security:
         - ZelID: []
       parameters:
@@ -7811,25 +7811,25 @@ paths:
                   status:
                     $ref: '#/components/schemas/status'
                   data:
-                    $ref: '#/components/schemas/startzelnode'
+                    $ref: '#/components/schemas/startfluxnode'
               example:
                 status: success
                 data:
-                  overall: 'Successfully started 0 zelnodes, failed to start 1, total'
+                  overall: 'Successfully started 0 fluxnodes, failed to start 1, total'
                   detail:
                     - result: failed
                       error: could not find alias in config. Verify with list-conf.
-  /daemon/startdeterministiczelnode:
+  /daemon/startdeterministicfluxnode:
     get:
       tags:
         - Daemon
-      summary: Start zelnode command
+      summary: Start fluxnode command
       description: >-
-        Attempts to start one fluxnode. Same as the `/daemon/startzelnode` call
+        Attempts to start one fluxnode. Same as the `/daemon/startfluxnode` call
         this call will only work if running a hot FluxNode which is highly not
         recommended. It is a control wallet function so basically your wallet
         containing the collateral funds.  **Admin**
-      operationId: startDeterministicZelNode
+      operationId: startDeterministicFluxNode
       security:
         - ZelID: []
       parameters:
@@ -7864,11 +7864,11 @@ paths:
                   status:
                     $ref: '#/components/schemas/status'
                   data:
-                    $ref: '#/components/schemas/startzelnode'
+                    $ref: '#/components/schemas/startfluxnode'
               example:
                 status: success
                 data:
-                  overall: 'Successfully started 0 zelnodes, failed to start 1, total'
+                  overall: 'Successfully started 0 fluxnodes, failed to start 1, total'
                   detail:
                     - alias: Basic1
                       result: failed
@@ -11177,7 +11177,7 @@ paths:
       description: >-
         This will return the status of the node, what FluxBenchd determined the
         tier the server could pass for, and if Flux backend is connected. If
-        any one of these return a negative result the ZelNode will fail to
+        any one of these return a negative result the FluxNode will fail to
         confirm. **Public**
       operationId: getStatus
       responses:
@@ -11196,7 +11196,7 @@ paths:
                 status: success
                 data:
                   status: online
-                  benchmarking: SUPER
+                  benchmarking: NIMMBUS
                   zelback: connected
   /benchmark/help:
     get:
@@ -11224,13 +11224,14 @@ paths:
                   == Benchmarks ==
                   getstatus (full_check)
                   restartnodebenchmarks
-                  signzelnodetransaction "hexstring"
+                  signfluxnodetransaction "hexstring"
+                  startmultiportbench
 
                   == Control ==
                   help ( "command" )
                   stop
 
-                  == Zelnode ==
+                  == Fluxnode ==
                   getbenchmarks
                   getinfo
   /benchmark/getbenchmarks:
@@ -11239,7 +11240,7 @@ paths:
         - Benchmark
       summary: Benchmark results
       description: Return most recent benchmark results. **Public**
-      operationId: getBenchmarksZelBench
+      operationId: getBenchmarksBenchmark
       responses:
         '200':
           description: OK
@@ -11256,14 +11257,27 @@ paths:
                 status: success
                 data:
                   ipaddress: 96.30.196.88
-                  status: SUPER
+                  armboard: ""
+                  status: STRATUS
                   time: 1588374276
-                  cores: 6
-                  ram: 15
-                  ssd: 0
-                  hdd: 400.0308227539062
-                  ddwrite: 290.239013671875
-                  eps: 259.3544006347656
+                  real_cores: 16
+                  cores: 16
+                  ram: 62
+                  ssd: 2000
+                  hdd: 0
+                  ddwrite: 613.75
+                  disksinfo: 
+                    - disk: sda
+                    - size: 2000
+                    - writespeeed: 613.75
+                  eps: 1548.22
+                  ping: 0.428
+                  download_speed: 770.4780079999999
+                  pload_speed: 813.4250479999999
+                  bench_version: 1.0.20
+                  peed_version: 1.2.0
+                  thunder: false
+                  error: ""
   /benchmark/getinfo:
     get:
       tags:
@@ -11286,7 +11300,7 @@ paths:
               example:
                 status: success
                 data:
-                  version: 1.3.1
+                  version: 3.8.0
                   rpcport: 16224
   /benchmark/restartnodebenchmarks:
     get:
@@ -11340,13 +11354,13 @@ paths:
               example:
                 status: success
                 data: Zelbench server stopping
-  /benchmark/signzelnodetransaction:
+  /benchmark/signfluxnodetransaction:
     post:
       tags:
         - Benchmark
       summary: Sign FluxNode transaction
       description: Command to get FluxBenchd to sign a FluxNode broadcast. **Admin**
-      operationId: signZelNodeTransactionPost
+      operationId: signFluxNodeTransactionPost
       security:
         - ZelID: []
       requestBody:
@@ -11373,12 +11387,12 @@ paths:
                   status:
                     $ref: '#/components/schemas/status'
                   data:
-                    $ref: '#/components/schemas/signzelnodetransaction'
+                    $ref: '#/components/schemas/signfluxnodetransaction'
               example:
                 status: success
                 data:
                   status: complete
-                  tier: BASIC
+                  tier: CUMULUS
                   hex: >-
                     0500000004566e906c6df24b00ca710cecbbea166a29b9098456bed212207fea66f433ba4500000000ba33bd5e014d3cbd5e010f3131362e3230332e3233372e323530411b27b3e254a9f3248d88039a0f062e0d634e130bd34a9e4a1cb27d7aa6ce975cee251be9af6864a1a4a9e9d5fc2b28a07af8bab36a73f912c59ef844a69fa03f5f411b38e0e02dfece0ba3b7aae0afdcea7c70c9ea28b11317763f12092214086059e74d542cada464f3ee2c655011c53f6f18c0aa484bff8ce36926c6b295eb9287ff
     get:
@@ -11386,7 +11400,7 @@ paths:
         - Benchmark
       summary: Sign FluxNode transaction
       description: Command to get FluxBenchd to sign a FluxNode broadcast. **Admin**
-      operationId: signZelNodeTransaction
+      operationId: signFluxNodeTransaction
       security:
         - ZelID: []
       parameters:
@@ -11395,7 +11409,7 @@ paths:
           required: true
           schema:
             type: string
-          description: The hex encoded zelnode broadcast message
+          description: The hex encoded fluxnode broadcast message
           example: >-
             0500000004566e906c6df24b00ca710cecbbea166a29b9098456bed212207fea66f433ba4500000000ba33bd5e01182ebd5e010f3131362e3230332e3233372e323530411b27b3e254a9f3248d88039a0f062e0d634e130bd34a9e4a1cb27d7aa6ce975cee251be9af6864a1a4a9e9d5fc2b28a07af8bab36a73f912c59ef844a69fa03f5f411c7f47ba609b2c0eb91268b446b31899ce66f90fa1375aab29692f1b252a53a9883120e10c646292486365608dc806c43e2d49b66afdd150a6a7f60b6b2392a83b
       responses:
@@ -11409,12 +11423,12 @@ paths:
                   status:
                     $ref: '#/components/schemas/status'
                   data:
-                    $ref: '#/components/schemas/signzelnodetransaction'
+                    $ref: '#/components/schemas/signfluxnodetransaction'
               example:
                 status: success
                 data:
                   status: complete
-                  tier: BASIC
+                  tier: CUMULUS
                   hex: >-
                     0500000004566e906c6df24b00ca710cecbbea166a29b9098456bed212207fea66f433ba4500000000ba33bd5e014d3cbd5e010f3131362e3230332e3233372e323530411b27b3e254a9f3248d88039a0f062e0d634e130bd34a9e4a1cb27d7aa6ce975cee251be9af6864a1a4a9e9d5fc2b28a07af8bab36a73f912c59ef844a69fa03f5f411b38e0e02dfece0ba3b7aae0afdcea7c70c9ea28b11317763f12092214086059e74d542cada464f3ee2c655011c53f6f18c0aa484bff8ce36926c6b295eb9287ff
   /apps/listrunningapps:
@@ -14359,7 +14373,7 @@ paths:
         - Explorer
       summary: View FluxNode transactions
       description: View a filtered list of the FluxNode's transactions. **Public**
-      operationId: getFilteredZelNodeTxs
+      operationId: getFilteredFluxNodeTxs
       parameters:
         - in: query
           name: filter
@@ -14420,10 +14434,10 @@ paths:
                   txid: >-
                     793dc163a52f445ebeaa838d8d23b22ebd7c1b1d990c450a52f00ff1825c1368
                   version: 5
-                  type: Confirming a zelnode
+                  type: Confirming a fluxnode
                   updateType: 1
                   ip: 47.22.47.180
-                  benchTier: SUPER
+                  benchTier: NIMMBUS
                   collateralHash: >-
                     1216fd06c889aa3c559739f0ad6756a6a03700dd0590749a58868ad90a116f13
                   collateralIndex: 0
@@ -14816,7 +14830,7 @@ components:
           description: Status of server
         benchmarking:
           type: string
-          description: Tier server passed for BASIC/SUPER/BAMF
+          description: Tier server passed for CUMULUS/NIMMBUS/STRATUS
         zelback:
           type: string
           description: Status of Flux backend
@@ -14933,10 +14947,10 @@ components:
       properties:
         ipaddress:
           type: string
-          description: Ip address of ZelNode server
+          description: Ip address of FluxNode server
         status:
           type: string
-          description: BASIC/SUPER/BAMF
+          description: CUMULUS/NIMMBUS/STRATUS
         time:
           type: integer
           description: Time of bench in epoch time
@@ -15155,7 +15169,7 @@ components:
             error:
               type: string
               description: Verification or signing error related to the input
-    signzelnodetransaction:
+    signfluxnodetransaction:
       type: object
       properties:
         status:
@@ -15163,11 +15177,11 @@ components:
           description: Explanation of status
         tier:
           type: string
-          description: Tier of ZelNode
+          description: Tier of FluxNode
         hex:
           type: string
           description: Hex encoded info of the transaction
-    startzelnode:
+    startfluxnode:
       type: object
       properties:
         overall:
@@ -15447,7 +15461,7 @@ components:
         errors:
           type: string
           description: Any error messages
-    zelnodestatus:
+    fluxnodestatus:
       type: object
       properties:
         status:
@@ -15482,10 +15496,10 @@ components:
           description: Last block height when FluxNode was paid
         tier:
           type: string
-          description: Tier (BASIC/SUPER/BAMF)
+          description: Tier (CUMULUS/NIMMBUS/STRATUS)
         payment_address:
           type: string
-          description: FLUX address for ZelNode payments
+          description: FLUX address for FluxNode payments
         pubkey:
           type: string
           description: FluxNode public key used for message broadcasting
