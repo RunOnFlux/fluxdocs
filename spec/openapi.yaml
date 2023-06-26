@@ -11910,6 +11910,427 @@ paths:
                 type: string
                 format: binary
               example: Hello world
+  /apps/fluxshare/getfolder:
+    get:
+      tags:
+        - Apps
+      summary: FluxShare - Get folder content
+      description: Call to get content of folder in fluxshare. **Admin**
+      operationId: GetFolder
+      security:
+        - ZelID: []
+      parameters:
+        - in: query
+          name: folder
+          required: true
+          schema:
+            type: string
+          description:  The name of the folder that content will be display
+          example: test
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    $ref: '#/components/schemas/status'
+                  data:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        name: 
+                          type: string
+                          description: Name of file
+                        size:
+                          type: integer
+                          description: Size of file 
+                        isDirectory:
+                          type: boolean
+                          description: True if item is directory
+                        isFile:
+                          type: boolean
+                          description: True if item is file
+                        isSymbolicLink:
+                          type: boolean
+                          description: Treu if item is symbolic link
+                        createdAt:
+                          type: string
+                          description: Create date of item
+                        modifiedAt:
+                          type: string
+                          description: Modifi date of item 
+                        shareToken:
+                          type: string
+                          description: Share token when file is share
+                        shareFile:
+                          type: string
+                          description: Path if file is shared
+              example:
+                status: success
+                data: 
+                  name: b1fcb9da0a941468f2c8cde01.txt
+                  size: 119273
+                  isDirectory: false
+                  isFile: true
+                  isSymbolicLink: false
+                  createdAt: 2022-04-09T10:38:18.482Z
+                  modifiedAt: 2022-04-09T10:38:18.562Z
+                  shareToken: acb55e162ce245bd7cf78a0a2fa00eba7d960ac3312f3cb441a4e3884966c6c3
+                  shareFile: test%2Fb1fcb9da0a941468f2c8cde01.txt
+  /apps/fluxshare/createfolder:
+    get:
+      tags:
+        - Apps
+      summary: FluxShare - Create folder
+      description: Call to create folder in fluxshare. **Admin**
+      operationId: CreateFolder
+      security:
+        - ZelID: []
+      parameters:
+        - in: query
+          name: folder
+          required: true
+          schema:
+            type: string
+          description: >-
+            The name of the folder that will be created in fluxshare
+          example: test
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    $ref: '#/components/schemas/status'
+                  data:
+                    type: object
+                    properties:
+                      message:
+                        type: string
+                        description: Explanation of status
+              example:
+                status: success
+                data: 
+                  message: Folder Created
+  /apps/fluxshare/removefile:
+    get:
+      tags:
+        - Apps
+      summary: FluxShare - Remove file
+      description: Call to remove file from fluxshare. **Admin**
+      operationId: RemoveFile
+      security:
+        - ZelID: []
+      parameters:
+        - in: query
+          name: file
+          required: true
+          schema:
+            type: string
+          description: The name of the file that will be removed in fluxshare
+          example: test
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    $ref: '#/components/schemas/status'
+                  data:
+                    type: object
+                    properties:
+                      message:
+                        type: string
+                        description: Explanation of status
+              example:
+                status: success
+                data:
+                  message: File Removed
+  /apps/fluxshare/removefolder:
+    get:
+      tags:
+        - Apps
+      summary: FluxShare - Remove folder
+      description: Call to remove folder from fluxshare. **Admin**
+      operationId: RemoveFolder
+      security:
+        - ZelID: []
+      parameters:
+        - in: query
+          name: folder
+          required: true
+          schema:
+            type: string
+          description: The name of the folder that will be removed in fluxshare
+          example: test
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    $ref: '#/components/schemas/status'
+                  data:
+                    type: object
+                    properties:
+                      message:
+                        type: string
+                        description: Explanation of status
+              example:
+                status: success
+                data: 
+                  message: Folder Removed
+  /apps/fluxshare/fileexists:
+    get:
+      tags:
+        - Apps
+      summary: FluxShare - File exists 
+      description: Call to check if file exist. **Admin**
+      operationId: FileExists
+      security:
+        - ZelID: []
+      parameters:
+        - in: query
+          name: file
+          required: true
+          schema:
+            type: string
+          description: >-
+            File name to check if exists
+          example: message.txt
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    $ref: '#/components/schemas/status'
+                  data:
+                    type: object
+                    properties:
+                      fileexists:
+                        type: boolean
+                        description: Explanation of file status
+              example:
+                status: success
+                data: 
+                 fileExists: true
+  /apps/fluxshare/stats:
+    get:
+      tags:
+        - Apps
+      summary: FluxShare - Stats
+      description: Call to check stats of fluxshare. **Admin**
+      operationId: Stats
+      security:
+        - ZelID: []
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    $ref: '#/components/schemas/status'
+                  data:
+                    type: object
+                    properties:
+                      available: 
+                        type: number
+                        description: Available space in fluxshare
+                      used:
+                        type: number
+                        description: Used space in fluxshare 
+                      total:
+                        type: number
+                        description: Total space in fluxshare
+              example:
+                status: success
+                data: 
+                  available: 1.999761
+                  used: 0.000239
+                  total: 2
+  /apps/fluxshare/sharefile:
+    get:
+      tags:
+        - Apps
+      summary: FluxShare - Share file
+      description: Call to share file in fluxshare. **Admin**
+      operationId: ShareFile
+      security:
+        - ZelID: []
+      parameters:
+        - in: query
+          name: file
+          required: true
+          schema:
+            type: string
+          description: >-
+            File name that will be share
+          example: message.txt
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    $ref: '#/components/schemas/status'
+                  data:
+                    type: object
+                    properties:
+                      name: 
+                        type: string
+                        description: File name
+                      token:
+                        type: string
+                        description: Token for share file
+                      _id:
+                        type: string
+                        description: Id of file
+              example:
+                status: success
+                data: 
+                  name: 3481a25d24702b2ff3cefed00.txt
+                  token: 8e889d99cb46b3ce7e75a008ed2feaeaa03a0d203c47a3bdd5a068c3fee837d3
+                  _id: 6276251c61d22f58c2902d32
+  /apps/fluxshare/unsharefile:
+    get:
+      tags:
+        - Apps
+      summary: FluxShare - Unshare file
+      description: Call to unshare file in fluxshare. **Admin**
+      operationId: UnshareFile
+      security:
+        - ZelID: []
+      parameters:
+        - in: query
+          name: file
+          required: true
+          schema:
+            type: string
+          description: >-
+            File name that will be unshare
+          example: message.txt
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    $ref: '#/components/schemas/status'
+                  data:
+                    type: object
+                    properties:
+                      message:
+                        type: string
+                        description: Explanation of status
+              example:
+                status: success
+                data: 
+                  message: File sharing disabled
+  /apps/fluxshare/sharedfiles:
+    get:
+      tags:
+        - Apps
+      summary: FluxShare - Shared files
+      description: Call to display shared files. **Admin**
+      operationId: SharedFiles
+      security:
+        - ZelID: []
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    $ref: '#/components/schemas/status'
+                  data:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        name:
+                          type: string
+                          description: File name
+                        token:
+                          type: string
+                          description: Token for share file
+              example:
+                status: success
+                data: 
+                  name: test%2Fb1fcb9da0a941468f2c8cde01.txt
+                  token: acb55e162ce245bd7cf78a0a2fa00eba7d960ac3312f3cb441a4e3884966c6c3
+  /apps/fluxshare/rename:
+    get:
+      tags:
+        - Apps
+      summary: FluxShare - Rename file
+      description: Call to rename file in fluxshare. **Admin**
+      operationId: RenameFile
+      security:
+        - ZelID: []
+      parameters:
+        - in: query
+          name: oldpath
+          required: true
+          schema:
+            type: string
+          description: Path to file
+          example: test%2Fb1fcb9da0a941468f2c8cde01.txt
+        - in: query
+          name: newname
+          required: true
+          schema:
+            type: string
+          description: New name for file
+          example: 2Fb1fcb9da0a941468f2c8cde02.txt
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    $ref: '#/components/schemas/status'
+                  data:
+                    type: object
+                    properties:
+                      message:
+                        type: string
+                        description: Explanation of status
+              example:
+                status: success
+                data: 
+                  message: Rename successful
   /apps/fluxusage:
     get:
       tags:
