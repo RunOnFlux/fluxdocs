@@ -1,4 +1,4 @@
-openapi: 3.0.0
+openapi: 3.0.3
 info:
   version: 0.4.1
   title: Flux
@@ -3016,350 +3016,186 @@ paths:
                 status: success
                 data: >-
                   == Addressindex ==
-
                   getaddressbalance {"addresses": ["taddr", ...]}
-
-                  getaddressdeltas {"addresses": ["taddr", ...], ("start": n),
-                  ("end": n), ("chainInfo": true|false)}
-
+                  getaddressdeltas {"addresses": ["taddr", ...], ("start": n), ("end": n), ("chainInfo": true|false)}
                   getaddressmempool {"addresses": ["taddr", ...]}
-
-                  getaddresstxids {"addresses": ["taddr", ...], ("start": n),
-                  ("end": n)}
-
-                  getaddressutxos {"addresses": ["taddr", ...], ("chainInfo":
-                  true|false)}
-
+                  getaddresstxids {"addresses": ["taddr", ...], ("start": n), ("end": n)}
+                  getaddressutxos {"addresses": ["taddr", ...], ("chainInfo": true|false)}
 
                   == Benchmarks ==
-
                   getbenchmarks
-
                   getbenchstatus
-
-                  startbenchmark
-
-                  stopbenchmark
-
+                  startfluxbenchd
+                  startzelbenchd
+                  stopfluxbenchd
+                  stopzelbenchd
 
                   == Blockchain ==
-
                   getbestblockhash
-
                   getblock "hash|height" ( verbosity )
-
                   getblockchaininfo
-
                   getblockcount
-
                   getblockdeltas "blockhash"
-
                   getblockhash index
-
-                  getblockhashes high low ( {"noOrphans": true|false,
-                  "logicalTimes": true|false} )
-
+                  getblockhashes high low ( {"noOrphans": true|false, "logicalTimes": true|false} )
                   getblockheader "hash" ( verbose )
-
                   getchaintips
-
                   getdifficulty
-
                   getmempoolinfo
-
                   getrawmempool ( verbose )
-
                   getspentinfo {"txid": "txidhex", "index": n}
-
                   gettxout "txid" n ( includemempool )
-
                   gettxoutproof ["txid",...] ( blockhash )
-
                   gettxoutsetinfo
-
                   verifychain ( checklevel numblocks )
-
                   verifytxoutproof "proof"
 
-
                   == Control ==
-
                   getinfo
-
                   help ( "command" )
-
                   stop
 
-
                   == Disclosure ==
-
-                  z_getpaymentdisclosure "txid" "js_index" "output_index"
-                  ("message")
-
+                  z_getpaymentdisclosure "txid" "js_index" "output_index" ("message") 
                   z_validatepaymentdisclosure "paymentdisclosure"
 
+                  == Fluxnode ==
+                  createfluxnodekey
+                  createzelnodekey
+                  fluxnodecurrentwinner
+                  getdoslist
+                  getfluxnodecount
+                  getfluxnodeoutputs
+                  getfluxnodestatus
+                  getmigrationcount
+                  getstartlist
+                  getzelnodecount
+                  getzelnodeoutputs
+                  getzelnodestatus
+                  listfluxnodeconf ( "filter" )
+                  listfluxnodes ( "filter" )
+                  listzelnodeconf ( "filter" )
+                  listzelnodes ( "filter" )
+                  startdeterministicfluxnode alias_name lockwallet
+                  startdeterministiczelnode alias_name lockwallet
+                  startfluxnode "all|alias" lockwallet ( "alias" )
+                  startzelnode "all|alias" lockwallet ( "alias" )
+                  viewdeterministicfluxnodelist ( "filter" )
+                  viewdeterministiczelnodelist ( "filter" )
+                  zelnodecurrentwinner
 
                   == Generating ==
-
                   generate numblocks
-
                   getgenerate
-
                   setgenerate generate ( genproclimit )
 
-
                   == Mining ==
-
                   getblocksubsidy height
-
                   getblocktemplate ( "jsonrequestobject" )
-
                   getlocalsolps
-
                   getmininginfo
-
                   getnetworkhashps ( blocks height )
-
                   getnetworksolps ( blocks height )
-
                   prioritisetransaction <txid> <priority delta> <fee delta>
-
                   submitblock "hexdata" ( "jsonparametersobject" )
 
-
                   == Network ==
-
                   addnode "node" "add|remove|onetry"
-
                   clearbanned
-
-                  disconnectnode "node"
-
+                  disconnectnode "node" 
                   getaddednodeinfo dns ( "node" )
-
                   getconnectioncount
-
                   getdeprecationinfo
-
                   getnettotals
-
                   getnetworkinfo
-
                   getpeerinfo
-
                   listbanned
-
                   ping
-
                   setban "ip(/netmask)" "add|remove" (bantime) (absolute)
 
-
                   == Rawtransactions ==
-
-                  createrawtransaction [{"txid":"id","vout":n},...]
-                  {"address":amount,...} ( locktime ) ( expiryheight )
-
+                  createrawtransaction [{"txid":"id","vout":n},...] {"address":amount,...} ( locktime ) ( expiryheight )
+                  decoderawblock "hexstring"
                   decoderawtransaction "hexstring"
-
                   decodescript "hex"
-
                   fundrawtransaction "hexstring"
-
                   getrawtransaction "txid" ( verbose )
-
                   sendrawtransaction "hexstring" ( allowhighfees )
-
-                  signrawtransaction "hexstring" (
-                  [{"txid":"id","vout":n,"scriptPubKey":"hex","redeemScript":"hex"},...]
-                  ["privatekey1",...] sighashtype )
-
+                  signrawtransaction "hexstring" ( [{"txid":"id","vout":n,"scriptPubKey":"hex","redeemScript":"hex"},...] ["privatekey1",...] sighashtype )
 
                   == Util ==
-
                   createmultisig nrequired ["key",...]
-
                   estimatefee nblocks
-
                   estimatepriority nblocks
-
+                  printsnapshot "time" 
                   validateaddress "fluxaddress"
-
                   verifymessage "fluxaddress" "signature" "message"
-
                   z_validateaddress "zaddr"
 
-
                   == Wallet ==
-
                   addmultisigaddress nrequired ["key",...] ( "account" )
-
                   backupwallet "destination"
-
+                  consolidateutxos (utxo_count)
                   dumpprivkey "t-addr"
-
                   dumpwallet "folder/filename"
-
                   encryptwallet "passphrase"
-
                   getaccount "fluxaddress"
-
                   getaccountaddress "account"
-
                   getaddressesbyaccount "account"
-
                   getbalance ( "account" minconf includeWatchonly )
-
                   getnewaddress ( "account" )
-
                   getrawchangeaddress
-
                   getreceivedbyaccount "account" ( minconf )
-
                   getreceivedbyaddress "fluxaddress" ( minconf )
-
                   gettransaction "txid" ( includeWatchonly )
-
                   getunconfirmedbalance
-
                   getwalletinfo
-
                   importaddress "address" ( "label" rescan )
-
-                  importprivkey "fluxprivkey" ( "label" rescan )
-
+                  importprivkey "zelcashprivkey" ( "label" rescan )
                   importwallet "filename"
-
                   keypoolrefill ( newsize )
-
                   listaccounts ( minconf includeWatchonly)
-
                   listaddressgroupings
-
                   listlockunspent
-
                   listreceivedbyaccount ( minconf includeempty includeWatchonly)
-
                   listreceivedbyaddress ( minconf includeempty includeWatchonly)
-
-                  listsinceblock ( "blockhash" target-confirmations
-                  includeWatchonly)
-
+                  listsinceblock ( "blockhash" target-confirmations includeWatchonly)
                   listtransactions ( "account" count from includeWatchonly)
-
                   listunspent ( minconf maxconf  ["address",...] )
-
                   lockunspent unlock [{"txid":"txid","vout":n},...]
-
                   move "fromaccount" "toaccount" amount ( minconf "comment" )
-
                   rescanblockchain (start_height)
-
-                  sendfrom "fromaccount" "tofluxaddress" amount ( minconf
-                  "comment" "comment-to" )
-
-                  sendmany "fromaccount" {"address":amount,...} ( minconf
-                  "comment" ["address",...] )
-
-                  sendtoaddress "fluxaddress" amount ( "comment" "comment-to"
-                  subtractfeefromamount )
-
+                  sendfrom "fromaccount" "tofluxaddress" amount ( minconf "comment" "comment-to" )
+                  sendmany "fromaccount" {"address":amount,...} ( minconf "comment" ["address",...] )
+                  sendtoaddress "fluxaddress" amount ( "comment" "comment-to" subtractfeefromamount )
                   setaccount "fluxaddress" "account"
-
                   settxfee amount
-
                   signmessage "t-addr" "message"
-
                   z_exportkey "zaddr"
-
                   z_exportviewingkey "zaddr"
-
                   z_exportwallet "folder/filename"
-
                   z_getbalance "address" ( minconf )
-
                   z_getmigrationstatus
-
                   z_getnewaddress ( type )
-
-                  z_getoperationresult (["operationid", ... ])
-
-                  z_getoperationstatus (["operationid", ... ])
-
+                  z_getoperationresult (["operationid", ... ]) 
+                  z_getoperationstatus (["operationid", ... ]) 
                   z_gettotalbalance ( minconf includeWatchonly )
-
                   z_importkey "zkey" ( rescan startHeight )
-
                   z_importviewingkey "vkey" ( rescan startHeight )
-
                   z_importwallet "filename"
-
                   z_listaddresses ( includeWatchonly )
-
                   z_listoperationids
-
                   z_listreceivedbyaddress "address" ( minconf )
-
-                  z_listunspent ( minconf maxconf includeWatchonly ["zaddr",...]
-                  )
-
-                  z_mergetoaddress ["fromaddress", ... ] "toaddress" ( fee ) (
-                  transparent_limit ) ( shielded_limit ) ( memo )
-
-                  z_sendmany "fromaddress" [{"address":... ,"amount":...},...] (
-                  minconf ) ( fee )
-
+                  z_listunspent ( minconf maxconf includeWatchonly ["zaddr",...] )
+                  z_mergetoaddress ["fromaddress", ... ] "toaddress" ( fee ) ( transparent_limit ) ( shielded_limit ) ( memo )
+                  z_sendmany "fromaddress" [{"address":... ,"amount":...},...] ( minconf ) ( fee )
                   z_setmigration enabled
-
                   z_shieldcoinbase "fromaddress" "tozaddress" ( fee ) ( limit )
-
                   zcbenchmark benchmarktype samplecount
-
                   zcrawjoinsplit rawtx inputs outputs vpub_old vpub_new
-
                   zcrawkeygen
-
                   zcrawreceive zcsecretkey encryptednote
-
                   zcsamplejoinsplit
-
-
-                  == Fluxnode ==
-
-                  createfluxnodebroadcast "command" ( "alias")
-
-                  createfluxnodekey
-
-                  decodefluxnodebroadcast "hexstring"
-
-                  getfluxnodecount
-
-                  getfluxnodeoutputs
-
-                  getfluxnodescores ( blocks )
-
-                  getfluxnodestatus
-
-                  getfluxnodewinners ( blocks "filter" )
-
-                  listfluxnodeconf ( "filter" )
-
-                  listfluxnodes ( "filter" )
-
-                  relayfluxnodebroadcast "hexstring"
-
-                  spork "name" ( value )
-
-                  startdeterministicfluxnode alias_name lockwallet
-
-                  startfluxnode "all|alias" lockwallet ( "alias" )
-
-                  viewdeterministicfluxnodelist ( "filter" )
-
-                  fluxnodecurrentwinner
-
-                  fluxnodedebug
-
-                  znsync "status|reset"
   /daemon/getinfo:
     get:
       tags:

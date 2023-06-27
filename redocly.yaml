@@ -4,5 +4,6 @@ splitSpec: false
 codeSamples: true
 swaggerUI: true
 travis: true
+breaks: true
 repo: runonflux/fluxdocs
-oasVersion: 3.0.0
+oasVersion: 3.0.3
