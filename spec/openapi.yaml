@@ -3220,17 +3220,17 @@ paths:
               example:
                 status: success
                 data:
-                  version: 4000150
-                  protocolversion: 170016
+                  version: 6010050
+                  protocolversion: 170018
                   walletversion: 60000
                   balance: 0
-                  blocks: 585849
+                  blocks: 1414803
                   timeoffset: 0
                   connections: 33
                   proxy: ''
-                  difficulty: 2885.838697886431
+                  difficulty: 32885.838697886431
                   testnet: false
-                  keypoololdest: 1585688609
+                  keypoololdest: 1646279801
                   keypoolsize: 101
                   paytxfee: 0
                   relayfee: 0.000001
@@ -3276,6 +3276,7 @@ paths:
                     0485c289e6df683ac2af0ce514260a20cc5a631336fee6bbcb897694134c5a5ad2a5d918f99d70a60c0cb30c705a8c5440f1cbca08e6d3f037320f40751c50555c
                   activesince: 1586334448
                   lastpaid: 1588014482
+                  amount: 12500.00
   /daemon/listfluxnodes:
     get:
       tags:
@@ -3304,6 +3305,9 @@ paths:
                         ip:
                           type: string
                           description: Ip address of Flux server
+                        network:
+                          type: string
+                          description: Network type
                         added_height:
                           type: integer
                           description: Block height Flux node was added to list
@@ -3323,11 +3327,14 @@ paths:
                           type: string
                           description: Address where rewards are paid
                         activesince:
-                          type: integer
+                          type: string
                           description: Active time of Flux node in epoch
                         lastpaid:
-                          type: integer
+                          type: string
                           description: Last paid time in epoch
+                        amount:
+                          type: string
+                          description: Locked collateral amount
                         rank:
                           type: integer
                           description: Rank of Flux node
@@ -3338,56 +3345,68 @@ paths:
                       COutPoint(826d37f13065e87f77ce1667e035b30933f78462274062aa7e76f249b6ab59db,
                       0)
                     ip: 95.216.236.190
+                    network: ipv4
                     added_height: 562050
                     confirmed_height: 562053
                     last_confirmed_height: 588205
                     last_paid_height: 587939
                     tier: CUMULUS
                     payment_address: t1KrT6iKh384mQHwfAPcEFm3U7yFKwhmHbo
-                    activesince: 1585083381
-                    lastpaid: 1588210538
+                    pubkey: 0439e8b34e799e620b13bca67c6c32682e43f97e67dd777256f50255e36a98bfcf8c2ce4298b0504d3ac6b20bfd2807d425b71f78992e555eacd57fbd8d2aed637
+                    activesince: "1585083381"
+                    lastpaid: "1588210538"
+                    amount: "1000.00"
                     rank: 0
                   - collateral: >-
                       COutPoint(3798162c2b60906a9feff0efa38b57444f3749bebe397cba4edd495b929ed9b5,
                       0)
                     ip: 77.55.194.135
+                    network: ipv4
                     added_height: 587653
                     confirmed_height: 587669
                     last_confirmed_height: 588184
                     last_paid_height: 587940
                     tier: CUMULUS
                     payment_address: t1QEA6PepP2wS3Lg6gZDiFzRB6PfxWLYeK5
-                    activesince: 1588175897
-                    lastpaid: 1588210563
+                    pubkey: 042ebcb3a94fe66b9ded6e456871346d6984502bbadf14ed07644e0eb91f8cc0b1f07632c428e1e6793f372d9c303d680de80ae0499d51095676cabf68599e9591
+                    activesince: "1588175897"
+                    lastpaid: "1588210563"
+                    amount: "1000.00"
                     rank: 1
                   - collateral: >-
                       COutPoint(a375169d97fcafac46f673045dfa0a78dd78e6bc6db181df18bf39dbe03926a4,
                       0)
                     ip: 96.52.90.87
+                    network: ipv4
                     added_height: 572579
                     confirmed_height: 572581
                     last_confirmed_height: 588198
                     last_paid_height: 587986
                     tier: NIMMBUS
                     payment_address: t1a4J5u9rjrgVZLwRPSy7VPNoVVkeErNErk
-                    activesince: 1586358287
-                    lastpaid: 1588216950
+                    pubkey: 04a8cf2dd605884e793068e91a6444c573d5f6253643cfb1a2575c94487434cfdba20f115bceb5a96d87ad85aa7099076ba4435d97a9cc8cde6330c649dec1fe4e
+                    activesince: "1586358287"
+                    lastpaid: "1588216950"
+                    amount: "12500.00"
                     rank: 0
                   - collateral: >-
                       COutPoint(381d29a87b96e82253b3f9581618777469f854ae740b6a785c61867aa6f71e60,
                       0)
                     ip: 207.180.253.144
+                    network: ipv4
                     added_height: 585797
                     confirmed_height: 585799
                     last_confirmed_height: 588206
                     last_paid_height: 587988
                     tier: NIMMBUS
                     payment_address: t1ZvKaPfgXJsY1DkYJ5gKwtjKFUkZcuQB2U
-                    activesince: 1587952571
-                    lastpaid: 1588217098
+                    pubkey: 044a4faa023fccadfd4b59b888c7690e77f1f2dd613e6cab0b26a25ec152cf2adc16274aa970559d816cdca6730012b5f5a7067dac0fa918d69a44162ab4d4cacf
+                    activesince: "1587952571"
+                    lastpaid: "1588217098"
+                    amount: "12500.00"
                     rank: 1
                   - collateral: >-
-                      COutPoint(1a2c265b7d1d93941c4d551e61c90cc14482579835a4924e1e169339317bbef9,
+                      COutPoint(1a2c265b7d1d93941c4d551e61c90cc14482579835a4924e1e169339317bbef9,\
                       0)
                     ip: 47.22.47.186
                     added_height: 582736
@@ -3396,8 +3415,10 @@ paths:
                     last_paid_height: 588034
                     tier: STRATUS
                     payment_address: t1bNJrZ9JwWwvroT7YUJUSDfMQ2r21vZppe
-                    activesince: 1587582537
-                    lastpaid: 1588222759
+                    pubkey: 041d289318b6e1cc32045d57f896f3c8c3fbbc336be077f3f492d42ab1c391326d843b8ee609feb859bb88d6524b8c25fe6eed958ef4b59f408e759f0458046a1d
+                    activesince: "1587582537"
+                    lastpaid: "1588222759"
+                    amount: "40000.00"
                     rank: 0
   /daemon/viewdeterministicfluxnodelist:
     get:
@@ -3469,11 +3490,14 @@ paths:
                           type: string
                           description: Fluxnode public key used for message broadcasting
                         activesince:
-                          type: integer
+                          type: string
                           description: Active time of FluxNode in epoch
                         lastpaid:
-                          type: integer
+                          type: string
                           description: Last paid time in epoch
+                        amount:
+                          type: string
+                          description: Amount of collateral
                         rank:
                           type: integer
                           description: Rank of FluxNode
@@ -3496,8 +3520,9 @@ paths:
                     payment_address: t1ZhnnTVUfgwKbmtFvmYtSb1xwPpSdJmzaY
                     pubkey: >-
                       043249d5fc0517976c8eeaaf96ce306c00687cea677be0181cdddaf8f8e044119f13258083fb0a8e98afdf57994331cd1e71958ce63b7b2d0a2dda0e095bd2a2de
-                    activesince: 1585083381
-                    lastpaid: 1588210538
+                    activesince: "1585083381"
+                    lastpaid: "1588210538"
+                    amount: "1000.00"
                     rank: 0
                   - collateral: >-
                       COutPoint(62e0f589a36b9d009f060bcb062a9baf0a44ed3cb5fb4ba68fb5e8d1c6a76ed3,
@@ -3515,8 +3540,9 @@ paths:
                     payment_address: t1WWAUFtKyytFzuXpn3Rzc6fGFndzD6xWLK
                     pubkey: >-
                       0450331d67221677cdca27c7cce40c52d3f3aae1c71a3dbf0c7322a7739bb42855246a9ab3a0b4280f20a6ebb3bf4dcc2a2290b74e533560d9c64014d8937bd1bb
-                    activesince: 1588175897
-                    lastpaid: 1588210563
+                    activesince: "1588175897"
+                    lastpaid: "1588210563"
+                    amount: "1000.00"
                     rank: 1
                   - collateral: >-
                       COutPoint(b81456f6cb28cab6bb7c715a26cb40dbe841e9d14bf47aadbf7a50fb8a32f7f4,
@@ -3534,8 +3560,9 @@ paths:
                     payment_address: t1Wz3D8rTRB3xZi8WE8efgMzRwHhpg8dAWF
                     pubkey: >-
                       04e993a952569ecd6eb26eac7abdb699ca8e3f1debeaf544ef85b3c5838b74d7b30e196e917cb6e2008b2dcb9e42cafc4c93ccafb2888faea26b2e3a1a343f469a
-                    activesince: 1586358287
-                    lastpaid: 1588216950
+                    activesince: "1586358287"
+                    lastpaid: "1588216950"
+                    amount: "12500.00"
                     rank: 0
                   - collateral: >-
                       COutPoint(db8d6440f834f773561025c7327620bb1770df185ec506323f084c436eb9fca7,
@@ -3553,8 +3580,9 @@ paths:
                     payment_address: t1bXEnPZ22LRtd8WCmmKZAF2gxqaAxWysTb
                     pubkey: >-
                       04bfdff6a29281e057f10c2162db0ba98f70133fc45ccfa3cd8440a1ddc0ae30172b81f73b098cfdfe5f413a361dc422a03a31066413850ba418f3f8a2df65a4e1
-                    activesince: 1587952571
-                    lastpaid: 1588217098
+                    activesince: "1587952571"
+                    lastpaid: "1588217098"
+                    amount: "12500.00"
                     rank: 1
                   - collateral: >-
                       COutPoint(8dcdf431d67c54872dcbbbfe205df8d95bdf8d0c277f617ded10ff74d9242878,
@@ -3572,8 +3600,9 @@ paths:
                     payment_address: t1ZPnohxvacmT8VaJqRyZyMkvzERddQMttk
                     pubkey: >-
                       0418588b950297e955f7cc211c4d32f4f976433e8f1d4e2f2f0c4a1efd0e7a3b5167f27a0ad92ceedfa5b40862d929934a5d453f1268ee36b6ec22a7e921883454
-                    activesince: 1587582537
-                    lastpaid: 1588222759
+                    activesince: "1587582537"
+                    lastpaid: "1588222759"
+                    amount: "40000.00"
                     rank: 0
   /daemon/getfluxnodecount:
     get:
@@ -3670,6 +3699,9 @@ paths:
                           description: >-
                             The amount of blocks before the fluxnode is eligible
                             to be started again
+                        amount:
+                          type: string
+                          description: The amount of collateral associated with the fluxnode
               example:
                 status: success
                 data:
@@ -3679,6 +3711,7 @@ paths:
                     added_height: 644302
                     payment_address: t1LJAkTUAHcJZ535mqJmFwHtMTrEaQBSNf1
                     eligible_in: 35
+                    amount: "1000.00"
   /daemon/getstartlist:
     get:
       tags:
@@ -3718,6 +3751,9 @@ paths:
                             The amount of blocks before the start transaction
                             expires, unless a confirmation transaction is added
                             to a block
+                        amount:
+                          type: string
+                          description: The amount of collateral associated with the fluxnode
               example:
                 status: success
                 data:
@@ -3726,57 +3762,9 @@ paths:
                       0)
                     added_height: 684078
                     payment_address: t1TosdpcFNWAaJ8kNmc1LNWbVKh6ob4Tvri
-                    expires_in: 9
-  /daemon/spork:
-    get:
-      tags:
-        - Daemon
-      summary: Spork info
-      description: Return spork values or their active state. **Public**
-      operationId: spork
-      parameters:
-        - in: query
-          name: name
-          schema:
-            type: string
-          description: >-
-            Use "show" to get values or "active" to show active state. When set
-            up as a spork signer, the name of the spork can be used to update
-            it's value.
-          example: SPORK_1_fluxnode_PAYMENT_ENFORCEMENT
-        - in: query
-          name: value
-          schema:
-            type: integer
-          description: >-
-            The value for the spork specified. Only use this if you have name
-            query value set to a spork name.
-          example: 4070908800
-      responses:
-        '200':
-          description: OK
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  status:
-                    $ref: '#/components/schemas/status'
-                  data:
-                    type: object
-                    properties:
-                      SPORK_1_fluxnode_PAYMENT_ENFORCEMENT:
-                        type: integer
-                        description: Name of spork and value
-                      SPORK_2_fluxnode_UPGRADE_VOTE_ENFORCEMENT:
-                        type: integer
-                        description: Name of spork and value
-              example:
-                status: success
-                data:
-                  SPORK_1_fluxnode_PAYMENT_ENFORCEMENT: 4070908800
-                  SPORK_2_fluxnode_UPGRADE_VOTE_ENFORCEMENT: 4070908800
-  /daemon/fluxcurrentwinner:
+                    eligible_in: 9
+                    amount: "1000.00"
+  /daemon/fluxnodecurrentwinner:
     get:
       tags:
         - Daemon
@@ -4317,10 +4305,10 @@ paths:
                         window: 4000
                   upgrades:
                     76b809bb:
-                      name: Kamata
-                      activationheight: 558000
+                      name: Halving
+                      activationheight: 1076532
                       status: active
-                      info: 'Flux Kamata Upgrade, Deterministic FluxNodes and Flux'
+                      info: 'Flux Halving'
                   consensus:
                     chaintip: 76b809bb
                     nextblock: 76b809bb
@@ -4346,7 +4334,7 @@ paths:
                     description: Block count
               example:
                 status: success
-                data: 590823
+                data: 1410823
   /daemon/getblockhash:
     get:
       tags:
@@ -15761,15 +15749,18 @@ components:
           type: string
           description: FluxNode public key used for message broadcasting
         activesince:
-          type: integer
+          type: string
           description: >-
             The time in seconds since epoch (Jan 1 1970 GMT) FluxNode has been
             active
         lastpaid:
-          type: integer
+          type: string
           description: >-
             The time in seconds since epoch (Jan 1 1970 GMT) FluxNode was last
             paid
+        amount:
+          type: string
+          description: Locked collateral amount
     zoperationstatus:
       type: array
       items:
