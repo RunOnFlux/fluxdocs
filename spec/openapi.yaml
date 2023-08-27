@@ -1,6 +1,6 @@
 openapi: 3.0.3
 info:
-  version: 4.8.1
+  version: 4.9.1
   title: Flux
   contact:
     email: tadeas@runonflux.io
