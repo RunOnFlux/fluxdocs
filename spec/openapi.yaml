@@ -1766,7 +1766,7 @@ paths:
                             enum:
                               - true
                               - false
-                            description: If ``treu`` node have a static IP address
+                            description: If ``true`` node have a static IP address
                           zelid:
                             type: string
                             description: Admin's ZelID
