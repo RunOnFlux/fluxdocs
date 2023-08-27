@@ -17440,7 +17440,7 @@ paths:
           schema:
             type: string
           description: Appname
-          example: CryptPadOnFlux
+          example: mexcdnxbot
       responses:
         '200':
           description: OK
