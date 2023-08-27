@@ -1,6 +1,6 @@
 openapi: 3.0.3
 info:
-  version: 4.8.1
+  version: 0.4.1
   title: Flux
   contact:
     email: tadeas@runonflux.io
@@ -16060,7 +16060,7 @@ paths:
                           description: True if item is file
                         isSymbolicLink:
                           type: boolean
-                          description: Treu if item is symbolic link
+                          description: True if item is symbolic link
                         createdAt:
                           type: string
                           description: Create date of item
@@ -17061,6 +17061,14 @@ paths:
       summary: Temporary registration info
       description: Temporary registration info that will expire after 1 hour. **Public**
       operationId: getAppsTemporaryMessages
+      parameters:
+        - in: query
+          name: hash
+          required: false
+          schema:
+            type: string
+          description: Aplication hash
+          example: e9293e7eebc51586e7b90557f924b70a766ab970c91a6c923520577021424cb9
       responses:
         '200':
           description: OK
@@ -17152,6 +17160,28 @@ paths:
         Registration info of apps that have been stored to the database.
         **Public**
       operationId: getAppsPermanentMessages
+      parameters:
+        - in: query
+          name: hash
+          required: false
+          schema:
+            type: string
+          description: Application hash
+          example: e9293e7eebc51586e7b90557f924b70a766ab970c91a6c923520577021424cb9
+        - in: query
+          name: owner
+          required: false
+          schema:
+            type: string
+          description: Application ZelID
+          example: 15Mt8ctAFTVVzsx9UynnqxgM5JJuiwMPhs
+        - in: query
+          name: appname
+          required: false
+          schema:
+            type: string
+          description: Application name
+          example: FoldingAtFluxCloud1693167320638
       responses:
         '200':
           description: OK
@@ -20491,7 +20521,7 @@ components:
           description: Speedtest version
         thunder:
           type: boolean
-          description: Treu if fractus mode enabled    
+          description: True if fractus mode enabled    
         error:
           type: string
           description: Error message  
