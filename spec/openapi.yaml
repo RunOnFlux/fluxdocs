@@ -1766,7 +1766,7 @@ paths:
                             enum:
                               - true
                               - false
-                            description: If ``true`` node have a static IP address
+                            description: If ``treu`` node have a static IP address
                           zelid:
                             type: string
                             description: Admin's ZelID
@@ -3357,6 +3357,128 @@ paths:
               example:
                 status: success
                 data: /home/username/flux/ZelBack/
+  /flux/mapport:
+    get:
+      tags:
+        - Flux
+      summary: Map a specified port (UPnP)
+      description: This call map a specified port (UPnP). **AdminAndFluxTeam**
+      operationId: fluxMapport
+      parameters:
+        - in: query
+          name: port
+          required: true
+          schema:
+            type: integer
+          description: Port number to open
+          example: 666
+      security:
+        - ZelID: []
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    $ref: '#/components/schemas/status'
+                  data:
+                    type: object
+                    properties:
+                      message:
+                        type: string
+                        description: Explanation of status
+              example:
+                status: success
+                data:
+                  message: Port mapped
+  /flux/unmapport:
+    get:
+      tags:
+        - Flux
+      summary: Unmap a specified port (UPnP)
+      description: This call unmap a specified port (UPnP). **AdminAndFluxTeam**
+      operationId: fluxUnmapport
+      parameters:
+        - in: query
+          name: port
+          required: true
+          schema:
+            type: integer
+          description: Port number
+          example: 666
+      security:
+        - ZelID: []
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    $ref: '#/components/schemas/status'
+                  data:
+                    type: object
+                    properties:
+                      message:
+                        type: string
+                        description: Explanation of status
+              example:
+                status: success
+                data:
+                  message: Port unmapped
+  /flux/getip:
+    get:
+      tags:
+        - Flux
+      summary:  Show public IP address (UPnP)
+      description: This call show public IP address (UPnP). **AdminAndFluxTeam**
+      operationId: fluxGetip
+      security:
+        - ZelID: []
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    $ref: '#/components/schemas/status'
+                  data:
+                    type: string
+              example:
+                status: success
+                data: 84.28.5.7
+  /flux/getgateway:
+    get:
+      tags:
+        - Flux
+      summary:  Show gateway address (UPnP)
+      description: This call show a message with gateway address (UPnP). **AdminAndFluxTeam**
+      operationId: fluxGetGateway
+      security:
+        - ZelID: []
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    $ref: '#/components/schemas/status'
+                  data:
+                    type: string
+              example:
+                status: success
+                data: 89.58.3.255
   #Daemon
   /daemon/help:
     get:
@@ -16060,7 +16182,7 @@ paths:
                           description: True if item is file
                         isSymbolicLink:
                           type: boolean
-                          description: True if item is symbolic link
+                          description: Treu if item is symbolic link
                         createdAt:
                           type: string
                           description: Create date of item
@@ -20521,7 +20643,7 @@ components:
           description: Speedtest version
         thunder:
           type: boolean
-          description: True if fractus mode enabled    
+          description: Treu if fractus mode enabled    
         error:
           type: string
           description: Error message  
