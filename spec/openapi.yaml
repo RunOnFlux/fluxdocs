@@ -1766,7 +1766,7 @@ paths:
                             enum:
                               - true
                               - false
-                            description: If ``treu`` node have a static IP address
+                            description: If ``true`` node have a static IP address
                           zelid:
                             type: string
                             description: Admin's ZelID
@@ -16182,7 +16182,7 @@ paths:
                           description: True if item is file
                         isSymbolicLink:
                           type: boolean
-                          description: Treu if item is symbolic link
+                          description: True if item is symbolic link
                         createdAt:
                           type: string
                           description: Create date of item
@@ -20643,7 +20643,7 @@ components:
           description: Speedtest version
         thunder:
           type: boolean
-          description: Treu if fractus mode enabled    
+          description: True if fractus mode enabled    
         error:
           type: string
           description: Error message  
