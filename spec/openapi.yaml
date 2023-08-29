@@ -2234,6 +2234,9 @@ paths:
                     $ref: '#/components/schemas/status'
                   data:
                     type: boolean
+                    enum:
+                      - true
+                      - false
                     description: static ip ISP/Org or not
               example:
                 status: success
@@ -3370,7 +3373,7 @@ paths:
           required: true
           schema:
             type: integer
-          description: Port number to open
+          description: Port number
           example: 666
       security:
         - ZelID: []
@@ -3431,6 +3434,109 @@ paths:
                 status: success
                 data:
                   message: Port unmapped
+  /flux/getmap:
+    get:
+      tags:
+        - Flux
+      summary:  Show list with mappings (UPnP)
+      description: This call show message with mappings (UPnP). **AdminAndFluxTeam**
+      operationId: fluxGetMap
+      security:
+        - ZelID: []
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    $ref: '#/components/schemas/status'
+                  data:
+                    type: array
+                    items:
+                      type: object
+              example:
+                status: success
+                data:
+                  - public:
+                      host: ''
+                      port: 31111
+                    private:
+                      host: 192.168.1.105
+                      port: 31111
+                    protocol: tcp
+                    enabled: false
+                    description: Flux_App_StreamrNode1681108241435
+                    ttl: 0
+                    local: false
+                  - public:
+                      host: ''
+                      port: 31112
+                    private:
+                      host: 192.168.1.105
+                      port: 31112
+                    protocol: tcp
+                    enabled: false
+                    description: Flux_App_StreamrNode1681108241435
+                    ttl: 0
+                    local: false
+                  - public:
+                      host: ''
+                      port: 31113
+                    private:
+                      host: 192.168.1.105
+                      port: 31113
+                    protocol: tcp
+                    enabled: false
+                    description: Flux_App_StreamrNode1681108241435
+                    ttl: 0
+                    local: false
+                  - public:
+                      host: ''
+                      port: 16137
+                    private:
+                      host: 192.168.1.102
+                      port: 16137
+                    protocol: tcp
+                    enabled: false
+                    description: Flux_Backend_API
+                    ttl: 0
+                    local: false
+                  - public:
+                      host: ''
+                      port: 16136
+                    private:
+                      host: 192.168.1.102
+                      port: 16136
+                    protocol: tcp
+                    enabled: false
+                    description: Flux_Home_UI
+                    ttl: 0
+                    local: false
+                  - public:
+                      host: ''
+                      port: 16177
+                    private:
+                      host: 192.168.1.106
+                      port: 16177
+                    protocol: tcp
+                    enabled: false
+                    description: Flux_Backend_API
+                    ttl: 0
+                    local: true
+                  - public:
+                      host: ''
+                      port: 16176
+                    private:
+                      host: 192.168.1.106
+                      port: 16176
+                    protocol: tcp
+                    enabled: false
+                    description: Flux_Home_UI
+                    ttl: 0
+                    local: true
   /flux/getip:
     get:
       tags:
@@ -3478,7 +3584,14 @@ paths:
                     type: string
               example:
                 status: success
-                data: 89.58.3.255
+                data:
+                  gateway:
+                    description: http://192.168.1.1:2189/rootDesc.xml
+                    services:
+                      - urn:schemas-upnp-org:service:WANIPConnection:1
+                      - urn:schemas-upnp-org:service:WANIPConnection:2
+                      - urn:schemas-upnp-org:service:WANPPPConnection:1
+                  address: 192.168.1.106
   #Daemon
   /daemon/help:
     get:
@@ -12681,7 +12794,6 @@ paths:
                     $ref: '#/components/schemas/status'
                   data:
                     type: string
-                    description: The signature of the message encoded in base 64.
               example:
                 status: success
                 data: >-
