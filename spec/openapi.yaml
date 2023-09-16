@@ -1,6 +1,6 @@
 openapi: 3.0.3
 info:
-  version: 4.8.0
+  version: 4.9.1
   title: Flux
   contact:
     email: tadeas@runonflux.io
@@ -93,6 +93,7 @@ tags:
 servers:
   - url: 'https://api.runonflux.io'
 paths:
+  #ID
   /id/loginphrase:
     get:
       tags:
@@ -587,6 +588,7 @@ paths:
                 status: success
                 data:
                   message: admin
+  #Flux
   /flux/startdaemon:
     get:
       tags:
@@ -1759,9 +1761,21 @@ paths:
                           ip:
                             type: string
                             description: Server's IP address
+                          staticIp:
+                            type: boolean
+                            enum:
+                              - true
+                              - false
+                            description: If ``true`` node have a static IP address
                           zelid:
                             type: string
                             description: Admin's ZelID
+                          pgp:
+                            type: string
+                            description: PGP identity
+                          cruxid:
+                            type: string
+                            description: Cruxid address
                           timezone:
                             type: string
                             description: Server's timezone
@@ -1776,6 +1790,33 @@ paths:
                               dosMessage:
                                 type: string
                                 description: Status message or Null if no message
+                          appsDos:
+                            type: object
+                            properties:
+                              dosState:
+                                type: number
+                                description: >-
+                                  Number indicating value of DOS state from 0 to
+                                  infinity
+                              dosMessage:
+                                type: string
+                                description: Status message or Null if no message
+                          development:
+                            type: boolean
+                            enum:
+                              - true
+                              - false
+                            description: If ```true``` development branch is active 
+                          explorerScannedHeigth: 
+                            type: object
+                            properties:
+                              generalScannedHeight:
+                                type: integer
+                                description: Explorer block height
+                          numberOfConnectionsOut:
+                            type: integer
+                          numberOfConnectionsIn:
+                            type: integer
                       apps:
                         type: object
                         properties:
@@ -1786,22 +1827,27 @@ paths:
                             $ref: '#/components/schemas/containerinfo'
                           resources:
                             $ref: '#/components/schemas/appsresources'
+                      geolocation:
+                        $ref: '#/components/schemas/geolocation'
+                      appsHashesTotal:
+                        type: integer
+                      hashesPresent:
+                        type: integer
               example:
                 status: success
                 data:
                   daemon:
                     info:
-                      version: 4000150
-                      protocolversion: 170016
+                      version: 6020050
+                      protocolversion: 170018
                       walletversion: 60000
-                      balance: 0
-                      blocks: 590441
+                      blocks: 1455414
                       timeoffset: 0
-                      connections: 27
+                      connections: 100
                       proxy: ''
-                      difficulty: 2629.292064176152
+                      difficulty: 27259.8892076468
                       testnet: false
-                      keypoololdest: 1588335749
+                      keypoololdest: 1674853325
                       keypoolsize: 101
                       paytxfee: 0
                       relayfee: 0.000001
@@ -1809,105 +1855,291 @@ paths:
                   node:
                     status:
                       status: CONFIRMED
-                      collateral: >-
-                        COutPoint(d51c017cb61557137dc31e1fd630df34072555c8c659cd45af42cf33b5e2227e,
-                        0)
-                      txhash: >-
-                        d51c017cb61557137dc31e1fd630df34072555c8c659cd45af42cf33b5e2227e
+                      collateral: COutPoint(405e86b48a5d6846763f260154ca15383854ce5a2efad31474e55ff60cb62979, 0)
+                      txhash: 405e86b48a5d6846763f260154ca15383854ce5a2efad31474e55ff60cb62979
                       outidx: '0'
-                      ip: 167.86.81.87
+                      ip: 185.216.177.168
                       network: ipv4
-                      added_height: 587002
-                      confirmed_height: 587005
-                      last_confirmed_height: 590486
-                      last_paid_height: 590359
-                      tier: NIMMBUS
-                      payment_address: t1SiLvqFSjz2VJ5oMzv92yk1EeekSjexc6U
-                      pubkey: >-
-                        049a8a290ecb831f7d23b82c3d9fc9fdd029e5c7b0832044480b96d36b785a8c680c4fcc832c885b6f376495ee884ae1137fc156f7102efbddb9900d45fe1787ff
-                      activesince: '1588098076'
-                      lastpaid: '1588504103'
+                      added_height: 1327207
+                      confirmed_height: 1327209
+                      last_confirmed_height: 1455394
+                      last_paid_height: 1453696
+                      tier: NIMBUS
+                      payment_address: t1b6ZZLYAVG8QaafiZxB4dwX77YLLtMZeRx
+                      pubkey: 047f9deaee93ae795a354d5b0977dcc3949e062bdbacdd78384b550987ab9db4545f96a5b59bfb2418cba08a181a9eb501bf70d49ef0fc2aa17bcbaf7ada334c8b
+                      activesince: '1677520595'
+                      lastpaid: '1692825635'
+                      amount: '12500.00'
                   benchmark:
                     info:
-                      version: 1.3.1
+                      version: 3.9.0
                       rpcport: 16224
                     status:
                       status: online
-                      benchmarking: NIMMBUS
+                      benchmarking: NIMBUS
                       flux: connected
                     bench:
-                      ipaddress: 167.86.81.87
-                      status: NIMMBUS
-                      time: 1588523682
-                      cores: 4
-                      ram: 7.800000190734863
-                      ssd: 0
-                      hdd: 200.0308074951172
-                      ddwrite: 308.4692077636719
-                      eps: 220.1355895996094
+                      ipaddress: 185.216.177.168
+                      architecture: amd64
+                      armboard: ''
+                      status: NIMBUS
+                      time: 1693033429
+                      real_cores: 10
+                      cores: 10
+                      ram: 31
+                      ssd: 1024
+                      hdd: 0
+                      ddwrite: 1114.33
+                      totalstorage: 1024
+                      disksinfo:
+                        - disk: vda
+                          size: 1024
+                          writespeed: 1114.33
+                      eps: 1036
+                      ping: 7.226
+                      download_speed: 809.3055686875
+                      upload_speed: 310.0325255625
+                      bench_version: 1.0.20
+                      speed_version: 1.2.0
+                      thunder: false
+                      error: ''
                   flux:
-                    version: 0.58.2
-                    ip: 167.86.81.87
-                    zelid: 1K6nyw2VjV6jEN1f1CkbKn9htWnYkQabbR
+                    version: 4.9.1
+                    ip: 185.216.177.168
+                    staticIp: true
+                    zelid: 1HWjQ9S3MyzV6EbtDMEkpHm31parya412N
+                    pgp: |
+                      -----BEGIN PGP PUBLIC KEY BLOCK-----
+                
+                      xjMEZIgjpBYJKwYBBAHaRw8BAQdAerrwWyO64yjV8judx51MuoRVum3FDAx0
+                      WDtYoWqatwHNdDQwNWU4NmI0OGE1ZDY4NDY3NjNmMjYwMTU0Y2ExNTM4Mzg1
+                      NGNlNWEyZWZhZDMxNDc0ZTU1ZmY2MGNiNjI5Nzk6MCA8MUhXalE5UzNNeXpW
+                      NkVidERNRWtwSG0zMXBhcnlhNDEyTkBydW5vbmZsdXguaW8+wowEEBYKAD4F
+                      gmSII6QECwkHCAmQxAt379vcLEADFQgKBBYAAgECGQECmwMCHgEWIQTJIjfd
+                      RpTSWLEgehHEC3fv29wsQAAAIQoBAOWaX6+vALJA5DTZp3v/snNK4RUxGP4j
+                      0yPKXuMQtUJ7AP43Bjv22il8nWL7DAZZpPQu6EJI8vNSkfiw9rZDlYZAA844
+                      BGSII6QSCisGAQQBl1UBBQEBB0Dokszyg3BVx5lJpzDdsvazPLiwi+11Zz8b
+                      bpOisj8PSwMBCAfCeAQYFggAKgWCZIgjpAmQxAt379vcLEACmwwWIQTJIjfd
+                      RpTSWLEgehHEC3fv29wsQAAADuYA/2FMZLcEmH62FaUKeXsbxDtwH45o3zkr
+                      uuxpBKrbx06gAP4hhjAl+ldIxPVUlCTyd63V6T1/CZXmxjDcv9EXoTUiCQ==
+                      =B2xR
+                      -----END PGP PUBLIC KEY BLOCK-----
+                    cruxid: null
                     timezone: Europe/Berlin
                     dos:
                       dosState: 0
                       dosMessage: null
+                    appsDos:
+                      dosState: 0
+                      dosMessage: null
+                    development: false
+                    explorerScannedHeigth:
+                      generalScannedHeight: 1455414
+                    numberOfConnectionsOut: 19
+                    numberOfConnectionsIn: 33
                   apps:
-                    fluxusage: '2.84624023'
+                    fluxusage: '5.24500000'
                     runningapps:
-                      - Id: >-
-                          3502b57e324ce8a278700e5bb700c60a5d3256f45d22a07d53c970b41fceec6e
+                      - Id: 4d4f8b41bc06be437a289411fc368b533cb3037262db6c1b7da834b9ff64c990
                         Names:
-                          - /fluxFoldingAtHome
-                        Image: 'yurinnick/folding-at-home:latest'
-                        ImageID: >-
-                          sha256:ec31bf7fa749ec82c38191a83a325fa12689bfd3f4c05a0527e603c9aa9475f2
-                        Command: >-
-                          /opt/fahclient/entrypoint.sh --allow 0/0 --web-allow
-                          0/0
-                        Created: 1587401033
+                          - /fluxnode_PresearchNode1692351142712
+                        Image: presearch/node:latest
+                        ImageID: sha256:250779dc2ac2c4b8bef16ef46d0d5f4310eb9677e3da622f1a8dbbfc701dae36
+                        Command: /app/presearch-node
+                        Created: 1692377195
                         Ports:
+                          - IP: 0.0.0.0
+                            PrivatePort: 38253
+                            PublicPort: 39000
+                            Type: tcp
+                          - IP: '::'
+                            PrivatePort: 38253
+                            PublicPort: 39000
+                            Type: tcp
+                          - IP: 0.0.0.0
+                            PrivatePort: 38253
+                            PublicPort: 39000
+                            Type: udp
+                          - IP: '::'
+                            PrivatePort: 38253
+                            PublicPort: 39000
+                            Type: udp
+                          - PrivatePort: 39000
+                            Type: tcp
+                          - PrivatePort: 39000
+                            Type: udp
+                        Labels: {}
+                        State: running
+                        Status: Up 7 days
+                      - Id: ec7fbc0d1815dca14cbfc7618ca98bfed786664634919cfadcfe5ad476626fdd
+                        Names:
+                          - /fluxisokoredis_IsokoSSE
+                        Image: isokoxyz/isoko-redis:latest
+                        ImageID: sha256:57827417aa9fbd1d64bbdaece64baa432ba5ec59edce99c774e64f8c83c02c66
+                        Command: docker-entrypoint.sh redis-server --requirepass password
+                        Created: 1692341609
+                        Ports:
+                          - PrivatePort: 39470
+                            Type: udp
+                          - PrivatePort: 6379
+                            Type: tcp
+                          - IP: 0.0.0.0
+                            PrivatePort: 3679
+                            PublicPort: 39470
+                            Type: tcp
+                          - IP: '::'
+                            PrivatePort: 3679
+                            PublicPort: 39470
+                            Type: tcp
+                          - IP: 0.0.0.0
+                            PrivatePort: 3679
+                            PublicPort: 39470
+                            Type: udp
+                          - IP: '::'
+                            PrivatePort: 3679
+                            PublicPort: 39470
+                            Type: udp
+                          - PrivatePort: 39470
+                            Type: tcp
+                        Labels: {}
+                        State: running
+                        Status: Up 8 days
+                      - Id: c8e4a96024e3fef3790585ffcdb48fd81f914f8ace86e27961fe596675b73119
+                        Names:
+                          - /fluxisokosse_IsokoSSE
+                        Image: isokoxyz/isoko-sse:latest
+                        ImageID: sha256:e57a082b29709efc1d25583855276095873fb3b218fe5fb4ba7854bb6f5f900d
+                        Command: docker-entrypoint.sh npm run start
+                        Created: 1692341603
+                        Ports:
+                          - IP: 0.0.0.0
+                            PrivatePort: 5000
+                            PublicPort: 33772
+                            Type: udp
+                          - IP: '::'
+                            PrivatePort: 5000
+                            PublicPort: 33772
+                            Type: udp
+                          - PrivatePort: 33772
+                            Type: tcp
+                          - PrivatePort: 33772
+                            Type: udp
+                          - IP: 0.0.0.0
+                            PrivatePort: 5000
+                            PublicPort: 33772
+                            Type: tcp
+                          - IP: '::'
+                            PrivatePort: 5000
+                            PublicPort: 33772
+                            Type: tcp
+                        Labels: {}
+                        State: running
+                        Status: Up 8 days
+                      - Id: ca7edafff17324889aefbdfd8e9ad936e15f84d677d12716ec38f34fae15e046
+                        Names:
+                          - /fluxFoldingAtHome_FoldingAtRunOnFlux9
+                        Image: yurinnick/folding-at-home:latest
+                        ImageID: sha256:3b22eaf749f01384995a122aa97d4e03f80af32350e75ebe125927bf3f1d7a0e
+                        Command: /init-wrapper.sh
+                        Created: 1692163488
+                        Ports:
+                          - PrivatePort: 36330
+                            Type: tcp
+                          - PrivatePort: 36666
+                            Type: tcp
+                          - PrivatePort: 36666
+                            Type: udp
+                          - IP: 0.0.0.0
+                            PrivatePort: 7396
+                            PublicPort: 36666
+                            Type: tcp
+                          - IP: '::'
+                            PrivatePort: 7396
+                            PublicPort: 36666
+                            Type: tcp
+                          - IP: 0.0.0.0
+                            PrivatePort: 7396
+                            PublicPort: 36666
+                            Type: udp
+                          - IP: '::'
+                            PrivatePort: 7396
+                            PublicPort: 36666
+                            Type: udp
+                        Labels:
+                          description: Unofficial Folding@Home image for CPU compute
+                          maintainer: yurinnick
+                          repository: https://github.com/yurinnick/folding-at-home-docker
+                          version: v7.6.21
+                        State: running
+                        Status: Up 10 days
+                      - Id: 373182fd794517c6f959ad0ce208b1c3258ad5b3f182f07d35955f4c35873585
+                        Names:
+                          - /fluxFoldingAtHome_FoldingAtFluxCloud1691606082588
+                        Image: yurinnick/folding-at-home:latest
+                        ImageID: sha256:3b22eaf749f01384995a122aa97d4e03f80af32350e75ebe125927bf3f1d7a0e
+                        Command: /init-wrapper.sh
+                        Created: 1691875783
+                        Ports:
+                          - PrivatePort: 35555
+                            Type: udp
                           - PrivatePort: 36330
                             Type: tcp
                           - IP: 0.0.0.0
                             PrivatePort: 7396
-                            PublicPort: 30000
+                            PublicPort: 35555
                             Type: tcp
-                        Labels: {}
+                          - IP: '::'
+                            PrivatePort: 7396
+                            PublicPort: 35555
+                            Type: tcp
+                          - IP: 0.0.0.0
+                            PrivatePort: 7396
+                            PublicPort: 35555
+                            Type: udp
+                          - IP: '::'
+                            PrivatePort: 7396
+                            PublicPort: 35555
+                            Type: udp
+                          - PrivatePort: 35555
+                            Type: tcp
+                        Labels:
+                          description: Unofficial Folding@Home image for CPU compute
+                          maintainer: yurinnick
+                          repository: https://github.com/yurinnick/folding-at-home-docker
+                          version: v7.6.21
                         State: running
-                        Status: Up 9 days
-                        HostConfig:
-                          NetworkMode: fluxDockerNetwork
-                        NetworkSettings:
-                          Networks:
-                            fluxDockerNetwork:
-                              IPAMConfig: null
-                              Links: null
-                              Aliases: null
-                              NetworkID: >-
-                                7c9c2fb1680cecdbd121668453894f3ddad4ce254aac2293dd3fbbc48968b2c0
-                              EndpointID: >-
-                                7e598a3022547ad3db5c8fae8ce411ddd031013700904059e1589812bf1596cc
-                              Gateway: 172.16.0.1
-                              IPAddress: 172.16.0.2
-                              IPPrefixLen: 16
-                              IPv6Gateway: ''
-                              GlobalIPv6Address: ''
-                              GlobalIPv6PrefixLen: 0
-                              MacAddress: '02:23:ac:10:00:05'
-                              DriverOpts: null
-                        Mounts:
-                          - Type: bind
-                            Source: /home/user/flux/ZelApps/fluxFoldingAtHome
-                            Destination: /config
-                            Mode: ''
-                            RW: true
-                            Propagation: rprivate
+                        Status: Up 13 days
+                      - Id: e381969e619194b5c037b1063373d52d0e46d883f0cc2000889c064a67b83726
+                        Names:
+                          - /flux_watchtower
+                        Image: containrrr/watchtower
+                        ImageID: sha256:f847e1adb570c2cc11d1e613cad97baf3cdfe83ddd3c1a29ada848cfbd4f7f3f
+                        Command: /watchtower --cleanup --interval 24133
+                        Created: 1676891906
+                        Ports:
+                          - PrivatePort: 8080
+                            Type: tcp
+                        Labels:
+                          com.centurylinklabs.watchtower: 'true'
+                        State: running
+                        Status: Up 6 months
                     resources:
-                      appsCpusLocked: 1
-                      appsRamLocked: 1000
-                      appsHddLocked: 15
+                      appsCpusLocked: 4.3
+                      appsRamLocked: 17700
+                      appsHddLocked: 98
+                  geolocation:
+                    ip: 185.216.177.168
+                    continent: Europe
+                    continentCode: EU
+                    country: Germany
+                    countryCode: DE
+                    region: BW
+                    regionName: Baden-Wurttemberg
+                    lat: 49.0291
+                    lon: 8.35695
+                    org: netcup GmbH
+                  appsHashesTotal: 25312
+                  hashesPresent: 25279
   /flux/timezone:
     get:
       tags:
@@ -2002,6 +2234,9 @@ paths:
                     $ref: '#/components/schemas/status'
                   data:
                     type: boolean
+                    enum:
+                      - true
+                      - false
                     description: static ip ISP/Org or not
               example:
                 status: success
@@ -2024,7 +2259,7 @@ paths:
                   status:
                     $ref: '#/components/schemas/status'
                   data:
-                    type: object
+                    $ref: '#/components/schemas/geolocation'
               example:
                 status: success
                 data:
@@ -2771,7 +3006,6 @@ paths:
                   message: |-
                     Rule added
                     Rule added (v6)
-  # To be confirmed if CruxID is still relevant and if it is to be replaced.
   /flux/adjustcruxid:
     get:
       tags:
@@ -3126,6 +3360,239 @@ paths:
               example:
                 status: success
                 data: /home/username/flux/ZelBack/
+  /flux/mapport:
+    get:
+      tags:
+        - Flux
+      summary: Map a specified port (UPnP)
+      description: This call map a specified port (UPnP). **AdminAndFluxTeam**
+      operationId: fluxMapport
+      parameters:
+        - in: query
+          name: port
+          required: true
+          schema:
+            type: integer
+          description: Port number
+          example: 666
+      security:
+        - ZelID: []
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    $ref: '#/components/schemas/status'
+                  data:
+                    type: object
+                    properties:
+                      message:
+                        type: string
+                        description: Explanation of status
+              example:
+                status: success
+                data:
+                  message: Port mapped
+  /flux/unmapport:
+    get:
+      tags:
+        - Flux
+      summary: Unmap a specified port (UPnP)
+      description: This call unmap a specified port (UPnP). **AdminAndFluxTeam**
+      operationId: fluxUnmapport
+      parameters:
+        - in: query
+          name: port
+          required: true
+          schema:
+            type: integer
+          description: Port number
+          example: 666
+      security:
+        - ZelID: []
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    $ref: '#/components/schemas/status'
+                  data:
+                    type: object
+                    properties:
+                      message:
+                        type: string
+                        description: Explanation of status
+              example:
+                status: success
+                data:
+                  message: Port unmapped
+  /flux/getmap:
+    get:
+      tags:
+        - Flux
+      summary:  Show list with mappings (UPnP)
+      description: This call show message with mappings (UPnP). **AdminAndFluxTeam**
+      operationId: fluxGetMap
+      security:
+        - ZelID: []
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    $ref: '#/components/schemas/status'
+                  data:
+                    type: array
+                    items:
+                      type: object
+              example:
+                status: success
+                data:
+                  - public:
+                      host: ''
+                      port: 31111
+                    private:
+                      host: 192.168.1.105
+                      port: 31111
+                    protocol: tcp
+                    enabled: false
+                    description: Flux_App_StreamrNode1681108241435
+                    ttl: 0
+                    local: false
+                  - public:
+                      host: ''
+                      port: 31112
+                    private:
+                      host: 192.168.1.105
+                      port: 31112
+                    protocol: tcp
+                    enabled: false
+                    description: Flux_App_StreamrNode1681108241435
+                    ttl: 0
+                    local: false
+                  - public:
+                      host: ''
+                      port: 31113
+                    private:
+                      host: 192.168.1.105
+                      port: 31113
+                    protocol: tcp
+                    enabled: false
+                    description: Flux_App_StreamrNode1681108241435
+                    ttl: 0
+                    local: false
+                  - public:
+                      host: ''
+                      port: 16137
+                    private:
+                      host: 192.168.1.102
+                      port: 16137
+                    protocol: tcp
+                    enabled: false
+                    description: Flux_Backend_API
+                    ttl: 0
+                    local: false
+                  - public:
+                      host: ''
+                      port: 16136
+                    private:
+                      host: 192.168.1.102
+                      port: 16136
+                    protocol: tcp
+                    enabled: false
+                    description: Flux_Home_UI
+                    ttl: 0
+                    local: false
+                  - public:
+                      host: ''
+                      port: 16177
+                    private:
+                      host: 192.168.1.106
+                      port: 16177
+                    protocol: tcp
+                    enabled: false
+                    description: Flux_Backend_API
+                    ttl: 0
+                    local: true
+                  - public:
+                      host: ''
+                      port: 16176
+                    private:
+                      host: 192.168.1.106
+                      port: 16176
+                    protocol: tcp
+                    enabled: false
+                    description: Flux_Home_UI
+                    ttl: 0
+                    local: true
+  /flux/getip:
+    get:
+      tags:
+        - Flux
+      summary:  Show public IP address (UPnP)
+      description: This call show public IP address (UPnP). **AdminAndFluxTeam**
+      operationId: fluxGetip
+      security:
+        - ZelID: []
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    $ref: '#/components/schemas/status'
+                  data:
+                    type: string
+              example:
+                status: success
+                data: 84.28.5.7
+  /flux/getgateway:
+    get:
+      tags:
+        - Flux
+      summary:  Show gateway address (UPnP)
+      description: This call show a message with gateway address (UPnP). **AdminAndFluxTeam**
+      operationId: fluxGetGateway
+      security:
+        - ZelID: []
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    $ref: '#/components/schemas/status'
+                  data:
+                    type: string
+              example:
+                status: success
+                data:
+                  gateway:
+                    description: http://192.168.1.1:2189/rootDesc.xml
+                    services:
+                      - urn:schemas-upnp-org:service:WANIPConnection:1
+                      - urn:schemas-upnp-org:service:WANIPConnection:2
+                      - urn:schemas-upnp-org:service:WANPPPConnection:1
+                  address: 192.168.1.106
+  #Daemon
   /daemon/help:
     get:
       tags:
@@ -3341,7 +3808,6 @@ paths:
                     zcrawkeygen
                     zcrawreceive zcsecretkey encryptednote
                     zcsamplejoinsplit
-                  
   /daemon/getinfo:
     get:
       tags:
@@ -8234,15 +8700,30 @@ paths:
               example:
                 status: success
                 data:
-                  ipaddress: 49.12.8.215
-                  status: CUMULUS
-                  time: 1588852143
-                  cores: 2
-                  ram: 3.799999952316284
-                  ssd: 0
-                  hdd: 51.23081207275391
-                  dd_write: 706.22802734375
-                  eps: 163.5512084960938
+                  ipaddress: 185.220.177.169
+                  architecture: amd64
+                  armboard: ''
+                  status: NIMBUS
+                  time: 1692874695
+                  real_cores: 10
+                  cores: 10
+                  ram: 31
+                  ssd: 1024
+                  hdd: 0
+                  ddwrite: 1001.733828125
+                  totalstorage: 1024
+                  disksinfo:
+                    - disk: vda
+                      size: 1024
+                      writespeed: 1001.733828125
+                  eps: 1012.08
+                  ping: 7.226
+                  download_speed: 809.3055686875
+                  upload_speed: 310.0325255625
+                  bench_version: 1.0.20
+                  speed_version: 1.2.0
+                  thunder: false
+                  error: ''
   /daemon/getbenchstatus:
     get:
       tags:
@@ -11952,6 +12433,7 @@ paths:
               example:
                 status: success
                 data: Stopping process
+  #Benchmark
   /benchmark/getstatus:
     get:
       tags:
@@ -12039,28 +12521,30 @@ paths:
               example:
                 status: success
                 data:
-                  ipaddress: 96.30.196.88
-                  armboard: ""
+                  ipaddress: 149.154.176.24
+                  architecture: amd64
+                  armboard: ''
                   status: STRATUS
-                  time: 1588374276
-                  real_cores: 16
+                  time: 1692898160
+                  real_cores: 8
                   cores: 16
                   ram: 62
-                  ssd: 2000
+                  ssd: 880
                   hdd: 0
-                  ddwrite: 613.75
-                  disksinfo: 
+                  ddwrite: 830.878984375
+                  totalstorage: 880
+                  disksinfo:
                     - disk: sda
-                    - size: 2000
-                    - writespeeed: 613.75
-                  eps: 1548.22
-                  ping: 0.428
-                  download_speed: 770.4780079999999
-                  pload_speed: 813.4250479999999
+                      size: 880
+                      writespeed: 830.878984375
+                  eps: 3449.12
+                  ping: 0.733
+                  download_speed: 1370.830928
+                  upload_speed: 4973.01136
                   bench_version: 1.0.20
-                  peed_version: 1.2.0
+                  speed_version: 1.2.0
                   thunder: false
-                  error: ""
+                  error: ''
   /benchmark/getinfo:
     get:
       tags:
@@ -12214,464 +12698,13 @@ paths:
                   tier: CUMULUS
                   hex: >-
                     0500000004566e906c6df24b00ca710cecbbea166a29b9098456bed212207fea66f433ba4500000000ba33bd5e014d3cbd5e010f3131362e3230332e3233372e323530411b27b3e254a9f3248d88039a0f062e0d634e130bd34a9e4a1cb27d7aa6ce975cee251be9af6864a1a4a9e9d5fc2b28a07af8bab36a73f912c59ef844a69fa03f5f411b38e0e02dfece0ba3b7aae0afdcea7c70c9ea28b11317763f12092214086059e74d542cada464f3ee2c655011c53f6f18c0aa484bff8ce36926c6b295eb9287ff
-  /apps/listrunningapps:
-    get:
-      tags:
-        - Apps
-      summary: list running apps
-      description: List and info of running apps. **Public**
-      operationId: listRunningApps
-      responses:
-        '200':
-          description: OK
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  status:
-                    $ref: '#/components/schemas/status'
-                  data:
-                    $ref: '#/components/schemas/containerinfo'
-              example:
-                status: success
-                data:
-                  - Id: >-
-                      9a1369a96d82e74173476d30b12ac70c7261c253433b1303737d0461c5cbedee
-                    Names:
-                      - /fluxFoldingAtHome
-                    Image: 'yurinnick/folding-at-home:latest'
-                    ImageID: >-
-                      sha256:278b92c12d772dcfd77878fbb86714fd31d1c3e651b4f81761cc10b660cdb1d6
-                    Command: /opt/fahclient/entrypoint.sh --allow 0/0 --web-allow 0/0
-                    Created: 1587928808
-                    Ports:
-                      - PrivatePort: 36330
-                        Type: tcp
-                      - IP: 0.0.0.0
-                        PrivatePort: 7396
-                        PublicPort: 30000
-                        Type: tcp
-                    Labels:
-                      description: Unofficial Folding@Home image for CPU compute
-                      maintainer: yurinnick
-                      repository: 'https://github.com/yurinnick/folding-at-home-docker'
-                      version: 7.6
-                    State: running
-                    Status: Up 5 days
-                    HostConfig:
-                      NetworkMode: fluxDockerNetwork
-                    NetworkSettings:
-                      Networks:
-                        fluxDockerNetwork:
-                          IPAMConfig: null
-                          Links: null
-                          Aliases: null
-                          NetworkID: >-
-                            58358cee5a53dc4a089fb2f6341662cfb8aec702c5c16066ed3fd4c7570e330e
-                          EndpointID: >-
-                            f170fc599a65132a82fc6217cddc2ba40ade43263042dae0be8ab8ef4fadbec7
-                          Gateway: 172.16.0.1
-                          IPAddress: 172.16.0.2
-                          IPPrefixLen: 16
-                          IPv6Gateway: ''
-                          GlobalIPv6Address: ''
-                          GlobalIPv6PrefixLen: 0
-                          MacAddress: '02:42:ac:10:00:02'
-                          DriverOpts: null
-                    Mounts:
-                      - Type: bind
-                        Source: /home/user/flux/ZelApps/fluxFoldingAtHome
-                        Destination: /config
-                        Mode: ''
-                        RW: true
-                        Propagation: rprivate
-  /apps/listallapps:
-    get:
-      tags:
-        - Apps
-      summary: list all apps
-      description: List and info of all apps. **Public**
-      operationId: listAllApps
-      responses:
-        '200':
-          description: OK
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  status:
-                    $ref: '#/components/schemas/status'
-                  data:
-                    $ref: '#/components/schemas/containerinfo'
-              example:
-                status: success
-                data:
-                  - Id: >-
-                      9a1369a96d82e74173476d30b12ac70c7261c253433b1303737d0461c5cbedee
-                    Names:
-                      - /fluxFoldingAtHome
-                    Image: 'yurinnick/folding-at-home:latest'
-                    ImageID: >-
-                      sha256:278b92c12d772dcfd77878fbb86714fd31d1c3e651b4f81761cc10b660cdb1d6
-                    Command: /opt/fahclient/entrypoint.sh --allow 0/0 --web-allow 0/0
-                    Created: 1587928808
-                    Ports:
-                      - PrivatePort: 36330
-                        Type: tcp
-                      - IP: 0.0.0.0
-                        PrivatePort: 7396
-                        PublicPort: 30000
-                        Type: tcp
-                    Labels:
-                      description: Unofficial Folding@Home image for CPU compute
-                      maintainer: yurinnick
-                      repository: 'https://github.com/yurinnick/folding-at-home-docker'
-                      version: 7.6
-                    State: running
-                    Status: Up 5 days
-                    HostConfig:
-                      NetworkMode: fluxDockerNetwork
-                    NetworkSettings:
-                      Networks:
-                        fluxDockerNetwork:
-                          IPAMConfig: null
-                          Links: null
-                          Aliases: null
-                          NetworkID: >-
-                            58358cee5a53dc4a089fb2f6341662cfb8aec702c5c16066ed3fd4c7570e330e
-                          EndpointID: >-
-                            f170fc599a65132a82fc6217cddc2ba40ade43263042dae0be8ab8ef4fadbec7
-                          Gateway: 172.16.0.1
-                          IPAddress: 172.16.0.2
-                          IPPrefixLen: 16
-                          IPv6Gateway: ''
-                          GlobalIPv6Address: ''
-                          GlobalIPv6PrefixLen: 0
-                          MacAddress: '02:42:ac:10:00:02'
-                          DriverOpts: null
-                    Mounts:
-                      - Type: bind
-                        Source: /home/user/flux/ZelApps/fluxFoldingAtHome
-                        Destination: /config
-                        Mode: ''
-                        RW: true
-                        Propagation: rprivate
-  /apps/listappsimages:
-    get:
-      tags:
-        - Apps
-      summary: List of images
-      description: List of apps images installed. **Public**
-      operationId: listAppsImages
-      responses:
-        '200':
-          description: OK
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  status:
-                    $ref: '#/components/schemas/status'
-                  data:
-                    type: array
-                    items:
-                      type: object
-                      properties:
-                        Containers:
-                          type: integer
-                          description: Container number
-                        Created:
-                          type: integer
-                          description: Time created in epoch time
-                        Id:
-                          type: string
-                          description: Hash of image
-                        Labels:
-                          type: object
-                          description: User-defined key/value metadata
-                          properties:
-                            description:
-                              type: string
-                              description: Description of image
-                            maintainer:
-                              type: string
-                              description: Name of maintainer
-                            repository:
-                              type: string
-                              description: Url of repository
-                            version:
-                              type: number
-                              description: Version number
-                        ParentId:
-                          type: string
-                          description: Parent Id if available
-                        RepoDigests:
-                          type: array
-                          items:
-                            type: string
-                            description: Content addressable identifier
-                        RepoTags:
-                          type: array
-                          items:
-                            type: string
-                            description: Repo tag name
-                        SharedSize:
-                          type: integer
-                          description: Number of shared size
-                        Size:
-                          type: integer
-                          description: Size in bytes
-                        VirtualSize:
-                          type: integer
-                          description: Size in bytes
-              example:
-                status: success
-                data:
-                  - Containers: -1
-                    Created: 1588224617
-                    Id: >-
-                      sha256:8bd1fb3dd2de02f8d4403c657da6a19efeef9286981537b30d2a107079018402
-                    Labels:
-                      description: Unofficial Folding@Home image for CPU compute
-                      maintainer: yurinnick
-                      repository: 'https://github.com/yurinnick/folding-at-home-docker'
-                      version: 7.6
-                  - ParentId: ''
-                    RepoDigests:
-                      - >-
-                        yurinnick/folding-at-home@sha256:da4a32a257883ce5b796482d0f82ec1d1f191056600eb490e1195a65f6100d6d
-                    RepoTags:
-                      - 'yurinnick/folding-at-home:latest'
-                    SharedSize: -1
-                    Size: 85515870
-                    VirtualSize: 85515870
-  /apps/installedapps:
-    get:
-      tags:
-        - Apps
-      summary: installed apps
-      description: Info of installed apps. **Public**
-      operationId: installedApps
-      responses:
-        '200':
-          description: OK
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  status:
-                    $ref: '#/components/schemas/status'
-                  data:
-                    type: array
-                    items:
-                      type: object
-                      properties:
-                        _id:
-                          type: string
-                          description: App id
-                        repotag:
-                          type: string
-                          description: Repository tag
-                        name:
-                          type: string
-                          description: Name of app
-                        port:
-                          type: integer
-                          description: Port number
-                        cpu:
-                          type: number
-                          description: CPU usage
-                        ram:
-                          type: integer
-                          description: Ram usage
-                        hdd:
-                          type: integer
-                          description: Disk usage
-                        enviromentParameters:
-                          type: array
-                          items:
-                            type: string
-                            description: Parameters
-                        commands:
-                          type: array
-                          items:
-                            type: string
-                            description: Parameters
-                        containerPort:
-                          type: integer
-                          description: Port number
-                        containerData:
-                          type: string
-                          description: Dir of container
-              example:
-                status: success
-                data:
-                  - _id: 5ea5ded34640e92141c6ce35
-                    repotag: 'yurinnick/folding-at-home:latest'
-                    name: fluxFoldingAtHome
-                    port: 30000
-                    cpu: 0.5
-                    ram: 500
-                    hdd: 15
-                    enviromentParameters:
-                      - USERS=1MQetQGLuSmf6QVvYJFwuSR66WrU47G6NG
-                      - TEAM=262156
-                      - ENABLE_GPU=false
-                      - ENABLE_SMP=true
-                    commands:
-                      - '--allow'
-                      - 0/0
-                      - '--web-allow'
-                      - 0/0
-                    containerPort: 7396
-                    containerData: /config
-  /apps/availableapps:
-    get:
-      tags:
-        - Apps
-      summary: available apps
-      description: Info of available apps. **Public**
-      operationId: availableApps
-      responses:
-        '200':
-          description: OK
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  status:
-                    $ref: '#/components/schemas/status'
-                  data:
-                    type: array
-                    items:
-                      type: object
-                      properties:
-                        name:
-                          type: string
-                          description: App name/id
-                        repotag:
-                          type: string
-                          description: Repository tag
-                        owner:
-                          type: string
-                          description: User's id
-                        timestamp:
-                          type: integer
-                          description: Time stamp in epoch time
-                        validTill:
-                          type: integer
-                          description: Valid time in epoch time
-                        tiered:
-                          type: boolean
-                          description: Tier option
-                        port:
-                          type: integer
-                          description: Port number
-                        cpu:
-                          type: number
-                          description: CPU usage
-                        ram:
-                          type: integer
-                          description: Ram usage
-                        hdd:
-                          type: integer
-                          description: Disk usage
-                        cpubasic:
-                          type: string
-                          description: CPU usage
-                        cpusuper:
-                          type: string
-                          description: CPU usage
-                        cpubamf:
-                          type: string
-                          description: CPU usage
-                        rambasic:
-                          type: integer
-                          description: Ram usage
-                        ramsuper:
-                          type: integer
-                          description: Ram usage
-                        rambamf:
-                          type: integer
-                          description: Ram usage
-                        hddbasic:
-                          type: integer
-                          description: Disk usage
-                        hddsuper:
-                          type: integer
-                          description: Disk usage
-                        hddbamf:
-                          type: integer
-                          description: Disk usage
-                        enviromentParameters:
-                          type: array
-                          items:
-                            type: string
-                            description: Parameters
-                        commands:
-                          type: array
-                          items:
-                            type: string
-                            description: Parameters
-                        containerPort:
-                          type: integer
-                          description: Port number
-                        containerData:
-                          type: string
-                          description: Dir of container
-                        signature:
-                          type: string
-                          description: Signature
-                        txid:
-                          type: string
-                          description: Txid
-              example:
-                status: success
-                data:
-                  - name: fluxFoldingAtHome
-                    repotag: 'yurinnick/folding-at-home:latest'
-                    owner: 1CbErtneaX2QVyUfwU7JGB7VzvPgrgc3uC
-                    timestamp: 1587181519000
-                    validTill: 1608263119000
-                    tiered: true
-                    port: 30000
-                    cpu: 0.5
-                    ram: 500
-                    hdd: 15
-                    cpubasic: 0.5
-                    cpusuper: 1
-                    cpubamf: 2
-                    rambasic: 500
-                    ramsuper: 1000
-                    rambamf: 4000
-                    hddbasic: 15
-                    hddsuper: 15
-                    hddbamf: 15
-                    enviromentParameters:
-                      - USERS=1MQetQGLuSmf6QVvYJFwuSR66WrU47G6NG
-                      - TEAM=262156
-                      - ENABLE_GPU=false
-                      - ENABLE_SMP=true
-                    commands:
-                      - '--allow'
-                      - 0/0
-                      - '--web-allow'
-                      - 0/0
-                    containerPort: 7396
-                    containerData: /config
-                    signature: todo
-                    txid: todo
+  #Syncthing
   /syncthing/system/error:
     post:
       tags:
         - Syncthing
       summary: Set an error message
-      description: Post with an error message in the body (plain text) to register a new error. The new error will be displayed on any active GUI clients. **Admin**
+      description: Post with an error message in the body (plain text) to register a new error. The new error will be displayed on any active GUI clients. **AdminAndFluxTeam**
       operationId: fluxSyncthingSystemErrorPOST
       security:
         - ZelID: []
@@ -12761,7 +12794,6 @@ paths:
                     $ref: '#/components/schemas/status'
                   data:
                     type: string
-                    description: The signature of the message encoded in base 64.
               example:
                 status: success
                 data: >-
@@ -15715,7 +15747,6 @@ paths:
                       modifiedBy: 7IKKJI5
                       path: appdata/updraft/log.9ee33e08b594.txt
                       type: file
-
   /syncthing/svc/report:
     get:
       tags:
@@ -16180,6 +16211,7 @@ paths:
                 status: success
                 data:
                   status: "OK"
+  #FluxShare
   /apps/fluxshare/getfile:
     get:
       tags:
@@ -16262,7 +16294,7 @@ paths:
                           description: True if item is file
                         isSymbolicLink:
                           type: boolean
-                          description: Treu if item is symbolic link
+                          description: True if item is symbolic link
                         createdAt:
                           type: string
                           description: Create date of item
@@ -16663,6 +16695,459 @@ paths:
                 type: string
                 format: binary
               example: Hello world
+  #Apps
+  /apps/listrunningapps:
+    get:
+      tags:
+        - Apps
+      summary: list running apps
+      description: List and info of running apps. **Public**
+      operationId: listRunningApps
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    $ref: '#/components/schemas/status'
+                  data:
+                    $ref: '#/components/schemas/containerinfo'
+              example:
+                status: success
+                data:
+                  - Id: >-
+                      9a1369a96d82e74173476d30b12ac70c7261c253433b1303737d0461c5cbedee
+                    Names:
+                      - /fluxFoldingAtHome
+                    Image: 'yurinnick/folding-at-home:latest'
+                    ImageID: >-
+                      sha256:278b92c12d772dcfd77878fbb86714fd31d1c3e651b4f81761cc10b660cdb1d6
+                    Command: /opt/fahclient/entrypoint.sh --allow 0/0 --web-allow 0/0
+                    Created: 1587928808
+                    Ports:
+                      - PrivatePort: 36330
+                        Type: tcp
+                      - IP: 0.0.0.0
+                        PrivatePort: 7396
+                        PublicPort: 30000
+                        Type: tcp
+                    Labels:
+                      description: Unofficial Folding@Home image for CPU compute
+                      maintainer: yurinnick
+                      repository: 'https://github.com/yurinnick/folding-at-home-docker'
+                      version: 7.6
+                    State: running
+                    Status: Up 5 days
+                    HostConfig:
+                      NetworkMode: fluxDockerNetwork
+                    NetworkSettings:
+                      Networks:
+                        fluxDockerNetwork:
+                          IPAMConfig: null
+                          Links: null
+                          Aliases: null
+                          NetworkID: >-
+                            58358cee5a53dc4a089fb2f6341662cfb8aec702c5c16066ed3fd4c7570e330e
+                          EndpointID: >-
+                            f170fc599a65132a82fc6217cddc2ba40ade43263042dae0be8ab8ef4fadbec7
+                          Gateway: 172.16.0.1
+                          IPAddress: 172.16.0.2
+                          IPPrefixLen: 16
+                          IPv6Gateway: ''
+                          GlobalIPv6Address: ''
+                          GlobalIPv6PrefixLen: 0
+                          MacAddress: '02:42:ac:10:00:02'
+                          DriverOpts: null
+                    Mounts:
+                      - Type: bind
+                        Source: /home/user/flux/ZelApps/fluxFoldingAtHome
+                        Destination: /config
+                        Mode: ''
+                        RW: true
+                        Propagation: rprivate
+  /apps/listallapps:
+    get:
+      tags:
+        - Apps
+      summary: list all apps
+      description: List and info of all apps. **Public**
+      operationId: listAllApps
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    $ref: '#/components/schemas/status'
+                  data:
+                    $ref: '#/components/schemas/containerinfo'
+              example:
+                status: success
+                data:
+                  - Id: >-
+                      9a1369a96d82e74173476d30b12ac70c7261c253433b1303737d0461c5cbedee
+                    Names:
+                      - /fluxFoldingAtHome
+                    Image: 'yurinnick/folding-at-home:latest'
+                    ImageID: >-
+                      sha256:278b92c12d772dcfd77878fbb86714fd31d1c3e651b4f81761cc10b660cdb1d6
+                    Command: /opt/fahclient/entrypoint.sh --allow 0/0 --web-allow 0/0
+                    Created: 1587928808
+                    Ports:
+                      - PrivatePort: 36330
+                        Type: tcp
+                      - IP: 0.0.0.0
+                        PrivatePort: 7396
+                        PublicPort: 30000
+                        Type: tcp
+                    Labels:
+                      description: Unofficial Folding@Home image for CPU compute
+                      maintainer: yurinnick
+                      repository: 'https://github.com/yurinnick/folding-at-home-docker'
+                      version: 7.6
+                    State: running
+                    Status: Up 5 days
+                    HostConfig:
+                      NetworkMode: fluxDockerNetwork
+                    NetworkSettings:
+                      Networks:
+                        fluxDockerNetwork:
+                          IPAMConfig: null
+                          Links: null
+                          Aliases: null
+                          NetworkID: >-
+                            58358cee5a53dc4a089fb2f6341662cfb8aec702c5c16066ed3fd4c7570e330e
+                          EndpointID: >-
+                            f170fc599a65132a82fc6217cddc2ba40ade43263042dae0be8ab8ef4fadbec7
+                          Gateway: 172.16.0.1
+                          IPAddress: 172.16.0.2
+                          IPPrefixLen: 16
+                          IPv6Gateway: ''
+                          GlobalIPv6Address: ''
+                          GlobalIPv6PrefixLen: 0
+                          MacAddress: '02:42:ac:10:00:02'
+                          DriverOpts: null
+                    Mounts:
+                      - Type: bind
+                        Source: /home/user/flux/ZelApps/fluxFoldingAtHome
+                        Destination: /config
+                        Mode: ''
+                        RW: true
+                        Propagation: rprivate
+  /apps/listappsimages:
+    get:
+      tags:
+        - Apps
+      summary: List of images
+      description: List of apps images installed. **Public**
+      operationId: listAppsImages
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    $ref: '#/components/schemas/status'
+                  data:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        Containers:
+                          type: integer
+                          description: Container number
+                        Created:
+                          type: integer
+                          description: Time created in epoch time
+                        Id:
+                          type: string
+                          description: Hash of image
+                        Labels:
+                          type: object
+                          description: User-defined key/value metadata
+                          properties:
+                            description:
+                              type: string
+                              description: Description of image
+                            maintainer:
+                              type: string
+                              description: Name of maintainer
+                            repository:
+                              type: string
+                              description: Url of repository
+                            version:
+                              type: number
+                              description: Version number
+                        ParentId:
+                          type: string
+                          description: Parent Id if available
+                        RepoDigests:
+                          type: array
+                          items:
+                            type: string
+                            description: Content addressable identifier
+                        RepoTags:
+                          type: array
+                          items:
+                            type: string
+                            description: Repo tag name
+                        SharedSize:
+                          type: integer
+                          description: Number of shared size
+                        Size:
+                          type: integer
+                          description: Size in bytes
+                        VirtualSize:
+                          type: integer
+                          description: Size in bytes
+              example:
+                status: success
+                data:
+                  - Containers: -1
+                    Created: 1588224617
+                    Id: >-
+                      sha256:8bd1fb3dd2de02f8d4403c657da6a19efeef9286981537b30d2a107079018402
+                    Labels:
+                      description: Unofficial Folding@Home image for CPU compute
+                      maintainer: yurinnick
+                      repository: 'https://github.com/yurinnick/folding-at-home-docker'
+                      version: 7.6
+                  - ParentId: ''
+                    RepoDigests:
+                      - >-
+                        yurinnick/folding-at-home@sha256:da4a32a257883ce5b796482d0f82ec1d1f191056600eb490e1195a65f6100d6d
+                    RepoTags:
+                      - 'yurinnick/folding-at-home:latest'
+                    SharedSize: -1
+                    Size: 85515870
+                    VirtualSize: 85515870
+  /apps/installedapps:
+    get:
+      tags:
+        - Apps
+      summary: installed apps
+      description: Info of installed apps. **Public**
+      operationId: installedApps
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    $ref: '#/components/schemas/status'
+                  data:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        _id:
+                          type: string
+                          description: App id
+                        repotag:
+                          type: string
+                          description: Repository tag
+                        name:
+                          type: string
+                          description: Name of app
+                        port:
+                          type: integer
+                          description: Port number
+                        cpu:
+                          type: number
+                          description: CPU usage
+                        ram:
+                          type: integer
+                          description: Ram usage
+                        hdd:
+                          type: integer
+                          description: Disk usage
+                        enviromentParameters:
+                          type: array
+                          items:
+                            type: string
+                            description: Parameters
+                        commands:
+                          type: array
+                          items:
+                            type: string
+                            description: Parameters
+                        containerPort:
+                          type: integer
+                          description: Port number
+                        containerData:
+                          type: string
+                          description: Dir of container
+              example:
+                status: success
+                data:
+                  - _id: 5ea5ded34640e92141c6ce35
+                    repotag: 'yurinnick/folding-at-home:latest'
+                    name: fluxFoldingAtHome
+                    port: 30000
+                    cpu: 0.5
+                    ram: 500
+                    hdd: 15
+                    enviromentParameters:
+                      - USERS=1MQetQGLuSmf6QVvYJFwuSR66WrU47G6NG
+                      - TEAM=262156
+                      - ENABLE_GPU=false
+                      - ENABLE_SMP=true
+                    commands:
+                      - '--allow'
+                      - 0/0
+                      - '--web-allow'
+                      - 0/0
+                    containerPort: 7396
+                    containerData: /config
+  /apps/availableapps:
+    get:
+      tags:
+        - Apps
+      summary: available apps
+      description: Info of available apps. **Public**
+      operationId: availableApps
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    $ref: '#/components/schemas/status'
+                  data:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        name:
+                          type: string
+                          description: App name/id
+                        repotag:
+                          type: string
+                          description: Repository tag
+                        owner:
+                          type: string
+                          description: User's id
+                        timestamp:
+                          type: integer
+                          description: Time stamp in epoch time
+                        validTill:
+                          type: integer
+                          description: Valid time in epoch time
+                        tiered:
+                          type: boolean
+                          description: Tier option
+                        port:
+                          type: integer
+                          description: Port number
+                        cpu:
+                          type: number
+                          description: CPU usage
+                        ram:
+                          type: integer
+                          description: Ram usage
+                        hdd:
+                          type: integer
+                          description: Disk usage
+                        cpubasic:
+                          type: string
+                          description: CPU usage
+                        cpusuper:
+                          type: string
+                          description: CPU usage
+                        cpubamf:
+                          type: string
+                          description: CPU usage
+                        rambasic:
+                          type: integer
+                          description: Ram usage
+                        ramsuper:
+                          type: integer
+                          description: Ram usage
+                        rambamf:
+                          type: integer
+                          description: Ram usage
+                        hddbasic:
+                          type: integer
+                          description: Disk usage
+                        hddsuper:
+                          type: integer
+                          description: Disk usage
+                        hddbamf:
+                          type: integer
+                          description: Disk usage
+                        enviromentParameters:
+                          type: array
+                          items:
+                            type: string
+                            description: Parameters
+                        commands:
+                          type: array
+                          items:
+                            type: string
+                            description: Parameters
+                        containerPort:
+                          type: integer
+                          description: Port number
+                        containerData:
+                          type: string
+                          description: Dir of container
+                        signature:
+                          type: string
+                          description: Signature
+                        txid:
+                          type: string
+                          description: Txid
+              example:
+                status: success
+                data:
+                  - name: fluxFoldingAtHome
+                    repotag: 'yurinnick/folding-at-home:latest'
+                    owner: 1CbErtneaX2QVyUfwU7JGB7VzvPgrgc3uC
+                    timestamp: 1587181519000
+                    validTill: 1608263119000
+                    tiered: true
+                    port: 30000
+                    cpu: 0.5
+                    ram: 500
+                    hdd: 15
+                    cpubasic: 0.5
+                    cpusuper: 1
+                    cpubamf: 2
+                    rambasic: 500
+                    ramsuper: 1000
+                    rambamf: 4000
+                    hddbasic: 15
+                    hddsuper: 15
+                    hddbamf: 15
+                    enviromentParameters:
+                      - USERS=1MQetQGLuSmf6QVvYJFwuSR66WrU47G6NG
+                      - TEAM=262156
+                      - ENABLE_GPU=false
+                      - ENABLE_SMP=true
+                    commands:
+                      - '--allow'
+                      - 0/0
+                      - '--web-allow'
+                      - 0/0
+                    containerPort: 7396
+                    containerData: /config
+                    signature: todo
+                    txid: todo
   /apps/fluxusage:
     get:
       tags:
@@ -16810,6 +17295,14 @@ paths:
       summary: Temporary registration info
       description: Temporary registration info that will expire after 1 hour. **Public**
       operationId: getAppsTemporaryMessages
+      parameters:
+        - in: query
+          name: hash
+          required: false
+          schema:
+            type: string
+          description: Aplication hash
+          example: e9293e7eebc51586e7b90557f924b70a766ab970c91a6c923520577021424cb9
       responses:
         '200':
           description: OK
@@ -16825,7 +17318,7 @@ paths:
                     items:
                       type: object
                       properties:
-                        fluxAppSpecifications:
+                        appSpecifications:
                           $ref: '#/components/schemas/appspecification'
                         type:
                           type: string
@@ -16851,30 +17344,47 @@ paths:
               example:
                 status: success
                 data:
-                  AppSpecifications:
+                  - appSpecifications:
+                      version: 7
+                      name: mexcdnxbot
+                      description: DNX trading bot
+                      owner: 1DSBszWHPNs4MXwRdtV7wDLKDXRefzVYVi
+                      compose:
+                        - name: mexcdnxbot
+                          description: DNX trading bot
+                          repotag: botinflux/mexc-dnx-bot:latest
+                          ports: []
+                          domains: []
+                          environmentParameters:
+                            - api_key=mx0vddeecVubo
+                            - secret_key=b5c0433de7b2c1105222667871
+                            - email_sender=cla23lans@gmail.com
+                            - email_receiver=clas23xclans@gmail.com
+                            - email_password=cjpv23pnjmuhl
+                          commands: []
+                          containerPorts: []
+                          containerData: /tmp
+                          cpu: 1
+                          ram: 1000
+                          hdd: 5
+                          tiered: false
+                          secrets: ''
+                          repoauth: ''
+                      instances: 3
+                      contacts:
+                        - F_S_CONTACTS=https://storage.runonflux.io/v1/contacts/375596725336268
+                      geolocation:
+                        - a!cAS_ID
+                      expire: 22000
+                      nodes: []
+                      staticip: false
+                    type: fluxappregister
                     version: 1
-                    name: Mario
-                    description: InfiniteMario
-                    repotag: 'bharathshetty4/supermario:latest'
-                    owner: 1FLUX1AHpR35EiPHH4HUMsWzugTaj1Gp6M
-                    port: 31000
-                    enviromentParameters: []
-                    commands: []
-                    containerPort: 8600
-                    containerData: /tmp
-                    cpu: 0.1
-                    ram: 100
-                    hdd: 1
-                    tiered: false
-                  type: fluxappregister
-                  version: 1
-                  hash: >-
-                    a8f125e73dc5deab84d59e769511cf95e8e2664e0785737a0f7222752be42b0b
-                  timestamp: 1600298190513
-                  signature: >-
-                    G+zhabQa3xQWnINoxkOU8L0eod4OEddwmi1JYFoFf53GJ2yq0698jNzaXZtUiDfhWL30d6cJVDUnkO65DjCU/C4=
-                  receivedAt: '2020-09-16T23:25:19.634Z'
-                  expiredAt: '2020-09-17T00:25:19.634Z'
+                    hash: 11287d6b41cc35657d34e882678fbe8494a820e05eb006ef886512872fe28c98
+                    timestamp: 1692715746982
+                    signature: Hw4G1u4APaVaw+ZX6qnpYJmHLZrQG/xK3w5WJ2efqTYSYUQUQdW2g6xsr1imi7F/YLybyOj3LQiByxVc7i40Ljk=
+                    receivedAt: '2023-08-22T14:50:33.485Z'
+                    expireAt: '2023-08-22T15:50:33.485Z'
   /apps/permanentmessages:
     get:
       tags:
@@ -16884,6 +17394,28 @@ paths:
         Registration info of apps that have been stored to the database.
         **Public**
       operationId: getAppsPermanentMessages
+      parameters:
+        - in: query
+          name: hash
+          required: false
+          schema:
+            type: string
+          description: Application hash
+          example: e9293e7eebc51586e7b90557f924b70a766ab970c91a6c923520577021424cb9
+        - in: query
+          name: owner
+          required: false
+          schema:
+            type: string
+          description: Application ZelID
+          example: 15Mt8ctAFTVVzsx9UynnqxgM5JJuiwMPhs
+        - in: query
+          name: appname
+          required: false
+          schema:
+            type: string
+          description: Application name
+          example: FoldingAtFluxCloud1693167320638
       responses:
         '200':
           description: OK
@@ -16899,7 +17431,13 @@ paths:
                     items:
                       type: object
                       properties:
-                        fluxAppSpecifications:
+                        type:
+                          type: string
+                          description: Message type ```fluxappregister``` or ```fluxappupdate```
+                        version:
+                          type: integer
+                          description: Application specification message version, current 1
+                        appSpecifications:
                           $ref: '#/components/schemas/appspecification'
                         hash:
                           type: string
@@ -16922,30 +17460,94 @@ paths:
               example:
                 status: success
                 data:
-                  - AppSpecifications:
-                      version: 1
-                      name: TetrisTest
-                      description: Tetris is awesome
-                      repotag: 'uzyexe/tetris:latest'
-                      owner: 12hbuDGzfnndXP4NbrS3xdVXUcC6L7N2ag
-                      port: 31000
-                      enviromentParameters: []
-                      commands: []
-                      containerPort: 80
-                      containerData: /tmp
-                      cpu: 0.1
-                      ram: 200
-                      hdd: 1
-                      tiered: false
-                    hash: >-
-                      b44f1efe7bffc48b62d230f57341ce7fa193b71780491c1bc53c53e502e08d23
-                    timestamp: 1595183856015
-                    signature: >-
-                      ICO1rZcggFu+vXyeszecFJX+RuZNDiPqA7JQVA91wtC8Yab4VD5buR2flBVbGwK/WPL7KlhcEAThn4z9tyiN9mw=
-                    txid: >-
-                      885f11f8a44cf1ac9673fb5c745688a95715295e3c3d0d69517a17ab652f8780
-                    height: 645719
-                    valueSat: 2800000000
+                  - type: fluxappupdate
+                    version: 1
+                    appSpecifications:
+                      version: 7
+                      name: HH1u
+                      description: HH1u
+                      owner: 1xw845H9vKEjvcghMiYFy3htnBay7KpN9
+                      compose:
+                        - name: brit
+                          description: brit
+                          repotag: sandmanshiri/uni:2.0
+                          ports:
+                            - 38151
+                            - 37234
+                          domains:
+                            - ''
+                            - ''
+                          environmentParameters:
+                            - RP=Mhskap0737
+                            - RUP=Mhskap0737
+                            - NPU=40
+                            - prefix=MHssh20
+                            - udport=37234
+                            - limit=1
+                            - IP=2
+                            - SIN=1357
+                          commands: []
+                          containerPorts:
+                            - 22
+                            - 37234
+                          containerData: s:/home
+                          cpu: 0.1
+                          ram: 100
+                          hdd: 3
+                          tiered: false
+                          secrets: ''
+                          repoauth: ''
+                      instances: 3
+                      contacts: []
+                      geolocation:
+                        - acEU_PT
+                      expire: 22000
+                      nodes: []
+                      staticip: false
+                    hash: bab9b6d419316bebbe2a98d8b585377c8a10177f59e3032a3dafa536490ae46c
+                    timestamp: 1693123992018
+                    signature: IJ3NFgmxOgsnTfYNLR7u/FlNmUKAaIdto6BmPCuse9p3cVUrNJA9Oj0xJmuMZJsawWv2t7Wv6hWQBQC2DHFRDeg=
+                    txid: 0f2512106561e096193787d1fd35d97114ac85beb84fdf6b11cc7cb32bd85048
+                    height: 1456168
+                    valueSat: 3000000
+                  - type: fluxappregister
+                    version: 1
+                    appSpecifications:
+                      version: 4
+                      name: StreamrNode1693128754201
+                      description: The Streamr Broker Node hosted via the Flux Cloud
+                      owner: 14N5LBR23NBxJVR4QLgyWnvSb2QmLHAjbL
+                      compose:
+                        - name: streamrbroker
+                          description: The Streamr Broker Node Container
+                          repotag: streamr/broker-node:latest
+                          ports:
+                            - 31111
+                            - 31112
+                            - 31113
+                          domains:
+                            - ''
+                            - ''
+                            - ''
+                          environmentParameters:
+                            - STREAMR__BROKER__PLUGINS__BRUBECK_MINER__BENEFICIARY_ADDRESS=0x11D482E93b08cC46493BC88cf1770Cb91ec59A98
+                          commands: []
+                          containerPorts:
+                            - 1883
+                            - 7170
+                            - 7171
+                          containerData: /home/streamr/.streamr
+                          cpu: 1
+                          ram: 1000
+                          hdd: 1
+                          tiered: false
+                      instances: 3
+                    hash: e33205dcd24eed1957e6fd0a5913c7cc6972097f6a00ae72b929f9ffbe4c05c3
+                    timestamp: 1693128755202
+                    signature: IE/O0HPxxuHKrKz/M6MF+MpVRZ6JyjFQzCSaubyMsjngSGRwuXdQvesauavlD4pWJE3HC0KAdEB0n/MT7h7fN7g=
+                    txid: 8087dfb4a99d9c6984ded97a3ea2b500833f981b8fc35d96ed339363c2bd77be
+                    height: 1456206
+                    valueSat: 599000000
   /apps/globalappsspecifications:
     get:
       tags:
@@ -16966,27 +17568,98 @@ paths:
                   data:
                     type: array
                     items:
-                      $ref: '#/components/schemas/appname'
+                      type: object
               example:
                 status: success
                 data:
-                  - name: CryptPadOnFlux
-                    commands: []
-                    containerData: /cryptpad/customize
-                    containerPort: 3001
-                    cpu: 0.3
-                    description: CryptPad wow omg nice
-                    enviromentParameters: []
-                    hash: >-
-                      5fe93a466d9eccfedeaf6cb699d2f1b9e15f6d2f3aabf8df4db0ef69d19a3f2b
-                    hdd: 1
-                    height: 676127
-                    owner: 1CbErtneaX2QVyUfwU7JGB7VzvPgrgc3uC
-                    port: 31004
-                    ram: 100
-                    repotag: 'promasu/cryptpad:latest'
-                    tiered: false
-                    version: 1
+                  - name: FoldingAtFluxCloud1692691337989
+                    compose:
+                      - name: FoldingAtHome
+                        description: Folding @ Home for AMD64 Devices.
+                        repotag: yurinnick/folding-at-home:latest
+                        ports:
+                          - 35555
+                        domains:
+                          - ''
+                        environmentParameters:
+                          - TEAM=222256
+                          - USER=stam342kara
+                        commands: []
+                        containerPorts:
+                          - 7396
+                        containerData: /config
+                        cpu: 1
+                        ram: 700
+                        hdd: 3
+                        tiered: false
+                    description: PoUW at Flux layer 2 network. Folding@home is a project focused on disease research. Client Visit was disabled, to check Run On Flux team stats go to https://stats.foldingathome.org/team/262156
+                    hash: 05477aab02112b1db73a83ecee18d04a6933efddff80433c1ac10abf611ec9f1
+                    height: 1452583
+                    instances: 3
+                    owner: 1CS3fDTSkyJhsAST6xoeG4VG8ReWtuYhju
+                    version: 4
+                  - name: StreamrNode1692696525963
+                    compose:
+                      - name: streamrbroker
+                        description: The Streamr Broker Node Container
+                        repotag: streamr/broker-node:latest
+                        ports:
+                          - 31111
+                          - 31112
+                          - 31113
+                        domains:
+                          - ''
+                          - ''
+                          - ''
+                        environmentParameters:
+                          - STREAMR__BROKER__PLUGINS__BRUBECK_MINER__BENEFICIARY_ADDRESS=0xc60FA67aFd5A4332214D483b4Ff8E2993C8e3999
+                        commands: []
+                        containerPorts:
+                          - 1883
+                          - 7170
+                          - 7171
+                        containerData: /home/streamr/.streamr
+                        cpu: 1
+                        ram: 1000
+                        hdd: 1
+                        tiered: false
+                    description: The Streamr Broker Node hosted via the Flux Cloud
+                    hash: f647632c17c17a8feb7b8f39cc33eb9d0cde448d93ca8a251dab54dbee970638
+                    height: 1452619
+                    instances: 3
+                    owner: 1MhgaXdkNTqxvxxMBBWqmxvWTCRZ1kBYUQ
+                    version: 4
+                  - name: mexcdnxbot
+                    compose:
+                      - name: mexcdnxbot
+                        description: DNX trading bot
+                        repotag: botinflux/mexc-dnx-bot:latest
+                        ports: []
+                        domains: []
+                        environmentParameters:
+                          - F_S_ENV=https://storage.runonflux.io/v1/env/920423489107913
+                        commands: []
+                        containerPorts: []
+                        containerData: /tmp
+                        cpu: 1
+                        ram: 1000
+                        hdd: 5
+                        tiered: false
+                        secrets: ''
+                        repoauth: ''
+                    contacts:
+                      - F_S_CONTACTS=https://storage.runonflux.io/v1/contacts/375596725336268
+                    description: DNX trading bot
+                    expire: 22000
+                    geolocation:
+                      - a!cAS_ID_NONE
+                    hash: b9f3040c63ba8820acddcff5e503e8047a5c603ed734bb9bac953dcdc04ee33c
+                    height: 1452806
+                    instances: 3
+                    nodes: []
+                    owner: 1DSBszWHPNs4MXwRdtV7wDLKDXRefzVYVi
+                    staticip: false
+                    version: 7
   /apps/appspecifications:
     get:
       tags:
@@ -17001,7 +17674,7 @@ paths:
           schema:
             type: string
           description: Appname
-          example: CryptPadOnFlux
+          example: mexcdnxbot
       responses:
         '200':
           description: OK
@@ -17019,23 +17692,37 @@ paths:
               example:
                 status: success
                 data:
-                  - name: CryptPadOnFlux
-                    commands: []
-                    containerData: /cryptpad/customize
-                    containerPort: 3001
-                    cpu: 0.3
-                    description: CryptPad wow omg nice
-                    enviromentParameters: []
-                    hash: >-
-                      5fe93a466d9eccfedeaf6cb699d2f1b9e15f6d2f3aabf8df4db0ef69d19a3f2b
-                    hdd: 1
-                    height: 676127
-                    owner: 1CbErtneaX2QVyUfwU7JGB7VzvPgrgc3uC
-                    port: 31004
-                    ram: 100
-                    repotag: 'promasu/cryptpad:latest'
-                    tiered: false
-                    version: 1
+                  name: mexcdnxbot
+                  compose:
+                    - name: mexcdnxbot
+                      description: DNX trading bot
+                      repotag: botinflux/mexc-dnx-bot:latest
+                      ports: []
+                      domains: []
+                      environmentParameters:
+                        - F_S_ENV=https://storage.runonflux.io/v1/env/920423489107913
+                      commands: []
+                      containerPorts: []
+                      containerData: /tmp
+                      cpu: 1
+                      ram: 1000
+                      hdd: 5
+                      tiered: false
+                      secrets: ''
+                      repoauth: ''
+                  contacts:
+                    - F_S_CONTACTS=https://storage.runonflux.io/v1/contacts/375596725336268
+                  description: DNX trading bot
+                  expire: 22000
+                  geolocation:
+                    - a!cAS_ID_NONE
+                  hash: b9f3040c63ba8820acddcff5e503e8047a5c603ed734bb9bac953dcdc04ee33c
+                  height: 1452806
+                  instances: 3
+                  nodes: []
+                  owner: 1DSBszWHPNs4MXwRdtV7wDLKDXRefzVYVi
+                  staticip: false
+                  version: 7
   /apps/appowner:
     get:
       tags:
@@ -17236,29 +17923,171 @@ paths:
             schema:
               type: object
               properties:
+                version:
+                  type: integer
+                  description: Version of message which is 7
                 name:
                   type: string
-                  description: App name
-                cpu:
-                  type: number
-                  description: CPU amount
-                ram:
+                  description: Name of app
+                description:
+                  type: string
+                  description: Description of app
+                owner:
+                  type: string
+                  description: Your ZelID
+                compose:
+                  type: array
+                  items:
+                    type: object
+                    description: component specification
+                    properties:
+                      name:
+                        type: string
+                        description: Name of app
+                      description:
+                        type: string
+                        description: Description of component
+                      repotag:
+                        type: string
+                        description: 'Repotag of docker image in this format `namespace/repository:tag`'
+                      ports:
+                        type: array
+                        items:
+                          type: integer
+                          description: Ports list
+                      domains:
+                        type: array
+                        items:
+                          type: string
+                          description: Domain list
+                      enviromentParameters:
+                        type: array
+                        items:
+                          type: string
+                          description: Environment variables
+                      commands:
+                        type: array
+                        items:
+                          type: string
+                          description: Execution list
+                      containerPorts:
+                        type: array
+                        items:
+                          type: integer
+                          description: Container ports
+                      containerData:
+                        type: string
+                        description: >-
+                          Directory the data is stored and what dir is tied to the system
+                          folder
+                      cpu:
+                        type: number
+                        description: CPU amount requesting
+                      ram:
+                        type: integer
+                        description: Ram amount requesting in MB
+                      hdd:
+                        type: integer
+                        description: Storage space requesting in GB
+                      tiered:
+                        type: boolean
+                        description: >-
+                          If set to true you will also need following key/value pairs to
+                          provide tiered info. If false do not add the following key/value
+                          pairs.
+                      cpubasic:
+                        type: number
+                        description: CPU amount
+                      cpusuper:
+                        type: number
+                        description: CPU amount
+                      cpubamf:
+                        type: number
+                        description: CPU amount
+                      rambasic:
+                        type: integer
+                        description: Ram amount in MB
+                      ramsuper:
+                        type: integer
+                        description: Ram amount in MB
+                      rambamf:
+                        type: integer
+                        description: Ram amount in MB
+                      hddbasic:
+                        type: integer
+                        description: Storage space in GB
+                      hddsuper:
+                        type: integer
+                        description: Storage space in GB
+                      hddbamf:
+                        type: integer
+                        description: Storage space in GB
+                      secrets:
+                        type: string
+                        description: >-
+                          Array of strings of Secret Environmental Parameters. This will be encrypted and accessible to selected Enterprise Nodes only.
+                      repoauth:
+                        type: string
+                        description: >-
+                          Docker image authentication for private images in the format of username:apikey. This field will be encrypted and accessible to selected Enterprise Nodes only.
+                instances:
                   type: integer
-                  description: Ram amount in MB
-                hdd:
+                  description: Instances number             
+                contacts:
+                  type: array
+                  items:
+                    type: string
+                    description: Mail list
+                geolocation:
+                  type: array
+                  items:
+                    type: string
+                    description: Geolocation symbols 
+                expire:
                   type: integer
-                  description: Storage amount in GB
-                tiered:
+                  description: Number of blocks after apps expire 
+                nodes:
+                  type: array
+                  items:
+                    type: string
+                    description: Enterprise Nodes IP list          
+                staticip:
                   type: boolean
                   description: >-
-                    If requesting tiered and set to true add key/value pairs as
-                    mentioned in the note
+                    If set to true apps will be installed of nodes with static IP only.
             example:
-              name: AppTest
-              cpu: 0.1
-              ram: 100
-              hdd: 1
-              tiered: false
+              version: 7
+              name: blockbookneurai
+              description: Blockbook for Neurai
+              owner: 1XcNTEsgVND4eb3bsVa2bjktnZZSruVct
+              compose:
+                - name: blockbookneurai
+                  description: Blockbook for Neurai
+                  repotag: runonflux/blockbook-docker:latest
+                  ports:
+                    - 38382
+                    - 38383
+                  domains:
+                    - ''
+                    - ''
+                  environmentParameters: []
+                  commands: []
+                  containerPorts:
+                    - 9199
+                    - 1337
+                  containerData: /root
+                  cpu: 2.5
+                  ram: 5000
+                  hdd: 40
+                  tiered: false
+                  secrets: ''
+                  repoauth: ''
+              instances: 3
+              contacts: []
+              geolocation: []
+              expire: 22000
+              nodes: []
+              staticip: false
       responses:
         '200':
           description: OK
@@ -18075,8 +18904,6 @@ paths:
                             description: An object mapping ports to an empty object
                             additionalProperties:
                               type: object
-                              enum:
-                                - {}
                               default: {}
                           Tty:
                             type: boolean
@@ -18115,8 +18942,6 @@ paths:
                               container to empty objects
                             additionalProperties:
                               type: object
-                              enum:
-                                - {}
                               default: {}
                           WorkingDir:
                             type: string
@@ -18958,7 +19783,7 @@ paths:
         Example:
 
         -
-        `fluxappregister1{"version":1,"name":"Mario","description":"InfiniteMario","repotag":"bharathshetty4/supermario:latest","owner":"1FLUX1AHpR35EiPHH4HUMsWzugTaj1Gp6M","port":31000,"enviromentParameters":[],"commands":[],"containerPort":8600,"containerData":"/tmp","cpu":0.1,"ram":100,"hdd":1,"tiered":false}1600255247532`
+        `fluxappregister1{"version":7,"name":"blockbookneurai","description":"Blockbook for Neurai","owner":"1XcNTEsgVND4eb3bsVa2bjktnZZSruVct","compose":[{"name":"blockbookneurai","description":"Blockbook for Neurai","repotag":"runonflux/blockbook-docker:latest","ports":[38382,38383],"domains":["",""],"environmentParameters":["COIN=neurai","BLOCKBOOK_PORT=9168","BLOCKBOOKGIT_URL=https://github.com/NeuraiProject/blockbook"],"commands":[],"containerPorts":[9168,1337],"containerData":"/root","cpu":2.5,"ram":5000,"hdd":40,"tiered":false,"secrets":"","repoauth":""}],"instances":3,"contacts":[],"geolocation":[],"expire":22000,"nodes":[],"staticip":false}1692605469050`
       operationId: Appregister
       security:
         - ZelID: []
@@ -18969,7 +19794,13 @@ paths:
             schema:
               type: object
               properties:
-                fluxAppSpecification:
+                type:
+                  type: string
+                  description: Message type
+                version:
+                  type: integer
+                  description: Message version
+                appSpecifications:
                   $ref: '#/components/schemas/appspecification'
                 timestamp:
                   type: integer
@@ -18977,42 +19808,44 @@ paths:
                 signature:
                   type: object
                   description: Signature of data message you signed with ZelID.
-                type:
-                  type: string
-                  description: Message type
-                version:
-                  type: integer
-                  description: Message version
             example:
-              fluxAppSpecification:
-                version: 1
-                name: Mario
-                description: InfiniteMario
-                repotag: 'bharathshetty4/supermario:latest'
-                owner: 1FLUX1AHpR35EiPHH4HUMsWzugTaj1Gp6M
-                port: 31000
-                enviromentParameters: []
-                commands: []
-                containerPort: 8600
-                containerData: /tmp
-                cpu: 0.1
-                ram: 100
-                hdd: 1
-                tiered: true
-                cpubasic: 0.1
-                cpusuper: 0.1
-                cpubamf: 0.1
-                rambasic: 100
-                ramsuper: 100
-                rambamf: 100
-                hddbasic: 1
-                hddsuper: 1
-                hddbamf: 1
-              timestamp: 1600255247532
-              signature: >-
-                Gz6XXaBOCutFDRS2Fn9oTdM6quAEU2ppulO+X0NKJRs0Zsv7nbs5LlyLfln+qBEB0/rnehDRm0iM8X/CDl80ToU=
               type: fluxappregister
               version: 1
+              appSpecifications:
+                version: 7
+                name: blockbookneurai
+                description: Blockbook for Neurai
+                owner: 1XcNTEsgVND4eb3bsVa2bjktnZZSruVct
+                compose:
+                  - name: blockbookneurai
+                    description: Blockbook for Neurai
+                    repotag: runonflux/blockbook-docker:latest
+                    ports:
+                      - 38382
+                      - 38383
+                    domains:
+                      - ''
+                      - ''
+                    environmentParameters: []
+                    commands: []
+                    containerPorts:
+                      - 9199
+                      - 1337
+                    containerData: /root
+                    cpu: 2.5
+                    ram: 5000
+                    hdd: 40
+                    tiered: false
+                    secrets: ''
+                    repoauth: ''
+                instances: 3
+                contacts: []
+                geolocation: []
+                expire: 22000
+                nodes: []
+                staticip: false
+              timestamp: 1692605469050
+              signature: II3DdnuO5j6qPVAjid4zac3QRUpvdwwSwCGYoHTQqozveFPnSAueeYW3oPN1+oN2pJSFnXgxeT/odisfGRF5uu0=
       responses:
         '200':
           description: OK
@@ -19048,7 +19881,7 @@ paths:
         Example:
 
         -
-        `fluxappregister1{"version":1,"name":"Mario","description":"InfiniteMario","repotag":"bharathshetty4/supermario:latest","owner":"1FLUX1AHpR35EiPHH4HUMsWzugTaj1Gp6M","port":31000,"enviromentParameters":[],"commands":[],"containerPort":8600,"containerData":"/tmp","cpu":0.1,"ram":100,"hdd":1,"tiered":false}1600255247532`
+        `fluxappupdate1{"version":7,"name":"blockbookneurai","description":"Blockbook for Neurai","owner":"1HWjQ9S3MyzV6EbtDMEkpHm31parya412N","compose":[{"name":"blockbookneurai","description":"Blockbook for Neurai","repotag":"runonflux/blockbook-docker:latest","ports":[38382,38383],"domains":["",""],"environmentParameters":["COIN=neurai","BLOCKBOOK_PORT=9168","BLOCKBOOKGIT_URL=https://github.com/NeuraiProject/blockbook"],"commands":[],"containerPorts":[9168,1337],"containerData":"/root","cpu":2.5,"ram":5000,"hdd":40,"tiered":false,"secrets":"","repoauth":""}],"instances":3,"contacts":[],"geolocation":[],"expire":22000,"nodes":[],"staticip":false}1692697789387`
       operationId: updateAppGlobalyApi
       security:
         - ZelID: []
@@ -19059,7 +19892,7 @@ paths:
             schema:
               type: object
               properties:
-                AppSpecification:
+                appSpecifications:
                   $ref: '#/components/schemas/appspecification'
                 timestamp:
                   type: integer
@@ -19074,35 +19907,46 @@ paths:
                   type: integer
                   description: Message version
             example:
-              AppSpecification:
-                version: 1
-                name: Mario
-                description: InfiniteMario
-                repotag: 'bharathshetty4/supermario:latest'
-                owner: 1FLUX1AHpR35EiPHH4HUMsWzugTaj1Gp6M
-                port: 31000
-                enviromentParameters: []
-                commands: []
-                containerPort: 8600
-                containerData: /tmp
-                cpu: 0.1
-                ram: 100
-                hdd: 1
-                tiered: true
-                cpubasic: 0.1
-                cpusuper: 0.1
-                cpubamf: 0.1
-                rambasic: 100
-                ramsuper: 100
-                rambamf: 100
-                hddbasic: 1
-                hddsuper: 1
-                hddbamf: 1
-              timestamp: 1600255247532
-              signature: >-
-                Gz6XXaBOCutFDRS2Fn9oTdM6quAEU2ppulO+X0NKJRs0Zsv7nbs5LlyLfln+qBEB0/rnehDRm0iM8X/CDl80ToU=
-              type: appupdate
+              type: fluxappupdate
               version: 1
+              appSpecifications:
+                version: 7
+                name: blockbookneurai
+                description: Blockbook for Neurai
+                owner: 1HWjQ9S3MyzV6EbtDMEkpHm31parya412N
+                compose:
+                  - name: blockbookneurai
+                    description: Blockbook for Neurai
+                    repotag: runonflux/blockbook-docker:latest
+                    ports:
+                      - 38382
+                      - 38383
+                    domains:
+                      - ''
+                      - ''
+                    environmentParameters:
+                      - COIN=neurai
+                      - BLOCKBOOK_PORT=9168
+                      - BLOCKBOOKGIT_URL=https://github.com/NeuraiProject/blockbook
+                    commands: []
+                    containerPorts:
+                      - 9168
+                      - 1337
+                    containerData: /root
+                    cpu: 2.5
+                    ram: 5000
+                    hdd: 40
+                    tiered: false
+                    secrets: ''
+                    repoauth: ''
+                instances: 3
+                contacts: []
+                geolocation: []
+                expire: 22000
+                nodes: []
+                staticip: false
+              timestamp: 1692697789387
+              signature: HxtjvY3/CSoKxlaAZ4seno5qNYSZLVQ30IEqC1pw8644YjtN0H5IC131XaPkTrptUmxTHCVxE/gIQZsld4lWX54=
       responses:
         '200':
           description: OK
@@ -19120,6 +19964,166 @@ paths:
                 status: success
                 data: >-
                   a7a5b90b25ccc0a8379ec960c103103390369d1d6d18f88281372b944531dc23
+  /apps/deploymentinformation:
+    get:
+      tags:
+        - Apps
+      summary: Deployment information
+      description: >-
+        This will return deployment information. **Public**
+      operationId: getDeploymentInformatio
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    $ref: '#/components/schemas/status'
+                  data:
+                    type: object
+              example:
+                status: success
+                data:
+                  price:
+                    - height: -1
+                      cpu: 3
+                      ram: 1
+                      hdd: 0.5
+                      minPrice: 1
+                      port: 2
+                      scope: 6
+                      staticip: 3
+                    - height: 983000
+                      cpu: 0.3
+                      ram: 0.1
+                      hdd: 0.05
+                      minPrice: 0.1
+                      port: 2
+                      scope: 6
+                      staticip: 3
+                    - height: 1004000
+                      cpu: 0.06
+                      ram: 0.02
+                      hdd: 0.01
+                      minPrice: 0.01
+                      port: 2
+                      scope: 6
+                      staticip: 3
+                    - height: 1288000
+                      cpu: 0.15
+                      ram: 0.05
+                      hdd: 0.02
+                      minPrice: 0.01
+                      port: 2
+                      scope: 6
+                      staticip: 3
+                  appSpecsEnforcementHeights:
+                    '1': 0
+                    '2': 0
+                    '3': 983000
+                    '4': 1004000
+                    '5': 1142000
+                    '6': 1300000
+                    '7': 1420000
+                  address: t3aGJvdtd8NR6GrnqnRuVEzH6MbrXuJFLUX
+                  portMin: 1
+                  portMax: 65535
+                  enterprisePorts:
+                    - 0-1023
+                    - 8080
+                    - 8081
+                    - 8443
+                    - 25565
+                    - 6667
+                  bannedPorts:
+                    - 16100-16299
+                    - 26100-26299
+                    - 30000-30099
+                    - 8384
+                    - 27017
+                    - 22
+                    - 23
+                    - 25
+                    - 3389
+                    - 5900
+                    - 5800
+                    - 161
+                    - 512
+                    - 513
+                    - 5901
+                    - 3388
+                    - 4444
+                    - 123
+                  maxImageSize: 2000000000
+                  minimumInstances: 3
+                  maximumInstances: 100
+                  blocksLasting: 22000
+                  minBlocksAllowance: 5000
+                  maxBlocksAllowance: 264000
+                  blocksAllowanceInterval: 1000
+  /apps/enterprisenodes:
+    get:
+      tags:
+        - Apps
+      summary: List of enterprise nodes
+      description: >-
+        This will return a list of enterprise nodes. **Public**
+      operationId: getEnterpriseNodes
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    $ref: '#/components/schemas/status'
+                  data:
+                    type: object
+              example:
+                status: success
+                data:
+                  - tier: STRATUS
+                    payment_address: t3c4EfxLoXXSRZCRnPRF3RpjPi9mBzF5yoJ
+                    txhash: 9c271f03885a58b91b0529e3c59744397898b91a36bc129395244dd714a49247
+                    outidx: '0'
+                    pubkey: 045bd4f81d7bda582141793463edb58e0f3228a873bd6b6680b78586db2969f51dfeda672eae65e64ca814316f77557012d02c73db7876764f5eddb6b6d9d02b5b
+                    ip: 65.21.76.151
+                    collateralPoints: 30
+                    maturityPoints: 500
+                    pubKeyPoints: 500
+                    enterprisePoints: 2000
+                    enterpriseApps: 0
+                    score: 3030
+                  - tier: STRATUS
+                    payment_address: t3c4EfxLoXXSRZCRnPRF3RpjPi9mBzF5yoJ
+                    txhash: 2b9f7c3f9d537c931345a095de6083fc4d90abdaeafad4920aa7efa61a046a03
+                    outidx: '0'
+                    pubkey: 045bd4f81d7bda582141793463edb58e0f3228a873bd6b6680b78586db2969f51dfeda672eae65e64ca814316f77557012d02c73db7876764f5eddb6b6d9d02b5b
+                    ip: 135.181.62.100
+                    collateralPoints: 30
+                    maturityPoints: 500
+                    pubKeyPoints: 500
+                    enterprisePoints: 2000
+                    enterpriseApps: 0
+                    score: 3030
+                  - tier: CUMULUS
+                    payment_address: t1dQ3eY9fk2VyLKMsMSRDsKhV6vQGuozvtU
+                    txhash: 00eac3603342d31a57aa37a64bd4204ecc3ea0abd82e6d848b7d6e30c0c54af0
+                    outidx: '0'
+                    pubkey: 043b7284fe091ce9fc5bfc2e4e898a944d116ec3bbd1cb1669f6a4ade792175216e348c48afb300d01e2d9e0ced10ad934341a11d4cc866ca2f8839a558ca558ad
+                    ip: 71.203.179.136
+                    collateralPoints: 2
+                    maturityPoints: 0
+                    pubKeyPoints: 2
+                    enterprisePoints: 0
+                    enterpriseApps: 0
+                    score: 4
+  #Explorer               
   /explorer/fluxtxs:
     get:
       tags:
@@ -19512,24 +20516,6 @@ components:
           example: 1CbErtneaX2QVyUfwU7JGB7VzvPgrgc3uC
         signature:
           $ref: '#/components/schemas/signature'
-    ErrorMessage:
-      type: object
-      properties:
-        status:
-          type: string
-          description: error
-        data:
-          type: object
-          properties:
-            code:
-              type: string
-              description: code of error
-            name:
-              type: string
-              description: name of error
-            message:
-              type: string
-              description: message of error
     status:
       type: string
       description: Explanation of status
@@ -19701,15 +20687,24 @@ components:
         ipaddress:
           type: string
           description: Ip address of FluxNode server
+        architecture:
+          type: string
+          description: System architecture
+        armboard:
+          type: string
+          description: ARM board model
         status:
           type: string
           description: CUMULUS/NIMMBUS/STRATUS
         time:
           type: integer
           description: Time of bench in epoch time
+        real_cores:
+          type: string
+          description: The amount of physical cores detected
         cores:
           type: integer
-          description: The amount of cores detected
+          description: The amount of vcores detected
         ram:
           type: number
           description: The amount of ram detected
@@ -19722,9 +20717,48 @@ components:
         dd_write:
           type: number
           description: The amount of write speed detected
+        totalstorage:
+          type: number
+          description: The amount of hdd and ssd space detected
+        disksinfo:
+          type: array
+          items:
+            type: object
+            description: Disks information
+            properties:
+              disk:
+                type: string
+                description: Disk name
+              size:
+                type: number
+                description: The amount of space detected
+              writespeed:
+                type: number
+                description: The amount of write speed detected
         eps:
           type: number
           description: The amount of cpu speed detected
+        ping:
+          type: number
+          description: Ping number in ms
+        download_speed:
+          type: number
+          description: Download speed        
+        upload_speed:
+          type: number
+          description: Upload speed   
+        bench_version:
+          type: string
+          description: Benchmark version
+        speed_version:
+          type: string
+          description: Speedtest version
+        thunder:
+          type: boolean
+          description: True if fractus mode enabled    
+        error:
+          type: string
+          description: Error message  
     joinsplit:
       type: array
       items:
@@ -20021,56 +21055,145 @@ components:
       properties:
         name:
           type: string
-          description: Appname
-        commands:
+          description: Name of app
+        compose:
+          type: array
+          items:
+            type: object
+            description: component specification
+            properties:
+              name:
+                type: string
+                description: Name of app
+              description:
+                type: string
+                description: Description of component
+              repotag:
+                type: string
+                description: 'Repotag of docker image in this format `namespace/repository:tag`'
+              ports:
+                type: array
+                items:
+                  type: integer
+                  description: Ports list
+              domains:
+                type: array
+                items:
+                  type: string
+                  description: Domain list
+              enviromentParameters:
+                type: array
+                items:
+                  type: string
+                  description: Environment variables
+              commands:
+                type: array
+                items:
+                  type: string
+                  description: Execution list
+              containerPorts:
+                type: array
+                items:
+                  type: integer
+                  description: Container ports
+              containerData:
+                type: string
+                description: >-
+                  Directory the data is stored and what dir is tied to the system
+                  folder
+              cpu:
+                type: number
+                description: CPU amount requesting
+              ram:
+                type: integer
+                description: Ram amount requesting in MB
+              hdd:
+                type: integer
+                description: Storage space requesting in GB
+              tiered:
+                type: boolean
+                description: >-
+                  If set to true you will also need following key/value pairs to
+                  provide tiered info. If false do not add the following key/value
+                  pairs.
+              cpubasic:
+                type: number
+                description: CPU amount
+              cpusuper:
+                type: number
+                description: CPU amount
+              cpubamf:
+                type: number
+                description: CPU amount
+              rambasic:
+                type: integer
+                description: Ram amount in MB
+              ramsuper:
+                type: integer
+                description: Ram amount in MB
+              rambamf:
+                type: integer
+                description: Ram amount in MB
+              hddbasic:
+                type: integer
+                description: Storage space in GB
+              hddsuper:
+                type: integer
+                description: Storage space in GB
+              hddbamf:
+                type: integer
+                description: Storage space in GB
+              secrets:
+                type: string
+                description: >-
+                  Encrypted environmental accessible to selected Enterprise Nodes only.
+              repoauth:
+                type: string
+                description: >-
+                  Docker image authentication for private images in the format of username:apikey. This field will be encrypted and accessible to selected Enterprise Nodes only.
+        contacts:
           type: array
           items:
             type: string
-            description: Execution list
-        containerData:
-          type: string
-          description: Directory the data is stored
-        containerPort:
-          type: integer
-          description: Container port number
-        cpu:
-          type: number
-          description: CPU amount
+            description: Mail list
         description:
           type: string
-          description: App description
-        enviromentParameters:
+          description: Description of app    
+        expire:
+          type: integer
+          description: Number of blocks after apps expire 
+        geolocation:
           type: array
           items:
             type: string
-            description: Environment variables
+            description: Geolocation symbols 
         hash:
           type: string
-          description: Hash of app
-        hdd:
-          type: integer
-          description: Storage space in GB
+          description: Transation hash
         height:
+            type: integer
+            description: Block height
+        instances:
           type: integer
-          description: Block height
+          description: Instances number             
+        nodes:
+          type: array
+          items:
+            type: string
+            description: Enterprise Nodes IP list          
         owner:
           type: string
-          description: ZelID of app owner
-        port:
-          type: integer
-          description: App port
-        ram:
-          type: integer
-          description: Ram space in MB
-        repotag:
-          type: string
-          description: Repotag of image
-        tiered:
+          description: Your ZelID    
+        staticip:
           type: boolean
-          description: Is app tiered
+          enum:
+           - true
+           - false
+          description: >-
+            If set to true apps will be installed of nodes with static IP only.
         version:
           type: integer
-          description: Message version
+          description: Version of message which is 7
     appsresources:
       type: object
       properties:
@@ -20088,82 +21211,136 @@ components:
       properties:
         version:
           type: integer
-          description: Version of message which is 1
+          description: Version of message which is 7
         name:
           type: string
           description: Name of app
         description:
           type: string
           description: Description of app
-        repotag:
-          type: string
-          description: 'Repotag of docker image in this format `namespace/repository:tag`'
         owner:
           type: string
           description: Your ZelID
-        port:
+        compose:
+          type: array
+          items:
+            type: object
+            description: component specification
+            properties:
+              name:
+                type: string
+                description: Name of app
+              description:
+                type: string
+                description: Description of component
+              repotag:
+                type: string
+                description: 'Repotag of docker image in this format `namespace/repository:tag`'
+              ports:
+                type: array
+                items:
+                  type: integer
+                  description: Ports list
+              domains:
+                type: array
+                items:
+                  type: string
+                  description: Domain list
+              enviromentParameters:
+                type: array
+                items:
+                  type: string
+                  description: Environment variables
+              commands:
+                type: array
+                items:
+                  type: string
+                  description: Execution list
+              containerPorts:
+                type: array
+                items:
+                  type: integer
+                  description: Container ports
+              containerData:
+                type: string
+                description: >-
+                  Directory the data is stored and what dir is tied to the system
+                  folder
+              cpu:
+                type: number
+                description: CPU amount requesting
+              ram:
+                type: integer
+                description: Ram amount requesting in MB
+              hdd:
+                type: integer
+                description: Storage space requesting in GB
+              tiered:
+                type: boolean
+                description: >-
+                  If set to true you will also need following key/value pairs to
+                  provide tiered info. If false do not add the following key/value
+                  pairs.
+              cpubasic:
+                type: number
+                description: CPU amount
+              cpusuper:
+                type: number
+                description: CPU amount
+              cpubamf:
+                type: number
+                description: CPU amount
+              rambasic:
+                type: integer
+                description: Ram amount in MB
+              ramsuper:
+                type: integer
+                description: Ram amount in MB
+              rambamf:
+                type: integer
+                description: Ram amount in MB
+              hddbasic:
+                type: integer
+                description: Storage space in GB
+              hddsuper:
+                type: integer
+                description: Storage space in GB
+              hddbamf:
+                type: integer
+                description: Storage space in GB
+              secrets:
+                type: string
+                description: >-
+                  Array of strings of Secret Environmental Parameters. This will be encrypted and accessible to selected Enterprise Nodes only.
+              repoauth:
+                type: string
+                description: >-
+                  Docker image authentication for private images in the format of username:apikey. This field will be encrypted and accessible to selected Enterprise Nodes only.
+        instances:
           type: integer
-          description: Public port for app access
-        enviromentParameters:
+          description: Instances number             
+        contacts:
           type: array
           items:
             type: string
-            description: Environment variables
-        commands:
+            description: Mail list
+        geolocation:
           type: array
           items:
             type: string
-            description: Execution list
-        containerPort:
+            description: Geolocation symbols 
+        expire:
           type: integer
-          description: Container port
-        containerData:
-          type: string
-          description: >-
-            Directory the data is stored and what dir is tied to the system
-            folder
-        cpu:
-          type: number
-          description: CPU amount requesting
-        ram:
-          type: integer
-          description: Ram amount requesting in MB
-        hdd:
-          type: integer
-          description: Storage space requesting in GB
-        tiered:
+          description: Number of blocks after apps expire 
+        nodes:
+          type: array
+          items:
+            type: string
+            description: Enterprise Nodes IP list          
+        staticip:
           type: boolean
           description: >-
-            If set to true you will also need following key/value pairs to
-            provide tiered info. If false do not add the following key/value
-            pairs.
-        cpubasic:
-          type: number
-          description: CPU amount
-        cpusuper:
-          type: number
-          description: CPU amount
-        cpubamf:
-          type: number
-          description: CPU amount
-        rambasic:
-          type: integer
-          description: Ram amount in MB
-        ramsuper:
-          type: integer
-          description: Ram amount in MB
-        rambamf:
-          type: integer
-          description: Ram amount in MB
-        hddbasic:
-          type: integer
-          description: Storage space in GB
-        hddsuper:
-          type: integer
-          description: Storage space in GB
-        hddbamf:
-          type: integer
-          description: Storage space in GB
+            If set to true apps will be installed of nodes with static IP only.
     daemongetinfo:
       type: object
       properties:
@@ -20182,7 +21359,7 @@ components:
         blocks:
           type: integer
           description: The current number of blocks processed in the server
-        timeoffset:
+        timeoffset: 
           type: integer
           description: The time offset
         connections:
@@ -20214,6 +21391,39 @@ components:
         errors:
           type: string
           description: Any error messages
+    geolocation:
+      type: object
+      properties:
+        ip:
+          type: string
+          description: IP address
+        continent:
+          type: string
+          description: Continent name
+        continentCode:
+          type: string
+          description: Continent code
+        country:
+          type: string
+          description: Country name
+        countryCode:
+          type: string
+          description: Continent code
+        region:
+          type: string
+          description: Region code
+        regionName:
+          type: string
+          description: Region name
+        lat:
+          type: number
+          description: Latitude parameter
+        lon: 
+          type: number
+          description: Longitude parameter
+        org: 
+          type: string
+          description: Organization name
     fluxnodestatus:
       type: object
       properties:
@@ -20364,28 +21574,6 @@ components:
                 PublicPort:
                   type: integer
                   description: Port exposed on the host
-                Labels:
-                  type: object
-                  description: User-defined key/value metadata
-                  properties:
-                    description:
-                      type: string
-                      description: Description of app
-                    maintainer:
-                      type: string
-                      description: Name/alias of creator/maintainer of app
-                    repository:
-                      type: string
-                      description: Url to repository
-                    version:
-                      type: number
-                      description: Version number
-                State:
-                  type: string
-                  description: State/status of the container
-                Status:
-                  type: string
-                  description: Additional human-readable status of this container
                 HostConfig:
                   type: object
                   properties:
@@ -20404,6 +21592,28 @@ components:
                           $ref: '#/components/schemas/fluxnetwork'
                 Mounts:
                   $ref: '#/components/schemas/mounts'
+          Labels:
+            type: object
+            description: User-defined key/value metadata
+            properties:
+              description:
+                type: string
+                description: Description of app
+              maintainer:
+                type: string
+                description: Name/alias of creator/maintainer of app
+              repository:
+                type: string
+                description: Url to repository
+              version:
+                type: number
+                description: Version number
+          State:
+            type: string
+            description: State/status of the container
+          Status:
+            type: string
+            description: Additional human-readable status of this container
     mounts:
       type: array
       items:
