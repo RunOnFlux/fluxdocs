@@ -1,6 +1,6 @@
 openapi: 3.0.3
 info:
-  version: 4.9.1
+  version: 5.0.0
   title: Flux
   contact:
     email: tadeas@runonflux.io
@@ -90,6 +90,8 @@ tags:
     description: Calls that interact with Syncthing service
   - name: Fluxshare
     description: Calls that interact with Fluxshare service
+  - name: Backup / Restore
+    description: Calls that interact with Backup / Restore service
 servers:
   - url: 'https://api.runonflux.io'
 paths:
@@ -3592,6 +3594,164 @@ paths:
                       - urn:schemas-upnp-org:service:WANIPConnection:2
                       - urn:schemas-upnp-org:service:WANPPPConnection:1
                   address: 192.168.1.106
+                  
+  /flux/routerip:
+  get:
+    tags:
+      - Flux
+    summary: To show the current user's Router IP setup.
+    description: To show the current user's Router IP setup in configuration file that is being used with FluxOS. **PUBLIC**
+    operationId: fluxRouterip
+    responses:
+      '200':
+        description: OK
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                status:
+                  $ref: '#/components/schemas/status'
+                data:
+                  type: string
+            example:
+            status: success
+            data: '196.53.8.65'
+  /flux/blockedports:
+    get:
+      tags:
+        - Flux
+      summary: Show the current user's blocked ports list.
+      description: Show the current user's blocked ports list. **PUBLIC**
+      operationId: fluxBlockedports
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    $ref: '#/components/schemas/status'
+                  data:
+                    type: array
+                    items:
+                      type: number
+                      description: Port
+              example:
+                status: success
+                data:
+                  - 22
+  /flux/adjustrouterip:
+    get:
+      tags:
+        - Flux
+      summary: Update the current routerIP.
+      description: Update the current routerIP that is being used with FluxOS. **Admin**
+      operationId: fluxAdjustrouterip
+      parameters:
+        - in: query
+          name: routerip
+          schema:
+            type: string
+          example: '196.53.8.65'
+      security:
+        - ZelID: []
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    $ref: '#/components/schemas/status'
+                  data:
+                    type: string
+              example:
+                status: success
+                data: 'Router IP adjusted'
+  /flux/adjustblockedports:
+    post:
+      tags:
+        - Flux
+      summary: Update blocked port list.
+      description: Update the current blocked port list that is being used by FluxOS. **Admin**
+      operationId: fluxAdjustblockedports
+      requestBody:
+        required: true
+        content:
+           text/plain:
+            schema:
+              type: object
+              properties:
+                blockedPorts:
+                  type: array
+                  items:
+                    type: number
+              example:    
+                blockedPorts:
+                  - 2233
+                  - 5544
+      security:
+        - ZelID: []
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    $ref: '#/components/schemas/status'
+                  data:
+                    type: object
+              example:
+                status: success
+                data: 
+                  message: User Blocked Ports adjusted
+  /flux/adjustblockedrepositories:
+    post:
+      tags:
+        - Flux
+      summary: Update blocked repositories list.
+      description: Update the current blocked repositories list that is being used by FluxOS. **Admin**
+      operationId: fluxAdjustblockedrepositories
+      requestBody:
+        required: true
+        content:
+           text/plain:
+            schema:
+              type: object
+              properties:
+                blockedRepositories:
+                  type: array
+                  items:
+                    type: string
+              example:    
+                blockedPorts:
+                  - 'zirnheltdj/wisconsinwaters:latest'
+      security:
+        - ZelID: []
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    $ref: '#/components/schemas/status'
+                  data:
+                    type: object
+              example:
+                status: success
+                data: 
+                  message: User Blocked Repositories adjusted
   #Daemon
   /daemon/help:
     get:
@@ -16211,6 +16371,9 @@ paths:
                 status: success
                 data:
                   status: "OK"
+  #FluxBackup/Restore
+  
+  
   #FluxShare
   /apps/fluxshare/getfile:
     get:
@@ -20123,6 +20286,62 @@ paths:
                     enterprisePoints: 0
                     enterpriseApps: 0
                     score: 4
+  /apps/requestmessage:
+    get:
+      tags:
+        - Apps
+      summary: Request application message hash.
+      description: >-
+        This will request application message hash. **AdminAndFluxTeam**
+      operationId: getRequestmessage
+      parameters:
+        - in: query
+          name: hash
+          required: true
+          schema:
+            type: string
+          description: 'Application hash'
+          example: 'bf3d860a1d5d0379519afc7da441fb56c688f83e528162d5f6825c05f6c27e7a'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    $ref: '#/components/schemas/status'
+                  data:
+                    type: object
+              example:
+                status: success
+                data:
+                  message: 'Application hash bf3d860a1d5d0379519afc7da441fb56c688f83e528162d5f6825c05f6c27e7a requested from the network'
+  /apps/checkhashes:
+    get:
+      tags:
+        - Apps
+      summary: Request check for missing application message.
+      description: >-
+        This will tigger check for misssing application messages. **AdminAndFluxTeam**
+      operationId: getCheckhashes
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    $ref: '#/components/schemas/status'
+                  data:
+                    type: object
+              example:
+                status: success
+                data:
+                  message: 'Running check on missing application messages'
   #Explorer               
   /explorer/fluxtxs:
     get:
