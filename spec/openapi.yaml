@@ -18230,9 +18230,9 @@ paths:
         - Apps
       summary: Calculate price of app
       description: >-
+        **DEPRECATED**: To get app price. Should be used getAppFiatAndFluxPrice method instead.
         Calculate price by sending request with specs required for app you are
         registering. **Public**
-
 
         Note: If tiered value is set to true you will also need to add the
         following key/value pairs
@@ -18242,6 +18242,7 @@ paths:
         `ramsuper: <n value in mb>`, `rambamf: <n value in mb>`, `hddbasic: <n
         value in gb>`, `hddsuper: <n value in gb>`, `hddbamf: <n value in gb>`
       operationId: getAppPrice
+      deprecated: true
       requestBody:
         required: true
         content:
@@ -18430,6 +18431,214 @@ paths:
               example:
                 status: success
                 data: 1.6
+  /apps/calculatefiatandfluxprice:
+    post:
+      tags:
+        - Apps
+      summary: Calculate price of app
+      description: >-
+        Calculate price by sending request with specs required for app you are
+        registering. **Public**
+
+        Note: If tiered value is set to true you will also need to add the
+        following key/value pairs
+
+        - `cpubasic: <n value of cpu core>`, `cpusuper: <n value of cpu core>`,
+        `cpubamf: <n value of cpu core>`, `rambasic: <n value in mb>`,
+        `ramsuper: <n value in mb>`, `rambamf: <n value in mb>`, `hddbasic: <n
+        value in gb>`, `hddsuper: <n value in gb>`, `hddbamf: <n value in gb>`
+      operationId: getAppPriceNew
+      requestBody:
+        required: true
+        content:
+          text/plain:
+            schema:
+              type: object
+              properties:
+                version:
+                  type: integer
+                  description: Version of message which is 7
+                name:
+                  type: string
+                  description: Name of app
+                description:
+                  type: string
+                  description: Description of app
+                owner:
+                  type: string
+                  description: Your ZelID
+                compose:
+                  type: array
+                  items:
+                    type: object
+                    description: component specification
+                    properties:
+                      name:
+                        type: string
+                        description: Name of app
+                      description:
+                        type: string
+                        description: Description of component
+                      repotag:
+                        type: string
+                        description: 'Repotag of docker image in this format `namespace/repository:tag`'
+                      ports:
+                        type: array
+                        items:
+                          type: integer
+                          description: Ports list
+                      domains:
+                        type: array
+                        items:
+                          type: string
+                          description: Domain list
+                      enviromentParameters:
+                        type: array
+                        items:
+                          type: string
+                          description: Environment variables
+                      commands:
+                        type: array
+                        items:
+                          type: string
+                          description: Execution list
+                      containerPorts:
+                        type: array
+                        items:
+                          type: integer
+                          description: Container ports
+                      containerData:
+                        type: string
+                        description: >-
+                          Directory the data is stored and what dir is tied to the system
+                          folder
+                      cpu:
+                        type: number
+                        description: CPU amount requesting
+                      ram:
+                        type: integer
+                        description: Ram amount requesting in MB
+                      hdd:
+                        type: integer
+                        description: Storage space requesting in GB
+                      tiered:
+                        type: boolean
+                        description: >-
+                          If set to true you will also need following key/value pairs to
+                          provide tiered info. If false do not add the following key/value
+                          pairs.
+                      cpubasic:
+                        type: number
+                        description: CPU amount
+                      cpusuper:
+                        type: number
+                        description: CPU amount
+                      cpubamf:
+                        type: number
+                        description: CPU amount
+                      rambasic:
+                        type: integer
+                        description: Ram amount in MB
+                      ramsuper:
+                        type: integer
+                        description: Ram amount in MB
+                      rambamf:
+                        type: integer
+                        description: Ram amount in MB
+                      hddbasic:
+                        type: integer
+                        description: Storage space in GB
+                      hddsuper:
+                        type: integer
+                        description: Storage space in GB
+                      hddbamf:
+                        type: integer
+                        description: Storage space in GB
+                      secrets:
+                        type: string
+                        description: >-
+                          Array of strings of Secret Environmental Parameters. This will be encrypted and accessible to selected Enterprise Nodes only.
+                      repoauth:
+                        type: string
+                        description: >-
+                          Docker image authentication for private images in the format of username:apikey. This field will be encrypted and accessible to selected Enterprise Nodes only.
+                instances:
+                  type: integer
+                  description: Instances number             
+                contacts:
+                  type: array
+                  items:
+                    type: string
+                    description: Mail list
+                geolocation:
+                  type: array
+                  items:
+                    type: string
+                    description: Geolocation symbols 
+                expire:
+                  type: integer
+                  description: Number of blocks after apps expire 
+                nodes:
+                  type: array
+                  items:
+                    type: string
+                    description: Enterprise Nodes IP list          
+                staticip:
+                  type: boolean
+                  description: >-
+                    If set to true apps will be installed of nodes with static IP only.
+            example:
+              version: 7
+              name: blockbookneurai
+              description: Blockbook for Neurai
+              owner: 1XcNTEsgVND4eb3bsVa2bjktnZZSruVct
+              compose:
+                - name: blockbookneurai
+                  description: Blockbook for Neurai
+                  repotag: runonflux/blockbook-docker:latest
+                  ports:
+                    - 38382
+                    - 38383
+                  domains:
+                    - ''
+                    - ''
+                  environmentParameters: []
+                  commands: []
+                  containerPorts:
+                    - 9199
+                    - 1337
+                  containerData: /root
+                  cpu: 2.5
+                  ram: 5000
+                  hdd: 40
+                  tiered: false
+                  secrets: ''
+                  repoauth: ''
+              instances: 3
+              contacts: []
+              geolocation: []
+              expire: 22000
+              nodes: []
+              staticip: false
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    $ref: '#/components/schemas/status'
+                  data:
+                    type: string
+                    description: FLUX amount
+              example:
+                status: success
+                data:
+                  usd: 7.05
+                  flux: 4.73
+                  fluxDiscount: 10
   /apps/appstart:
     get:
       tags:
