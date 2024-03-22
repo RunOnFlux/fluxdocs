@@ -1,6 +1,6 @@
 openapi: 3.0.3
 info:
-  version: 5.1.0
+  version: 5.0.0
   title: Flux
   contact:
     email: tadeas@runonflux.io
@@ -3621,32 +3621,6 @@ paths:
               example:
                 status: success
                 data: '196.53.8.65'
-  /flux/blockedports:
-    get:
-      tags:
-        - Flux
-      summary: Show the current user's blocked ports list.
-      description: Show the current user's blocked ports list. **PUBLIC**
-      operationId: fluxBlockedports
-      responses:
-        '200':
-          description: OK
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  status:
-                    $ref: '#/components/schemas/status'
-                  data:
-                    type: array
-                    items:
-                      type: number
-                      description: Port
-              example:
-                status: success
-                data:
-                  - 22
   /flux/adjustrouterip:
     get:
       tags:
@@ -3677,6 +3651,32 @@ paths:
               example:
                 status: success
                 data: 'Router IP adjusted'
+  /flux/blockedports:
+    get:
+      tags:
+        - Flux
+      summary: Show the current user's blocked ports list.
+      description: Show the current user's blocked ports list. **PUBLIC**
+      operationId: fluxBlockedports
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    $ref: '#/components/schemas/status'
+                  data:
+                    type: array
+                    items:
+                      type: number
+                      description: Port
+              example:
+                status: success
+                data:
+                  - 22
   /flux/adjustblockedports:
     post:
       tags:
@@ -3717,6 +3717,32 @@ paths:
                 status: success
                 data: 
                   message: User Blocked Ports adjusted
+  /flux/blockedrepositories:
+    get:
+      tags:
+        - Flux
+      summary: Show the current user's blocked repositories list.
+      description: Show the current user's blocked repositories list. **PUBLIC**
+      operationId: fluxBlockedrepositories
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    $ref: '#/components/schemas/status'
+                  data:
+                    type: array
+                    items:
+                      type: number
+                      description: Port
+              example:
+                status: success
+                data:
+                  - 'zirnheltdj/wisconsinwaters:latest'
   /flux/adjustblockedrepositories:
     post:
       tags:
