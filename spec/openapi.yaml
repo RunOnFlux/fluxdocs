@@ -4184,6 +4184,188 @@ paths:
             schema:
               type: string
               format: binary
+  #Backup/Restore
+  /backup/getvolumedataofcomponent:
+    get:
+      tags:
+        - Backup/Restore
+      summary: Get volume data of a component
+      operationId: fluxGetvolumedataofcomponent
+      security:
+        - ZelID: []
+      parameters:
+        - in: query
+          name: appname
+          required: true
+          schema:
+            type: string
+          description: Name of the application
+          example: FoldingAtRunOnFlux11
+        - in: query
+          name: component
+          required: true
+          schema:
+            type: string
+          description: Component of application
+          example: FoldingAtHome
+        - in: query
+          name: multiplier
+          schema:
+            type: string
+          description: Multiplier value (B, KB, MB, GB, TB)
+          example: 'B'
+        - in: query
+          name: decimal
+          schema:
+            type: number
+          description: Decimal value
+          example: 2
+        - in: query
+          name: fields
+          required: true
+          schema:
+            type: string
+          description: Fields to include, possibls mount, size, used, available, capacity, filesystem separate with coma
+          example: size,used
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    $ref: '#/components/schemas/status'
+                  data:
+                    type: string
+              example:
+                status: success
+                data:
+                  size: 3.09
+                  used: 0.28
+  /backup/getremotefilesize:
+    get:
+      tags:
+        - Backup/Restore
+      summary: Get size of a remote file
+      operationId: fluxGetremotefilesize
+      security:
+        - ZelID: []
+      parameters:
+        - in: query
+          name: fileurl
+          required: true
+          schema:
+            type: string
+          description: Remote URL
+          example: https://go.dev/dl/go1.22.1.darwin-amd64.tar.gz
+        - in: query
+          name: multiplier
+          schema:
+            type: string
+          description: Multiplier value (B, KB, MB, GB, TB)
+          example: 'B'
+        - in: query
+          name: decimal
+          schema:
+            type: number
+          description: Decimal value
+          example: 2
+        - in: query
+          name: number
+          schema:
+            type: boolean
+          description: return only number
+          example: true
+        - in: query
+          name: appname
+          schema:
+            type: string
+          description: Application name
+          example: FoldingAtRunOnFlux11
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    $ref: '#/components/schemas/status'
+                  data:
+                    type: string
+              example:
+                status: success
+                data: 67267354
+  /backup/getlocalbackuplist:
+    get:
+      tags:
+        - Backup/Restore
+      summary: Get the list of local backups based on the provided appname
+      operationId: fluxGetlocalbackuplist
+      security:
+        - ZelID: []
+      parameters:
+        - in: query
+          name: fileurl
+          required: true
+          schema:
+            type: string
+          description: Full path
+          example: '%2Fhome%2Fflux01%2Fzelflux%2FZelApps%2FfluxFoldingAtHome_FoldingAtRunOnFlux11%2Fbackup%2Flocal'
+        - in: query
+          name: multiplier
+          schema:
+            type: string
+          description: Multiplier value (B, KB, MB, GB, TB)
+          example: 'B'
+        - in: query
+          name: decimal
+          schema:
+            type: number
+          description: Decimal value
+          example: 2
+        - in: query
+          name: number
+          schema:
+            type: boolean
+          description: return only number
+          example: true
+        - in: query
+          name: appname
+          schema:
+            type: string
+          description: Application name
+          example: FoldingAtRunOnFlux11
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    $ref: '#/components/schemas/status'
+                  data:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        name:
+                          type: string
+                        create:
+                          type: string
+                        size:
+                          type: integer
+              example:
+                status: success
+                data:
+                  - name: backup_foldingathome.tar.gz
+                    create: '1711116249595'
+                    size: 280725761
   #IOUtils
   /ioutils/fileupload:
     post:
