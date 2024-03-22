@@ -1,6 +1,6 @@
 openapi: 3.0.3
 info:
-  version: 5.5.0
+  version: 5.0.0
   title: Flux
   contact:
     email: tadeas@runonflux.io
@@ -90,8 +90,12 @@ tags:
     description: Calls that interact with Syncthing service
   - name: Fluxshare
     description: Calls that interact with Fluxshare service
-  - name: Backup / Restore
-    description: Calls that interact with Backup / Restore service
+  - name: Backup/Restore
+    description: Calls that interact with appication Backup/Restore service
+  - name: Volume Browser
+    description: Calls that interact with application Volume Browser service
+  - name: IOUtils
+    description: Calls that interact with files operations 
 servers:
   - url: 'https://api.runonflux.io'
 paths:
@@ -3915,6 +3919,197 @@ paths:
                   unicode: '14.0'
                   ngtcp2: 0.8.1
                   nghttp3: 0.7.0
+  #Volume Browser
+  /apps/getfolderinfo:
+     get:
+      tags:
+        - Volume Browser
+      summary: Get a list of files with their details for all files.
+      description: Get a list of files with their details for all files. **AppOwnerAbove**
+      operationId: fluxGetfolderinfo
+      security:
+        - ZelID: []
+      parameters:
+        - in: query
+          name: appname
+          required: true
+          schema:
+            type: string
+          example: FoldingAtRunOnFlux11
+        - in: query
+          name: component
+          required: true
+          schema:
+            type: string
+          example: FoldingAtHome
+        - in: query
+          name: folder
+          schema:
+            type: string
+          example: ddd         
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    $ref: '#/components/schemas/status'
+                  data:
+                    type: string
+              example:
+                status: success
+                data:
+                  - name: fluxredis_ethercalc (2).tar.gz
+                    size: 138008536
+                    isDirectory: false
+                    isFile: true
+                    isSymbolicLink: false
+                    createdAt: '2024-03-12T08:57:40.817Z'
+                    modifiedAt: '2024-03-12T08:58:19.263Z'
+  /apps/createfolder:
+     get:
+      tags:
+        - Volume Browser
+      summary: Create folder.
+      description: Create folder inside app volume. **AppOwnerAbove**
+      operationId: fluxCreatefolder
+      security:
+        - ZelID: []
+      parameters:
+        - in: query
+          name: appname
+          required: true
+          schema:
+            type: string
+          example: FoldingAtRunOnFlux11
+        - in: query
+          name: component
+          required: true
+          schema:
+            type: string
+          example: FoldingAtHome
+        - in: query
+          name: folder
+          required: true
+          schema:
+            type: string
+          example: ddd         
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    $ref: '#/components/schemas/status'
+                  data:
+                    type: string
+              example:
+                status: success
+                data:
+                  message: Folder Created
+  /apps/renameobject:
+     get:
+      tags:
+        - Volume Browser
+      summary: Rename file/folder
+      description: Rename file/folder. **AppOwnerAbove**
+      operationId: fluxRenameobject
+      security:
+        - ZelID: []
+      parameters:
+        - in: query
+          name: appname
+          required: true
+          schema:
+            type: string
+          example: FoldingAtRunOnFlux11
+        - in: query
+          name: component
+          required: true
+          schema:
+            type: string
+          example: FoldingAtHome
+        - in: query
+          name: oldpath
+          required: true
+          schema:
+            type: string
+          example: ddd 
+          description: old path name inside volume with file/folder name
+        - in: query
+          name: newname
+          required: true
+          description: new full path name inside volume with file/folder name
+          schema:
+            type: string
+          example: ccc             
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    $ref: '#/components/schemas/status'
+                  data:
+                    type: string
+              example:
+                status: success
+                data:
+                  message: Rename successful
+  /apps/removeobject:
+     get:
+      tags:
+        - Volume Browser
+      summary: Remove file/folder
+      description: Remove file/folder. **AppOwnerAbove**
+      operationId: fluxRemoveobject
+      security:
+        - ZelID: []
+      parameters:
+        - in: query
+          name: appname
+          required: true
+          schema:
+            type: string
+          example: FoldingAtRunOnFlux11
+        - in: query
+          name: component
+          required: true
+          schema:
+            type: string
+          example: FoldingAtHome
+        - in: query
+          name: object
+          required: true
+          schema:
+            type: string
+          example: ddd 
+          description: path name inside volume with file/folder name
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    $ref: '#/components/schemas/status'
+                  data:
+                    type: string
+              example:
+                status: success
+                data:
+                  message: Removed successful
   #Daemon
   /daemon/help:
     get:
