@@ -1,6 +1,6 @@
 openapi: 3.0.3
 info:
-  version: 5.0.0
+  version: 5.5.0
   title: Flux
   contact:
     email: tadeas@runonflux.io
@@ -3596,27 +3596,27 @@ paths:
                   address: 192.168.1.106
                   
   /flux/routerip:
-  get:
-    tags:
-      - Flux
-    summary: To show the current user's Router IP setup.
-    description: To show the current user's Router IP setup in configuration file that is being used with FluxOS. **PUBLIC**
-    operationId: fluxRouterip
-    responses:
-      '200':
-        description: OK
-        content:
-          application/json:
-            schema:
-              type: object
-              properties:
-                status:
-                  $ref: '#/components/schemas/status'
-                data:
-                  type: string
-            example:
-            status: success
-            data: '196.53.8.65'
+    get:
+      tags:
+        - Flux
+      summary: To show the current user's Router IP setup.
+      description: To show the current user's Router IP setup in configuration file that is being used with FluxO. **PUBLIC**
+      operationId: fluxRouterip
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    $ref: '#/components/schemas/status'
+                  data:
+                    type: string
+              example:
+                status: success
+                data: '196.53.8.65'
   /flux/blockedports:
     get:
       tags:
@@ -3752,6 +3752,169 @@ paths:
                 status: success
                 data: 
                   message: User Blocked Repositories adjusted
+  /flux/apiport:
+    get:
+      tags:
+        - Flux
+      summary: Show the current user's Api Port setup in configuration file that is being used by FluxOS.
+      description: Show the current user's Api Port. **PUBLIC**
+      operationId: fluxApiport
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    $ref: '#/components/schemas/status'
+                  data:
+                    type: string
+                    description: Api Port
+              example:
+                status: success
+                data: 16127
+  /flux/adjustapiport:
+    get:
+      tags:
+        - Flux
+      summary: Update Api Port setup in configuration file that is being used by FluxOS.
+      description: Update Api Port. **PUBLIC**
+      operationId: fluxAdjustapiport
+      security:
+        - ZelID: []
+      parameters:
+        - in: query
+          name: apiport
+          schema:
+            type: number
+          example: 16127
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    $ref: '#/components/schemas/status'
+                  data:
+                    type: string
+              example:
+                status: success
+                data: API Port adjusted
+  /flux/marketplaceurl:
+    get:
+      tags:
+        - Flux
+      summary: Show marketplace URL.
+      description: Show marketplace URL based on current development flag setup in configuration file that is being used with FluxOS. **PUBLIC**
+      operationId: fluxMarketplaceurl
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    $ref: '#/components/schemas/status'
+                  data:
+                    type: string
+                    description: Api Port
+              example:
+                status: success
+                data: https://stats.runonflux.io/marketplace/listapps
+  /flux/restart:
+    get:
+      tags:
+        - Flux
+      summary: Restart FluxOS.
+      description: Restart FluxOS. **Admin**
+      operationId: fluxRestart
+      security:
+        - ZelID: []
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    $ref: '#/components/schemas/status'
+                  data:
+                    type: string
+              example:
+                status: success
+                data: Restarting FluxOS..
+  /flux/systemuptime:
+    get:
+      tags:
+        - Flux
+      summary: Show system uptime.
+      description: Show system uptime in ms. **Public**
+      operationId: fluxSystemuptime
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    $ref: '#/components/schemas/status'
+                  data:
+                    type: number
+                    description: System uptime in ms
+              example:
+                status: success
+                data: 2531565
+  /flux/nodejsversions:
+    get:
+      tags:
+        - Flux
+      summary: Show nodejs entire versions object.
+      description: Show nodejs entire versions object. **Public**
+      operationId: fluxNodejsversions
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    $ref: '#/components/schemas/status'
+                  data:
+                    type: object
+                    description: Nodejs entire versions object
+              example:
+                status: success
+                data:
+                  node: 16.20.2
+                  v8: 9.4.146.26-node.26
+                  uv: 1.43.0
+                  zlib: 1.2.11
+                  brotli: 1.0.9
+                  ares: 1.19.1
+                  modules: '93'
+                  nghttp2: 1.47.0
+                  napi: '8'
+                  llhttp: 6.0.11
+                  openssl: 1.1.1v+quic
+                  cldr: '41.0'
+                  icu: '71.1'
+                  tz: 2022f
+                  unicode: '14.0'
+                  ngtcp2: 0.8.1
+                  nghttp3: 0.7.0
   #Daemon
   /daemon/help:
     get:
