@@ -4110,6 +4110,139 @@ paths:
                 status: success
                 data:
                   message: Removed successful
+  /apps/downloadfile:
+   get:
+    tags:
+      - Volume Browser
+    summary: Download file
+    description: Download file. **AppOwnerAbove**
+    operationId: fluxDownloadFile
+    security:
+      - ZelID: []
+    parameters:
+      - in: query
+        name: appname
+        required: true
+        schema:
+          type: string
+        example: FoldingAtRunOnFlux11
+      - in: query
+        name: component
+        required: true
+        schema:
+          type: string
+        example: FoldingAtHome
+      - in: query
+        name: file
+        required: true
+        schema:
+          type: string
+        example: notes.txt
+        description: full path inside volume to file
+    responses:
+      '200':
+        description: OK
+        content:
+          application/file:
+            schema:
+              type: string
+              format: binary
+  /apps/downloadfolder:
+   get:
+    tags:
+      - Volume Browser
+    summary: Download folder as gzip file
+    description: Download folder as gzip file. **AppOwnerAbove**
+    operationId: fluxDownloadFolder
+    security:
+      - ZelID: []
+    parameters:
+      - in: query
+        name: appname
+        required: true
+        schema:
+          type: string
+        example: FoldingAtRunOnFlux11
+      - in: query
+        name: component
+        required: true
+        schema:
+          type: string
+        example: FoldingAtHome
+      - in: query
+        name: folder
+        required: true
+        schema:
+          type: string
+        example: ddd
+        description: full path inside volume to folder
+    responses:
+      '200':
+        description: OK
+        content:
+          application/gzip:
+            schema:
+              type: string
+              format: binary
+  #IOUtils
+  /ioutils/fileupload:
+    post:
+      tags:
+        - IOUtils
+      summary: Upload file
+      description: Uploads a file to the specified location. **AppOwnerAbove**
+      operationId: fileUpload
+      security:
+        - ZelID: []
+      parameters:
+        - in: query
+          name: type
+          required: true
+          schema:
+            type: string
+          description: Type of upload (backup or volume)
+          example: volume
+        - in: query
+          name: appname
+          required: true
+          schema:
+            type: string
+          description: Name of the application
+          example: FoldingAtRunOnFlux11
+        - in: query
+          name: component
+          required: true
+          schema:
+            type: string
+          description: Component of application
+          example: FoldingAtHome
+        - in: query
+          name: folder
+          required: false
+          schema:
+            type: string
+          description: Full path inside volume to the folder
+          example: ddd/ccc
+        - in: query
+          name: filename
+          required: false
+          schema:
+            type: string
+          description: Name of the file to be uploaded. If not provided, the file will be uploaded with its original name.
+          example: FoldingAtHome.gzip
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                file:
+                  type: string
+                  format: binary
+      responses:
+        '200':
+          description: OK
   #Daemon
   /daemon/help:
     get:
