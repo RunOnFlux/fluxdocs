@@ -4216,6 +4216,7 @@ paths:
       tags:
         - Backup/Restore
       summary: Get volume data of a component
+      description: Get volume data of a component. **AppOwnerAbove**
       operationId: fluxGetvolumedataofcomponent
       security:
         - ZelID: []
@@ -4274,7 +4275,8 @@ paths:
     get:
       tags:
         - Backup/Restore
-      summary: Get size of a remote file
+      summary: Get size of a remote file. **AppOwnerAbove**
+      description: Get size of a remote file. **AppOwnerAbove**
       operationId: fluxGetremotefilesize
       security:
         - ZelID: []
@@ -4330,6 +4332,7 @@ paths:
       tags:
         - Backup/Restore
       summary: Get the list of local backups based on the provided appname
+      description:  Get the list of local backups based on the provided appname. **AppOwnerAbove**
       operationId: fluxGetlocalbackuplist
       security:
         - ZelID: []
@@ -4392,6 +4395,163 @@ paths:
                   - name: backup_foldingathome.tar.gz
                     create: '1711116249595'
                     size: 280725761
+  /backup/removebackupfile:
+    get:
+      tags:
+        - Backup/Restore
+      summary: Remove a backup file.
+      description: Remove a backup file.**AppOwnerAbove**
+      operationId: fluxRemovebackupfile
+      security:
+        - ZelID: []
+      parameters:
+        - in: query
+          name: filepath
+          required: true
+          schema:
+            type: string
+          description: Full path
+          example: '%2Fhome%2Fflux05%2Fzelflux%2FZelApps%2FfluxFoldingAtHome_FoldingAtRunOnFlux11%2Fbackup%2Flocal%2Fbackup_foldingathome.tar.gz'
+        - in: query
+          name: appname
+          required: true
+          schema:
+            type: string
+          description: Application name
+          example: FoldingAtRunOnFlux11
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    $ref: '#/components/schemas/status'
+                  data:
+                    type: object
+                    properties:
+                        message:
+                          type: boolean
+              example:
+                status: success
+                data:
+                  message: true
+  /backup/downloadlocalfile:
+   get:
+    tags:
+      - Backup/Restore
+    summary: Download a local backup file
+    description: Download a local backup file. **AppOwnerAbove**
+    operationId: fluxDownloadlocalfile
+    security:
+      - ZelID: []
+    parameters:
+      - in: query
+        name: filepath
+        required: true
+        schema:
+          type: string
+        description: Full path
+        example: '%2Fhome%2Fflux05%2Fzelflux%2FZelApps%2FfluxFoldingAtHome_FoldingAtRunOnFlux11%2Fbackup%2Flocal%2Fbackup_foldingathome.tar.gz'
+      - in: query
+        name: appname
+        required: true
+        schema:
+          type: string
+        description: Application name
+        example: FoldingAtRunOnFlux11
+    responses:
+      '200':
+        description: OK
+        content:
+          application/gzip:
+            schema:
+              type: string
+              format: binary
+  /apps/appendbackuptask:
+    post:
+      tags:
+      - Backup/Restore
+      summary: Append backup task to an application
+      description: Append backup task to an application. **AppOwnerAbove**
+      operationId: fluxAppendbackuptask
+      security:
+        - ZelID: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                appname:
+                  type: string
+                  description: Name of the application
+                  example: FoldingAtRunOnFlux11
+                backup:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      component:
+                        type: string
+                        description: Name of component
+                        example: FoldingAtHome
+                      backup:
+                        type: boolean
+                        description: Whether to perform backup for the component
+                        example: true
+              example:
+                appname: FoldingAtRunOnFlux11
+                backup:
+                  - component: FoldingAtHome
+                    backup: true
+      responses:
+        '200':
+          description: OK
+  /apps/appendrestoretask:
+    post:
+      tags:
+      - Backup/Restore
+      summary: Append restore task to an application
+      description: Append restore task to an application. **AppOwnerAbove**
+      operationId: fluxAppendrestoretask
+      security:
+        - ZelID: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                appname:
+                  type: string
+                  description: Name of the application
+                  example: FoldingAtRunOnFlux11
+                backup:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      component:
+                        type: string
+                        description: Name of component
+                        example: FoldingAtHome
+                      restore:
+                        type: boolean
+                        description: Whether to perform backup for the component
+                        example: true
+              example:
+                appname: FoldingAtRunOnFlux11
+                restore:
+                  - component: FoldingAtHome
+                    restore: true
+      responses:
+        '200':
+          description: OK
   #IOUtils
   /ioutils/fileupload:
     post:
