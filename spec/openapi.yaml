@@ -17717,6 +17717,37 @@ paths:
                 type: string
                 format: binary
               example: Hello world
+  /apps/fluxshare/upload:
+    post:
+      tags:
+        - Fluxshare
+      summary: Fluxshare - Upload file
+      description: Uploads a file. **Admin**
+      operationId: fileUploadFluxshare
+      security:
+        - ZelID: []
+      parameters:
+        - in: query
+          name: folder
+          required: false
+          schema:
+            type: string
+          description: path inside fluxshare
+          example: ddd/ccc
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                file:
+                  type: string
+                  format: binary
+      responses:
+        '200':
+          description: OK
+
   #Apps
   /apps/listrunningapps:
     get:
