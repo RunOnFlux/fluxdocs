@@ -1,6 +1,6 @@
 openapi: 3.0.3
 info:
-  version: 4.9.1
+  version: 5.1.0
   title: Flux
   contact:
     email: tadeas@runonflux.io
@@ -90,6 +90,12 @@ tags:
     description: Calls that interact with Syncthing service
   - name: Fluxshare
     description: Calls that interact with Fluxshare service
+  - name: Backup/Restore
+    description: Calls that interact with appication Backup/Restore service
+  - name: Volume Browser
+    description: Calls that interact with application Volume Browser service
+  - name: IOUtils
+    description: Calls that interact with files operations 
 servers:
   - url: 'https://api.runonflux.io'
 paths:
@@ -3592,6 +3598,1019 @@ paths:
                       - urn:schemas-upnp-org:service:WANIPConnection:2
                       - urn:schemas-upnp-org:service:WANPPPConnection:1
                   address: 192.168.1.106
+                  
+  /flux/routerip:
+    get:
+      tags:
+        - Flux
+      summary: To show the current user's Router IP setup.
+      description: To show the current user's Router IP setup in configuration file that is being used with FluxO. **PUBLIC**
+      operationId: fluxRouterip
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    $ref: '#/components/schemas/status'
+                  data:
+                    type: string
+              example:
+                status: success
+                data: '196.53.8.65'
+  /flux/adjustrouterip:
+    get:
+      tags:
+        - Flux
+      summary: Update the current routerIP.
+      description: Update the current routerIP that is being used with FluxOS. **Admin**
+      operationId: fluxAdjustrouterip
+      parameters:
+        - in: query
+          name: routerip
+          schema:
+            type: string
+          example: '196.53.8.65'
+      security:
+        - ZelID: []
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    $ref: '#/components/schemas/status'
+                  data:
+                    type: string
+              example:
+                status: success
+                data: 'Router IP adjusted'
+  /flux/blockedports:
+    get:
+      tags:
+        - Flux
+      summary: Show the current user's blocked ports list.
+      description: Show the current user's blocked ports list. **PUBLIC**
+      operationId: fluxBlockedports
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    $ref: '#/components/schemas/status'
+                  data:
+                    type: array
+                    items:
+                      type: number
+                      description: Port
+              example:
+                status: success
+                data:
+                  - 22
+  /flux/adjustblockedports:
+    post:
+      tags:
+        - Flux
+      summary: Update blocked port list.
+      description: Update the current blocked port list that is being used by FluxOS. **Admin**
+      operationId: fluxAdjustblockedports
+      requestBody:
+        required: true
+        content:
+           text/plain:
+            schema:
+              type: object
+              properties:
+                blockedPorts:
+                  type: array
+                  items:
+                    type: number
+              example:    
+                blockedPorts:
+                  - 2233
+                  - 5544
+      security:
+        - ZelID: []
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    $ref: '#/components/schemas/status'
+                  data:
+                    type: object
+              example:
+                status: success
+                data: 
+                  message: User Blocked Ports adjusted
+  /flux/blockedrepositories:
+    get:
+      tags:
+        - Flux
+      summary: Show the current user's blocked repositories list.
+      description: Show the current user's blocked repositories list. **PUBLIC**
+      operationId: fluxBlockedrepositories
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    $ref: '#/components/schemas/status'
+                  data:
+                    type: array
+                    items:
+                      type: number
+                      description: Port
+              example:
+                status: success
+                data:
+                  - 'zirnheltdj/wisconsinwaters:latest'
+  /flux/adjustblockedrepositories:
+    post:
+      tags:
+        - Flux
+      summary: Update blocked repositories list.
+      description: Update the current blocked repositories list that is being used by FluxOS. **Admin**
+      operationId: fluxAdjustblockedrepositories
+      requestBody:
+        required: true
+        content:
+           text/plain:
+            schema:
+              type: object
+              properties:
+                blockedRepositories:
+                  type: array
+                  items:
+                    type: string
+              example:    
+                blockedPorts:
+                  - 'zirnheltdj/wisconsinwaters:latest'
+      security:
+        - ZelID: []
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    $ref: '#/components/schemas/status'
+                  data:
+                    type: object
+              example:
+                status: success
+                data: 
+                  message: User Blocked Repositories adjusted
+  /flux/apiport:
+    get:
+      tags:
+        - Flux
+      summary: Show the current user's Api Port setup in configuration file that is being used by FluxOS.
+      description: Show the current user's Api Port. **PUBLIC**
+      operationId: fluxApiport
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    $ref: '#/components/schemas/status'
+                  data:
+                    type: string
+                    description: Api Port
+              example:
+                status: success
+                data: 16127
+  /flux/adjustapiport:
+    get:
+      tags:
+        - Flux
+      summary: Update Api Port setup in configuration file that is being used by FluxOS.
+      description: Update Api Port. **PUBLIC**
+      operationId: fluxAdjustapiport
+      security:
+        - ZelID: []
+      parameters:
+        - in: query
+          name: apiport
+          schema:
+            type: number
+          example: 16127
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    $ref: '#/components/schemas/status'
+                  data:
+                    type: string
+              example:
+                status: success
+                data: API Port adjusted
+  /flux/marketplaceurl:
+    get:
+      tags:
+        - Flux
+      summary: Show marketplace URL.
+      description: Show marketplace URL based on current development flag setup in configuration file that is being used with FluxOS. **PUBLIC**
+      operationId: fluxMarketplaceurl
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    $ref: '#/components/schemas/status'
+                  data:
+                    type: string
+                    description: Api Port
+              example:
+                status: success
+                data: https://stats.runonflux.io/marketplace/listapps
+  /flux/restart:
+    get:
+      tags:
+        - Flux
+      summary: Restart FluxOS.
+      description: Restart FluxOS. **Admin**
+      operationId: fluxRestart
+      security:
+        - ZelID: []
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    $ref: '#/components/schemas/status'
+                  data:
+                    type: string
+              example:
+                status: success
+                data: Restarting FluxOS..
+  /flux/systemuptime:
+    get:
+      tags:
+        - Flux
+      summary: Show system uptime.
+      description: Show system uptime in ms. **Public**
+      operationId: fluxSystemuptime
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    $ref: '#/components/schemas/status'
+                  data:
+                    type: number
+                    description: System uptime in ms
+              example:
+                status: success
+                data: 2531565
+  /flux/nodejsversions:
+    get:
+      tags:
+        - Flux
+      summary: Show nodejs entire versions object.
+      description: Show nodejs entire versions object. **Public**
+      operationId: fluxNodejsversions
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    $ref: '#/components/schemas/status'
+                  data:
+                    type: object
+                    description: Nodejs entire versions object
+              example:
+                status: success
+                data:
+                  node: 16.20.2
+                  v8: 9.4.146.26-node.26
+                  uv: 1.43.0
+                  zlib: 1.2.11
+                  brotli: 1.0.9
+                  ares: 1.19.1
+                  modules: '93'
+                  nghttp2: 1.47.0
+                  napi: '8'
+                  llhttp: 6.0.11
+                  openssl: 1.1.1v+quic
+                  cldr: '41.0'
+                  icu: '71.1'
+                  tz: 2022f
+                  unicode: '14.0'
+                  ngtcp2: 0.8.1
+                  nghttp3: 0.7.0
+  #Volume Browser
+  /apps/getfolderinfo:
+     get:
+      tags:
+        - Volume Browser
+      summary: Get a list of files with their details for all files.
+      description: Get a list of files with their details for all files. **AppOwnerAbove**
+      operationId: fluxGetfolderinfo
+      security:
+        - ZelID: []
+      parameters:
+        - in: query
+          name: appname
+          required: true
+          schema:
+            type: string
+          example: FoldingAtRunOnFlux11
+        - in: query
+          name: component
+          required: true
+          schema:
+            type: string
+          example: FoldingAtHome
+        - in: query
+          name: folder
+          schema:
+            type: string
+          example: ddd         
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    $ref: '#/components/schemas/status'
+                  data:
+                    type: string
+              example:
+                status: success
+                data:
+                  - name: fluxredis_ethercalc (2).tar.gz
+                    size: 138008536
+                    isDirectory: false
+                    isFile: true
+                    isSymbolicLink: false
+                    createdAt: '2024-03-12T08:57:40.817Z'
+                    modifiedAt: '2024-03-12T08:58:19.263Z'
+  /apps/createfolder:
+     get:
+      tags:
+        - Volume Browser
+      summary: Create folder.
+      description: Create folder inside app volume. **AppOwnerAbove**
+      operationId: fluxCreatefolder
+      security:
+        - ZelID: []
+      parameters:
+        - in: query
+          name: appname
+          required: true
+          schema:
+            type: string
+          example: FoldingAtRunOnFlux11
+        - in: query
+          name: component
+          required: true
+          schema:
+            type: string
+          example: FoldingAtHome
+        - in: query
+          name: folder
+          required: true
+          schema:
+            type: string
+          example: ddd         
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    $ref: '#/components/schemas/status'
+                  data:
+                    type: string
+              example:
+                status: success
+                data:
+                  message: Folder Created
+  /apps/renameobject:
+     get:
+      tags:
+        - Volume Browser
+      summary: Rename file/folder
+      description: Rename file/folder. **AppOwnerAbove**
+      operationId: fluxRenameobject
+      security:
+        - ZelID: []
+      parameters:
+        - in: query
+          name: appname
+          required: true
+          schema:
+            type: string
+          example: FoldingAtRunOnFlux11
+        - in: query
+          name: component
+          required: true
+          schema:
+            type: string
+          example: FoldingAtHome
+        - in: query
+          name: oldpath
+          required: true
+          schema:
+            type: string
+          example: ddd 
+          description: old path name inside volume with file/folder name
+        - in: query
+          name: newname
+          required: true
+          description: new full path name inside volume with file/folder name
+          schema:
+            type: string
+          example: ccc             
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    $ref: '#/components/schemas/status'
+                  data:
+                    type: string
+              example:
+                status: success
+                data:
+                  message: Rename successful
+  /apps/removeobject:
+     get:
+      tags:
+        - Volume Browser
+      summary: Remove file/folder
+      description: Remove file/folder. **AppOwnerAbove**
+      operationId: fluxRemoveobject
+      security:
+        - ZelID: []
+      parameters:
+        - in: query
+          name: appname
+          required: true
+          schema:
+            type: string
+          example: FoldingAtRunOnFlux11
+        - in: query
+          name: component
+          required: true
+          schema:
+            type: string
+          example: FoldingAtHome
+        - in: query
+          name: object
+          required: true
+          schema:
+            type: string
+          example: ddd 
+          description: path name inside volume with file/folder name
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    $ref: '#/components/schemas/status'
+                  data:
+                    type: string
+              example:
+                status: success
+                data:
+                  message: Removed successful
+  /apps/downloadfile:
+   get:
+    tags:
+      - Volume Browser
+    summary: Download file
+    description: Download file. **AppOwnerAbove**
+    operationId: fluxDownloadFile
+    security:
+      - ZelID: []
+    parameters:
+      - in: query
+        name: appname
+        required: true
+        schema:
+          type: string
+        example: FoldingAtRunOnFlux11
+      - in: query
+        name: component
+        required: true
+        schema:
+          type: string
+        example: FoldingAtHome
+      - in: query
+        name: file
+        required: true
+        schema:
+          type: string
+        example: notes.txt
+        description: full path inside volume to file
+    responses:
+      '200':
+        description: OK
+        content:
+          application/file:
+            schema:
+              type: string
+              format: binary
+  /apps/downloadfolder:
+   get:
+    tags:
+      - Volume Browser
+    summary: Download folder as gzip file
+    description: Download folder as gzip file. **AppOwnerAbove**
+    operationId: fluxDownloadFolder
+    security:
+      - ZelID: []
+    parameters:
+      - in: query
+        name: appname
+        required: true
+        schema:
+          type: string
+        example: FoldingAtRunOnFlux11
+      - in: query
+        name: component
+        required: true
+        schema:
+          type: string
+        example: FoldingAtHome
+      - in: query
+        name: folder
+        required: true
+        schema:
+          type: string
+        example: ddd
+        description: full path inside volume to folder
+    responses:
+      '200':
+        description: OK
+        content:
+          application/gzip:
+            schema:
+              type: string
+              format: binary
+  #Backup/Restore
+  /backup/getvolumedataofcomponent:
+    get:
+      tags:
+        - Backup/Restore
+      summary: Get volume data of a component
+      description: Get volume data of a component. **AppOwnerAbove**
+      operationId: fluxGetvolumedataofcomponent
+      security:
+        - ZelID: []
+      parameters:
+        - in: query
+          name: appname
+          required: true
+          schema:
+            type: string
+          description: Name of the application
+          example: FoldingAtRunOnFlux11
+        - in: query
+          name: component
+          required: true
+          schema:
+            type: string
+          description: Component of application
+          example: FoldingAtHome
+        - in: query
+          name: multiplier
+          schema:
+            type: string
+          description: Multiplier value (B, KB, MB, GB, TB)
+          example: 'B'
+        - in: query
+          name: decimal
+          schema:
+            type: number
+          description: Decimal value
+          example: 2
+        - in: query
+          name: fields
+          required: true
+          schema:
+            type: string
+          description: Fields to include, possibls mount, size, used, available, capacity, filesystem separate with coma
+          example: size,used
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    $ref: '#/components/schemas/status'
+                  data:
+                    type: string
+              example:
+                status: success
+                data:
+                  size: 3.09
+                  used: 0.28
+  /backup/getremotefilesize:
+    get:
+      tags:
+        - Backup/Restore
+      summary: Get size of a remote file. **AppOwnerAbove**
+      description: Get size of a remote file. **AppOwnerAbove**
+      operationId: fluxGetremotefilesize
+      security:
+        - ZelID: []
+      parameters:
+        - in: query
+          name: fileurl
+          required: true
+          schema:
+            type: string
+          description: Remote URL
+          example: https://go.dev/dl/go1.22.1.darwin-amd64.tar.gz
+        - in: query
+          name: multiplier
+          schema:
+            type: string
+          description: Multiplier value (B, KB, MB, GB, TB)
+          example: 'B'
+        - in: query
+          name: decimal
+          schema:
+            type: number
+          description: Decimal value
+          example: 2
+        - in: query
+          name: number
+          schema:
+            type: boolean
+          description: return only number
+          example: true
+        - in: query
+          name: appname
+          schema:
+            type: string
+          description: Application name
+          example: FoldingAtRunOnFlux11
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    $ref: '#/components/schemas/status'
+                  data:
+                    type: string
+              example:
+                status: success
+                data: 67267354
+  /backup/getlocalbackuplist:
+    get:
+      tags:
+        - Backup/Restore
+      summary: Get the list of local backups based on the provided appname
+      description:  Get the list of local backups based on the provided appname. **AppOwnerAbove**
+      operationId: fluxGetlocalbackuplist
+      security:
+        - ZelID: []
+      parameters:
+        - in: query
+          name: fileurl
+          required: true
+          schema:
+            type: string
+          description: Full path
+          example: '%2Fhome%2Fflux01%2Fzelflux%2FZelApps%2FfluxFoldingAtHome_FoldingAtRunOnFlux11%2Fbackup%2Flocal'
+        - in: query
+          name: multiplier
+          schema:
+            type: string
+          description: Multiplier value (B, KB, MB, GB, TB)
+          example: 'B'
+        - in: query
+          name: decimal
+          schema:
+            type: number
+          description: Decimal value
+          example: 2
+        - in: query
+          name: number
+          schema:
+            type: boolean
+          description: return only number
+          example: true
+        - in: query
+          name: appname
+          schema:
+            type: string
+          description: Application name
+          example: FoldingAtRunOnFlux11
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    $ref: '#/components/schemas/status'
+                  data:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        name:
+                          type: string
+                        create:
+                          type: string
+                        size:
+                          type: integer
+              example:
+                status: success
+                data:
+                  - name: backup_foldingathome.tar.gz
+                    create: '1711116249595'
+                    size: 280725761
+  /backup/removebackupfile:
+    get:
+      tags:
+        - Backup/Restore
+      summary: Remove a backup file.
+      description: Remove a backup file.**AppOwnerAbove**
+      operationId: fluxRemovebackupfile
+      security:
+        - ZelID: []
+      parameters:
+        - in: query
+          name: filepath
+          required: true
+          schema:
+            type: string
+          description: Full path
+          example: '%2Fhome%2Fflux05%2Fzelflux%2FZelApps%2FfluxFoldingAtHome_FoldingAtRunOnFlux11%2Fbackup%2Flocal%2Fbackup_foldingathome.tar.gz'
+        - in: query
+          name: appname
+          required: true
+          schema:
+            type: string
+          description: Application name
+          example: FoldingAtRunOnFlux11
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    $ref: '#/components/schemas/status'
+                  data:
+                    type: object
+                    properties:
+                        message:
+                          type: boolean
+              example:
+                status: success
+                data:
+                  message: true
+  /backup/downloadlocalfile:
+   get:
+    tags:
+      - Backup/Restore
+    summary: Download a local backup file
+    description: Download a local backup file. **AppOwnerAbove**
+    operationId: fluxDownloadlocalfile
+    security:
+      - ZelID: []
+    parameters:
+      - in: query
+        name: filepath
+        required: true
+        schema:
+          type: string
+        description: Full path
+        example: '%2Fhome%2Fflux05%2Fzelflux%2FZelApps%2FfluxFoldingAtHome_FoldingAtRunOnFlux11%2Fbackup%2Flocal%2Fbackup_foldingathome.tar.gz'
+      - in: query
+        name: appname
+        required: true
+        schema:
+          type: string
+        description: Application name
+        example: FoldingAtRunOnFlux11
+    responses:
+      '200':
+        description: OK
+        content:
+          application/gzip:
+            schema:
+              type: string
+              format: binary
+  /apps/appendbackuptask:
+    post:
+      tags:
+      - Backup/Restore
+      summary: Append backup task to an application
+      description: Append backup task to an application. **AppOwnerAbove**
+      operationId: fluxAppendbackuptask
+      security:
+        - ZelID: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                appname:
+                  type: string
+                  description: Name of the application
+                  example: FoldingAtRunOnFlux11
+                backup:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      component:
+                        type: string
+                        description: Name of component
+                        example: FoldingAtHome
+                      backup:
+                        type: boolean
+                        description: Whether to perform backup for the component
+                        example: true
+              example:
+                appname: FoldingAtRunOnFlux11
+                backup:
+                  - component: FoldingAtHome
+                    backup: true
+      responses:
+        '200':
+          description: OK
+  /apps/appendrestoretask:
+    post:
+      tags:
+      - Backup/Restore
+      summary: Append restore task to an application
+      description: Append restore task to an application. **AppOwnerAbove**
+      operationId: fluxAppendrestoretask
+      security:
+        - ZelID: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                appname:
+                  type: string
+                  description: Name of the application
+                  example: FoldingAtRunOnFlux11
+                backup:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      component:
+                        type: string
+                        description: Name of component
+                        example: FoldingAtHome
+                      restore:
+                        type: boolean
+                        description: Whether to perform backup for the component
+                        example: true
+              example:
+                appname: FoldingAtRunOnFlux11
+                restore:
+                  - component: FoldingAtHome
+                    restore: true
+      responses:
+        '200':
+          description: OK
+  #IOUtils
+  /ioutils/fileupload:
+    post:
+      tags:
+        - IOUtils
+      summary: Upload file
+      description: Uploads a file to the specified location. **AppOwnerAbove**
+      operationId: fileUpload
+      security:
+        - ZelID: []
+      parameters:
+        - in: query
+          name: type
+          required: true
+          schema:
+            type: string
+          description: Type of upload (backup or volume)
+          example: volume
+        - in: query
+          name: appname
+          required: true
+          schema:
+            type: string
+          description: Name of the application
+          example: FoldingAtRunOnFlux11
+        - in: query
+          name: component
+          required: true
+          schema:
+            type: string
+          description: Component of application
+          example: FoldingAtHome
+        - in: query
+          name: folder
+          required: false
+          schema:
+            type: string
+          description: Full path inside volume to the folder
+          example: ddd/ccc
+        - in: query
+          name: filename
+          required: false
+          schema:
+            type: string
+          description: Name of the file to be uploaded. If not provided, the file will be uploaded with its original name.
+          example: FoldingAtHome.gzip
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                file:
+                  type: string
+                  format: binary
+      responses:
+        '200':
+          description: OK
   #Daemon
   /daemon/help:
     get:
@@ -16211,6 +17230,9 @@ paths:
                 status: success
                 data:
                   status: "OK"
+  #FluxBackup/Restore
+  
+  
   #FluxShare
   /apps/fluxshare/getfile:
     get:
@@ -16695,6 +17717,37 @@ paths:
                 type: string
                 format: binary
               example: Hello world
+  /apps/fluxshare/upload:
+    post:
+      tags:
+        - Fluxshare
+      summary: Fluxshare - Upload file
+      description: Uploads a file. **Admin**
+      operationId: fileUploadFluxshare
+      security:
+        - ZelID: []
+      parameters:
+        - in: query
+          name: folder
+          required: false
+          schema:
+            type: string
+          description: path inside fluxshare
+          example: ddd/ccc
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                file:
+                  type: string
+                  format: binary
+      responses:
+        '200':
+          description: OK
+
   #Apps
   /apps/listrunningapps:
     get:
@@ -17904,9 +18957,9 @@ paths:
         - Apps
       summary: Calculate price of app
       description: >-
+        **DEPRECATED**: To get app price. Should be used getAppFiatAndFluxPrice method instead.
         Calculate price by sending request with specs required for app you are
         registering. **Public**
-
 
         Note: If tiered value is set to true you will also need to add the
         following key/value pairs
@@ -17916,6 +18969,7 @@ paths:
         `ramsuper: <n value in mb>`, `rambamf: <n value in mb>`, `hddbasic: <n
         value in gb>`, `hddsuper: <n value in gb>`, `hddbamf: <n value in gb>`
       operationId: getAppPrice
+      deprecated: true
       requestBody:
         required: true
         content:
@@ -18104,6 +19158,214 @@ paths:
               example:
                 status: success
                 data: 1.6
+  /apps/calculatefiatandfluxprice:
+    post:
+      tags:
+        - Apps
+      summary: Calculate price of app
+      description: >-
+        Calculate price by sending request with specs required for app you are
+        registering. **Public**
+
+        Note: If tiered value is set to true you will also need to add the
+        following key/value pairs
+
+        - `cpubasic: <n value of cpu core>`, `cpusuper: <n value of cpu core>`,
+        `cpubamf: <n value of cpu core>`, `rambasic: <n value in mb>`,
+        `ramsuper: <n value in mb>`, `rambamf: <n value in mb>`, `hddbasic: <n
+        value in gb>`, `hddsuper: <n value in gb>`, `hddbamf: <n value in gb>`
+      operationId: getAppPriceNew
+      requestBody:
+        required: true
+        content:
+          text/plain:
+            schema:
+              type: object
+              properties:
+                version:
+                  type: integer
+                  description: Version of message which is 7
+                name:
+                  type: string
+                  description: Name of app
+                description:
+                  type: string
+                  description: Description of app
+                owner:
+                  type: string
+                  description: Your ZelID
+                compose:
+                  type: array
+                  items:
+                    type: object
+                    description: component specification
+                    properties:
+                      name:
+                        type: string
+                        description: Name of app
+                      description:
+                        type: string
+                        description: Description of component
+                      repotag:
+                        type: string
+                        description: 'Repotag of docker image in this format `namespace/repository:tag`'
+                      ports:
+                        type: array
+                        items:
+                          type: integer
+                          description: Ports list
+                      domains:
+                        type: array
+                        items:
+                          type: string
+                          description: Domain list
+                      enviromentParameters:
+                        type: array
+                        items:
+                          type: string
+                          description: Environment variables
+                      commands:
+                        type: array
+                        items:
+                          type: string
+                          description: Execution list
+                      containerPorts:
+                        type: array
+                        items:
+                          type: integer
+                          description: Container ports
+                      containerData:
+                        type: string
+                        description: >-
+                          Directory the data is stored and what dir is tied to the system
+                          folder
+                      cpu:
+                        type: number
+                        description: CPU amount requesting
+                      ram:
+                        type: integer
+                        description: Ram amount requesting in MB
+                      hdd:
+                        type: integer
+                        description: Storage space requesting in GB
+                      tiered:
+                        type: boolean
+                        description: >-
+                          If set to true you will also need following key/value pairs to
+                          provide tiered info. If false do not add the following key/value
+                          pairs.
+                      cpubasic:
+                        type: number
+                        description: CPU amount
+                      cpusuper:
+                        type: number
+                        description: CPU amount
+                      cpubamf:
+                        type: number
+                        description: CPU amount
+                      rambasic:
+                        type: integer
+                        description: Ram amount in MB
+                      ramsuper:
+                        type: integer
+                        description: Ram amount in MB
+                      rambamf:
+                        type: integer
+                        description: Ram amount in MB
+                      hddbasic:
+                        type: integer
+                        description: Storage space in GB
+                      hddsuper:
+                        type: integer
+                        description: Storage space in GB
+                      hddbamf:
+                        type: integer
+                        description: Storage space in GB
+                      secrets:
+                        type: string
+                        description: >-
+                          Array of strings of Secret Environmental Parameters. This will be encrypted and accessible to selected Enterprise Nodes only.
+                      repoauth:
+                        type: string
+                        description: >-
+                          Docker image authentication for private images in the format of username:apikey. This field will be encrypted and accessible to selected Enterprise Nodes only.
+                instances:
+                  type: integer
+                  description: Instances number             
+                contacts:
+                  type: array
+                  items:
+                    type: string
+                    description: Mail list
+                geolocation:
+                  type: array
+                  items:
+                    type: string
+                    description: Geolocation symbols 
+                expire:
+                  type: integer
+                  description: Number of blocks after apps expire 
+                nodes:
+                  type: array
+                  items:
+                    type: string
+                    description: Enterprise Nodes IP list          
+                staticip:
+                  type: boolean
+                  description: >-
+                    If set to true apps will be installed of nodes with static IP only.
+            example:
+              version: 7
+              name: blockbookneurai
+              description: Blockbook for Neurai
+              owner: 1XcNTEsgVND4eb3bsVa2bjktnZZSruVct
+              compose:
+                - name: blockbookneurai
+                  description: Blockbook for Neurai
+                  repotag: runonflux/blockbook-docker:latest
+                  ports:
+                    - 38382
+                    - 38383
+                  domains:
+                    - ''
+                    - ''
+                  environmentParameters: []
+                  commands: []
+                  containerPorts:
+                    - 9199
+                    - 1337
+                  containerData: /root
+                  cpu: 2.5
+                  ram: 5000
+                  hdd: 40
+                  tiered: false
+                  secrets: ''
+                  repoauth: ''
+              instances: 3
+              contacts: []
+              geolocation: []
+              expire: 22000
+              nodes: []
+              staticip: false
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    $ref: '#/components/schemas/status'
+                  data:
+                    type: string
+                    description: FLUX amount
+              example:
+                status: success
+                data:
+                  usd: 7.05
+                  flux: 4.73
+                  fluxDiscount: 10
   /apps/appstart:
     get:
       tags:
@@ -20123,6 +21385,62 @@ paths:
                     enterprisePoints: 0
                     enterpriseApps: 0
                     score: 4
+  /apps/requestmessage:
+    get:
+      tags:
+        - Apps
+      summary: Request application message hash.
+      description: >-
+        This will request application message hash. **AdminAndFluxTeam**
+      operationId: getRequestmessage
+      parameters:
+        - in: query
+          name: hash
+          required: true
+          schema:
+            type: string
+          description: 'Application hash'
+          example: 'bf3d860a1d5d0379519afc7da441fb56c688f83e528162d5f6825c05f6c27e7a'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    $ref: '#/components/schemas/status'
+                  data:
+                    type: object
+              example:
+                status: success
+                data:
+                  message: 'Application hash bf3d860a1d5d0379519afc7da441fb56c688f83e528162d5f6825c05f6c27e7a requested from the network'
+  /apps/checkhashes:
+    get:
+      tags:
+        - Apps
+      summary: Request check for missing application message.
+      description: >-
+        This will tigger check for misssing application messages. **AdminAndFluxTeam**
+      operationId: getCheckhashes
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    $ref: '#/components/schemas/status'
+                  data:
+                    type: object
+              example:
+                status: success
+                data:
+                  message: 'Running check on missing application messages'
   #Explorer               
   /explorer/fluxtxs:
     get:
