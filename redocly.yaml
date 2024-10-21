@@ -1,9 +1,23 @@
-
-apiTitle: fluxdocs
-splitSpec: false
-codeSamples: true
-swaggerUI: true
-travis: true
-breaks: true
-repo: runonflux/fluxdocs
-oasVersion: 3.0.3
+# See https://redocly.com/docs/cli/configuration/ for more information.
+apis:
+  sample@v1: 
+    root: openapi/openapi.yaml
+extends:
+  - recommended
+rules:
+  no-unused-components: error
+  no-server-example.com: off
+theme:
+  openapi:
+    htmlTemplate: ./docs/index.html
+    theme:
+      colors:
+        primary:
+          main: "#32329f"
+    generateCodeSamples:
+      languages:  # Array of language config objects; indicates in which languages to generate code samples.
+        - lang: curl
+        - lang: Node.js
+        - lang: JavaScript
+        - lang: PHP
+        - lang: Python
