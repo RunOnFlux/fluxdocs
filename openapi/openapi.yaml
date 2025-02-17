@@ -20799,7 +20799,7 @@ paths:
     get:
       tags:
         - Apps
-      summary: Clean and remove container
+      summary: Uninstall application
       description: >-
         This will stop, clean data, close port, and remove the container.
         **AdminAndFluxTeam**
@@ -20808,12 +20808,28 @@ paths:
         - ZelID: []
       parameters:
         - in: query
-          name: app
+          name: appname
           required: true
           schema:
             type: string
-          description: Name/Id of app
+          description: Name of the app
           example: fluxFoldingAtHome
+        - in: query
+          name: force
+          required: false
+          schema:
+            type: boolean
+            default: false
+          description: >-
+            Defaults to false. If true, forces removal without checking if the app exists.
+        - in: query
+          name: global
+          required: false
+          schema:
+            type: boolean
+            default: false
+          description: >-
+            Defaults to false (local removal). If true, removes the app from all nodes in the network.
       responses:
         '200':
           description: OK
@@ -20829,7 +20845,7 @@ paths:
                     description: Status of the cleanup in progress
               example:
                 status: success
-                data: App fluxFoldingAtHome was successfuly removed
+                data: App fluxFoldingAtHome was successfully removed
   /apps/installtemporarylocalapp:
     get:
       tags:
