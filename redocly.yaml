@@ -1,3 +1,17 @@
+navbar:
+  items:
+    - href: /fluxapi/
+      label: API Reference
+    - href: https://docs.runonflux.com/
+      label: Documentation
+      external: true
+    - href: https://home.runonflux.io/
+      label: FluxOS
+      external: true
+    - href: https://runonflux.com/
+      label: About Flux
+      external: true
+
 apis:
   main: 
     root: fluxapi.yaml
