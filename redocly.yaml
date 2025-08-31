@@ -1,3 +1,10 @@
+# SEO and Meta Configuration
+seo:
+  title: "Flux API Documentation"
+  description: "Complete API reference for Flux - decentralized cloud computing infrastructure"
+  keywords: "Flux, API, blockchain, decentralized, cloud computing, documentation"
+  favicon: "/favicon.ico"
+
 navbar:
   items:
     - href: /fluxapi/
@@ -11,6 +18,29 @@ navbar:
     - href: https://runonflux.com/
       label: About Flux
       external: true
+
+# Footer configuration
+footer:
+  copyrightText: "Copyright 2025 InFlux Technologies"
+  items:
+    - group: Resources
+      items:
+        - label: GitHub
+          href: https://github.com/RunOnFlux
+          external: true
+        - label: Discord
+          href: https://discord.gg/runonflux
+          external: true
+        - label: Twitter
+          href: https://x.com/runonflux
+          external: true
+    - group: Documentation
+      items:
+        - label: API Reference
+          href: /fluxapi/
+        - label: User Guide
+          href: https://docs.runonflux.com/
+          external: true
 
 apis:
   main: 
@@ -27,10 +57,23 @@ apis:
         pathInMiddlePanel: true
         expandResponses: "200,201,400,401,403,404,500"
         sortPropsAlphabetically: true
+        hideDownloadButton: false
+        hideHostname: false
+        hideLoading: false
+        nativeScrollbars: false
+        scrollYOffset: 0
+        suppressWarnings: true
+        payloadSampleIdx: 0
         theme:
           colors:
             primary:
               main: "#32329f"
+            success:
+              main: "#00C851"
+            warning: 
+              main: "#ffbb33"
+            error:
+              main: "#ff4444"
 
 extends:
   - recommended
