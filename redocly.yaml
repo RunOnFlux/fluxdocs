@@ -3,6 +3,12 @@ seo:
   title: "Flux API Documentation"
   description: "Complete API reference for Flux - decentralized cloud computing infrastructure"
   keywords: "Flux, API, blockchain, decentralized, cloud computing, documentation"
+
+# Site branding and favicon
+logo:
+  image: "/flux_logo.png"
+  altText: "RunOnFlux"
+  link: "/fluxapi/"
   favicon: "/favicon.ico"
 
 navbar:
