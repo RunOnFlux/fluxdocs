@@ -1,6 +1,6 @@
 {
   "name": "fluxdocs",
-  "version": "2.0.0",
+  "version": "3.0.0",
   "author": "InFlux Technologies Limited",
   "license": "GNU AGPLv3",
   "repository": {
@@ -8,21 +8,13 @@
     "url": "git://github.com/runonflux/fluxdocs.git"
   },
   "description": "FluxOS documentation",
-  "contributors": [
-    {
-      "name": "dk808"
-    },
-    {
-      "name": "Tadeas Kmenta",
-      "email": "tadeas@runonflux.io"
-    }
-  ],
   "scripts": {
-    "start": "redocly preview-docs",
-    "build": "redocly bundle -o dist/bundle.yaml",
-    "test": "redocly lint"
+    "start": "redocly preview --port 4000",
+    "build": "redocly build-docs fluxapi.yaml --output docs/index.html --title \"FluxOS API Documentation\"",
+    "test": "redocly lint fluxapi.yaml",
+    "docker": "docker build -t fluxdocs . && docker run --rm -p 4000:4000 fluxdocs"
   },
   "dependencies": {
-    "@redocly/cli": "^1.25.7"
+    "@redocly/cli": "^2.0.8"
   }
 }

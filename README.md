@@ -1,31 +1,25 @@
-# Flux documentation OpenAPI Specification
+# FluxOS API Documentation
 
-[Flux](https://github.com/runonflux/flux/)
+Beautiful, interactive API documentation for FluxOS. Test against `https://api.runonflux.io`.
 
-## Links
+## Quick Start
 
-- [Reference Documentation (ReDoc)](https://docs.runonflux.io)
-- [SwaggerUI](https://docs.runonflux.io/swagger-ui/)
-- OpenAPI Raw Files: [JSON](https://docs.runonflux.io/openapi.json) [YAML](https://docs.runonflux.io/openapi.yaml)
+```bash
+npm install
+npm start
+```
 
-**Warning:** All above links are updated only after Travis CI finishes deployment
+Visit http://localhost:4000 - Modern Redocly v2 interface with interactive testing.
 
-## Working on specification
-### Install
+## Commands
 
-1. Install [Node JS](https://nodejs.org/)
-2. Clone repo and run `npm install` in the repo root
+- `npm start` - Start interactive documentation server
+- `npm run build` - Generate static HTML for GitHub Pages  
+- `npm test` - Lint OpenAPI specification
+- `npm run docker` - Run in Docker container
 
-### Usage
+## Deployment
 
-#### `npm start`
-Starts the development server.
+**GitHub Pages**: Push to master, GitHub Actions will deploy automatically.
 
-#### `npm run build`
-Bundles the spec and prepares web_deploy folder with static assets.
-
-#### `npm test`
-Validates the spec.
-
-#### `npm run gh-pages`
-Deploys docs to GitHub Pages. You don't need to run it manually if you have Travis CI configured.
+**Your Server**: Run `npm start` or `npm run docker` for containerized deployment.

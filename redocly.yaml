@@ -1,23 +1,28 @@
-# See https://redocly.com/docs/cli/configuration/ for more information.
 apis:
-  sample@v1: 
-    root: openapi/openapi.yaml
+  main: 
+    root: fluxapi.yaml
+    theme:
+      openapi:
+        generateCodeSamples:
+          languages:
+            - lang: curl
+            - lang: JavaScript
+            - lang: Node.js
+            - lang: PHP  
+            - lang: Python
+        pathInMiddlePanel: true
+        expandResponses: "200,201,400,401,403,404,500"
+        sortPropsAlphabetically: true
+        theme:
+          colors:
+            primary:
+              main: "#32329f"
+
 extends:
   - recommended
+
 rules:
+  operation-4xx-response: off
+  no-invalid-media-type-examples: off
   no-unused-components: error
   no-server-example.com: off
-theme:
-  openapi:
-    htmlTemplate: ./docs/index.html
-    theme:
-      colors:
-        primary:
-          main: "#32329f"
-    generateCodeSamples:
-      languages:  # Array of language config objects; indicates in which languages to generate code samples.
-        - lang: curl
-        - lang: Node.js
-        - lang: JavaScript
-        - lang: PHP
-        - lang: Python
