@@ -1,101 +1,386 @@
 openapi: 3.0.3
 info:
   version: 6.6.1
-  title: Flux OS API
+  title: Flux Decentralized Cloud API
+  termsOfService: 'https://cdn.runonflux.io/Flux_Terms_of_Service.pdf'
   contact:
-    email: info@runonflux.com
+    name: Flux Development Team
+    email: development@runonflux.com
     url: 'https://docs.runonflux.io'
   license:
     name: GNU AGPLv3
     url: 'https://www.gnu.org/licenses/agpl-3.0.en.html'
   x-logo:
-    url: 'https://raw.githubusercontent.com/runonflux/fluxdocs/master/flux.jpg'
+    url: 'https://raw.githubusercontent.com/runonflux/fluxdocs/master/flux_logo.png'
   description: >-
-    This is an API documentation of calls available to be made to any Flux.
-    <br>
-    GET Calls are available as both query and in order as path.
-    <br>
-    Flux is completely open source and we encourage everyone to feel free and
-    contribute :)
-    <br>
-    Further questions or support join and ask in our [discord](https://discord.io/runonflux)
-
-
-    # Introduction
-
-    Flux possesses a 5 tier hiearchy level API.
-
-    * **Public** API level - Available without any permission, does not require
-    signing.
-
-    * **User** API level - User level permission, requires signing.
-
-    * **FluxTeam** API level - FluxTeam level permission (an appointed Flux Team
-    member has access to those API calls), requires signing.
-
-    * **Admin** API level - Admin level permission, requires signing. Flux
-    owner.
-
-    * **AdminAndFluxTeam** API level permission (Admin and Flux Team has access to
-    these calls), requires signing.
-
-    * **AppOwner** API level - AppOwner level permission, requires signing. App
-    Owner.
-
-    * **AppOwnerAbove** API level - AppOwnerAbove level permission (App Owner,
-    FluxTeam, and Admin has access to these calls), requires signing.
-
-
-    Most calls are available via GET request with some that may require large
-    amount of data via POST request.
-
-    Websocket is currently used only for simplifying login operations and for
-    internal Flux communication.
-
-    # Getting Started with the API
-
-    * **1. Install Zelcore Wallet:** The Zelcore wallet is required for signing messages. Please install this if not already installed.
-
-    * **2. Create Zelcore Account:** A Zelcore wallet account is required for signing messages. Please register an account if you don't already have one.
-
-    * **3. Obtain API Authentication Credentials:** Follow the Authentication section of this API documentation in order to set up your credentials for using the rest of the API. You will need to use your Zelcore wallet for parts of this process.
-
-    * **4. Set Up Authentication Credentials in Header:** Set up your zelidauth credentials in your header. If you are using variables, the signature value may need to be URLencoded.
-
+    # Flux API Documentation
+    
+    Welcome to the comprehensive API reference for **Flux**, the world's leading decentralized Web3 cloud computing platform. This documentation covers all available API endpoints for interacting with the Flux network, nodes, and decentralized applications.
+    
+    
+    ## About Flux
+    
+    **Flux** is a decentralized Web3 cloud infrastructure powered by globally distributed, user-operated nodes. Built for scalability and censorship resistance, Flux eliminates single points of failure while providing enterprise-grade computing resources for deploying and managing applications.
+    
+    
+    ### Key Features
+    
+    - **🌐 Decentralized Infrastructure**: Over 15,000 nodes worldwide providing 111,500+ cores, 193TB+ RAM, and 6.7PB+ SSD storage
+    - **⚡ High Performance**: Enterprise-grade computing with automatic load balancing and high availability
+    - **🔐 Secure by Design**: Multiple authentication methods with advanced cryptographic security
+    - **💰 Cost Effective**: Competitive pricing compared to traditional cloud providers
+    - **🚀 Developer Friendly**: Docker-based deployments with comprehensive API support
+    
+    
+    ## API Architecture
+    
+    The Flux API uses a **5-tier permission hierarchy** to ensure secure and controlled access:
+    
+    | Permission Level | Description | Authentication Required |
+    |------------------|-------------|-------------------------|
+    | **Public** | Open access endpoints | ❌ No |
+    | **User** | User-level permissions | ✅ Yes |
+    | **FluxTeam** | Flux Team member access | ✅ Yes |
+    | **Admin** | Node administrator access | ✅ Yes |
+    | **AdminAndFluxTeam** | Combined Admin & FluxTeam access | ✅ Yes |
+    | **AppOwner** | Application owner permissions | ✅ Yes |
+    | **AppOwnerAbove** | App Owner, FluxTeam, and Admin access | ✅ Yes |
+    
+    
+    ### Request Methods
+    
+    - **GET**: Most endpoints support GET requests with parameters as query strings or path variables
+    - **POST**: Used for endpoints requiring large payloads or sensitive data
+    - **WebSocket**: Used for real-time communication and simplified authentication flows
+    
+    
+    ## Supported Wallet Authentication
+    
+    Flux supports multiple modern authentication methods for maximum flexibility and security:
+    
+    
+    ### 🛡️ SSP Wallet
+    
+    **Secure, Simple, Powerful** - The next-generation 2FA wallet with enterprise security:
+    
+    - **True 2-of-2 Multi-Signature**: Requires both browser extension and mobile app authorization
+    - **Advanced Security**: BIP48 derivation, Account Abstraction (ERC-4337), Schnorr signatures
+    - **Multi-Chain Support**: Bitcoin, Ethereum, Polygon, BSC, Avalanche, and 15+ blockchains
+    - **WalletConnect v2**: Connect to thousands of dApps seamlessly
+    - **Professional Audit**: Thoroughly audited by security experts in 2025
+    
+    **Installation**:
+    - Chrome Extension: [SSP Wallet - Chrome Web Store](https://chromewebstore.google.com/detail/ssp-wallet/mgfbabcnedcejkfibpafadgkhmkifhbd)
+    - Mobile App: Available on iOS App Store and Google Play Store
+    - Website: [sspwallet.io](https://sspwallet.io)
+    
+    
+    ### 🔑 ZelCore Wallet
+    
+    **Multi-Asset Cryptocurrency Wallet** - The original Flux ecosystem wallet:
+    
+    - **Self-Custodial**: Full control over your private keys
+    - **Decentralized 2FA (d2FA)**: Unique blockchain-based two-factor authentication
+    - **Multi-Chain**: Support for 80+ blockchains and thousands of assets
+    - **Hardware Integration**: Connect with hardware wallets for enhanced security
+    - **Deep Linking**: Native `zel:` protocol support
+    
+    **Installation**: [zelcore.io](https://zelcore.io)
+    
+    
+    ### 🦊 MetaMask Integration
+    
+    **Ethereum Ecosystem Wallet** - Popular browser extension wallet:
+    
+    - **Ethereum Native**: Full Ethereum and EVM chain support
+    - **Sign-In with Ethereum (SIWE)**: ERC-4361 standard compliance
+    - **Wide Adoption**: Most popular Web3 wallet with extensive dApp support
+    - **Domain Binding**: Advanced phishing protection
+    
+    **Installation**: [metamask.io](https://metamask.io)
+    
+    
+    ### 🔗 WalletConnect v2
+    
+    **Universal Wallet Connection Protocol** - Connect any compatible wallet:
+    
+    - **700+ Wallets**: Support for hundreds of popular wallets
+    - **Cross-Platform**: Mobile, desktop, and web wallet compatibility
+    - **Secure Bridge**: Encrypted communication between wallet and dApp
+    - **QR Code Connection**: Simple mobile wallet connection
+    
+    
+    ### 📧 Traditional Authentication
+    
+    **Email-Based Login** - For users preferring traditional authentication:
+    
+    - **Firebase Integration**: Google Firebase authentication backend
+    - **Email/Password**: Standard username/password login
+    - **Google OAuth**: Sign in with Google account
+    - **Account Recovery**: Standard password reset flows
+    
+    
+    ## Getting Started
+    
+    Follow these steps to start using the Flux API:
+    
+    
+    ### 1. Choose Your Authentication Method
+    
+    Select from the supported wallet options above based on your development needs and user preferences. All methods are supported by the FluxOS API.
+    
+    
+    ### 2. Set Up Your Wallet
+    
+    Install and configure your chosen wallet:
+    - Download from official sources only
+    - Secure your seed phrase or recovery information
+    - Enable two-factor authentication where available
+    - Test with small amounts first
+    
+    
+    ### 3. Obtain Authentication Credentials
+    
+    Follow the **Authentication** section in this API documentation to:
+    - Generate login phrases
+    - Sign authentication messages
+    - Obtain session tokens
+    - Set up API headers
+    
+    
+    ### 4. Configure API Headers
+    
+    For authenticated requests, include these headers:
+    
+    ```
+    zelidauth: {
+      "zelid": "your-wallet-address",
+      "signature": "signed-message-signature", 
+      "loginPhrase": "temporary-login-phrase"
+    }
+    ```
+    
+    **Note**: Signature values may need to be URL-encoded depending on your HTTP client.
+    
+    
+    ### 5. Start Making API Calls
+    
+    Test your setup with public endpoints first, then proceed to authenticated endpoints once your credentials are properly configured.
+    
+    
+    ## Support & Community
+    
+    - **Documentation**: [docs.runonflux.com](https://docs.runonflux.com)
+    - **Discord Community**: [discord.io/runonflux](https://discord.io/runonflux) 
+    - **GitHub**: [github.com/RunOnFlux](https://github.com/RunOnFlux)
+    - **Twitter/X**: [@RunOnFlux](https://x.com/runonflux)
+    - **Website**: [runonflux.com](https://runonflux.com)
+    
+    
+    **🚀 Ready to build on the decentralized web? Let's get started!**
+    
+    
+    ## Important Notes
+    
+    - Login phrases expire after 15 minutes
+    - Session tokens are valid for up to 14 days
+    - Always use HTTPS in production environments
+    - Signature values may need URL encoding depending on your HTTP client
+    
 externalDocs:
-  description: Flux
-  url: 'https://github.com/runonflux/flux'
+  description: Flux Documentation & Resources Hub
+  url: 'https://docs.runonflux.com'
 tags:
   - name: Authentication
     description: >-
-      Calls that are neccessary to be made for correct signing into Flux and
-      obtaining zelauth header.
+      **Authentication & Authorization Endpoints**
+      
+      Essential API endpoints for secure authentication and authorization with the Flux network. 
+      These endpoints handle login phrase generation, message signing verification, and session 
+      management for all supported wallet types including SSP Wallet, ZelCore, MetaMask, and 
+      WalletConnect integrations.
+      
+      **Key Features:**
+      - Multi-wallet authentication support
+      - Secure login phrase generation
+      - Cryptographic signature verification 
+      - Session token management
+      - 5-tier permission system integration
+      
   - name: ID
     description: >-
-      Calls that interact with Identity via ZelID (BTC/ETH address) and login/authentication 
-      management of Flux
+      **Identity & User Management**
+      
+      Comprehensive identity management endpoints that handle user authentication, authorization 
+      levels, and identity verification across multiple blockchain addresses (Bitcoin P2PKH, 
+      Ethereum, ZelID). These endpoints manage user sessions, permissions, and access control 
+      throughout the Flux ecosystem.
+      
+      **Supported Address Types:**
+      - Bitcoin P2PKH addresses
+      - Ethereum addresses  
+      - ZelID addresses
+      - Multi-signature addresses
+      
   - name: Daemon
-    description: Calls that interact with locally running Flux daemon
+    description: >-
+      **Flux Daemon Operations**
+      
+      Core blockchain daemon endpoints for interacting with the underlying Flux blockchain node.
+      These endpoints provide access to blockchain data, wallet operations, mining information,
+      network statistics, and node management functions. Essential for node operators and 
+      developers building blockchain-integrated applications.
+      
+      **Core Functions:**
+      - Blockchain state queries
+      - Transaction management
+      - Wallet operations
+      - Network information
+      - Mining and staking operations
+      
   - name: Benchmark
-    description: Calls that interact with locally running Benchmark daemon
+    description: >-
+      **Node Performance & Benchmarking**
+      
+      Endpoints for monitoring and managing Flux node performance benchmarks. These APIs provide
+      access to hardware specifications, performance metrics, benchmark results, and node tier
+      qualification status. Critical for node operators to ensure optimal performance and 
+      maintain network participation requirements.
+      
+      **Monitoring Capabilities:**
+      - Hardware specification reporting
+      - Performance benchmark execution
+      - Node tier status verification
+      - Resource utilization metrics
+      - Network connectivity testing
+      
   - name: Flux
-    description: Calls that interact with Flux and its network
+    description: >-
+      **Flux Network Operations**
+      
+      Core network endpoints for interacting with the broader Flux decentralized network.
+      These APIs provide access to network statistics, node information, consensus data,
+      and network-wide operations that facilitate the decentralized cloud infrastructure.
+      
+      **Network Services:**
+      - Node discovery and registry
+      - Network consensus information
+      - Global network statistics
+      - Peer-to-peer communication
+      - Distributed coordination
+      
   - name: Apps
     description: >-
-      Calls that interact with Apps fascilitated by local Flux and Flux
-      network
+      **Decentralized Application Management**
+      
+      Comprehensive endpoints for deploying, managing, and monitoring decentralized applications 
+      (dApps) on the Flux network. These APIs handle the complete application lifecycle from 
+      deployment to scaling, including Docker container management, resource allocation, and 
+      global distribution across the Flux node network.
+      
+      **Application Services:**
+      - Docker-based app deployment
+      - Application lifecycle management
+      - Resource scaling and allocation
+      - Multi-region distribution
+      - Application marketplace integration
+      - Performance monitoring and analytics
+      
   - name: Explorer
-    description: Calls that interact with locally running explorer
+    description: >-
+      **Blockchain Explorer Services**
+      
+      Blockchain exploration endpoints providing detailed access to on-chain data, transaction 
+      history, address information, and network analytics. These APIs power blockchain explorers
+      and provide developers with comprehensive blockchain data access for building analytics
+      and monitoring applications.
+      
+      **Explorer Features:**
+      - Transaction history and details
+      - Address balance and activity
+      - Block information and statistics
+      - Network-wide analytics
+      - Search and filtering capabilities
+      
   - name: Syncthing
-    description: Calls that interact with Syncthing service
+    description: >-
+      **Distributed File Synchronization**
+      
+      Endpoints for managing Syncthing-based distributed file synchronization services.
+      These APIs enable secure, decentralized file sharing and synchronization across
+      Flux nodes, providing reliable data distribution and backup capabilities for
+      decentralized applications and user data.
+      
+      **Synchronization Services:**
+      - Peer-to-peer file synchronization
+      - Distributed storage management
+      - Conflict resolution
+      - Encryption and security
+      - Bandwidth optimization
+      
   - name: Fluxshare
-    description: Calls that interact with Fluxshare service
+    description: >-
+      **Decentralized File Sharing**
+      
+      Advanced file sharing and storage endpoints built on the Flux decentralized network.
+      FluxShare provides secure, distributed file storage with redundancy, encryption,
+      and global accessibility. Ideal for building decentralized storage applications
+      and content distribution networks.
+      
+      **Storage Features:**
+      - Distributed file storage
+      - Redundancy and fault tolerance
+      - End-to-end encryption
+      - Global content distribution
+      - Access control and sharing permissions
+      
   - name: Backup/Restore
-    description: Calls that interact with appication Backup/Restore service
+    description: >-
+      **Application Backup & Recovery**
+      
+      Comprehensive backup and disaster recovery endpoints for Flux applications and data.
+      These APIs provide automated backup creation, version management, and restoration
+      capabilities to ensure data integrity and business continuity for decentralized
+      applications running on the Flux network.
+      
+      **Backup Services:**
+      - Automated backup scheduling
+      - Version control and history
+      - Cross-region replication  
+      - Point-in-time recovery
+      - Disaster recovery orchestration
+      
   - name: Volume Browser
-    description: Calls that interact with application Volume Browser service
+    description: >-
+      **Persistent Storage Management**
+      
+      Advanced volume and persistent storage management endpoints for containerized applications.
+      These APIs provide comprehensive file system operations, storage allocation, and data
+      management capabilities for applications requiring persistent data storage across
+      the distributed Flux network.
+      
+      **Storage Management:**
+      - Volume provisioning and management
+      - File system operations
+      - Storage quota enforcement
+      - Data migration and replication
+      - Performance optimization
+      
   - name: IOUtils
-    description: Calls that interact with files operations 
+    description: >-
+      **File System Operations & Utilities**
+      
+      Low-level file system operation endpoints providing essential I/O utilities for
+      application development and system administration. These APIs offer direct file
+      manipulation, directory management, and system utilities required for advanced
+      application deployment and management on Flux nodes.
+      
+      **I/O Operations:**
+      - File and directory management
+      - Permission and ownership control
+      - Data transfer utilities
+      - System resource monitoring
+      - Batch operation support
 servers:
   - url: 'https://api.runonflux.io'
 paths:
