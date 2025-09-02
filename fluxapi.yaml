@@ -187,6 +187,222 @@ info:
     - Always use HTTPS in production environments
     - Signature values may need URL encoding depending on your HTTP client
     
+    
+    ## Authentication Workflows
+    
+    
+    ### 🔐 Complete Authentication Flow
+    
+    **Step 1: Get Login Phrase**
+    ```bash
+    curl -X GET "https://api.runonflux.io/id/loginphrase"
+    ```
+    
+    **Step 2: Sign the Login Phrase**
+    - **SSP Wallet**: Use browser extension + mobile app to sign the message
+    - **ZelCore**: Use the wallet's message signing feature  
+    - **MetaMask**: Use `personal_sign` method
+    - **Hardware Wallet**: Sign via hardware device integration
+    
+    **Step 3: Verify Login** 
+    ```bash
+    curl -X POST "https://api.runonflux.io/id/verifylogin" \
+      -H "Content-Type: application/json" \
+      -d '{
+        "zelid": "your-wallet-address",
+        "loginPhrase": "phrase-from-step-1", 
+        "signature": "your-signature-from-step-2"
+      }'
+    ```
+    
+    **Step 4: Use Authentication Header**
+    ```bash
+    curl -X GET "https://api.runonflux.io/id/loggedsessions" \
+      -H "zelidauth: zelid=your-address&signature=your-signature&loginPhrase=your-phrase"
+    ```
+    
+    
+    ### 📱 SSP Wallet Integration Guide
+    
+    **Browser Extension Setup:**
+    1. Install SSP Wallet Chrome Extension
+    2. Install SSP Key mobile app (iOS/Android)
+    3. Pair devices using QR code
+    4. Fund wallet with small amount for testing
+    
+    **Signing Messages with SSP:**
+    ```javascript
+    // Connect to SSP Wallet
+    if (window.ssp) {
+      const accounts = await window.ssp.request({
+        method: 'wallet_requestPermissions',
+        params: [{ wallet_accounts: {} }]
+      });
+      
+      // Sign login phrase
+      const signature = await window.ssp.request({
+        method: 'personal_sign',
+        params: [loginPhrase, accounts[0]]
+      });
+    }
+    ```
+    
+    
+    ### 🦊 MetaMask Integration Guide
+    
+    **Connect and Sign:**
+    ```javascript
+    // Connect MetaMask
+    const accounts = await ethereum.request({
+      method: 'eth_requestAccounts'
+    });
+    
+    // Sign login phrase
+    const signature = await ethereum.request({
+      method: 'personal_sign',
+      params: [loginPhrase, accounts[0]]
+    });
+    
+    // Use Ethereum address as zelid
+    const zelid = accounts[0];
+    ```
+    
+    
+    ### 🔑 ZelCore Wallet Integration
+    
+    **Deep Link Integration:**
+    ```javascript
+    // Generate ZelCore deep link for signing
+    const zelcoreUrl = `zel:?action=sign&message=${encodeURIComponent(loginPhrase)}&icon=https://yourapp.com/icon.png&callback=${encodeURIComponent('https://yourapp.com/auth/callback')}`;
+    
+    // Open ZelCore for signing
+    window.location.href = zelcoreUrl;
+    ```
+    
+    **WebSocket Integration:**
+    ```javascript
+    // Listen for ZelCore signature via WebSocket
+    const ws = new WebSocket(`wss://api.runonflux.io/ws/id/${loginPhrase}`);
+    
+    ws.onmessage = (event) => {
+      const authData = JSON.parse(event.data);
+      if (authData.status === 'success') {
+        // Authentication successful
+        console.log('Signed in with ZelID:', authData.data.zelid);
+      }
+    };
+    ```
+    
+    
+    ### 🔗 WalletConnect v2 Integration
+    
+    **Setup WalletConnect:**
+    ```javascript
+    import { SignClient } from '@walletconnect/sign-client';
+    
+    const signClient = await SignClient.init({
+      projectId: 'your-walletconnect-project-id',
+      metadata: {
+        name: 'Your Flux App',
+        description: 'Flux Network Integration',
+        url: 'https://yourapp.com',
+        icons: ['https://yourapp.com/logo.png']
+      }
+    });
+    
+    // Connect to wallet
+    const { uri, approval } = await signClient.connect({
+      requiredNamespaces: {
+        eip155: {
+          methods: ['personal_sign'],
+          chains: ['eip155:1'],
+          events: ['chainChanged', 'accountsChanged']
+        }
+      }
+    });
+    
+    // Sign message when connected
+    const signature = await signClient.request({
+      topic: session.topic,
+      chainId: 'eip155:1',
+      request: {
+        method: 'personal_sign',
+        params: [loginPhrase, address]
+      }
+    });
+    ```
+    
+    
+    ### 📧 Traditional Email Authentication
+    
+    **Firebase Integration:**
+    ```javascript
+    import { getAuth, signInWithEmailAndPassword } from 'firebase/auth';
+    
+    // Email/password login
+    const auth = getAuth();
+    const userCredential = await signInWithEmailAndPassword(auth, email, password);
+    
+    // Get ID token for API authentication
+    const idToken = await userCredential.user.getIdToken();
+    
+    // Use token in API calls
+    fetch('https://api.runonflux.io/protected-endpoint', {
+      headers: {
+        'Authorization': `Bearer ${idToken}`,
+        'Content-Type': 'application/json'
+      }
+    });
+    ```
+    
+    
+    ### ⚠️ Common Integration Issues
+    
+    **Login Phrase Expiration:**
+    ```javascript
+    // Always check phrase timestamp
+    const phraseTimestamp = parseInt(loginPhrase.substring(0, 13));
+    const now = Date.now();
+    const age = now - phraseTimestamp;
+    
+    if (age > 15 * 60 * 1000) { // 15 minutes
+      throw new Error('Login phrase expired, get a new one');
+    }
+    ```
+    
+    **Signature URL Encoding:**
+    ```javascript
+    // Always URL encode signatures for headers
+    const encodedSignature = encodeURIComponent(signature);
+    const authHeader = `zelid=${zelid}&signature=${encodedSignature}&loginPhrase=${loginPhrase}`;
+    ```
+    
+    **Error Handling:**
+    ```javascript
+    try {
+      const response = await fetch('/api/authenticated-endpoint', {
+        headers: { 'zelidauth': authHeader }
+      });
+      
+      if (response.status === 401) {
+        // Re-authenticate user
+        redirectToLogin();
+      }
+    } catch (error) {
+      console.error('API call failed:', error);
+    }
+    ```
+    
+    
+    ## API Version Information
+    
+    **Current Version**: 6.6.1
+    
+    **Version Notes**:
+    - All endpoints documented in this specification are available in version 6.6.1
+    - This documentation reflects the current stable API implementation
+    - For the latest changes and updates, refer to the [Flux GitHub repository](https://github.com/runonflux/flux)
+    
 externalDocs:
   description: Flux Documentation & Resources Hub
   url: 'https://docs.runonflux.com'
@@ -383,6 +599,23 @@ tags:
       - Batch operation support
 servers:
   - url: 'https://api.runonflux.io'
+    description: 'Production API Gateway - Global load-balanced endpoint'
+  - url: 'https://api.runonflux.com'
+    description: 'Backup Production API Gateway'
+  - url: 'https://testnet-api.runonflux.io'
+    description: 'Testnet API Gateway - For development and testing'
+  - url: 'https://{nodeip}:16127'
+    description: 'Direct Flux Node Connection - Connect directly to specific node'
+    variables:
+      nodeip:
+        description: 'Flux node IP address or hostname'
+        default: 'localhost'
+  - url: 'http://localhost:16127'
+    description: 'Local Development Node - For local testing'
+  - url: 'https://explorer.runonflux.io'
+    description: 'Explorer API - Blockchain data and statistics'
+  - url: 'https://stats.runonflux.io'
+    description: 'Network Statistics API - Real-time network metrics'
 paths:
   #ID
   /id/loginphrase:
@@ -397,6 +630,50 @@ paths:
         valid for 15 minutes. **Public**
       operationId: loginPhrase
       security: []
+      x-codeSamples:
+        - lang: 'curl'
+          source: |
+            curl -X GET "https://api.runonflux.io/id/loginphrase"
+        - lang: 'JavaScript'
+          source: |
+            const response = await fetch('https://api.runonflux.io/id/loginphrase');
+            const data = await response.json();
+            console.log(data.data); // Login phrase string
+        - lang: 'Node.js'
+          source: |
+            const https = require('https');
+            
+            const options = {
+              hostname: 'api.runonflux.io',
+              path: '/id/loginphrase',
+              method: 'GET'
+            };
+            
+            const req = https.request(options, (res) => {
+              let data = '';
+              res.on('data', chunk => data += chunk);
+              res.on('end', () => {
+                const result = JSON.parse(data);
+                console.log(result.data);
+              });
+            });
+            req.end();
+        - lang: 'Python'
+          source: |
+            import requests
+            
+            response = requests.get('https://api.runonflux.io/id/loginphrase')
+            data = response.json()
+            login_phrase = data['data']
+            print(login_phrase)
+        - lang: 'PHP'
+          source: |
+            <?php
+            $response = file_get_contents('https://api.runonflux.io/id/loginphrase');
+            $data = json_decode($response, true);
+            $loginPhrase = $data['data'];
+            echo $loginPhrase;
+            ?>
       responses:
         '200':
           description: OK
@@ -454,6 +731,51 @@ paths:
         ws://{Flux_IP}:16127/ws/id/{loginPhrase}. **Public**
       operationId: verifyLogin
       security: []
+      x-codeSamples:
+        - lang: 'curl'
+          source: |
+            curl -X POST "https://api.runonflux.io/id/verifylogin" \
+              -H "Content-Type: application/json" \
+              -d '{
+                "zelid": "1CbErtneaX2QVyUfwU7JGB7VzvPgrgc3uC",
+                "loginPhrase": "1574994809615gj4ct52kzz695twl0l27np0ivkmvu2ow4lbtpwk2nvf2k",
+                "signature": "IAMZBB0p8aQ6A0Zt8uUKFLdWvPJlBypuczhaM6/R+s5bI72NQs/TPF1KYywvJlumMZyvLmk7JelDwaQbfTjqtSs="
+              }'
+        - lang: 'JavaScript'
+          source: |
+            const loginData = {
+              zelid: "1CbErtneaX2QVyUfwU7JGB7VzvPgrgc3uC",
+              loginPhrase: "1574994809615gj4ct52kzz695twl0l27np0ivkmvu2ow4lbtpwk2nvf2k", 
+              signature: "IAMZBB0p8aQ6A0Zt8uUKFLdWvPJlBypuczhaM6/R+s5bI72NQs/TPF1KYywvJlumMZyvLmk7JelDwaQbfTjqtSs="
+            };
+            
+            const response = await fetch('https://api.runonflux.io/id/verifylogin', {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify(loginData)
+            });
+            
+            const result = await response.json();
+            console.log(result);
+        - lang: 'Python'
+          source: |
+            import requests
+            import json
+            
+            login_data = {
+                "zelid": "1CbErtneaX2QVyUfwU7JGB7VzvPgrgc3uC",
+                "loginPhrase": "1574994809615gj4ct52kzz695twl0l27np0ivkmvu2ow4lbtpwk2nvf2k",
+                "signature": "IAMZBB0p8aQ6A0Zt8uUKFLdWvPJlBypuczhaM6/R+s5bI72NQs/TPF1KYywvJlumMZyvLmk7JelDwaQbfTjqtSs="
+            }
+            
+            response = requests.post(
+                'https://api.runonflux.io/id/verifylogin',
+                headers={'Content-Type': 'application/json'},
+                data=json.dumps(login_data)
+            )
+            
+            result = response.json()
+            print(result)
       requestBody:
         content:
           text/plain:
@@ -598,6 +920,41 @@ paths:
       operationId: loggedSessions
       security:
         - ZelID: []
+      x-codeSamples:
+        - lang: 'curl'
+          source: |
+            curl -X GET "https://api.runonflux.io/id/loggedsessions" \
+              -H "zelidauth: zelid=1CbErtneaX2QVyUfwU7JGB7VzvPgrgc3uC&signature=IAMZBB0p8aQ6A0Zt8uUKFLdWvPJlBypuczhaM6%2FR%2Bs5bI72NQs%2FTPF1KYywvJlumMZyvLmk7JelDwaQbfTjqtSs%3D&loginPhrase=1574994809615gj4ct52kzz695twl0l27np0ivkmvu2ow4lbtpwk2nvf2k"
+        - lang: 'JavaScript'
+          source: |
+            const authHeader = 'zelid=1CbErtneaX2QVyUfwU7JGB7VzvPgrgc3uC&signature=' + 
+              encodeURIComponent('IAMZBB0p8aQ6A0Zt8uUKFLdWvPJlBypuczhaM6/R+s5bI72NQs/TPF1KYywvJlumMZyvLmk7JelDwaQbfTjqtSs=') +
+              '&loginPhrase=1574994809615gj4ct52kzz695twl0l27np0ivkmvu2ow4lbtpwk2nvf2k';
+            
+            const response = await fetch('https://api.runonflux.io/id/loggedsessions', {
+              headers: { 'zelidauth': authHeader }
+            });
+            
+            const result = await response.json();
+            console.log(result);
+        - lang: 'Python'
+          source: |
+            import requests
+            from urllib.parse import quote
+            
+            auth_header = (
+                f"zelid=1CbErtneaX2QVyUfwU7JGB7VzvPgrgc3uC&"
+                f"signature={quote('IAMZBB0p8aQ6A0Zt8uUKFLdWvPJlBypuczhaM6/R+s5bI72NQs/TPF1KYywvJlumMZyvLmk7JelDwaQbfTjqtSs=')}&"
+                f"loginPhrase=1574994809615gj4ct52kzz695twl0l27np0ivkmvu2ow4lbtpwk2nvf2k"
+            )
+            
+            response = requests.get(
+                'https://api.runonflux.io/id/loggedsessions',
+                headers={'zelidauth': auth_header}
+            )
+            
+            result = response.json()
+            print(result)
       responses:
         '200':
           description: OK
@@ -5429,6 +5786,25 @@ paths:
         **Public**
       operationId: getInfo
       security: []
+      x-codeSamples:
+        - lang: 'curl'
+          source: |
+            curl -X GET "https://api.runonflux.io/daemon/getinfo"
+        - lang: 'JavaScript'
+          source: |
+            const response = await fetch('https://api.runonflux.io/daemon/getinfo');
+            const daemonInfo = await response.json();
+            console.log('Daemon version:', daemonInfo.data.version);
+            console.log('Block count:', daemonInfo.data.blocks);
+        - lang: 'Python'
+          source: |
+            import requests
+            
+            response = requests.get('https://api.runonflux.io/daemon/getinfo')
+            daemon_info = response.json()
+            
+            print(f"Daemon version: {daemon_info['data']['version']}")
+            print(f"Block count: {daemon_info['data']['blocks']}")
       responses:
         '200':
           description: OK
@@ -19332,6 +19708,28 @@ paths:
       description: List and info of running apps. **Public**
       operationId: listRunningApps
       security: []
+      x-codeSamples:
+        - lang: 'curl'
+          source: |
+            curl -X GET "https://api.runonflux.io/apps/listrunningapps"
+        - lang: 'JavaScript'
+          source: |
+            const response = await fetch('https://api.runonflux.io/apps/listrunningapps');
+            const apps = await response.json();
+            
+            // Display running apps
+            apps.data.forEach(app => {
+              console.log(`App: ${app.Names[0]} - Status: ${app.State}`);
+            });
+        - lang: 'Python'
+          source: |
+            import requests
+            
+            response = requests.get('https://api.runonflux.io/apps/listrunningapps')
+            apps_data = response.json()
+            
+            for app in apps_data['data']:
+                print(f"App: {app['Names'][0]} - Status: {app['State']}")
       responses:
         '200':
           description: OK
