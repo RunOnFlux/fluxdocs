@@ -21460,8 +21460,18 @@ paths:
     get:
       tags:
         - Apps
-      summary: Pause app
-      description: This will pause the fluxapp. **AppOwnerAbove**
+      deprecated: true
+      summary: 'Pause app (REMOVED)'
+      description: >-
+        **Removed.** Docker reports a paused container as running, so a paused
+        app stayed listed as healthy: the load balancer kept routing to a server
+        whose processes were frozen and which could never answer, and monitoring
+        showed a flat line with no explanation. Nothing could release one either.
+
+
+        Use `/apps/appstop` instead, and `/apps/appstart` to bring it back. The
+        route still answers, with the error below, so an existing caller learns
+        why rather than failing blind. **AppOwnerAbove**
       operationId: appsAppPause
       security:
         - ZelID: []
@@ -21487,14 +21497,23 @@ paths:
                     type: string
                     description: Explanation of status
               example:
-                status: success
-                data: Flux App fluxFoldingAtHome successfully paused.
+                status: error
+                data:
+                  code: 410
+                  name: Deprecated
+                  message: >-
+                    Pausing applications is no longer supported. Use appstop to
+                    stop an application.
   /apps/appunpause:
     get:
       tags:
         - Apps
-      summary: Unpause app
-      description: This will unpause the Flux application. **AppOwnerAbove**
+      deprecated: true
+      summary: 'Unpause app (REMOVED)'
+      description: >-
+        **Removed** alongside `/apps/apppause`. Use `/apps/appstart` to start a
+        stopped application. The route still answers, with the error below, so an
+        existing caller learns why rather than failing blind. **AppOwnerAbove**
       operationId: AppUnpause
       security:
         - ZelID: []
@@ -21520,8 +21539,13 @@ paths:
                     type: string
                     description: Explanation of status
               example:
-                status: success
-                data: Flux App fluxFoldingAtHome successfully unpaused.
+                status: error
+                data:
+                  code: 410
+                  name: Deprecated
+                  message: >-
+                    Pausing applications is no longer supported. Use appstop to
+                    stop an application.
   /apps/apptop:
     get:
       tags:
@@ -22571,7 +22595,31 @@ paths:
       tags:
         - Apps
       summary: App stats based on resource usage
-      description: Returns containers resource usage. **AppOwnerAbove**
+      description: >-
+        Returns the container's resource usage.
+
+
+        **The payload is a NARROWED subset of docker's stats object, not the raw
+        object.** The node samples every app it runs and keeps only the values a
+        consumer reads; the rest is dropped before it reaches the wire. Fields
+        that used to appear here and no longer do: `percpu_usage`,
+        `usage_in_kernelmode`, `usage_in_usermode`, `throttling_data`,
+        `max_usage`, `failcnt`, `pids_stats`, `num_procs`, `storage_stats`,
+        `preread`, `read`, and the container `id` and `name`.
+
+
+        Two consequences worth knowing. `memory_stats.stats` carries
+        `inactive_file` only, reported under that cgroup v2 name whichever key it
+        was read from. And `percpu_usage` is gone, so a consumer using docker's
+        documented "fall back to the length of percpu_usage when online_cpus is
+        0" trick must read `online_cpus` directly.
+
+
+        `disk_stats.status` is `success` when every mount was measured,
+        `partial` when some could not be (an `unmeasured` list is then included)
+        and `error` when the reading failed outright. A `partial` reading is a
+        floor, not a total - charting one as a real value shows a drop that did
+        not happen. **AppOwnerAbove**
       externalDocs:
         url: 'https://docs.docker.com/engine/api/v1.40/#operation/ContainerStats'
       operationId: AppStats
@@ -22595,98 +22643,37 @@ paths:
               example:
                 status: success
                 data:
-                  read: '2020-09-18T00:35:37.306888517Z'
-                  preread: '2020-09-18T00:35:36.072193466Z'
-                pids_stats: {}
-                blkio_stats:
-                  io_service_bytes_recursive: []
-                  io_serviced_recursive: []
-                  io_queue_recursive: []
-                  io_service_time_recursive: []
-                  io_wait_time_recursive: []
-                  io_merged_recursive: []
-                  io_time_recursive: []
-                  sectors_recursive: []
-                num_procs: 0
-                storage_stats: {}
-                cpu_stats:
-                  cpu_usage:
-                    total_usage: 7296404247
-                    percpu_usage:
-                      - 3217120277
-                      - 4079283970
-                    usage_in_kernelmode: 570000000
-                    usage_in_usermode: 6550000000
-                  system_cpu_usage: 516655370000000
-                  online_cpus: 2
-                  throttling_data:
-                    periods: 842
-                    throttled_periods: 179
-                    throttled_time: 8202758092
-                precpu_stats:
-                  cpu_usage:
-                    total_usage: 7296404247
-                    percpu_usage:
-                      - 3217120277
-                      - 4079283970
-                    usage_in_kernelmode: 570000000
-                    usage_in_usermode: 6550000000
-                  system_cpu_usage: 516653230000000
-                  online_cpus: 2
-                  throttling_data:
-                    periods: 842
-                    throttled_periods: 179
-                    throttled_time: 8202758092
-                memory_stats:
-                  usage: 15024128
-                  max_usage: 82767872
-                  stats:
-                    active_anon: 3551232
-                    active_file: 1179648
-                    cache: 1392640
-                    dirty: 0
-                    hierarchical_memory_limit: 209715200
-                    hierarchical_memsw_limit: 0
-                    inactive_anon: 3555328
-                    inactive_file: 126976
-                    mapped_file: 1388544
-                    pgfault: 17858
-                    pgmajfault: 194
-                    pgpgin: 23417
-                    pgpgout: 21363
-                    rss: 7020544
-                    rss_huge: 0
-                    total_active_anon: 3551232
-                    total_active_file: 1179648
-                    total_cache: 1392640
-                    total_dirty: 0
-                    total_inactive_anon: 3555328
-                    total_inactive_file: 126976
-                    total_mapped_file: 1388544
-                    total_pgfault: 17858
-                    total_pgmajfault: 194
-                    total_pgpgin: 23417
-                    total_pgpgout: 21363
-                    total_rss: 7020544
-                    total_rss_huge: 0
-                    total_unevictable: 0
-                    total_writeback: 0
-                    unevictable: 0
-                    writeback: 0
-                  limit: 209715200
-                name: /fluxdibi-UND
-                id: >-
-                  1e2f681c8a356c0af561bcefb3a85b8dbe690487598a004fef1c4a65001e0078
-                networks:
-                  eth0:
-                    rx_bytes: 4191270113
-                    rx_packets: 3346216
-                    rx_errors: 0
-                    rx_dropped: 0
-                    tx_bytes: 300477601
-                    tx_packets: 2264232
-                    tx_errors: 0
-                    tx_dropped: 0
+                  cpu_stats:
+                    cpu_usage:
+                      total_usage: 7296404247
+                    system_cpu_usage: 516655370000000
+                    online_cpus: 2
+                  precpu_stats:
+                    cpu_usage:
+                      total_usage: 7294264247
+                    system_cpu_usage: 516653230000000
+                  memory_stats:
+                    usage: 15024128
+                    limit: 209715200
+                    stats:
+                      inactive_file: 126976
+                  blkio_stats:
+                    io_service_bytes_recursive:
+                      - op: read
+                        value: 12288
+                      - op: write
+                        value: 4096
+                  networks:
+                    eth0:
+                      rx_bytes: 4191270113
+                      tx_bytes: 300477601
+                  nanoCpus: 2000000000
+                  disk_stats:
+                    bind: 33554432
+                    volume: 8388608
+                    rootfs: 0
+                    used: 41943040
+                    status: success
   /apps/appchanges:
     get:
       tags:
@@ -24098,8 +24085,18 @@ paths:
     get:
       tags:
         - Apps
-      summary: Stream application monitoring data
-      description: Get real-time streaming monitoring data for an application. **AppOwnerAbove**
+      deprecated: true
+      summary: 'Stream application monitoring data (REMOVED)'
+      description: >-
+        **Removed, and unlike the other retired endpoints this one no longer
+        exists at all** - the route is gone, so a request returns a plain HTTP
+        404 rather than an in-band explanation.
+
+
+        Poll `/apps/appmonitor/{appname}` instead. The node samples every
+        application it runs on its own schedule and keeps a rolling window, so a
+        poll returns the same data the stream did without holding a connection
+        open. **AppOwnerAbove**
       operationId: appMonitorStream
       security:
         - ZelID: []
@@ -24112,13 +24109,10 @@ paths:
           description: Name of the application
           example: electrumxtest
       responses:
-        '200':
-          description: OK - Server-Sent Events stream
-          content:
-            text/event-stream:
-              schema:
-                type: string
-                description: Streaming monitoring data
+        '404':
+          description: >-
+            Not Found. The route no longer exists. This is a real wire status,
+            not the in-band error the other retired endpoints answer with.
   /apps/testappinstall/{appname}:
     get:
       tags:
@@ -24280,8 +24274,13 @@ paths:
     get:
       tags:
         - Apps
-      summary: Start application monitoring
-      description: Start monitoring for a specific application. **AppOwnerAbove**
+      deprecated: true
+      summary: 'Start application monitoring (NO LONGER HAS ANY EFFECT)'
+      description: >-
+        **Removed.** The node monitors every application it runs, for the CPU
+        throttling loop, so there is nothing for a caller to turn on. The route
+        still answers, with the error below, so an existing caller is not told
+        "success" for something that did not happen. **AppOwnerAbove**
       operationId: startAppMonitoringAPI
       security:
         - ZelID: []
@@ -24310,15 +24309,26 @@ paths:
                         type: string
                         description: Monitoring status
               example:
-                status: success
+                status: error
                 data:
-                  message: 'Application monitoring started'
+                  code: 410
+                  name: Deprecated
+                  message: >-
+                    Application monitoring is managed by the node and runs for
+                    every app. This endpoint no longer has any effect and will be
+                    removed.
   /apps/stopmonitoring/{appname}:
     get:
       tags:
         - Apps
-      summary: Stop application monitoring  
-      description: Stop monitoring for a specific application. **AppOwnerAbove**
+      deprecated: true
+      summary: 'Stop application monitoring (NO LONGER HAS ANY EFFECT)'
+      description: >-
+        **Removed** alongside `/apps/startmonitoring`. Monitoring is not
+        optional - the node needs it for every app it runs - so a caller told
+        "success" here would believe monitoring had stopped while it was still
+        running. The route answers with the error below instead.
+        **AppOwnerAbove**
       operationId: stopAppMonitoringAPI
       security:
         - ZelID: []
@@ -24354,9 +24364,14 @@ paths:
                         type: string
                         description: Stop monitoring status
               example:
-                status: success
+                status: error
                 data:
-                  message: 'Application monitoring stopped'
+                  code: 410
+                  name: Deprecated
+                  message: >-
+                    Application monitoring is managed by the node and runs for
+                    every app. This endpoint no longer has any effect and will be
+                    removed.
   /apps/getpublickey:
     post:
       tags:
