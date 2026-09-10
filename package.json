@@ -1,8 +1,8 @@
 {
   "name": "fluxdocs",
   "version": "3.0.0",
-  "author": "InFlux Technologies Limited",
-  "license": "GNU AGPLv3",
+  "author": "InFlux Technologies USA LLC",
+  "license": "AGPL-3.0-or-later",
   "repository": {
     "type": "git",
     "url": "git://github.com/runonflux/fluxdocs.git"

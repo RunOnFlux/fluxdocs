@@ -18,7 +18,7 @@ navbar:
     - href: https://docs.runonflux.com/
       label: Documentation
       external: true
-    - href: https://home.runonflux.io/
+    - href: https://cloud.runonflux.com/
       label: FluxOS
       external: true
     - href: https://runonflux.com/
@@ -27,7 +27,7 @@ navbar:
 
 # Footer configuration
 footer:
-  copyrightText: "Copyright 2025 InFlux Technologies"
+  copyrightText: "Copyright 2026 InFlux Technologies USA LLC"
   items:
     - group: Resources
       items:
