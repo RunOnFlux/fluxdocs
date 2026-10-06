@@ -1,0 +1,1085 @@
+{
+  "removedIn": "8.19.0",
+  "operations": [
+    {
+      "operationId": "CreateFolder",
+      "tags": [
+        "Fluxshare"
+      ],
+      "method": "GET",
+      "path": "/apps/fluxshare/createfolder"
+    },
+    {
+      "operationId": "FluxDownloadFolder",
+      "tags": [
+        "Fluxshare"
+      ],
+      "method": "GET",
+      "path": "/apps/fluxshare/downloadfolder"
+    },
+    {
+      "operationId": "FileExists",
+      "tags": [
+        "Fluxshare"
+      ],
+      "method": "GET",
+      "path": "/apps/fluxshare/fileexists"
+    },
+    {
+      "operationId": "RemoveFile",
+      "tags": [
+        "Fluxshare"
+      ],
+      "method": "GET",
+      "path": "/apps/fluxshare/removefile"
+    },
+    {
+      "operationId": "RemoveFolder",
+      "tags": [
+        "Fluxshare"
+      ],
+      "method": "GET",
+      "path": "/apps/fluxshare/removefolder"
+    },
+    {
+      "operationId": "RenameFile",
+      "tags": [
+        "Fluxshare"
+      ],
+      "method": "GET",
+      "path": "/apps/fluxshare/rename"
+    },
+    {
+      "operationId": "SharedFiles",
+      "tags": [
+        "Fluxshare"
+      ],
+      "method": "GET",
+      "path": "/apps/fluxshare/sharedfiles"
+    },
+    {
+      "operationId": "ShareFile",
+      "tags": [
+        "Fluxshare"
+      ],
+      "method": "GET",
+      "path": "/apps/fluxshare/sharefile"
+    },
+    {
+      "operationId": "Stats",
+      "tags": [
+        "Fluxshare"
+      ],
+      "method": "GET",
+      "path": "/apps/fluxshare/stats"
+    },
+    {
+      "operationId": "UnshareFile",
+      "tags": [
+        "Fluxshare"
+      ],
+      "method": "GET",
+      "path": "/apps/fluxshare/unsharefile"
+    },
+    {
+      "operationId": "fluxShareUploadFile",
+      "tags": [
+        "Fluxshare"
+      ],
+      "method": "POST",
+      "path": "/apps/fluxshare/uploadfile"
+    },
+    {
+      "operationId": "addmultisigaddress",
+      "tags": [
+        "Daemon"
+      ],
+      "method": "GET",
+      "path": "/daemon/addmultisigaddress"
+    },
+    {
+      "operationId": "addMultiSigAddressPost",
+      "tags": [
+        "Daemon"
+      ],
+      "method": "POST",
+      "path": "/daemon/addmultisigaddress"
+    },
+    {
+      "operationId": "backupWallet",
+      "tags": [
+        "Daemon"
+      ],
+      "method": "GET",
+      "path": "/daemon/backupwallet"
+    },
+    {
+      "operationId": "dumpPrivKey",
+      "tags": [
+        "Daemon"
+      ],
+      "method": "GET",
+      "path": "/daemon/dumpprivkey"
+    },
+    {
+      "operationId": "fundRawTransaction",
+      "tags": [
+        "Daemon"
+      ],
+      "method": "GET",
+      "path": "/daemon/fundrawtransaction"
+    },
+    {
+      "operationId": "fundRawTransactionPost",
+      "tags": [
+        "Daemon"
+      ],
+      "method": "POST",
+      "path": "/daemon/fundrawtransaction"
+    },
+    {
+      "operationId": "getBalance",
+      "tags": [
+        "Daemon"
+      ],
+      "method": "GET",
+      "path": "/daemon/getbalance"
+    },
+    {
+      "operationId": "getNewAddress",
+      "tags": [
+        "Daemon"
+      ],
+      "method": "GET",
+      "path": "/daemon/getnewaddress"
+    },
+    {
+      "operationId": "getRawChangeAddress",
+      "tags": [
+        "Daemon"
+      ],
+      "method": "GET",
+      "path": "/daemon/getrawchangeaddress"
+    },
+    {
+      "operationId": "getReceivedByAddress",
+      "tags": [
+        "Daemon"
+      ],
+      "method": "GET",
+      "path": "/daemon/getreceivedbyaddress"
+    },
+    {
+      "operationId": "getTransaction",
+      "tags": [
+        "Daemon"
+      ],
+      "method": "GET",
+      "path": "/daemon/gettransaction"
+    },
+    {
+      "operationId": "getUnconfirmedBalance",
+      "tags": [
+        "Daemon"
+      ],
+      "method": "GET",
+      "path": "/daemon/getunconfirmedbalance"
+    },
+    {
+      "operationId": "getWalletInfo",
+      "tags": [
+        "Daemon"
+      ],
+      "method": "GET",
+      "path": "/daemon/getwalletinfo"
+    },
+    {
+      "operationId": "importAddress",
+      "tags": [
+        "Daemon"
+      ],
+      "method": "GET",
+      "path": "/daemon/importaddress"
+    },
+    {
+      "operationId": "importPrivKey",
+      "tags": [
+        "Daemon"
+      ],
+      "method": "GET",
+      "path": "/daemon/importprivkey"
+    },
+    {
+      "operationId": "importWallet",
+      "tags": [
+        "Daemon"
+      ],
+      "method": "GET",
+      "path": "/daemon/importwallet"
+    },
+    {
+      "operationId": "keyPoolRefill",
+      "tags": [
+        "Daemon"
+      ],
+      "method": "GET",
+      "path": "/daemon/keypoolrefill"
+    },
+    {
+      "operationId": "listAddressGroupings",
+      "tags": [
+        "Daemon"
+      ],
+      "method": "GET",
+      "path": "/daemon/listaddressgroupings"
+    },
+    {
+      "operationId": "listLockUnspent",
+      "tags": [
+        "Daemon"
+      ],
+      "method": "GET",
+      "path": "/daemon/listlockunspent"
+    },
+    {
+      "operationId": "listReceivedByAddress",
+      "tags": [
+        "Daemon"
+      ],
+      "method": "GET",
+      "path": "/daemon/listreceivedbyaddress"
+    },
+    {
+      "operationId": "listSinceBlock",
+      "tags": [
+        "Daemon"
+      ],
+      "method": "GET",
+      "path": "/daemon/listsinceblock"
+    },
+    {
+      "operationId": "listTransactions",
+      "tags": [
+        "Daemon"
+      ],
+      "method": "GET",
+      "path": "/daemon/listtransactions"
+    },
+    {
+      "operationId": "listUnspent",
+      "tags": [
+        "Daemon"
+      ],
+      "method": "GET",
+      "path": "/daemon/listunspent"
+    },
+    {
+      "operationId": "lockUnspent",
+      "tags": [
+        "Daemon"
+      ],
+      "method": "GET",
+      "path": "/daemon/lockunspent"
+    },
+    {
+      "operationId": "rescanBlockchain",
+      "tags": [
+        "Daemon"
+      ],
+      "method": "GET",
+      "path": "/daemon/rescanblockchain"
+    },
+    {
+      "operationId": "sendFrom",
+      "tags": [
+        "Daemon"
+      ],
+      "method": "GET",
+      "path": "/daemon/sendfrom"
+    },
+    {
+      "operationId": "sendFromPost",
+      "tags": [
+        "Daemon"
+      ],
+      "method": "POST",
+      "path": "/daemon/sendfrom"
+    },
+    {
+      "operationId": "sendMany",
+      "tags": [
+        "Daemon"
+      ],
+      "method": "GET",
+      "path": "/daemon/sendmany"
+    },
+    {
+      "operationId": "sendManyPost",
+      "tags": [
+        "Daemon"
+      ],
+      "method": "POST",
+      "path": "/daemon/sendmany"
+    },
+    {
+      "operationId": "sendToAddress",
+      "tags": [
+        "Daemon"
+      ],
+      "method": "GET",
+      "path": "/daemon/sendtoaddress"
+    },
+    {
+      "operationId": "sendToAddressPost",
+      "tags": [
+        "Daemon"
+      ],
+      "method": "POST",
+      "path": "/daemon/sendtoaddress"
+    },
+    {
+      "operationId": "setTxFee",
+      "tags": [
+        "Daemon"
+      ],
+      "method": "GET",
+      "path": "/daemon/settxfee"
+    },
+    {
+      "operationId": "signMessage",
+      "tags": [
+        "Daemon"
+      ],
+      "method": "GET",
+      "path": "/daemon/signmessage"
+    },
+    {
+      "operationId": "signMessagePost",
+      "tags": [
+        "Daemon"
+      ],
+      "method": "POST",
+      "path": "/daemon/signmessage"
+    },
+    {
+      "operationId": "signRawTransaction",
+      "tags": [
+        "Daemon"
+      ],
+      "method": "GET",
+      "path": "/daemon/signrawtransaction"
+    },
+    {
+      "operationId": "signRawTransactionPost",
+      "tags": [
+        "Daemon"
+      ],
+      "method": "POST",
+      "path": "/daemon/signrawtransaction"
+    },
+    {
+      "operationId": "zcBenchmark",
+      "tags": [
+        "Daemon"
+      ],
+      "method": "GET",
+      "path": "/daemon/zcbenchmark"
+    },
+    {
+      "operationId": "zcRawJoinSplit",
+      "tags": [
+        "Daemon"
+      ],
+      "method": "GET",
+      "path": "/daemon/zcrawjoinsplit"
+    },
+    {
+      "operationId": "zcRawJoinSplitPost",
+      "tags": [
+        "Daemon"
+      ],
+      "method": "POST",
+      "path": "/daemon/zcrawjoinsplit"
+    },
+    {
+      "operationId": "zcrawkeygen",
+      "tags": [
+        "Daemon"
+      ],
+      "method": "GET",
+      "path": "/daemon/zcrawkeygen"
+    },
+    {
+      "operationId": "zcRawReceive",
+      "tags": [
+        "Daemon"
+      ],
+      "method": "GET",
+      "path": "/daemon/zcrawreceive"
+    },
+    {
+      "operationId": "zcRawReceivePost",
+      "tags": [
+        "Daemon"
+      ],
+      "method": "POST",
+      "path": "/daemon/zcrawreceive"
+    },
+    {
+      "operationId": "zcsamplejoinsplit",
+      "tags": [
+        "Daemon"
+      ],
+      "method": "GET",
+      "path": "/daemon/zcsamplejoinsplit"
+    },
+    {
+      "operationId": "zExportKey",
+      "tags": [
+        "Daemon"
+      ],
+      "method": "GET",
+      "path": "/daemon/zexportkey"
+    },
+    {
+      "operationId": "zExportViewingKey",
+      "tags": [
+        "Daemon"
+      ],
+      "method": "GET",
+      "path": "/daemon/zexportviewingkey"
+    },
+    {
+      "operationId": "zGetBalance",
+      "tags": [
+        "Daemon"
+      ],
+      "method": "GET",
+      "path": "/daemon/zgetbalance"
+    },
+    {
+      "operationId": "zGetMigrationStatus",
+      "tags": [
+        "Daemon"
+      ],
+      "method": "GET",
+      "path": "/daemon/zgetmigrationstatus"
+    },
+    {
+      "operationId": "zGetNewAddress",
+      "tags": [
+        "Daemon"
+      ],
+      "method": "GET",
+      "path": "/daemon/zgetnewaddress"
+    },
+    {
+      "operationId": "zGetOperationResult",
+      "tags": [
+        "Daemon"
+      ],
+      "method": "GET",
+      "path": "/daemon/zgetoperationresult"
+    },
+    {
+      "operationId": "zGetOperationStatus",
+      "tags": [
+        "Daemon"
+      ],
+      "method": "GET",
+      "path": "/daemon/zgetoperationstatus"
+    },
+    {
+      "operationId": "zGetTotalBalance",
+      "tags": [
+        "Daemon"
+      ],
+      "method": "GET",
+      "path": "/daemon/zgettotalbalance"
+    },
+    {
+      "operationId": "zImportKey",
+      "tags": [
+        "Daemon"
+      ],
+      "method": "GET",
+      "path": "/daemon/zimportkey"
+    },
+    {
+      "operationId": "zImportViewingKey",
+      "tags": [
+        "Daemon"
+      ],
+      "method": "GET",
+      "path": "/daemon/zimportviewingkey"
+    },
+    {
+      "operationId": "zImportWallet",
+      "tags": [
+        "Daemon"
+      ],
+      "method": "GET",
+      "path": "/daemon/zimportwallet"
+    },
+    {
+      "operationId": "zListAddresses",
+      "tags": [
+        "Daemon"
+      ],
+      "method": "GET",
+      "path": "/daemon/zlistaddresses"
+    },
+    {
+      "operationId": "zListOperationIds",
+      "tags": [
+        "Daemon"
+      ],
+      "method": "GET",
+      "path": "/daemon/zlistoperationids"
+    },
+    {
+      "operationId": "zListReceivedByAddress",
+      "tags": [
+        "Daemon"
+      ],
+      "method": "GET",
+      "path": "/daemon/zlistreceivedbyaddress"
+    },
+    {
+      "operationId": "zListUnspent",
+      "tags": [
+        "Daemon"
+      ],
+      "method": "GET",
+      "path": "/daemon/zlistunspent"
+    },
+    {
+      "operationId": "zmergetoaddress",
+      "tags": [
+        "Daemon"
+      ],
+      "method": "GET",
+      "path": "/daemon/zmergetoaddress"
+    },
+    {
+      "operationId": "zSendMany",
+      "tags": [
+        "Daemon"
+      ],
+      "method": "GET",
+      "path": "/daemon/zsendmany"
+    },
+    {
+      "operationId": "zSendManyPost",
+      "tags": [
+        "Daemon"
+      ],
+      "method": "POST",
+      "path": "/daemon/zsendmany"
+    },
+    {
+      "operationId": "zSetMigration",
+      "tags": [
+        "Daemon"
+      ],
+      "method": "GET",
+      "path": "/daemon/zsetmigration"
+    },
+    {
+      "operationId": "zShieldCoinBase",
+      "tags": [
+        "Daemon"
+      ],
+      "method": "GET",
+      "path": "/daemon/zshieldcoinbase"
+    },
+    {
+      "operationId": "fluxAdjustblockedports",
+      "tags": [
+        "Flux"
+      ],
+      "method": "POST",
+      "path": "/flux/adjustblockedports"
+    },
+    {
+      "operationId": "fluxAdjustblockedrepositories",
+      "tags": [
+        "Flux"
+      ],
+      "method": "POST",
+      "path": "/flux/adjustblockedrepositories"
+    },
+    {
+      "operationId": "fluxBlockedports",
+      "tags": [
+        "Flux"
+      ],
+      "method": "GET",
+      "path": "/flux/blockedports"
+    },
+    {
+      "operationId": "fluxBlockedrepositories",
+      "tags": [
+        "Flux"
+      ],
+      "method": "GET",
+      "path": "/flux/blockedrepositories"
+    },
+    {
+      "operationId": "fluxSyncthingPendingDevice",
+      "tags": [
+        "Syncthing"
+      ],
+      "method": "GET",
+      "path": "/syncthing/cluster/pending/devices"
+    },
+    {
+      "operationId": "fluxSyncthingPendingFolders",
+      "tags": [
+        "Syncthing"
+      ],
+      "method": "GET",
+      "path": "/syncthing/cluster/pending/folders"
+    },
+    {
+      "operationId": "fluxSyncthingConfig",
+      "tags": [
+        "Syncthing"
+      ],
+      "method": "GET",
+      "path": "/syncthing/config"
+    },
+    {
+      "operationId": "fluxSyncthingConfigDefaultsDevice",
+      "tags": [
+        "Syncthing"
+      ],
+      "method": "GET",
+      "path": "/syncthing/config/defaults/device"
+    },
+    {
+      "operationId": "fluxSyncthingConfigDefaultsFolder",
+      "tags": [
+        "Syncthing"
+      ],
+      "method": "GET",
+      "path": "/syncthing/config/defaults/folder"
+    },
+    {
+      "operationId": "fluxSyncthingConfigIgnores",
+      "tags": [
+        "Syncthing"
+      ],
+      "method": "GET",
+      "path": "/syncthing/config/defaults/ignores"
+    },
+    {
+      "operationId": "fluxSyncthingConfigDefaultsIgnoresPOST",
+      "tags": [
+        "Syncthing"
+      ],
+      "method": "POST",
+      "path": "/syncthing/config/defaults/ignores"
+    },
+    {
+      "operationId": "fluxSyncthingConfigDevices",
+      "tags": [
+        "Syncthing"
+      ],
+      "method": "GET",
+      "path": "/syncthing/config/devices"
+    },
+    {
+      "operationId": "fluxSyncthingConfigFoldersGET",
+      "tags": [
+        "Syncthing"
+      ],
+      "method": "GET",
+      "path": "/syncthing/config/folders"
+    },
+    {
+      "operationId": "fluxSyncthingConfigGuiGet",
+      "tags": [
+        "Syncthing"
+      ],
+      "method": "GET",
+      "path": "/syncthing/config/gui"
+    },
+    {
+      "operationId": "fluxSyncthingConfigLdapGet",
+      "tags": [
+        "Syncthing"
+      ],
+      "method": "GET",
+      "path": "/syncthing/config/ldap"
+    },
+    {
+      "operationId": "fluxSyncthingConfigOptions",
+      "tags": [
+        "Syncthing"
+      ],
+      "method": "GET",
+      "path": "/syncthing/config/options"
+    },
+    {
+      "operationId": "fluxSyncthingConfigRestartRequired",
+      "tags": [
+        "Syncthing"
+      ],
+      "method": "GET",
+      "path": "/syncthing/config/restart-required"
+    },
+    {
+      "operationId": "fluxSyncthingDbBrowse",
+      "tags": [
+        "Syncthing"
+      ],
+      "method": "GET",
+      "path": "/syncthing/db/browse"
+    },
+    {
+      "operationId": "fluxSyncthingDbCompletion",
+      "tags": [
+        "Syncthing"
+      ],
+      "method": "GET",
+      "path": "/syncthing/db/completion"
+    },
+    {
+      "operationId": "fluxSyncthingDbFile",
+      "tags": [
+        "Syncthing"
+      ],
+      "method": "GET",
+      "path": "/syncthing/db/file"
+    },
+    {
+      "operationId": "fluxSyncthingDbIgnores",
+      "tags": [
+        "Syncthing"
+      ],
+      "method": "GET",
+      "path": "/syncthing/db/ignores"
+    },
+    {
+      "operationId": "fluxSyncthingDbIgnoresPOST",
+      "tags": [
+        "Syncthing"
+      ],
+      "method": "POST",
+      "path": "/syncthing/db/ignores"
+    },
+    {
+      "operationId": "fluxSyncthingDbLocalChanged",
+      "tags": [
+        "Syncthing"
+      ],
+      "method": "GET",
+      "path": "/syncthing/db/localchanged"
+    },
+    {
+      "operationId": "fluxSyncthingDbNeed",
+      "tags": [
+        "Syncthing"
+      ],
+      "method": "GET",
+      "path": "/syncthing/db/need"
+    },
+    {
+      "operationId": "fluxSyncthingDbRemoteneed",
+      "tags": [
+        "Syncthing"
+      ],
+      "method": "GET",
+      "path": "/syncthing/db/remoteneed"
+    },
+    {
+      "operationId": "fluxSyncthingDbStatus",
+      "tags": [
+        "Syncthing"
+      ],
+      "method": "GET",
+      "path": "/syncthing/db/status"
+    },
+    {
+      "operationId": "fluxSyncthingDebugCpuprof",
+      "tags": [
+        "Syncthing"
+      ],
+      "method": "GET",
+      "path": "/syncthing/debug/cpuprof"
+    },
+    {
+      "operationId": "fluxSyncthingDebugFile",
+      "tags": [
+        "Syncthing"
+      ],
+      "method": "GET",
+      "path": "/syncthing/debug/file"
+    },
+    {
+      "operationId": "fluxSyncthingDebugHeapprof",
+      "tags": [
+        "Syncthing"
+      ],
+      "method": "GET",
+      "path": "/syncthing/debug/heapprof"
+    },
+    {
+      "operationId": "fluxSyncthingDebugHttpmetrics",
+      "tags": [
+        "Syncthing"
+      ],
+      "method": "GET",
+      "path": "/syncthing/debug/httpmetrics"
+    },
+    {
+      "operationId": "fluxSyncthingDebugpeercompletion",
+      "tags": [
+        "Syncthing"
+      ],
+      "method": "GET",
+      "path": "/syncthing/debug/peercompletion"
+    },
+    {
+      "operationId": "fluxSyncthingDebugSupport",
+      "tags": [
+        "Syncthing"
+      ],
+      "method": "GET",
+      "path": "/syncthing/debug/support"
+    },
+    {
+      "operationId": "fluxSyncthingEvents",
+      "tags": [
+        "Syncthing"
+      ],
+      "method": "GET",
+      "path": "/syncthing/events"
+    },
+    {
+      "operationId": "fluxSyncthingEventsDisk",
+      "tags": [
+        "Syncthing"
+      ],
+      "method": "GET",
+      "path": "/syncthing/events/disk"
+    },
+    {
+      "operationId": "fluxSyncthingFoldersError",
+      "tags": [
+        "Syncthing"
+      ],
+      "method": "GET",
+      "path": "/syncthing/folder/errors"
+    },
+    {
+      "operationId": "fluxSyncthingFolderVersions",
+      "tags": [
+        "Syncthing"
+      ],
+      "method": "GET",
+      "path": "/syncthing/folder/versions"
+    },
+    {
+      "operationId": "fluxSyncthingHealth",
+      "tags": [
+        "Syncthing"
+      ],
+      "method": "GET",
+      "path": "/syncthing/health"
+    },
+    {
+      "operationId": "fluxSyncthingMeta",
+      "tags": [
+        "Syncthing"
+      ],
+      "method": "GET",
+      "path": "/syncthing/meta"
+    },
+    {
+      "operationId": "fluxSyncthingStatsDevice",
+      "tags": [
+        "Syncthing"
+      ],
+      "method": "GET",
+      "path": "/syncthing/stats/device"
+    },
+    {
+      "operationId": "fluxSyncthingStatsFolder",
+      "tags": [
+        "Syncthing"
+      ],
+      "method": "GET",
+      "path": "/syncthing/stats/folder"
+    },
+    {
+      "operationId": "fluxSyncthingSvc",
+      "tags": [
+        "Syncthing"
+      ],
+      "method": "GET",
+      "path": "/syncthing/svc"
+    },
+    {
+      "operationId": "fluxSyncthingSvcRandom",
+      "tags": [
+        "Syncthing"
+      ],
+      "method": "GET",
+      "path": "/syncthing/svc/random/string"
+    },
+    {
+      "operationId": "fluxSyncthingSvcReport",
+      "tags": [
+        "Syncthing"
+      ],
+      "method": "GET",
+      "path": "/syncthing/svc/report"
+    },
+    {
+      "operationId": "fluxSyncthingSysytemBrowse",
+      "tags": [
+        "Syncthing"
+      ],
+      "method": "GET",
+      "path": "/syncthing/system/browse"
+    },
+    {
+      "operationId": "fluxSyncthingSysytemConnections",
+      "tags": [
+        "Syncthing"
+      ],
+      "method": "GET",
+      "path": "/syncthing/system/connections"
+    },
+    {
+      "operationId": "fluxSyncthingSysytemDebug",
+      "tags": [
+        "Syncthing"
+      ],
+      "method": "GET",
+      "path": "/syncthing/system/debug"
+    },
+    {
+      "operationId": "fluxSyncthingSysytemDiscovery",
+      "tags": [
+        "Syncthing"
+      ],
+      "method": "GET",
+      "path": "/syncthing/system/discovery"
+    },
+    {
+      "operationId": "fluxSyncthingSystemErrorGET",
+      "tags": [
+        "Syncthing"
+      ],
+      "method": "GET",
+      "path": "/syncthing/system/error"
+    },
+    {
+      "operationId": "fluxSyncthingSystemErrorClear",
+      "tags": [
+        "Syncthing"
+      ],
+      "method": "GET",
+      "path": "/syncthing/system/error/clear"
+    },
+    {
+      "operationId": "fluxSyncthingSysytemLog",
+      "tags": [
+        "Syncthing"
+      ],
+      "method": "GET",
+      "path": "/syncthing/system/log"
+    },
+    {
+      "operationId": "fluxSyncthingSysytemLogTxt",
+      "tags": [
+        "Syncthing"
+      ],
+      "method": "GET",
+      "path": "/syncthing/system/logtxt"
+    },
+    {
+      "operationId": "fluxSyncthingSysytemPath",
+      "tags": [
+        "Syncthing"
+      ],
+      "method": "GET",
+      "path": "/syncthing/system/paths"
+    },
+    {
+      "operationId": "fluxSyncthingSysytemPause",
+      "tags": [
+        "Syncthing"
+      ],
+      "method": "GET",
+      "path": "/syncthing/system/pause"
+    },
+    {
+      "operationId": "fluxSyncthingSysytemPing",
+      "tags": [
+        "Syncthing"
+      ],
+      "method": "GET",
+      "path": "/syncthing/system/ping"
+    },
+    {
+      "operationId": "fluxSyncthingSystemReset",
+      "tags": [
+        "Syncthing"
+      ],
+      "method": "GET",
+      "path": "/syncthing/system/reset"
+    },
+    {
+      "operationId": "fluxSyncthingSystemRestart",
+      "tags": [
+        "Syncthing"
+      ],
+      "method": "GET",
+      "path": "/syncthing/system/restart"
+    },
+    {
+      "operationId": "fluxSyncthingSysytemResume",
+      "tags": [
+        "Syncthing"
+      ],
+      "method": "GET",
+      "path": "/syncthing/system/resume"
+    },
+    {
+      "operationId": "fluxSyncthingSystemShutdown",
+      "tags": [
+        "Syncthing"
+      ],
+      "method": "GET",
+      "path": "/syncthing/system/shutdown"
+    },
+    {
+      "operationId": "fluxSyncthingSystemStatus",
+      "tags": [
+        "Syncthing"
+      ],
+      "method": "GET",
+      "path": "/syncthing/system/status"
+    },
+    {
+      "operationId": "fluxSyncthingUpgradeGET",
+      "tags": [
+        "Syncthing"
+      ],
+      "method": "GET",
+      "path": "/syncthing/system/upgrade"
+    },
+    {
+      "operationId": "fluxSyncthingSystemVersion",
+      "tags": [
+        "Syncthing"
+      ],
+      "method": "GET",
+      "path": "/syncthing/system/version"
+    }
+  ]
+}
