@@ -3,6 +3,7 @@
 // static host - GitHub Pages - answers all of them with 200. Without them a
 // deep link would load through the host's 404 page: it still renders, but
 // search engines treat a 404 as a missing page.
+import { readFileSync } from 'node:fs';
 import { redoclySlug } from './markdown.mjs';
 
 const SITE = 'https://docs.runonflux.io/fluxapi';
@@ -155,7 +156,18 @@ export function pageRoutes(spec) {
   return routes.filter((r) => !seen.has(r.path) && seen.add(r.path));
 }
 
-// Redocly's addresses, as { from, to }, both relative to /fluxapi.
+// Operations FluxOS no longer routes (site/removed-operations.json, recorded
+// from the spec before they were taken out). Their old addresses lead to the
+// note that says so, instead of a 404.
+const removedOperations = JSON.parse(
+  readFileSync(
+    new URL('../site/removed-operations.json', import.meta.url),
+    'utf8',
+  ),
+).operations;
+
+// Redocly's addresses, and the addresses of removed operations, as
+// { from, to }, both relative to /fluxapi.
 export function redoclyRedirects(spec) {
   const redirects = [{ from: 'section/flux-api-documentation', to: '' }];
   for (const { level, text } of introHeadings(spec.info.description ?? '')) {
@@ -178,6 +190,19 @@ export function redoclyRedirects(spec) {
         from: `${redoclySlug(tag)}/${id}`,
         to: `tag/${scalarSlug(tag)}/${id}`,
       });
+    }
+  }
+  const headings = introHeadings(spec.info.description ?? '').map(
+    (h) => h.text,
+  );
+  const notes = headings.includes('Deprecated & Removed Endpoints')
+    ? `description/${headingSlug('Deprecated & Removed Endpoints')}`
+    : '';
+  for (const { operationId, tags } of removedOperations) {
+    const id = operationId.toLowerCase();
+    for (const tag of tags) {
+      redirects.push({ from: `${redoclySlug(tag)}/${id}`, to: notes });
+      redirects.push({ from: `tag/${scalarSlug(tag)}/${id}`, to: notes });
     }
   }
   const seen = new Set();
