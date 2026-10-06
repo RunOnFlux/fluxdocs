@@ -5,7 +5,7 @@ decentralized cloud. Published at [docs.runonflux.io](https://docs.runonflux.io)
 
 The specification in `fluxapi.yaml` tracks
 [RunOnFlux/flux](https://github.com/RunOnFlux/flux) `ZelBack/src/routes.js` — it
-currently documents **FluxOS 8.18.0** (446 paths). Test against
+currently documents **FluxOS 8.20.0** (339 paths). Test against
 `https://api.runonflux.io`, or against an individual node at
 `https://<node-ip>:16127` for anything node-scoped.
 
