@@ -10,8 +10,6 @@ info:
   license:
     name: GNU AGPLv3
     url: 'https://www.gnu.org/licenses/agpl-3.0.en.html'
-  x-logo:
-    url: 'https://raw.githubusercontent.com/runonflux/fluxdocs/master/flux_logo.png'
   description: |-
     # Flux API Documentation
     
@@ -15706,7 +15704,8 @@ paths:
         **Removed.** Pausing applications is no longer supported and this
         endpoint always answers **HTTP 200** with `status: error` and
         `data.code: 410`. Use `GET /apps/appstart` to start a stopped
-        application. **AppOwnerAbove**
+        application. When `appname` is given the caller is still authorised
+        before the refusal is returned. **AppOwnerAbove**
       operationId: AppUnpause
       deprecated: true
       security:
@@ -16786,7 +16785,37 @@ paths:
       tags:
         - Apps
       summary: App stats based on resource usage
-      description: Returns containers resource usage. **AppOwnerAbove**
+      description: >-
+        The container's current resource usage, in the shape of Docker's
+        container-stats object but **narrowed** to the values FluxOS keeps:
+        CPU totals, memory usage, limit and page cache, block I/O, network
+        bytes, the CPU allocation and disk usage. The reading is at most five
+        seconds old, and callers arriving together share one.
+
+
+        Not returned (they are in Docker's raw object, and were in this
+        response before FluxOS 8.18.0): `read`, `preread`, `id`, `name`,
+        `pids_stats`, `num_procs`, `storage_stats`, `percpu_usage`,
+        `usage_in_kernelmode`, `usage_in_usermode`, `throttling_data`,
+        `precpu_stats.online_cpus`, `max_usage`, `failcnt`, every
+        `memory_stats.stats` key except `inactive_file`, every `blkio_stats`
+        list except `io_service_bytes_recursive`, and the per-interface packet,
+        error and dropped counters. With `percpu_usage` gone, read
+        `online_cpus` directly rather than falling back to that array's length.
+
+
+        `memory_stats.stats.inactive_file` is the page cache to subtract from
+        `usage` as `docker stats` does (cgroup v1's `cache` is reported under
+        this name). `blkio_stats.io_service_bytes_recursive` is one `read` and
+        one `write` entry summed across devices, or `null`. `nanoCpus` is the
+        CPU allocation (1000000000 = one core).
+
+
+        `disk_stats.status` is `success` when every mount was measured,
+        `partial` when some could not be (listed in `unmeasured`; `used` is
+        then a floor, not a total), `error` when the reading failed (`message`
+        says why and every size is 0), or `stale` when a failed reading was
+        replaced by the last measured one. **AppOwnerAbove**
       externalDocs:
         url: 'https://docs.docker.com/engine/api/v1.40/#operation/ContainerStats'
       operationId: AppStats
@@ -16807,101 +16836,46 @@ paths:
             application/json:
               schema:
                 type: object
+                properties:
+                  status:
+                    $ref: '#/components/schemas/status'
+                  data:
+                    type: object
+                    description: The reading, in Docker's container-stats shape, narrowed as described above
               example:
                 status: success
                 data:
-                  read: '2020-09-18T00:35:37.306888517Z'
-                  preread: '2020-09-18T00:35:36.072193466Z'
-                pids_stats: {}
-                blkio_stats:
-                  io_service_bytes_recursive: []
-                  io_serviced_recursive: []
-                  io_queue_recursive: []
-                  io_service_time_recursive: []
-                  io_wait_time_recursive: []
-                  io_merged_recursive: []
-                  io_time_recursive: []
-                  sectors_recursive: []
-                num_procs: 0
-                storage_stats: {}
-                cpu_stats:
-                  cpu_usage:
-                    total_usage: 7296404247
-                    percpu_usage:
-                      - 3217120277
-                      - 4079283970
-                    usage_in_kernelmode: 570000000
-                    usage_in_usermode: 6550000000
-                  system_cpu_usage: 516655370000000
-                  online_cpus: 2
-                  throttling_data:
-                    periods: 842
-                    throttled_periods: 179
-                    throttled_time: 8202758092
-                precpu_stats:
-                  cpu_usage:
-                    total_usage: 7296404247
-                    percpu_usage:
-                      - 3217120277
-                      - 4079283970
-                    usage_in_kernelmode: 570000000
-                    usage_in_usermode: 6550000000
-                  system_cpu_usage: 516653230000000
-                  online_cpus: 2
-                  throttling_data:
-                    periods: 842
-                    throttled_periods: 179
-                    throttled_time: 8202758092
-                memory_stats:
-                  usage: 15024128
-                  max_usage: 82767872
-                  stats:
-                    active_anon: 3551232
-                    active_file: 1179648
-                    cache: 1392640
-                    dirty: 0
-                    hierarchical_memory_limit: 209715200
-                    hierarchical_memsw_limit: 0
-                    inactive_anon: 3555328
-                    inactive_file: 126976
-                    mapped_file: 1388544
-                    pgfault: 17858
-                    pgmajfault: 194
-                    pgpgin: 23417
-                    pgpgout: 21363
-                    rss: 7020544
-                    rss_huge: 0
-                    total_active_anon: 3551232
-                    total_active_file: 1179648
-                    total_cache: 1392640
-                    total_dirty: 0
-                    total_inactive_anon: 3555328
-                    total_inactive_file: 126976
-                    total_mapped_file: 1388544
-                    total_pgfault: 17858
-                    total_pgmajfault: 194
-                    total_pgpgin: 23417
-                    total_pgpgout: 21363
-                    total_rss: 7020544
-                    total_rss_huge: 0
-                    total_unevictable: 0
-                    total_writeback: 0
-                    unevictable: 0
-                    writeback: 0
-                  limit: 209715200
-                name: /fluxdibi-UND
-                id: >-
-                  1e2f681c8a356c0af561bcefb3a85b8dbe690487598a004fef1c4a65001e0078
-                networks:
-                  eth0:
-                    rx_bytes: 4191270113
-                    rx_packets: 3346216
-                    rx_errors: 0
-                    rx_dropped: 0
-                    tx_bytes: 300477601
-                    tx_packets: 2264232
-                    tx_errors: 0
-                    tx_dropped: 0
+                  cpu_stats:
+                    cpu_usage:
+                      total_usage: 7296404247
+                    system_cpu_usage: 516655370000000
+                    online_cpus: 2
+                  precpu_stats:
+                    cpu_usage:
+                      total_usage: 7294264247
+                    system_cpu_usage: 516653230000000
+                  memory_stats:
+                    usage: 15024128
+                    limit: 209715200
+                    stats:
+                      inactive_file: 126976
+                  blkio_stats:
+                    io_service_bytes_recursive:
+                      - op: read
+                        value: 12288
+                      - op: write
+                        value: 4096
+                  networks:
+                    eth0:
+                      rx_bytes: 4191270113
+                      tx_bytes: 300477601
+                  nanoCpus: 2000000000
+                  disk_stats:
+                    bind: 33554432
+                    volume: 8388608
+                    rootfs: 0
+                    used: 41943040
+                    status: success
   /apps/appchanges:
     get:
       tags:
