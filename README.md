@@ -66,22 +66,16 @@ check is a check of the live behaviour.
 ## Deployment: GitHub Pages
 
 `.github/workflows/pages.yml` lints, builds and publishes `dist/` on every push
-to `master`. One-time setup, replacing the Redocly-hosted site:
+to `master`; nothing else is needed to release a change. It can also be run by
+hand (**Actions -> Deploy to GitHub Pages -> Run workflow**).
 
-1. **Settings -> Pages -> Build and deployment -> Source: GitHub Actions.**
-2. Merge to `master` (or run the workflow by hand) and wait for the first
-   deployment.
-3. **Settings -> Pages -> Custom domain: `docs.runonflux.io`.** Verifying the
-   domain for the organisation first (**Organisation settings -> Pages ->
-   Add a domain**, a TXT record) prevents anyone else from claiming it.
-4. **DNS:** point `docs.runonflux.io` at GitHub instead of Redocly - a
-   `CNAME` to `runonflux.github.io` (today it is `ssl.redocly.app`).
-5. Once GitHub has issued the certificate, tick **Enforce HTTPS**.
-6. Check the site, then cancel the Redocly subscription and delete
-   `redocly.yaml`'s `seo`, `logo`, `navbar`, `footer` and `apis` sections; the
-   lint settings (`extends`, `rules`) are still used by `npm test`.
+How it is set up, for reference:
 
-Until the DNS change, Redocly keeps building its own site from `master`.
+- **Settings -> Pages:** source **GitHub Actions**, custom domain
+  `docs.runonflux.io`, **Enforce HTTPS** on. GitHub issues and renews the
+  certificate itself.
+- **DNS (Cloudflare):** `docs` is a `CNAME` to `runonflux.github.io`, **DNS
+  only**. Proxied through Cloudflare, GitHub cannot renew the certificate.
 
 ## The Flux AI assistant
 
