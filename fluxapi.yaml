@@ -183,6 +183,31 @@ info:
     Test your setup with public endpoints first, then proceed to authenticated endpoints once your credentials are properly configured.
     
     
+    ## AI Agents and MCP
+
+    **Flux Cloud MCP** is an [MCP](https://modelcontextprotocol.io) server that lets AI agents use Flux Cloud through this API: quote an app in US dollars, deploy it, pay for it, watch it come up, read its logs, update it and cancel it. It works with Claude, ChatGPT, Cursor, VS Code, Windsurf and other MCP hosts. Source: [RunOnFlux/flux-cloud-mcp](https://github.com/RunOnFlux/flux-cloud-mcp).
+
+    **Hosted, nothing to install.** Add it as a remote MCP server (Streamable HTTP):
+
+    ```
+    https://mcp.runonflux.com/mcp
+    ```
+
+    In Claude Code: `claude mcp add --transport http flux-cloud https://mcp.runonflux.com/mcp`. In VS Code and Cursor, use **Connect MCP** at the bottom of the sidebar.
+
+    The hosted server holds no keys. Read-only tools need none; tools that sign or pay take the keys as call arguments, used for that call only and never stored. Create a dedicated pair with `flux_generate_keys` and fund it with only what a deployment needs.
+
+    **Local, keys stay on your machine.** For larger budgets, run the server locally:
+
+    ```bash
+    claude mcp add flux-cloud -s user \
+      -e FLUX_ID_PRIVATE_KEY=<wif> -e FLUX_PAYMENT_PRIVATE_KEY=<wif> \
+      -- npx -y @runonflux/flux-cloud-mcp
+    ```
+
+    **Any other AI tool** can read this reference as [markdown](https://docs.runonflux.io/fluxapi.md), listed in [llms.txt](https://docs.runonflux.io/llms.txt).
+
+
     ## Support & Community
     
     - **Documentation**: [docs.runonflux.com](https://docs.runonflux.com)
@@ -417,7 +442,7 @@ info:
       const authData = JSON.parse(event.data);
       if (authData.status === 'success') {
         // Authentication successful
-        console.log('Signed in with ZelID:', authData.data.zelid);
+        console.log('Signed in with FluxID:', authData.data.zelid);
       }
     };
     ```
@@ -571,13 +596,13 @@ tags:
       
       Comprehensive identity management endpoints that handle user authentication, authorization 
       levels, and identity verification across multiple blockchain addresses (Bitcoin P2PKH, 
-      Ethereum, ZelID). These endpoints manage user sessions, permissions, and access control 
+      Ethereum, FluxID). These endpoints manage user sessions, permissions, and access control 
       throughout the Flux ecosystem.
       
       **Supported Address Types:**
       - Bitcoin P2PKH addresses
       - Ethereum addresses  
-      - ZelID addresses
+      - FluxID addresses
       - Multi-signature addresses
       
   - name: Daemon
@@ -918,7 +943,7 @@ paths:
         - ID
       summary: Login into Flux
       description: >-
-        Login into Flux by submitting correct ZelID, login phrase and
+        Login into Flux by submitting correct FluxID, login phrase and
         signature. Note that to get the signature of the signed message you
         would need to do the signing on Zelcore or your BTC wallet or your ETH wallet. If success
         status response is returned, we can use the supplied data(zelid,
@@ -977,12 +1002,12 @@ paths:
         content:
           text/plain:
             schema:
-              $ref: '#/components/schemas/ZelIDLogin'
+              $ref: '#/components/schemas/FluxIDLogin'
             example:
               loginPhrase: 1575012988077darschvve5ag82g8e8sgeij4sn61842ya7ovxi9r3kba
               zelid: 1CbErtneaX2QVyUfwU7JGB7VzvPgrgc3uC
               signature: IAMZBB0p8aQ6A0Zt8uUKFLdWvPJlBypuczhaM6/R+s5bI72NQs/TPF1KYywvJlumMZyvLmk7JelDwaQbfTjqtSs=
-        description: ZelID login object
+        description: FluxID login object
         required: true
       responses:
         '200':
@@ -1006,7 +1031,7 @@ paths:
                         description: explanation of status
                       zelid:
                         type: string
-                        description: supplied ZelID or bitcoin P2PKH address or ethereum address
+                        description: supplied FluxID or bitcoin P2PKH address or ethereum address
                       loginPhrase:
                         type: string
                         description: valid and active loginPhrase
@@ -1055,7 +1080,7 @@ paths:
               properties:
                 address:
                   type: string
-                  description: ZelID or any P2PKH Bitcoin address or Ethereum address
+                  description: FluxID or any P2PKH Bitcoin address or Ethereum address
                 message:
                   type: string
                   description: >-
@@ -1084,10 +1109,10 @@ paths:
                     properties:
                       signature:
                         type: string
-                        description: Signature of signed loginPhrase with ZelID
+                        description: Signature of signed loginPhrase with FluxID
                       identifier:
                         type: string
-                        description: ZelID or any P2PKH Bitcoin address or Ethereum address
+                        description: FluxID or any P2PKH Bitcoin address or Ethereum address
                       createdAt:
                         type: string
                         description: Start date and time of vaild message
@@ -1110,13 +1135,13 @@ paths:
     get:
       tags:
         - ID
-      summary: Obtain all logged sessions of ZelID.
+      summary: Obtain all logged sessions of FluxID.
       description: >-
         Gets all currently active logged sessions in Flux tied to given
-        ZelID. **User**
+        FluxID. **User**
       operationId: loggedSessions
       security:
-        - ZelID: []
+        - FluxID: []
       x-codeSamples:
         - lang: 'curl'
           source: |
@@ -1169,7 +1194,7 @@ paths:
                       properties:
                         zelid:
                           type: string
-                          description: associated ZelID
+                          description: associated FluxID
                         loginPhrase:
                           type: string
                           description: login phrase used for session
@@ -1198,7 +1223,7 @@ paths:
         supplied authentication header. **User**
       operationId: logoutCurrentSession
       security:
-        - ZelID: []
+        - FluxID: []
       responses:
         '200':
           description: OK
@@ -1225,7 +1250,7 @@ paths:
         supplied authentication header. **User**
       operationId: logoutAllSession
       security:
-        - ZelID: []
+        - FluxID: []
       responses:
         '200':
           description: OK
@@ -1252,7 +1277,7 @@ paths:
         users. **Admin**
       operationId: loggedUsers
       security:
-        - ZelID: []
+        - FluxID: []
       responses:
         '200':
           description: OK
@@ -1270,7 +1295,7 @@ paths:
                       properties:
                         zelid:
                           type: string
-                          description: users ZelID
+                          description: users FluxID
                         loginPhrase:
                           type: string
                           description: login phrase used for session
@@ -1296,7 +1321,7 @@ paths:
         recently and phrases that can be used to log in.. **Admin**
       operationId: activeLoginPhrases
       security:
-        - ZelID: []
+        - FluxID: []
       responses:
         '200':
           description: OK
@@ -1346,7 +1371,7 @@ paths:
         **Admin**
       operationId: logoutAllUsers
       security:
-        - ZelID: []
+        - FluxID: []
       responses:
         '200':
           description: OK
@@ -1374,7 +1399,7 @@ paths:
         - ID
       summary: Logs out a specific session
       security:
-        - ZelID: []
+        - FluxID: []
       description: >-
         Logs out a specific session. Requires the knowledge of a session
         loginPhrase and so users level is sufficient and user cannot logout
@@ -1429,10 +1454,10 @@ paths:
               properties:
                 zelid:
                   type: string
-                  description: ZelID
+                  description: FluxID
                 signature:
                   type: string
-                  description: Signature of signed loginPhrase with ZelID
+                  description: Signature of signed loginPhrase with FluxID
             example:
               zelid: 1CbErtneaX2QVyUfwU7JGB7VzvPgrgc3uC
               signature: IAMZBB0p8aQ6A0Zt8uUKFLdWvPJlBypuczhaM6/R+s5bI72NQs/TPF1KYywvJlumMZyvLmk7JelDwaQbfTjqtSs=
@@ -1465,7 +1490,7 @@ paths:
         against without any extra parameters. **AdminAndFluxTeam**
       operationId: startdaemon
       security:
-        - ZelID: []
+        - FluxID: []
       responses:
         '200':
           description: OK
@@ -1497,7 +1522,7 @@ paths:
         extra parameters. **AdminAndFluxTeam**
       operationId: restartdaemon
       security:
-        - ZelID: []
+        - FluxID: []
       responses:
         '200':
           description: OK
@@ -1527,7 +1552,7 @@ paths:
         Tries to switch to master branch of FluxOS. **FluxTeam**
       operationId: FluxEnterMaster
       security:
-        - ZelID: []
+        - FluxID: []
       responses:
         '200':
           description: OK
@@ -1557,7 +1582,7 @@ paths:
         Tries to switch to development branch of FluxOS. **FluxTeam**
       operationId: FluxEnterDevelopment
       security:
-        - ZelID: []
+        - FluxID: []
       responses:
         '200':
           description: OK
@@ -1589,7 +1614,7 @@ paths:
         flag. **Admin**
       operationId: reindexFluxB
       security:
-        - ZelID: []
+        - FluxID: []
       responses:
         '200':
           description: OK
@@ -1621,7 +1646,7 @@ paths:
         **AdminAndFluxTeam**
       operationId: updateFlux
       security:
-        - ZelID: []
+        - FluxID: []
       responses:
         '200':
           description: OK
@@ -1651,7 +1676,7 @@ paths:
         its services after the update. **AdminAndFluxTeam**
       operationId: hardUpdateFlux
       security:
-        - ZelID: []
+        - FluxID: []
       responses:
         '200':
           description: OK
@@ -1679,7 +1704,7 @@ paths:
         with no extra parameters during this update. **AdminAndFluxTeam**
       operationId: updateDaemon
       security:
-        - ZelID: []
+        - FluxID: []
       responses:
         '200':
           description: OK
@@ -1707,7 +1732,7 @@ paths:
         with no extra parameters during this update. **AdminAndFluxTeam**
       operationId: updateBenchmark
       security:
-        - ZelID: []
+        - FluxID: []
       responses:
         '200':
           description: OK
@@ -1734,7 +1759,7 @@ paths:
         **AdminAndFluxTeam**
       operationId: fluxDebug
       security:
-        - ZelID: []
+        - FluxID: []
       responses:
         '200':
           description: OK
@@ -1777,7 +1802,7 @@ paths:
         **AdminAndFluxTeam**
       operationId: benchmarkDebuf
       security:
-        - ZelID: []
+        - FluxID: []
       responses:
         '200':
           description: OK
@@ -1818,7 +1843,7 @@ paths:
         **AdminAndFluxTeam**
       operationId: tailFluxDebug
       security:
-        - ZelID: []
+        - FluxID: []
       responses:
         '200':
           description: OK
@@ -2081,7 +2106,7 @@ paths:
         **AdminAndFluxTeam**
       operationId: tailBenchmarkDebug
       security:
-        - ZelID: []
+        - FluxID: []
       responses:
         '200':
           description: OK
@@ -2284,7 +2309,7 @@ paths:
         **AdminAndFluxTeam**
       operationId: fluxErrorLog
       security:
-        - ZelID: []
+        - FluxID: []
       responses:
         '200':
           description: OK
@@ -2331,7 +2356,7 @@ paths:
         **AdminAndFluxTeam**
       operationId: tailFluxErrorLog
       security:
-        - ZelID: []
+        - FluxID: []
       responses:
         '200':
           description: OK
@@ -2630,7 +2655,7 @@ paths:
                             description: If ``true`` node have a static IP address
                           zelid:
                             type: string
-                            description: Admin's ZelID
+                            description: Admin's FluxID
                           pgp:
                             type: string
                             description: PGP identity
@@ -3141,8 +3166,8 @@ paths:
     get:
       tags:
         - Flux
-      summary: Admin's ZelID
-      description: This will return with the admin's ZelID. **Public**
+      summary: Admin's FluxID
+      description: This will return with the admin's FluxID. **Public**
       operationId: getFluxID
       security: []
       responses:
@@ -3157,7 +3182,7 @@ paths:
                     $ref: '#/components/schemas/status'
                   data:
                     type: string
-                    description: ZelID
+                    description: FluxID
               example:
                 status: success
                 data: 1CcoEkKQZcwUXPSps4bZJDjUM3mqe9bNXf
@@ -3269,7 +3294,7 @@ paths:
         **FluxTeam**
       operationId: setDOSState
       security:
-        - ZelID: []
+        - FluxID: []
       requestBody:
         required: true
         content:
@@ -3554,7 +3579,7 @@ paths:
       description: Broadcast data message to peers that are connected. **AdminAndFluxTeam**
       operationId: broadcastMessageFromUserPost
       security:
-        - ZelID: []
+        - FluxID: []
       requestBody:
         required: true
         content:
@@ -3589,7 +3614,7 @@ paths:
       summary: Broadcast message to peers
       description: Broadcast data message to peers that are connected. **AdminAndFluxTeam**
       security:
-        - ZelID: []
+        - FluxID: []
       parameters:
         - in: query
           name: data
@@ -3627,7 +3652,7 @@ paths:
       operationId: broadcastMessageToOutgoingFromUserPost
       deprecated: true
       security:
-        - ZelID: []
+        - FluxID: []
       requestBody:
         required: true
         content:
@@ -3667,7 +3692,7 @@ paths:
       operationId: broadcastMessageToOutgoingFromUser
       deprecated: true
       security:
-        - ZelID: []
+        - FluxID: []
       parameters:
         - in: query
           name: data
@@ -3704,7 +3729,7 @@ paths:
       operationId: broadcastMessageToIncomingFromUserPost
       deprecated: true
       security:
-        - ZelID: []
+        - FluxID: []
       requestBody:
         required: true
         content:
@@ -3744,7 +3769,7 @@ paths:
       operationId: broadcastMessageToIncomingFromUser
       deprecated: true
       security:
-        - ZelID: []
+        - FluxID: []
       parameters:
         - in: query
           name: data
@@ -3779,7 +3804,7 @@ paths:
         **AdminAndFluxTeam**
       operationId: addPeer
       security:
-        - ZelID: []
+        - FluxID: []
       parameters:
         - in: query
           name: ip
@@ -3814,7 +3839,7 @@ paths:
         connected peer. **AdminAndFluxTeam**
       operationId: removePeer
       security:
-        - ZelID: []
+        - FluxID: []
       parameters:
         - in: query
           name: ip
@@ -3847,7 +3872,7 @@ paths:
       description: Remove a incoming connected peer. **AdminAndFluxTeam**
       operationId: removeIncomingPeer
       security:
-        - ZelID: []
+        - FluxID: []
       parameters:
         - in: query
           name: ip
@@ -3882,7 +3907,7 @@ paths:
         **AdminAndFluxTeam**
       operationId: allowPortApi
       security:
-        - ZelID: []
+        - FluxID: []
       parameters:
         - in: query
           name: port
@@ -3929,7 +3954,7 @@ paths:
       description: Essentially rebuilds flux - use with caution! **Admin**
       operationId: adjustKadenaAccount
       security:
-        - ZelID: []
+        - FluxID: []
       parameters:
         - in: query
           name: account
@@ -3973,7 +3998,7 @@ paths:
       description: This call will start the benchmark which tests the hardware specifications and performance. **AdminAndFluxTeam**
       operationId: fluxstartBenchmark
       security:
-        - ZelID: []
+        - FluxID: []
       responses:
         '200':
           description: OK
@@ -3999,7 +4024,7 @@ paths:
       description: This call will restart the benchmark which tests the hardware specifications and performance. **AdminAndFluxTeam**
       operationId: fluxrestartbenchmark
       security:
-        - ZelID: []
+        - FluxID: []
       responses:
         '200':
           description: OK
@@ -4025,7 +4050,7 @@ paths:
       description: This call will perform a soft update of Flux. **AdminAndFluxTeam**
       operationId: softUpdateFlux
       security:
-        - ZelID: []
+        - FluxID: []
       responses:
         '200':
           description: OK
@@ -4051,7 +4076,7 @@ paths:
       description: This call will install Flux. **AdminAndFluxTeam**
       operationId: softUpdateFluxInstall
       security:
-        - ZelID: []
+        - FluxID: []
       responses:
         '200':
           description: OK
@@ -4077,7 +4102,7 @@ paths:
       description: This call returns the Flux warning log. **AdminAndFluxTeam**
       operationId: fluxWarnLog
       security:
-        - ZelID: []
+        - FluxID: []
       responses:
         '200':
           description: OK
@@ -4099,7 +4124,7 @@ paths:
       description: This call returns the Flux debug log. **AdminAndFluxTeam**
       operationId: fluxDebugLog
       security:
-        - ZelID: []
+        - FluxID: []
       responses:
         '200':
           description: OK
@@ -4133,7 +4158,7 @@ paths:
       description: This call returns the Flux info log. **AdminAndFluxTeam**
       operationId: fluxInfoLog
       security:
-        - ZelID: []
+        - FluxID: []
       responses:
         '200':
           description: OK
@@ -4162,7 +4187,7 @@ paths:
       description: This call returns the Flux tail warn log. **AdminAndFluxTeam**
       operationId: tailFluxWarnLog
       security:
-        - ZelID: []
+        - FluxID: []
       responses:
         '200':
           description: OK
@@ -4186,7 +4211,7 @@ paths:
       description: This call returns the Flux tail debug log. **AdminAndFluxTeam**
       operationId: tailFluxDebugLog
       security:
-        - ZelID: []
+        - FluxID: []
       responses:
         '200':
           description: OK
@@ -4210,7 +4235,7 @@ paths:
       description: This call returns the Flux tail info log. **AdminAndFluxTeam**
       operationId: tailFluxInfoLog
       security:
-        - ZelID: []
+        - FluxID: []
       responses:
         '200':
           description: OK
@@ -4265,7 +4290,7 @@ paths:
           description: Port number
           example: 666
       security:
-        - ZelID: []
+        - FluxID: []
       responses:
         '200':
           description: OK
@@ -4302,7 +4327,7 @@ paths:
           description: Port number
           example: 666
       security:
-        - ZelID: []
+        - FluxID: []
       responses:
         '200':
           description: OK
@@ -4331,7 +4356,7 @@ paths:
       description: This call show message with mappings (UPnP). **AdminAndFluxTeam**
       operationId: fluxGetMap
       security:
-        - ZelID: []
+        - FluxID: []
       responses:
         '200':
           description: OK
@@ -4434,7 +4459,7 @@ paths:
       description: This call show public IP address (UPnP). **AdminAndFluxTeam**
       operationId: fluxGetip
       security:
-        - ZelID: []
+        - FluxID: []
       responses:
         '200':
           description: OK
@@ -4458,7 +4483,7 @@ paths:
       description: This call show a message with gateway address (UPnP). **AdminAndFluxTeam**
       operationId: fluxGetGateway
       security:
-        - ZelID: []
+        - FluxID: []
       responses:
         '200':
           description: OK
@@ -4519,7 +4544,7 @@ paths:
             type: string
           example: '196.53.8.65'
       security:
-        - ZelID: []
+        - FluxID: []
       responses:
         '200':
           description: OK
@@ -4589,7 +4614,7 @@ paths:
                   - 2233
                   - 5544
       security:
-        - ZelID: []
+        - FluxID: []
       responses:
         '200':
           description: OK
@@ -4659,7 +4684,7 @@ paths:
                 blockedPorts:
                   - 'zirnheltdj/wisconsinwaters:latest'
       security:
-        - ZelID: []
+        - FluxID: []
       responses:
         '200':
           description: OK
@@ -4712,7 +4737,7 @@ paths:
       description: Update the API port in the node configuration. **Admin**
       operationId: fluxAdjustapiport
       security:
-        - ZelID: []
+        - FluxID: []
       parameters:
         - in: query
           name: apiport
@@ -4766,7 +4791,7 @@ paths:
       description: Restart FluxOS. **Admin**
       operationId: fluxRestart
       security:
-        - ZelID: []
+        - FluxID: []
       responses:
         '200':
           description: OK
@@ -4990,7 +5015,7 @@ paths:
       description: Check if a specific application is available and accessible. **FluxTeam**
       operationId: checkAppAvailability
       security:
-        - ZelID: []
+        - FluxID: []
       requestBody:
         required: true
         content:
@@ -5041,7 +5066,7 @@ paths:
       description: Maintain UPnP port mappings to keep them open. **FluxTeam**
       operationId: keepUPNPPortsOpen
       security:
-        - ZelID: []
+        - FluxID: []
       requestBody:
         required: true
         content:
@@ -5085,7 +5110,7 @@ paths:
       description: Get a list of files with their details for all files. **AppOwnerAbove**
       operationId: fluxGetfolderinfo
       security:
-        - ZelID: []
+        - FluxID: []
       parameters:
         - in: query
           name: appname
@@ -5134,7 +5159,7 @@ paths:
       description: Create folder inside app volume. **AppOwnerAbove**
       operationId: fluxCreatefolder
       security:
-        - ZelID: []
+        - FluxID: []
       parameters:
         - in: query
           name: appname
@@ -5178,7 +5203,7 @@ paths:
       description: Rename file/folder. **AppOwnerAbove**
       operationId: fluxRenameobject
       security:
-        - ZelID: []
+        - FluxID: []
       parameters:
         - in: query
           name: appname
@@ -5230,7 +5255,7 @@ paths:
       description: Remove file/folder. **AppOwnerAbove**
       operationId: fluxRemoveobject
       security:
-        - ZelID: []
+        - FluxID: []
       parameters:
         - in: query
           name: appname
@@ -5275,7 +5300,7 @@ paths:
     description: Download file. **AppOwnerAbove**
     operationId: fluxDownloadFile
     security:
-      - ZelID: []
+      - FluxID: []
     parameters:
       - in: query
         name: appname
@@ -5312,7 +5337,7 @@ paths:
     description: Download folder as gzip file. **AppOwnerAbove**
     operationId: fluxDownloadFolder
     security:
-      - ZelID: []
+      - FluxID: []
     parameters:
       - in: query
         name: appname
@@ -5350,7 +5375,7 @@ paths:
       description: Get volume data of a component. **AppOwnerAbove**
       operationId: fluxGetvolumedataofcomponent
       security:
-        - ZelID: []
+        - FluxID: []
       parameters:
         - in: query
           name: appname
@@ -5410,7 +5435,7 @@ paths:
       description: Get size of a remote file. **AppOwnerAbove**
       operationId: fluxGetremotefilesize
       security:
-        - ZelID: []
+        - FluxID: []
       parameters:
         - in: query
           name: fileurl
@@ -5466,7 +5491,7 @@ paths:
       description:  Get the list of local backups based on the provided appname. **AppOwnerAbove**
       operationId: fluxGetlocalbackuplist
       security:
-        - ZelID: []
+        - FluxID: []
       parameters:
         - in: query
           name: path
@@ -5534,7 +5559,7 @@ paths:
       description: Remove a backup file.**AppOwnerAbove**
       operationId: fluxRemovebackupfile
       security:
-        - ZelID: []
+        - FluxID: []
       parameters:
         - in: query
           name: filepath
@@ -5577,7 +5602,7 @@ paths:
     description: Download a local backup file. **AppOwnerAbove**
     operationId: fluxDownloadlocalfile
     security:
-      - ZelID: []
+      - FluxID: []
     parameters:
       - in: query
         name: filepath
@@ -5609,7 +5634,7 @@ paths:
       description: Append backup task to an application. **AppOwnerAbove**
       operationId: fluxAppendbackuptask
       security:
-        - ZelID: []
+        - FluxID: []
       requestBody:
         required: true
         content:
@@ -5650,7 +5675,7 @@ paths:
       description: Append restore task to an application. **AppOwnerAbove**
       operationId: fluxAppendrestoretask
       security:
-        - ZelID: []
+        - FluxID: []
       requestBody:
         required: true
         content:
@@ -5692,7 +5717,7 @@ paths:
       description: Uploads a file to the specified location. **AppOwnerAbove**
       operationId: fileUpload
       security:
-        - ZelID: []
+        - FluxID: []
       parameters:
         - in: query
           name: type
@@ -7136,7 +7161,7 @@ paths:
       tags:
         - Daemon
       summary: Current block count
-      description: Returns the number of blocks in the best valid block chain. **Public**
+      description: Returns the number of blocks in the best valid block chain, i.e. the current block height. **Public**
       operationId: getBlockCount
       security: []
       responses:
@@ -11550,7 +11575,7 @@ paths:
       description: Send Flux from a specific account to an address. **Admin**
       operationId: sendFrom
       security:
-        - ZelID: []
+        - FluxID: []
       parameters:
         - name: tofluxaddress
           in: query
@@ -11607,7 +11632,7 @@ paths:
       description: Send Flux from account using POST method. **Admin**
       operationId: sendFromPost
       security:
-        - ZelID: []
+        - FluxID: []
       requestBody:
         required: true
         content:
@@ -11652,7 +11677,7 @@ paths:
       description: Submit a block to the network. **User**
       operationId: submitBlock
       security:
-        - ZelID: []
+        - FluxID: []
       parameters:
         - name: hexdata
           in: query
@@ -11686,7 +11711,7 @@ paths:
       description: Submit a block using POST method. **User**
       operationId: submitBlockPost
       security:
-        - ZelID: []
+        - FluxID: []
       requestBody:
         required: true
         content:
@@ -11720,7 +11745,7 @@ paths:
       description: Create a raw joinsplit transaction. **Admin**
       operationId: zcRawJoinSplit
       security:
-        - ZelID: []
+        - FluxID: []
       parameters:
         - name: rawtx
           in: query
@@ -11775,7 +11800,7 @@ paths:
       description: Create raw joinsplit using POST method. **Admin**
       operationId: zcRawJoinSplitPost
       security:
-        - ZelID: []
+        - FluxID: []
       requestBody:
         required: true
         content:
@@ -11823,7 +11848,7 @@ paths:
       description: Decrypt and return information about a note. **Admin**
       operationId: zcRawReceive
       security:
-        - ZelID: []
+        - FluxID: []
       parameters:
         - name: zcsecretkey
           in: query
@@ -11860,7 +11885,7 @@ paths:
       description: Decrypt note using POST method. **Admin**
       operationId: zcRawReceivePost
       security:
-        - ZelID: []
+        - FluxID: []
       requestBody:
         required: true
         content:
@@ -11901,7 +11926,7 @@ paths:
         priority. **User**
       operationId: prioritiseTransaction
       security:
-        - ZelID: []
+        - FluxID: []
       parameters:
         - in: query
           name: txid
@@ -11958,7 +11983,7 @@ paths:
         flag. **Admin**
       operationId: reindexFlux
       security:
-        - ZelID: []
+        - FluxID: []
       responses:
         '200':
           description: OK
@@ -11987,7 +12012,7 @@ paths:
       description: This will stop the Flux daemon from running. **Admin**
       operationId: stop
       security:
-        - ZelID: []
+        - FluxID: []
       responses:
         '200':
           description: OK
@@ -12016,7 +12041,7 @@ paths:
       description: Create a new fluxnode private key. **Admin**
       operationId: createFluxNodeKey
       security:
-        - ZelID: []
+        - FluxID: []
       responses:
         '200':
           description: OK
@@ -12047,7 +12072,7 @@ paths:
         unless running a hot wallet. **Admin**
       operationId: listFluxNodeConf
       security:
-        - ZelID: []
+        - FluxID: []
       parameters:
         - in: query
           name: filter
@@ -12157,7 +12182,7 @@ paths:
       description: Print all fluxnode transaction outputs. **Admin**
       operationId: getFluxNodeOutputs
       security:
-        - ZelID: []
+        - FluxID: []
       responses:
         '200':
           description: OK
@@ -12197,7 +12222,7 @@ paths:
         funds. **Admin**
       operationId: startFluxNode
       security:
-        - ZelID: []
+        - FluxID: []
       parameters:
         - in: query
           name: set
@@ -12257,7 +12282,7 @@ paths:
         containing the collateral funds.  **Admin**
       operationId: startDeterministicFluxNode
       security:
-        - ZelID: []
+        - FluxID: []
       parameters:
         - in: query
           name: alias
@@ -12307,7 +12332,7 @@ paths:
       description: Verifies blockchain database. **Admin**
       operationId: verifyChain
       security:
-        - ZelID: []
+        - FluxID: []
       parameters:
         - in: query
           name: checklevel
@@ -12358,7 +12383,7 @@ paths:
         connection to a node once. **Admin**
       operationId: addNode
       security:
-        - ZelID: []
+        - FluxID: []
       parameters:
         - in: query
           name: node
@@ -12405,7 +12430,7 @@ paths:
       description: Clear all banned IP's. **Admin**
       operationId: clearBanned
       security:
-        - ZelID: []
+        - FluxID: []
       responses:
         '200':
           description: OK
@@ -12429,7 +12454,7 @@ paths:
       description: Immediately disconnects from the specified node. **Admin**
       operationId: disconnectNode
       security:
-        - ZelID: []
+        - FluxID: []
       parameters:
         - in: query
           name: node
@@ -12465,7 +12490,7 @@ paths:
         also be available. **Admin**
       operationId: getAddedNodeInfo
       security:
-        - ZelID: []
+        - FluxID: []
       parameters:
         - in: query
           name: dns
@@ -12542,7 +12567,7 @@ paths:
       description: Attempts add or remove a IP/Subnet from the banned list. **Admin**
       operationId: setBan
       security:
-        - ZelID: []
+        - FluxID: []
       parameters:
         - in: query
           name: ip
@@ -12620,7 +12645,7 @@ paths:
         to sign the transaction. **Admin**
       operationId: signRawTransactionPost
       security:
-        - ZelID: []
+        - FluxID: []
       requestBody:
         required: true
         content:
@@ -12713,7 +12738,7 @@ paths:
         to sign the transaction. **Admin**
       operationId: signRawTransaction
       security:
-        - ZelID: []
+        - FluxID: []
       parameters:
         - in: query
           name: hexstring
@@ -12820,7 +12845,7 @@ paths:
         is a Flux address or hex-encoded public key. **Admin**
       operationId: addMultiSigAddressPost
       security:
-        - ZelID: []
+        - FluxID: []
       requestBody:
         required: true
         content:
@@ -12871,7 +12896,7 @@ paths:
         is a Flux address or hex-encoded public key. **Admin**
       operationId: addmultisigaddress
       security:
-        - ZelID: []
+        - FluxID: []
       parameters:
         - in: query
           name: 'n'
@@ -12918,7 +12943,7 @@ paths:
       description: Safely copies wallet.dat to destination filename. **Admin**
       operationId: backupWallet
       security:
-        - ZelID: []
+        - FluxID: []
       parameters:
         - in: query
           name: destination
@@ -12953,7 +12978,7 @@ paths:
       description: Reveals the private key corresponding to t-addr. **Admin**
       operationId: dumpPrivKey
       security:
-        - ZelID: []
+        - FluxID: []
       parameters:
         - in: query
           name: taddr
@@ -12986,7 +13011,7 @@ paths:
       description: Returns the server's total available balance. **Admin**
       operationId: getBalance
       security:
-        - ZelID: []
+        - FluxID: []
       parameters:
         - in: query
           name: minconf
@@ -13032,7 +13057,7 @@ paths:
       description: Returns a new Flux address for receiving payments. **Admin**
       operationId: getNewAddress
       security:
-        - ZelID: []
+        - FluxID: []
       responses:
         '200':
           description: OK
@@ -13059,7 +13084,7 @@ paths:
         with raw transactions, NOT normal use. **Admin**
       operationId: getRawChangeAddress
       security:
-        - ZelID: []
+        - FluxID: []
       responses:
         '200':
           description: OK
@@ -13086,7 +13111,7 @@ paths:
         transactions with at least minconf confirmations. **Admin**
       operationId: getReceivedByAddress
       security:
-        - ZelID: []
+        - FluxID: []
       parameters:
         - in: query
           name: fluxaddress
@@ -13126,7 +13151,7 @@ paths:
       description: Returns the server's total unconfirmed balance. **Admin**
       operationId: getUnconfirmedBalance
       security:
-        - ZelID: []
+        - FluxID: []
       responses:
         '200':
           description: OK
@@ -13151,7 +13176,7 @@ paths:
       description: Returns an object containing various wallet state info. **Admin**
       operationId: getWalletInfo
       security:
-        - ZelID: []
+        - FluxID: []
       responses:
         '200':
           description: OK
@@ -13217,7 +13242,7 @@ paths:
         your wallet but cannot be used to spend. **Admin**
       operationId: importAddress
       security:
-        - ZelID: []
+        - FluxID: []
       parameters:
         - in: query
           name: address
@@ -13269,7 +13294,7 @@ paths:
         **Admin**
       operationId: importPrivKey
       security:
-        - ZelID: []
+        - FluxID: []
       parameters:
         - in: query
           name: fluxprivkey
@@ -13319,7 +13344,7 @@ paths:
       description: Imports taddr keys from a wallet dump file. **Admin**
       operationId: importWallet
       security:
-        - ZelID: []
+        - FluxID: []
       parameters:
         - in: query
           name: filename
@@ -13353,7 +13378,7 @@ paths:
         close to using more than it comes with by default. **Admin**
       operationId: keyPoolRefill
       security:
-        - ZelID: []
+        - FluxID: []
       parameters:
         - in: query
           name: newsize
@@ -13388,7 +13413,7 @@ paths:
         transactions. **Admin**
       operationId: listAddressGroupings
       security:
-        - ZelID: []
+        - FluxID: []
       responses:
         '200':
           description: OK
@@ -13421,7 +13446,7 @@ paths:
       description: Returns list of temporarily unspendable outputs. **Admin**
       operationId: listLockUnspent
       security:
-        - ZelID: []
+        - FluxID: []
       responses:
         '200':
           description: OK
@@ -13457,7 +13482,7 @@ paths:
       description: List balances by receiving address. **Admin**
       operationId: listReceivedByAddress
       security:
-        - ZelID: []
+        - FluxID: []
       parameters:
         - in: query
           name: minconf
@@ -13563,7 +13588,7 @@ paths:
         transactions if omitted. **Admin**
       operationId: listSinceBlock
       security:
-        - ZelID: []
+        - FluxID: []
       parameters:
         - in: query
           name: blockhash
@@ -13639,7 +13664,7 @@ paths:
         transactions for account 'account'. **Admin**
       operationId: listTransactions
       security:
-        - ZelID: []
+        - FluxID: []
       parameters:
         - in: query
           name: count
@@ -13710,7 +13735,7 @@ paths:
         **Admin**
       operationId: listUnspent
       security:
-        - ZelID: []
+        - FluxID: []
       parameters:
         - in: query
           name: minconf
@@ -13816,7 +13841,7 @@ paths:
         fails. **Admin**
       operationId: lockUnspent
       security:
-        - ZelID: []
+        - FluxID: []
       parameters:
         - in: query
           name: unlock
@@ -13880,7 +13905,7 @@ paths:
         wallet. **Admin**
       operationId: rescanBlockchain
       security:
-        - ZelID: []
+        - FluxID: []
       parameters:
         - in: query
           name: startheight
@@ -13915,7 +13940,7 @@ paths:
         digits of precision. **Admin**
       operationId: sendManyPost
       security:
-        - ZelID: []
+        - FluxID: []
       requestBody:
         required: true
         content:
@@ -13981,7 +14006,7 @@ paths:
         digits of precision. **Admin**
       operationId: sendMany
       security:
-        - ZelID: []
+        - FluxID: []
       parameters:
         - in: query
           name: amounts
@@ -14046,7 +14071,7 @@ paths:
       description: Send an amount to a given address. **Admin**
       operationId: sendToAddressPost
       security:
-        - ZelID: []
+        - FluxID: []
       requestBody:
         required: true
         content:
@@ -14108,7 +14133,7 @@ paths:
       description: Send an amount to a given address. **Admin**
       operationId: sendToAddress
       security:
-        - ZelID: []
+        - FluxID: []
       parameters:
         - in: query
           name: fluxaddress
@@ -14178,7 +14203,7 @@ paths:
       description: This will restart the Flux daemon. **Admin**
       operationId: setTxFee
       security:
-        - ZelID: []
+        - FluxID: []
       parameters:
         - in: query
           name: amount
@@ -14211,7 +14236,7 @@ paths:
       description: Sign a message with the private key of a t-addr. **Admin**
       operationId: signMessagePost
       security:
-        - ZelID: []
+        - FluxID: []
       requestBody:
         required: true
         content:
@@ -14252,7 +14277,7 @@ paths:
       description: Sign a message with the private key of a t-addr. **Admin**
       operationId: signMessage
       security:
-        - ZelID: []
+        - FluxID: []
       parameters:
         - in: query
           name: taddr
@@ -14293,7 +14318,7 @@ paths:
       description: Reveals the zkey corresponding to zaddr. **Admin**
       operationId: zExportKey
       security:
-        - ZelID: []
+        - FluxID: []
       parameters:
         - in: query
           name: zaddr
@@ -14330,7 +14355,7 @@ paths:
         zaddr's. **Admin**
       operationId: zExportViewingKey
       security:
-        - ZelID: []
+        - FluxID: []
       parameters:
         - in: query
           name: zaddr
@@ -14369,7 +14394,7 @@ paths:
         larger than the actual balance. **Admin**
       operationId: zGetBalance
       security:
-        - ZelID: []
+        - FluxID: []
       parameters:
         - in: query
           name: address
@@ -14414,7 +14439,7 @@ paths:
         involving this wallet will be included in the result. **Admin**
       operationId: zGetMigrationStatus
       security:
-        - ZelID: []
+        - FluxID: []
       responses:
         '200':
           description: OK
@@ -14469,7 +14494,7 @@ paths:
       description: Returns a new shielded address for receiving payments. **Admin**
       operationId: zGetNewAddress
       security:
-        - ZelID: []
+        - FluxID: []
       parameters:
         - in: query
           name: type
@@ -14511,7 +14536,7 @@ paths:
         then remove the operation from memory. **Admin**
       operationId: zGetOperationResult
       security:
-        - ZelID: []
+        - FluxID: []
       parameters:
         - in: query
           name: operationid
@@ -14569,7 +14594,7 @@ paths:
         operation will remain in memory. **Admin**
       operationId: zGetOperationStatus
       security:
-        - ZelID: []
+        - FluxID: []
       parameters:
         - in: query
           name: operationid
@@ -14625,7 +14650,7 @@ paths:
       description: Return the total value of funds stored in the node's wallet. **Admin**
       operationId: zGetTotalBalance
       security:
-        - ZelID: []
+        - FluxID: []
       parameters:
         - in: query
           name: minconf
@@ -14683,7 +14708,7 @@ paths:
       description: Adds a zkey to your wallet. **Admin**
       operationId: zImportKey
       security:
-        - ZelID: []
+        - FluxID: []
       parameters:
         - in: query
           name: zkey
@@ -14736,7 +14761,7 @@ paths:
       description: Adds a viewing key to your wallet. **Admin**
       operationId: zImportViewingKey
       security:
-        - ZelID: []
+        - FluxID: []
       parameters:
         - in: query
           name: vkey
@@ -14786,7 +14811,7 @@ paths:
       description: Imports taddr and zaddr keys from a wallet export file. **Admin**
       operationId: zImportWallet
       security:
-        - ZelID: []
+        - FluxID: []
       parameters:
         - in: query
           name: filename
@@ -14820,7 +14845,7 @@ paths:
         the wallet. **Admin**
       operationId: zListAddresses
       security:
-        - ZelID: []
+        - FluxID: []
       parameters:
         - in: query
           name: includewatchonly
@@ -14866,7 +14891,7 @@ paths:
         **Admin**
       operationId: zListOperationIds
       security:
-        - ZelID: []
+        - FluxID: []
       responses:
         '200':
           description: OK
@@ -14897,7 +14922,7 @@ paths:
         wallet. **Admin**
       operationId: zListReceivedByAddress
       security:
-        - ZelID: []
+        - FluxID: []
       parameters:
         - in: query
           name: address
@@ -14982,7 +15007,7 @@ paths:
         (inclusive) confirmations. **Admin**
       operationId: zListUnspent
       security:
-        - ZelID: []
+        - FluxID: []
       parameters:
         - in: query
           name: minconf
@@ -15112,7 +15137,7 @@ paths:
         size limits. **Admin**
       operationId: zSendManyPost
       security:
-        - ZelID: []
+        - FluxID: []
       requestBody:
         required: true
         content:
@@ -15187,7 +15212,7 @@ paths:
         size limits. **Admin**
       operationId: zSendMany
       security:
-        - ZelID: []
+        - FluxID: []
       parameters:
         - in: query
           name: fromaddress
@@ -15281,7 +15306,7 @@ paths:
         0.01 FLUX. **Admin**
       operationId: zSetMigration
       security:
-        - ZelID: []
+        - FluxID: []
       parameters:
         - in: query
           name: enabled
@@ -15325,7 +15350,7 @@ paths:
         bytes once Acadia (Sapling) activates.. **Admin**
       operationId: zShieldCoinBase
       security:
-        - ZelID: []
+        - FluxID: []
       parameters:
         - in: query
           name: fromaddress
@@ -15405,7 +15430,7 @@ paths:
         against without any extra parameters. **AdminAndFluxTeam**
       operationId: startdaemonB
       security:
-        - ZelID: []
+        - FluxID: []
       responses:
         '200':
           description: OK
@@ -15433,7 +15458,7 @@ paths:
         extra parameters. **AdminAndFluxTeam**
       operationId: restartdaemonB
       security:
-        - ZelID: []
+        - FluxID: []
       responses:
         '200':
           description: OK
@@ -15460,7 +15485,7 @@ paths:
         **AdminAndFluxTeam**
       operationId: ping
       security:
-        - ZelID: []
+        - FluxID: []
       responses:
         '200':
           description: OK
@@ -15486,7 +15511,7 @@ paths:
         the running times of each sample. **AdminAndFluxTeam**
       operationId: zcBenchmark
       security:
-        - ZelID: []
+        - FluxID: []
       parameters:
         - in: query
           name: benchmarktype
@@ -15553,7 +15578,7 @@ paths:
       description: Start Benchmark daemon. **AdminAndFluxTeam**
       operationId: daemonstartbenchmark
       security:
-        - ZelID: []
+        - FluxID: []
       responses:
         '200':
           description: OK
@@ -15578,7 +15603,7 @@ paths:
       description: Stop Benchmark daemon. **AdminAndFluxTeam**
       operationId: stopbenchmark
       security:
-        - ZelID: []
+        - FluxID: []
       responses:
         '200':
           description: OK
@@ -15752,7 +15777,7 @@ paths:
         **AdminAndFluxTeam**
       operationId: restartNodeBenchmarks
       security:
-        - ZelID: []
+        - FluxID: []
       responses:
         '200':
           description: OK
@@ -15777,7 +15802,7 @@ paths:
       description: This will stop the fluxbench daemon. **Admin**
       operationId: stopbenchmarkaemon
       security:
-        - ZelID: []
+        - FluxID: []
       responses:
         '200':
           description: OK
@@ -15802,7 +15827,7 @@ paths:
       description: Command to get FluxBenchd to sign a FluxNode broadcast. **Admin**
       operationId: signFluxNodeTransactionPost
       security:
-        - ZelID: []
+        - FluxID: []
       requestBody:
         required: true
         content:
@@ -15842,7 +15867,7 @@ paths:
       description: Command to get FluxBenchd to sign a FluxNode broadcast. **Admin**
       operationId: signFluxNodeTransaction
       security:
-        - ZelID: []
+        - FluxID: []
       parameters:
         - in: query
           name: hexstring
@@ -15880,7 +15905,7 @@ paths:
       description: Post with an error message in the body (plain text) to register a new error. The new error will be displayed on any active GUI clients. **AdminAndFluxTeam**
       operationId: fluxSyncthingSystemErrorPOST
       security:
-        - ZelID: []
+        - FluxID: []
       requestBody:
         required: true
         content:
@@ -15912,7 +15937,7 @@ paths:
       description: Get list with error message. **AdminAndFluxTeam**
       operationId: fluxSyncthingSystemErrorGET
       security:
-        - ZelID: []
+        - FluxID: []
       parameters:
         - in: query
           name: message
@@ -15964,7 +15989,7 @@ paths:
         **AdminAndFluxTeam**
       operationId: fluxSyncthingSystemErrorClear
       security:
-        - ZelID: []
+        - FluxID: []
       responses:
         '200':
           description: OK
@@ -16054,7 +16079,7 @@ paths:
       description: Perform an upgrade to the newest released version and restart. Does nothing if there is no newer version than currently running. **AdminAndFluxTeam**
       operationId: fluxSyncthingUpgradePOST
       security:
-        - ZelID: []
+        - FluxID: []
       responses:
         '200':
           description: OK
@@ -16078,7 +16103,7 @@ paths:
       description: Checks for a possible upgrade and returns an object describing the newest version and upgrade possibility. **AdminAndFluxTeam**
       operationId: fluxSyncthingUpgradeGET
       security:
-        - ZelID: []
+        - FluxID: []
       responses:
         '200':
           description: OK
@@ -16115,7 +16140,7 @@ paths:
       description: Returns a list of directories matching the path given by the optional parameter *current*. The path can use patterns as described in Go’s filepath package. A ‘*’ will always be appended to the given path (e.g. /tmp/ matches all its subdirectories). If the option *current* is not given, filesystem root paths are returned. **AdminAndFluxTeam**
       operationId: fluxSyncthingSysytemBrowse
       security:
-      - ZelID: []     
+      - FluxID: []     
       parameters:
         - in: query
           name: current
@@ -16163,7 +16188,7 @@ paths:
       description: Pause the given device or all devices. Takes the optional parameter device (device ID). When omitted, pauses all devices. Returns status 200 and no content upon success, or status 500 and a plain text error on failure. **AdminAndFluxTeam**
       operationId: fluxSyncthingSysytemPause
       security:
-        - ZelID: []
+        - FluxID: []
       parameters:
         - in: query
           name: device
@@ -16195,7 +16220,7 @@ paths:
       description: Resume the given device or all devices. Takes the optional parameter device (device ID). When omitted, pauses all devices. Returns status 200 and no content upon success, or status 500 and a plain text error on failure. **AdminAndFluxTeam**
       operationId: fluxSyncthingSysytemResume
       security:
-        - ZelID: []
+        - FluxID: []
       parameters:
         - in: query
           name: device
@@ -16227,7 +16252,7 @@ paths:
       description:  Immediately restart Syncthing. **AdminAndFluxTeam**
       operationId: fluxSyncthingSystemRestart
       security:
-        - ZelID: []
+        - FluxID: []
       responses:
         '200':
           description: OK
@@ -16255,7 +16280,7 @@ paths:
       description:  Immediately shutdown Syncthing. **AdminAndFluxTeam**
       operationId: fluxSyncthingSystemShutdown
       security:
-        - ZelID: []
+        - FluxID: []
       responses:
         '200':
           description: OK
@@ -16283,7 +16308,7 @@ paths:
       description: Erase the current index database and restart Syncthing. With no query parameters, the entire database is erased from disk. By specifying the folder parameter with a valid folder ID, only information for that folder will be erased. **AdminAndFluxTeam**
       operationId: fluxSyncthingSystemReset
       security:
-        - ZelID: []
+        - FluxID: []
       parameters:
         - in: query
           name: folder
@@ -16374,7 +16399,7 @@ paths:
       description: Returns the path locations used internally for storing configuration, database, and others. **AdminAndFluxTeam**
       operationId: fluxSyncthingSysytemPath
       security:
-        - ZelID: []
+        - FluxID: []
       responses:
         '200':
           description: OK
@@ -16453,7 +16478,7 @@ paths:
       description: Returns the contents of the local discovery cache. **AdminAndFluxTeam**
       operationId: fluxSyncthingSysytemDiscovery
       security:
-        - ZelID: []
+        - FluxID: []
       parameters:
         - in: query
           name: device
@@ -16494,7 +16519,7 @@ paths:
       description: Returns the set of debug facilities and which of them are currently enabled. Enables or disables debugging for specified facilities. Give one or both of enable and disable query parameters, with comma separated facility names. To disable debugging of the beacon and discovery packages, and enable it for config and db. **AdminAndFluxTeam**
       operationId: fluxSyncthingSysytemDebug
       security:
-        - ZelID: []
+        - FluxID: []
       parameters:
         - in: query
           name: disable
@@ -16563,7 +16588,7 @@ paths:
       description: Returns the list of recent log entries. The optional `since` parameter limits the results to message newer than the given timestamp in ***RFC 3339*** format. **AdminAndFluxTeam**
       operationId: fluxSyncthingSysytemLog
       security:
-        - ZelID: []
+        - FluxID: []
       parameters:
         - in: query
           name: since
@@ -16605,7 +16630,7 @@ paths:
       description: Returns the list of recent log entries as text. The optional `since` parameter limits the results to message newer than the given timestamp in ***RFC 3339*** format. **AdminAndFluxTeam**
       operationId: fluxSyncthingSysytemLogTxt
       security:
-        - ZelID: []
+        - FluxID: []
       parameters:
         - in: query
           name: since
@@ -16676,7 +16701,7 @@ paths:
       description: Returns the entire config. **AdminAndFluxTeam**
       operationId: fluxSyncthingConfig
       security:
-        - ZelID: []
+        - FluxID: []
       responses:
         '200':
           description: OK
@@ -16878,7 +16903,7 @@ paths:
         Replaces this node&#39;s whole Syncthing configuration with the object sent in `config`. **AdminAndFluxTeam**
       operationId: fluxSyncthingConfigPOST
       security:
-        - ZelID: []
+        - FluxID: []
       requestBody:
         required: true
         content:
@@ -16968,7 +16993,7 @@ paths:
         Replaces the Syncthing device configuration section. **AdminAndFluxTeam**
       operationId: fluxSyncthingConfigDevicesPOST
       security:
-        - ZelID: []
+        - FluxID: []
       requestBody:
         required: true
         content:
@@ -17090,7 +17115,7 @@ paths:
       description: Replace folder config section. **AdminAndFluxTeam**
       operationId: fluxSyncthingConfigFoldersPOST
       security:
-        - ZelID: []
+        - FluxID: []
       requestBody:
         required: true
         content:
@@ -17250,7 +17275,7 @@ paths:
         Replaces the template Syncthing applies to newly created folders. **AdminAndFluxTeam**
       operationId: fluxSyncthingConfigDefaultsFolderPOST
       security:
-        - ZelID: []
+        - FluxID: []
       requestBody:
         required: true
         content:
@@ -17331,7 +17356,7 @@ paths:
         Replaces the template Syncthing applies to newly added devices. **AdminAndFluxTeam**
       operationId: fluxSyncthingConfigDefaultsDevicePOST
       security:
-        - ZelID: []
+        - FluxID: []
       requestBody:
         required: true
         content:
@@ -17398,7 +17423,7 @@ paths:
         Replaces the ignore patterns applied to newly created folders. **AdminAndFluxTeam**
       operationId: fluxSyncthingConfigDefaultsIgnoresPOST
       security:
-        - ZelID: []
+        - FluxID: []
       requestBody:
         required: true
         content:
@@ -17518,7 +17543,7 @@ paths:
         Replaces the Syncthing options configuration section. **AdminAndFluxTeam**
       operationId: fluxSyncthingConfigOptionsPOST
       security:
-        - ZelID: []
+        - FluxID: []
       requestBody:
         required: true
         content:
@@ -17558,7 +17583,7 @@ paths:
       description: GET returns the respective object, PUT replaces the entire object and PATCH replaces only the given child objects. **FluxTeam**
       operationId: fluxSyncthingConfigGuiGet
       security:
-        - ZelID: []
+        - FluxID: []
       responses:
         '200':
           description: OK
@@ -17594,7 +17619,7 @@ paths:
       description: Replaces the entire gui object in config. **FluxTeam**
       operationId: fluxSyncthingConfigGuiPost
       security:
-        - ZelID: []
+        - FluxID: []
       requestBody:
         required: true
         content:
@@ -17691,7 +17716,7 @@ paths:
       description: Replaces the entire ldap config object. **AdminAndFluxTeam**
       operationId: fluxSyncthingConfigLdapPost
       security:
-        - ZelID: []
+        - FluxID: []
       requestBody:
         required: true
         content:
@@ -17926,7 +17951,7 @@ paths:
       description: Remove records about a pending remote device which tried to connect. Valid values for the device parameter are those from the corresponding GET /rest/cluster/pending/devices endpoint. **AdminAndFluxTeam**
       operationId: fluxSyncthingPendingDevicesPOST
       security:
-        - ZelID: []
+        - FluxID: []
       requestBody:
         required: true
         content:
@@ -17991,7 +18016,7 @@ paths:
       description: Remove records about a pending folder announced from a remote device. Valid values for the folde parameters are those from the corresponding GET /rest/cluster/pending/folders endpoint. **AdminAndFluxTeam**
       operationId: fluxSyncthingPendingFoldersPOST
       security:
-        - ZelID: []
+        - FluxID: []
       requestBody:
         required: true
         content:
@@ -18109,7 +18134,7 @@ paths:
         Restores files from a folder&#39;s version archive. `folder` names the folder and `method` selects the HTTP verb Syncthing is asked with (`post` by default). **AdminAndFluxTeam**
       operationId: fluxSyncthingFolderVersionsPOST
       security:
-        - ZelID: []
+        - FluxID: []
       requestBody:
         required: true
         content:
@@ -18582,7 +18607,7 @@ paths:
       description: Expects a format similar to the output of GET /rest/db/ignores call, but only containing the ignore field (expanded field should be omitted). It takes one parameter, folder, and either updates the content of the .stignore echoing it back as a response, or returns an error. **FluxTeam**
       operationId: fluxSyncthingDbIgnoresPOST
       security:
-        - ZelID: []
+        - FluxID: []
       parameters:
       - in: query
         name: folder
@@ -18798,7 +18823,7 @@ paths:
       description: Request immediate scan. Takes the optional parameters ```folder``` (folder ID). **AdminAndFluxTeam**
       operationId: fluxSyncthingDbScan
       security:
-        - ZelID: []
+        - FluxID: []
       requestBody:
         content:
           application/json:
@@ -18833,7 +18858,7 @@ paths:
       description: Request revert of a receive only folder. Reverting a folder means to undo all local changes. **AdminAndFluxTeam**
       operationId: fluxSyncthingDbRevert
       security:
-        - ZelID: []
+        - FluxID: []
       requestBody:
         required: true
         content:
@@ -18869,7 +18894,7 @@ paths:
       description: Moves the file to the top of the download queue ```folder``` and ```file``` params are mandatory. **AdminAndFluxTeam**
       operationId: fluxSyncthingDbPrio
       security:
-        - ZelID: []
+        - FluxID: []
       requestBody:
         required: true
         content:
@@ -18914,7 +18939,7 @@ paths:
       description: Request override of a send only folder. Override means to make the local version latest, overriding changes made on other devices. This API call does nothing if the folder is not a send only folder. Takes the mandatory parameter ```folder``` (folder ID). **AdminAndFluxTeam**
       operationId: fluxSyncthingDbOverride
       security:
-        - ZelID: []
+        - FluxID: []
       requestBody:
         required: true
         content:
@@ -18950,7 +18975,7 @@ paths:
       description: To filter the event list, in effect creating a specific subscription for only the desired event types, add a parameter events=EventTypeA,EventTypeB,... where the event types are any of the Event Types. If no filter is specified, all events except LocalChangeDetected and RemoteChangeDetected are included. The optional parameter since=`lastSeenID` sets the ID of the last event you've already seen. Syncthing returns a JSON encoded array of event objects, starting at the event just after the one with this last seen ID. The default value is 0, which returns all events. There is a limit to the number of events buffered, so if the rate of events is high or the time between polling calls is long some events might be missed. This can be detected by noting a discontinuity in the event IDs. If no new events are produced since `lastSeenID`, the HTTP call blocks and waits for new events to happen before returning. By default it times out after 60 seconds returning an empty array. The time out duration can be customized with the optional parameter timeout=`seconds`. To receive only a limited number of events, add the limit=`n` parameter with a suitable value for n and only the last n events will be returned. This can be used to catch up with the latest event ID after a disconnection. **AdminAndFluxTeam**
       operationId: fluxSyncthingEvents
       security:
-        - ZelID: []
+        - FluxID: []
       parameters:
       - in: query
         name: events
@@ -19191,7 +19216,7 @@ paths:
       description: To filter the event list, in effect creating a specific subscription for only the desired event types, add a parameter events=EventTypeA,EventTypeB,... where the event types are any of the Event Types. If no filter is specified, all events except LocalChangeDetected and RemoteChangeDetected are included. The optional parameter since=`lastSeenID` sets the ID of the last event you've already seen. Syncthing returns a JSON encoded array of event objects, starting at the event just after the one with this last seen ID. The default value is 0, which returns all events. There is a limit to the number of events buffered, so if the rate of events is high or the time between polling calls is long some events might be missed. This can be detected by noting a discontinuity in the event IDs. If no new events are produced since `lastSeenID`, the HTTP call blocks and waits for new events to happen before returning. By default it times out after 60 seconds returning an empty array. The time out duration can be customized with the optional parameter timeout=`seconds`. To receive only a limited number of events, add the limit=`n` parameter with a suitable value for n and only the last n events will be returned. This can be used to catch up with the latest event ID after a disconnection. **AdminAndFluxTeam**
       operationId: fluxSyncthingEventsDisk
       security:
-        - ZelID: []
+        - FluxID: []
       parameters:
       - in: query
         name: events
@@ -19312,7 +19337,7 @@ paths:
       description: Returns a strong random generated string (alphanumeric) of the specified length. Takes the ``length`` parameter. **AdminAndFluxTeam**
       operationId: fluxSyncthingSvcRandom
       security:
-        - ZelID: []
+        - FluxID: []
       parameters:
         - in: query
           name: length
@@ -19377,7 +19402,7 @@ paths:
       description: Returns statistics about each served REST API endpoint, to diagnose how much time was spent generating the responses. **AdminAndFluxTeam**
       operationId: fluxSyncthingDebugHttpmetrics
       security:
-        - ZelID: []
+        - FluxID: []
       responses:
         '200':
           description: OK
@@ -19489,7 +19514,7 @@ paths:
       description: Summarizes the completion percentage for each remote device. Returns an object with device IDs as keys and an integer percentage as values. **AdminAndFluxTeam**
       operationId: fluxSyncthingDebugpeercompletion
       security:
-        - ZelID: []
+        - FluxID: []
       responses:
         '200':
           description: OK
@@ -19520,7 +19545,7 @@ paths:
       description: The profiling starts when the page is requested and takes 30 seconds. During this time it will seem like nothing is happening and the browser is just waiting, hung, or “spinning”. Don’t worry - leave it be and have patience. Once done the profiling will result in a download called something like syncthing-cpu-windows-amd64-v0.14.4-112233.pprof. This is the file to keep and send in, without modifying the file name as it tells us information necessary to interpret it. **AdminAndFluxTeam**
       operationId: fluxSyncthingDebugCpuprof
       security:
-        - ZelID: []
+        - FluxID: []
       responses:
         '200':
           description: OK
@@ -19537,7 +19562,7 @@ paths:
       description: The profiling will result in a download called something like syncthing-heap-windows-amd64-v0.14.4-112233.pprof. This is the file to keep and send in, without modifying the file name as it tells us information necessary to interpret it. **AdminAndFluxTeam**
       operationId: fluxSyncthingDebugHeapprof
       security:
-        - ZelID: []
+        - FluxID: []
       responses:
         '200':
           description: OK
@@ -19554,7 +19579,7 @@ paths:
       description: Returns a “support bundle” as a zipped archive, which should be sent to the developers after verifying it contains no sensitive personal information. Credentials for the web GUI and the API key are automatically redacted already. **AdminAndFluxTeam**
       operationId: fluxSyncthingDebugSupport
       security:
-        - ZelID: []
+        - FluxID: []
       responses:
         '200':
           description: OK
@@ -19571,7 +19596,7 @@ paths:
       description: Shows diagnostics about a certain file in a shared folder. Takes the folder (folder ID) and file (folder relative path) parameters. **AdminAndFluxTeam**
       operationId: fluxSyncthingDebugFile
       security:
-        - ZelID: []
+        - FluxID: []
       parameters:
       - in: query
         name: folder
@@ -19744,7 +19769,7 @@ paths:
       description: Call to retrieve share file. **Admin**
       operationId: fluxShareFile
       security:
-        - ZelID: []
+        - FluxID: []
       parameters:
         - in: query
           name: file
@@ -19780,7 +19805,7 @@ paths:
       description: Call to get content of folder in fluxshare. **Admin**
       operationId: GetFolder
       security:
-        - ZelID: []
+        - FluxID: []
       parameters:
         - in: query
           name: folder
@@ -19851,7 +19876,7 @@ paths:
       description: Call to create folder in fluxshare. **Admin**
       operationId: CreateFolder
       security:
-        - ZelID: []
+        - FluxID: []
       parameters:
         - in: query
           name: folder
@@ -19889,7 +19914,7 @@ paths:
       description: Call to remove file from fluxshare. **Admin**
       operationId: RemoveFile
       security:
-        - ZelID: []
+        - FluxID: []
       parameters:
         - in: query
           name: file
@@ -19926,7 +19951,7 @@ paths:
       description: Call to remove folder from fluxshare. **Admin**
       operationId: RemoveFolder
       security:
-        - ZelID: []
+        - FluxID: []
       parameters:
         - in: query
           name: folder
@@ -19963,7 +19988,7 @@ paths:
       description: Call to check if file exist. **Admin**
       operationId: FileExists
       security:
-        - ZelID: []
+        - FluxID: []
       parameters:
         - in: query
           name: file
@@ -20001,7 +20026,7 @@ paths:
       description: Call to check stats of fluxshare. **Admin**
       operationId: Stats
       security:
-        - ZelID: []
+        - FluxID: []
       responses:
         '200':
           description: OK
@@ -20038,7 +20063,7 @@ paths:
       description: Call to share file in fluxshare. **Admin**
       operationId: ShareFile
       security:
-        - ZelID: []
+        - FluxID: []
       parameters:
         - in: query
           name: file
@@ -20084,7 +20109,7 @@ paths:
       description: Call to unshare file in fluxshare. **Admin**
       operationId: UnshareFile
       security:
-        - ZelID: []
+        - FluxID: []
       parameters:
         - in: query
           name: file
@@ -20122,7 +20147,7 @@ paths:
       description: Call to display shared files. **Admin**
       operationId: SharedFiles
       security:
-        - ZelID: []
+        - FluxID: []
       responses:
         '200':
           description: OK
@@ -20157,7 +20182,7 @@ paths:
       description: Call to rename file in fluxshare. **Admin**
       operationId: RenameFile
       security:
-        - ZelID: []
+        - FluxID: []
       parameters:
         - in: query
           name: oldpath
@@ -20201,7 +20226,7 @@ paths:
       description: Call to download content of folder in fluxshare. **Admin**
       operationId: FluxDownloadFolder
       security:
-        - ZelID: []
+        - FluxID: []
       parameters:
         - in: query
           name: folder
@@ -20396,7 +20421,7 @@ paths:
       description: List of apps images installed. **FluxTeam**
       operationId: listAppsImages
       security:
-        - ZelID: []
+        - FluxID: []
       responses:
         '200':
           description: OK
@@ -20972,7 +20997,7 @@ paths:
           required: false
           schema:
             type: string
-          description: Application ZelID
+          description: Application FluxID
           example: 15Mt8ctAFTVVzsx9UynnqxgM5JJuiwMPhs
         - in: query
           name: appname
@@ -21331,8 +21356,8 @@ paths:
     get:
       tags:
         - Apps
-      summary: App owner's ZelID
-      description: This will return the ZelID of the owner of the app specified. **Public**
+      summary: App owner's FluxID
+      description: This will return the FluxID of the owner of the app specified. **Public**
       operationId: getApplicationOwnerAPI
       security: []
       parameters:
@@ -21355,7 +21380,7 @@ paths:
                     $ref: '#/components/schemas/status'
                   data:
                     type: string
-                    description: App owner's ZelID
+                    description: App owner's FluxID
               example:
                 status: success
                 data: 1CbErtneaX2QVyUfwU7JGB7VzvPgrgc3uC
@@ -21544,7 +21569,7 @@ paths:
                   description: Description of app
                 owner:
                   type: string
-                  description: Your ZelID
+                  description: Your FluxID
                 compose:
                   type: array
                   items:
@@ -21750,7 +21775,7 @@ paths:
                   description: Description of app
                 owner:
                   type: string
-                  description: Your ZelID
+                  description: Your FluxID
                 compose:
                   type: array
                   items:
@@ -21931,7 +21956,7 @@ paths:
       description: This will start the fluxapp. **AppOwnerAbove**
       operationId: AppStart
       security:
-        - ZelID: []
+        - FluxID: []
       parameters:
         - in: query
           name: appname
@@ -21971,7 +21996,7 @@ paths:
       description: This will stop the Flux application. **AppOwnerAbove**
       operationId: AppStop
       security:
-        - ZelID: []
+        - FluxID: []
       parameters:
         - in: query
           name: appname
@@ -22011,7 +22036,7 @@ paths:
       description: This will restart the Flux application. **AppOwnerAbove**
       operationId: AppRestart
       security:
-        - ZelID: []
+        - FluxID: []
       parameters:
         - in: query
           name: appname
@@ -22057,7 +22082,7 @@ paths:
       operationId: appsAppPause
       deprecated: true
       security:
-        - ZelID: []
+        - FluxID: []
       parameters:
         - in: query
           name: appname
@@ -22095,7 +22120,7 @@ paths:
       operationId: AppUnpause
       deprecated: true
       security:
-        - ZelID: []
+        - FluxID: []
       parameters:
         - in: query
           name: appname
@@ -22128,7 +22153,7 @@ paths:
       description: Display the running processes of a container. **AppOwnerAbove**
       operationId: AppTop
       security:
-        - ZelID: []
+        - FluxID: []
       parameters:
         - in: query
           name: appname
@@ -22216,7 +22241,7 @@ paths:
       description: This will fetch the logs of a fluxapp. **AppOwnerAbove**
       operationId: AppLogs
       security:
-        - ZelID: []
+        - FluxID: []
       parameters:
         - in: query
           name: appname
@@ -22327,7 +22352,7 @@ paths:
       description: Displays detailed info of the container. **AppOwnerAbove**
       operationId: AppInspect
       security:
-        - ZelID: []
+        - FluxID: []
       parameters:
         - in: query
           name: appname
@@ -23174,7 +23199,7 @@ paths:
         url: 'https://docs.docker.com/engine/api/v1.40/#operation/ContainerStats'
       operationId: AppStats
       security:
-        - ZelID: []
+        - FluxID: []
       parameters:
         - in: query
           name: appname
@@ -23304,7 +23329,7 @@ paths:
         - `2 = Deleted`
       operationId: AppChanges
       security:
-        - ZelID: []
+        - FluxID: []
       parameters:
         - in: query
           name: appname
@@ -23350,7 +23375,7 @@ paths:
       description: Run new commands inside running containers. **AppOwnerAbove**
       operationId: AppExec
       security:
-        - ZelID: []
+        - FluxID: []
       requestBody:
         required: true
         content:
@@ -23394,7 +23419,7 @@ paths:
         **AppOwnerAbove**
       operationId: Appremove
       security:
-        - ZelID: []
+        - FluxID: []
       parameters:
         - in: query
           name: appname
@@ -23443,7 +23468,7 @@ paths:
       description: This will create flux network if none is detected. **AdminAndFluxTeam**
       operationId: createFluxNetwork
       security:
-        - ZelID: []
+        - FluxID: []
       responses:
         '200':
           description: OK
@@ -23470,7 +23495,7 @@ paths:
         updates global apps information database. **AdminAndFluxTeam**
       operationId: rescanGlobalAppsInformationAPI
       security:
-        - ZelID: []
+        - FluxID: []
       parameters:
         - in: query
           name: blockheight
@@ -23516,7 +23541,7 @@ paths:
         rebuild incoming messages. **AdminAndFluxTeam**
       operationId: reindexGlobalAppsInformationAPI
       security:
-        - ZelID: []
+        - FluxID: []
       responses:
         '200':
           description: OK
@@ -23543,7 +23568,7 @@ paths:
         indexes. **AdminAndFluxTeam**
       operationId: reindexGlobalAppsLocationAPI
       security:
-        - ZelID: []
+        - FluxID: []
       responses:
         '200':
           description: OK
@@ -23568,7 +23593,7 @@ paths:
       description: This will check Docker Hub and verify image is available. **User**
       operationId: checkDockerAccessibility
       security:
-        - ZelID: []
+        - FluxID: []
       requestBody:
         required: true
         content:
@@ -23605,7 +23630,7 @@ paths:
         - Apps
       summary: App registration
       description: >-
-        This call is to provide required info to register app on Flux. **User**
+        Registers a new application on Flux: submits its signed specification for the network to deploy. **User**
 
 
         Note: Signature is following message signed in the format shown below
@@ -23620,7 +23645,7 @@ paths:
         `fluxappregister1{"version":7,"name":"blockbookneurai","description":"Blockbook for Neurai","owner":"1XcNTEsgVND4eb3bsVa2bjktnZZSruVct","compose":[{"name":"blockbookneurai","description":"Blockbook for Neurai","repotag":"runonflux/blockbook-docker:latest","ports":[38382,38383],"domains":["",""],"environmentParameters":["COIN=neurai","BLOCKBOOK_PORT=9168","BLOCKBOOKGIT_URL=https://github.com/NeuraiProject/blockbook"],"commands":[],"containerPorts":[9168,1337],"containerData":"/root","cpu":2.5,"ram":5000,"hdd":40,"tiered":false,"secrets":"","repoauth":""}],"instances":3,"contacts":[],"geolocation":[],"expire":22000,"nodes":[],"staticip":false}1692605469050`
       operationId: Appregister
       security:
-        - ZelID: []
+        - FluxID: []
       requestBody:
         required: true
         content:
@@ -23641,7 +23666,7 @@ paths:
                   description: Current timestamp in epoch/unix
                 signature:
                   type: object
-                  description: Signature of data message you signed with ZelID.
+                  description: Signature of data message you signed with FluxID.
             example:
               type: fluxappregister
               version: 1
@@ -23750,7 +23775,7 @@ paths:
         `fluxappupdate1{"version":7,"name":"blockbookneurai","description":"Blockbook for Neurai","owner":"1HWjQ9S3MyzV6EbtDMEkpHm31parya412N","compose":[{"name":"blockbookneurai","description":"Blockbook for Neurai","repotag":"runonflux/blockbook-docker:latest","ports":[38382,38383],"domains":["",""],"environmentParameters":["COIN=neurai","BLOCKBOOK_PORT=9168","BLOCKBOOKGIT_URL=https://github.com/NeuraiProject/blockbook"],"commands":[],"containerPorts":[9168,1337],"containerData":"/root","cpu":2.5,"ram":5000,"hdd":40,"tiered":false,"secrets":"","repoauth":""}],"instances":3,"contacts":[],"geolocation":[],"expire":22000,"nodes":[],"staticip":false}1692697789387`
       operationId: updateAppGlobalyApi
       security:
-        - ZelID: []
+        - FluxID: []
       requestBody:
         required: true
         content:
@@ -23765,7 +23790,7 @@ paths:
                   description: Current timestamp in epoch/unix
                 signature:
                   type: object
-                  description: Signature of data message you signed with ZelID.
+                  description: Signature of data message you signed with FluxID.
                 type:
                   type: string
                   description: Message type
@@ -24000,7 +24025,7 @@ paths:
         This will request application message hash. **AdminAndFluxTeam**
       operationId: getRequestmessage
       security:
-        - ZelID: []
+        - FluxID: []
       parameters:
         - in: query
           name: hash
@@ -24034,7 +24059,7 @@ paths:
         This will tigger check for misssing application messages. **AdminAndFluxTeam**
       operationId: getCheckhashes
       security:
-        - ZelID: []
+        - FluxID: []
       responses:
         '200':
           description: OK
@@ -24091,7 +24116,7 @@ paths:
         **AppOwner**
       operationId: updateApplicationSpecificationAPI
       security:
-        - ZelID: []
+        - FluxID: []
       parameters:
         - name: appname
           in: path
@@ -24148,7 +24173,7 @@ paths:
                     $ref: '#/components/schemas/status'
                   data:
                     type: string
-                    description: Original owner ZelID/address
+                    description: Original owner FluxID/address
               example:
                 status: success
                 data: '1CbErtneaX2QVyUfwU7JGB7VzvPgrgc3uC'
@@ -24406,7 +24431,7 @@ paths:
                   description: Application description
                 owner:
                   type: string
-                  description: Application owner ZelID
+                  description: Application owner FluxID
                 port:
                   type: integer
                   description: Application port
@@ -24621,7 +24646,7 @@ paths:
       description: Poll application logs with real-time updates. **AppOwnerAbove**
       operationId: appLogPolling
       security:
-        - ZelID: []
+        - FluxID: []
       parameters:
         - name: appname
           in: path
@@ -24690,7 +24715,7 @@ paths:
       operationId: appMonitorStream
       deprecated: true
       security:
-        - ZelID: []
+        - FluxID: []
       parameters:
         - name: appname
           in: path
@@ -24715,7 +24740,7 @@ paths:
       description: Test if an application can be installed without actually installing it. **User**
       operationId: testAppInstall
       security:
-        - ZelID: []
+        - FluxID: []
       parameters:
         - name: appname
           in: path
@@ -24768,7 +24793,7 @@ paths:
         this node is undergoing an operation. **User**
       operationId: installAppLocally
       security:
-        - ZelID: []
+        - FluxID: []
       parameters:
         - name: appname
           in: path
@@ -24801,7 +24826,7 @@ paths:
       description: Redeploy an existing application. **AppOwnerAbove**
       operationId: redeployAPI
       security:
-        - ZelID: []
+        - FluxID: []
       parameters:
         - name: appname
           in: path
@@ -24851,7 +24876,7 @@ paths:
       description: Reconstruct the application message hash collection. **AdminAndFluxTeam**
       operationId: reconstructAppMessagesHashCollectionAPI
       security:
-        - ZelID: []
+        - FluxID: []
       responses:
         '200':
           description: OK
@@ -24886,7 +24911,7 @@ paths:
       operationId: startAppMonitoringAPI
       deprecated: true
       security:
-        - ZelID: []
+        - FluxID: []
       parameters:
         - name: appname
           in: path
@@ -24927,7 +24952,7 @@ paths:
       operationId: stopAppMonitoringAPI
       deprecated: true
       security:
-        - ZelID: []
+        - FluxID: []
       parameters:
         - name: appname
           in: path
@@ -24971,7 +24996,7 @@ paths:
       description: Get the public key used for application operations. **User**
       operationId: getPublicKey
       security:
-        - ZelID: []
+        - FluxID: []
       requestBody:
         required: true
         content:
@@ -25242,7 +25267,7 @@ paths:
       description: Drop Flux collection and recreate it. **AdminAndFluxTeam**
       operationId: reindexExplorer
       security:
-        - ZelID: []
+        - FluxID: []
       responses:
         '200':
           description: OK
@@ -25267,7 +25292,7 @@ paths:
       description: Restarts Flux collection. **AdminAndFluxTeam**
       operationId: restartBlockProcessing
       security:
-        - ZelID: []
+        - FluxID: []
       responses:
         '200':
           description: OK
@@ -25292,7 +25317,7 @@ paths:
       description: Stops Flux collection. **AdminAndFluxTeam**
       operationId: stopBlockProcessing
       security:
-        - ZelID: []
+        - FluxID: []
       responses:
         '200':
           description: OK
@@ -25317,7 +25342,7 @@ paths:
       description: Rescan explorer from selected block height. **AdminAndFluxTeam**
       operationId: rescanExplorer
       security:
-        - ZelID: []
+        - FluxID: []
       parameters:
         - in: query
           name: blockheight
@@ -25528,7 +25553,7 @@ paths:
         shapes inside a single user action. **AppOwnerAbove**
       operationId: moveAppsObject
       security:
-        - ZelID: []
+        - FluxID: []
       requestBody:
         required: true
         content:
@@ -25568,7 +25593,7 @@ paths:
         `GET /apps/operations/{jobId}`. **AppOwnerAbove**
       operationId: copyAppsObject
       security:
-        - ZelID: []
+        - FluxID: []
       requestBody:
         required: true
         content:
@@ -25607,7 +25632,7 @@ paths:
         poll `GET /apps/operations/{jobId}`. **AppOwnerAbove**
       operationId: compressAppsObject
       security:
-        - ZelID: []
+        - FluxID: []
       requestBody:
         required: true
         content:
@@ -25649,7 +25674,7 @@ paths:
         `GET /apps/operations/{jobId}`. **AppOwnerAbove**
       operationId: extractAppsObject
       security:
-        - ZelID: []
+        - FluxID: []
       requestBody:
         required: true
         content:
@@ -25740,7 +25765,7 @@ paths:
         filling in, rather than answering from a partial view. **User**
       operationId: placementFeasibility
       security:
-        - ZelID: []
+        - FluxID: []
       requestBody:
         required: true
         content:
@@ -25956,7 +25981,7 @@ paths:
         operator is not a party to a customer's app at all. **FluxTeam**
       operationId: getApplicationComponentNames
       security:
-        - ZelID: []
+        - FluxID: []
       parameters:
         - in: query
           name: appname
@@ -26084,7 +26109,7 @@ paths:
         it stops the container. **AppOwnerAbove**
       operationId: appKill
       security:
-        - ZelID: []
+        - FluxID: []
       parameters:
         - in: query
           name: appname
@@ -26120,7 +26145,7 @@ paths:
         node. **AppOwnerAbove**
       operationId: appMonitor
       security:
-        - ZelID: []
+        - FluxID: []
       parameters:
         - in: query
           name: appname
@@ -26172,7 +26197,7 @@ paths:
         while a restore is running for the application. **AppOwnerAbove**
       operationId: redeployComponent
       security:
-        - ZelID: []
+        - FluxID: []
       parameters:
         - in: query
           name: appname
@@ -26226,7 +26251,7 @@ paths:
         it is refused. **Admin**
       operationId: fluxShareUploadFile
       security:
-        - ZelID: []
+        - FluxID: []
       parameters:
         - in: query
           name: folder
@@ -26361,7 +26386,7 @@ paths:
         **AdminAndFluxTeam**
       operationId: getPeerHistory
       security:
-        - ZelID: []
+        - FluxID: []
       parameters:
         - in: query
           name: ip
@@ -26589,7 +26614,7 @@ paths:
         **AdminAndFluxTeam** (or a signed peer request)
       operationId: portsInUse
       security:
-        - ZelID: []
+        - FluxID: []
         - {}
       requestBody:
         required: false
@@ -26694,7 +26719,7 @@ paths:
         Starts this node's peer discovery loop. **FluxTeam**
       operationId: startDiscovery
       security:
-        - ZelID: []
+        - FluxID: []
       responses:
         '200':
           description: OK
@@ -26721,7 +26746,7 @@ paths:
       description: The branch of the FluxOS working tree on this node. **FluxTeam**
       operationId: getCurrentBranch
       security:
-        - ZelID: []
+        - FluxID: []
       responses:
         '200':
           description: OK
@@ -26747,7 +26772,7 @@ paths:
       description: The commit id of the FluxOS working tree on this node. **FluxTeam**
       operationId: getCurrentCommitId
       security:
-        - ZelID: []
+        - FluxID: []
       responses:
         '200':
           description: OK
@@ -26782,7 +26807,7 @@ paths:
         **AdminAndFluxTeam**
       operationId: rebuildUi
       security:
-        - ZelID: []
+        - FluxID: []
       responses:
         '200':
           description: OK
@@ -26948,7 +26973,7 @@ paths:
         installs). **AdminAndFluxTeam**
       operationId: startBenchmarkDaemon
       security:
-        - ZelID: []
+        - FluxID: []
       responses:
         '200':
           description: OK
@@ -26975,7 +27000,7 @@ paths:
       description: Restarts the benchmark daemon on the node. **AdminAndFluxTeam**
       operationId: restartBenchmarkDaemon
       security:
-        - ZelID: []
+        - FluxID: []
       responses:
         '200':
           description: OK
@@ -27005,7 +27030,7 @@ paths:
       operationId: signZelNodeTransactionGet
       deprecated: true
       security:
-        - ZelID: []
+        - FluxID: []
       parameters:
         - in: query
           name: hexstring
@@ -27038,7 +27063,7 @@ paths:
       operationId: signZelNodeTransactionPost
       deprecated: true
       security:
-        - ZelID: []
+        - FluxID: []
       requestBody:
         required: true
         content:
@@ -27291,7 +27316,7 @@ paths:
         **FluxTeam**
       operationId: getSyncthingMetrics
       security:
-        - ZelID: []
+        - FluxID: []
       responses:
         '200':
           description: OK
@@ -27325,7 +27350,7 @@ paths:
         counts. **FluxTeam**
       operationId: getSyncthingHealthSummary
       security:
-        - ZelID: []
+        - FluxID: []
       responses:
         '200':
           description: OK
@@ -27388,7 +27413,7 @@ paths:
         **FluxTeam**
       operationId: getSyncthingMetricsHistory
       security:
-        - ZelID: []
+        - FluxID: []
       parameters:
         - in: query
           name: limit
@@ -27439,7 +27464,7 @@ paths:
         stalled. **FluxTeam**
       operationId: getPeerSyncDiagnostics
       security:
-        - ZelID: []
+        - FluxID: []
       responses:
         '200':
           description: OK
@@ -27545,7 +27570,7 @@ paths:
         primitive, retained from the upstream daemon. **Admin**
       operationId: zcrawkeygen
       security:
-        - ZelID: []
+        - FluxID: []
       responses:
         '200':
           description: OK
@@ -27577,7 +27602,7 @@ paths:
         slow. **AdminAndFluxTeam**
       operationId: zcsamplejoinsplit
       security:
-        - ZelID: []
+        - FluxID: []
       responses:
         '200':
           description: OK
@@ -27604,7 +27629,7 @@ paths:
         **Admin**
       operationId: zmergetoaddress
       security:
-        - ZelID: []
+        - FluxID: []
       parameters:
         - in: query
           name: fromaddresses
@@ -27688,7 +27713,7 @@ paths:
       operationId: createzelnodekey
       deprecated: true
       security:
-        - ZelID: []
+        - FluxID: []
       responses:
         '200':
           description: Identical to `GET /daemon/createfluxnodekey`
@@ -27741,7 +27766,7 @@ paths:
       operationId: getzelnodeoutputs
       deprecated: true
       security:
-        - ZelID: []
+        - FluxID: []
       responses:
         '200':
           description: Identical to `GET /daemon/getfluxnodeoutputs`
@@ -27794,7 +27819,7 @@ paths:
       operationId: listzelnodeconf
       deprecated: true
       security:
-        - ZelID: []
+        - FluxID: []
       parameters:
         - in: query
           name: filter
@@ -27863,7 +27888,7 @@ paths:
       operationId: startdeterministiczelnode
       deprecated: true
       security:
-        - ZelID: []
+        - FluxID: []
       parameters:
         - in: query
           name: alias
@@ -27906,7 +27931,7 @@ paths:
       operationId: startzelnode
       deprecated: true
       security:
-        - ZelID: []
+        - FluxID: []
       parameters:
         - in: query
           name: set
@@ -28040,7 +28065,7 @@ paths:
       operationId: zelidLoggedSessions
       deprecated: true
       security:
-        - ZelID: []
+        - FluxID: []
       responses:
         '200':
           description: Identical to `GET /id/loggedsessions`
@@ -28068,7 +28093,7 @@ paths:
       operationId: zelidLoggedUsers
       deprecated: true
       security:
-        - ZelID: []
+        - FluxID: []
       responses:
         '200':
           description: Identical to `GET /id/loggedusers`
@@ -28096,7 +28121,7 @@ paths:
       operationId: zelidActiveLoginPhrases
       deprecated: true
       security:
-        - ZelID: []
+        - FluxID: []
       responses:
         '200':
           description: Identical to `GET /id/activeloginphrases`
@@ -28124,7 +28149,7 @@ paths:
       operationId: zelidLogoutCurrentSession
       deprecated: true
       security:
-        - ZelID: []
+        - FluxID: []
       responses:
         '200':
           description: Identical to `GET /id/logoutcurrentsession`
@@ -28152,7 +28177,7 @@ paths:
       operationId: zelidLogoutAllSessions
       deprecated: true
       security:
-        - ZelID: []
+        - FluxID: []
       responses:
         '200':
           description: Identical to `GET /id/logoutallsessions`
@@ -28180,7 +28205,7 @@ paths:
       operationId: zelidLogoutAllUsers
       deprecated: true
       security:
-        - ZelID: []
+        - FluxID: []
       responses:
         '200':
           description: Identical to `GET /id/logoutallusers`
@@ -28306,7 +28331,7 @@ paths:
       operationId: zelidLogoutSpecificSession
       deprecated: true
       security:
-        - ZelID: []
+        - FluxID: []
       requestBody:
         required: true
         content:
@@ -28468,7 +28493,7 @@ components:
       type: string
       example: >-
         H+ZB3oSrsw6XkBxxlbwk33LEBJYvqtbMIm2kL9JzuoXMC6pSZd0lBHdnhJYzMTXv81zZQ7G/pkK1NvYN7cNF0GE=
-    ZelIDLogin:
+    FluxIDLogin:
       type: object
       properties:
         loginPhrase:
@@ -28477,7 +28502,7 @@ components:
           minLength: 40
           example: 1574991374806spbcvsuwerl52tppx9dw5khuz8rew13mkq86gg8r2c
         zelid:
-          description: ZelID or any P2PKH bitcoin address or ethereum address
+          description: FluxID or any P2PKH bitcoin address or ethereum address
           type: string
           minLength: 26
           maxLength: 35
@@ -29151,7 +29176,7 @@ components:
             description: Enterprise Nodes IP list          
         owner:
           type: string
-          description: Your ZelID    
+          description: Your FluxID    
         staticip:
           type: boolean
           enum:
@@ -29188,7 +29213,7 @@ components:
           description: Description of app
         owner:
           type: string
-          description: Your ZelID
+          description: Your FluxID
         compose:
           type: array
           items:
@@ -29848,12 +29873,12 @@ components:
           schema:
             $ref: '#/components/schemas/ServiceUnavailableError'
   securitySchemes:
-    ZelID:
+    FluxID:
       description: >-
-        ZelID is an authentication system based on Bitcoin message signing and Ethereum personal sign.
-        zelidauth header consist of stringified query of zelid, signature,
-        loginPhrase Please refer to Authentication workflow section on how to
-        obtain correct zelidauth header. An example of a header is
+        FluxID (formerly ZelID) is an authentication system based on Bitcoin message signing and Ethereum personal sign.
+        The header keeps its original name, `zelidauth`: a query string of zelid,
+        signature and loginPhrase (see Authentication Workflows for how to obtain
+        one). An example of a header is
         `zelid=1CbErtneaX2QVyUfwU7JGB7VzvPgrgc3uC&signature=%2BZB3oSrsw6XkBxxlbwk33LEBJYvqtbMIm2kL9JzuoXMC6pSZd0lBHdnhJYzMTXv81zZQ7G%2FpkK1NvYN7cNF0GE%3D&loginPhrase=1574991374806spbcvsuwerl52tppx9dw5khuz8rew13mkq86gg8r2c`
       type: apiKey
       in: header
