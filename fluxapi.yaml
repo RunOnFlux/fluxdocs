@@ -183,6 +183,31 @@ info:
     Test your setup with public endpoints first, then proceed to authenticated endpoints once your credentials are properly configured.
     
     
+    ## AI Agents and MCP
+
+    **Flux Cloud MCP** is an [MCP](https://modelcontextprotocol.io) server that lets AI agents use Flux Cloud through this API: quote an app in US dollars, deploy it, pay for it, watch it come up, read its logs, update it and cancel it. It works with Claude, ChatGPT, Cursor, VS Code, Windsurf and other MCP hosts. Source: [RunOnFlux/flux-cloud-mcp](https://github.com/RunOnFlux/flux-cloud-mcp).
+
+    **Hosted, nothing to install.** Add it as a remote MCP server (Streamable HTTP):
+
+    ```
+    https://mcp.runonflux.com/mcp
+    ```
+
+    In Claude Code: `claude mcp add --transport http flux-cloud https://mcp.runonflux.com/mcp`. In VS Code and Cursor, use **Connect MCP** at the bottom of the sidebar.
+
+    The hosted server holds no keys. Read-only tools need none; tools that sign or pay take the keys as call arguments, used for that call only and never stored. Create a dedicated pair with `flux_generate_keys` and fund it with only what a deployment needs.
+
+    **Local, keys stay on your machine.** For larger budgets, run the server locally:
+
+    ```bash
+    claude mcp add flux-cloud -s user \
+      -e FLUX_ID_PRIVATE_KEY=<wif> -e FLUX_PAYMENT_PRIVATE_KEY=<wif> \
+      -- npx -y @runonflux/flux-cloud-mcp
+    ```
+
+    **Any other AI tool** can read this reference as [markdown](https://docs.runonflux.io/fluxapi.md), listed in [llms.txt](https://docs.runonflux.io/llms.txt).
+
+
     ## Support & Community
     
     - **Documentation**: [docs.runonflux.com](https://docs.runonflux.com)
@@ -7136,7 +7161,7 @@ paths:
       tags:
         - Daemon
       summary: Current block count
-      description: Returns the number of blocks in the best valid block chain. **Public**
+      description: Returns the number of blocks in the best valid block chain, i.e. the current block height. **Public**
       operationId: getBlockCount
       security: []
       responses:
@@ -23605,7 +23630,7 @@ paths:
         - Apps
       summary: App registration
       description: >-
-        This call is to provide required info to register app on Flux. **User**
+        Registers a new application on Flux: submits its signed specification for the network to deploy. **User**
 
 
         Note: Signature is following message signed in the format shown below
