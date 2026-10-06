@@ -117,7 +117,7 @@ const authLine = (operation) => {
     /\*\*(AdminAndFluxTeam|AppOwnerAbove|AppOwner|FluxTeam|Admin|User)\*\*/.exec(
       operation.description ?? '',
     )?.[1];
-  return `${optional ? 'Optional' : 'Requires'} Flux ID login${privilege ? `, privilege ${privilege}` : ''}.`;
+  return `${optional ? 'Optional' : 'Requires'} FluxID login${privilege ? `, privilege ${privilege}` : ''}.`;
 };
 
 // How to authenticate, as its own section for each security scheme: the
@@ -130,7 +130,7 @@ const securitySections = (spec) =>
       `FluxOS API calls that need a login send a ${scheme.name} ${scheme.in}. ${oneLine(scheme.description, 900)}`,
       '',
       `Steps: 1. GET ${GATEWAY}/id/loginphrase returns a login phrase. ` +
-        '2. Sign the phrase with the Flux ID (ZelID) - SSP Wallet, ZelCore, MetaMask personal_sign or WalletConnect. ' +
+        '2. Sign the phrase with the FluxID (formerly ZelID) - SSP Wallet, ZelCore, MetaMask personal_sign or WalletConnect. ' +
         `3. POST ${GATEWAY}/id/verifylogin with zelid, loginPhrase and signature. ` +
         `4. Send ${scheme.name}: zelid=<address>&signature=<signature>&loginPhrase=<phrase> on every authenticated call.`,
     ].join('\n'),
