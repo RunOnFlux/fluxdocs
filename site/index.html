@@ -111,10 +111,20 @@
           <path d="M19 15l.8 2.2L22 18l-2.2.8L19 21l-.8-2.2L16 18l2.2-.8z" />
         </svg>
         <span>Ask AI</span>
+        <kbd class="flux-ask-key"></kbd>
       </button>
     </header>
 
-    <div id="app"></div>
+    <div id="app">
+      <div class="flux-loading">
+        <img
+          src="/flux_logo.png"
+          alt="Loading the Flux API reference"
+          width="56"
+          height="56"
+        />
+      </div>
+    </div>
 
     <noscript>
       <p class="flux-noscript">
@@ -173,8 +183,10 @@
 
     <script src="/assets/{{SCALAR_FILE}}"></script>
     <script>
+      // Also read by flux.js, for the endpoint behind each "Ask AI" button.
+      window.FLUX_SPEC_URL = '/fluxapi.json?v={{SPEC_HASH}}';
       Scalar.createApiReference('#app', {
-        url: '/fluxapi.json?v={{SPEC_HASH}}',
+        url: window.FLUX_SPEC_URL,
         slug: 'fluxapi',
         pathRouting: { basePath: '/fluxapi' },
         // Scalar uses the return value as the whole id, "<document slug>/description/<slug>".
@@ -191,6 +203,8 @@
         },
         layout: 'modern',
         theme: 'default',
+        // Fonts are self-hosted by flux.css (Gilroy, Figtree, IBM Plex Mono).
+        withDefaultFonts: false,
         favicon: '/favicon.ico',
         operationTitleSource: 'summary',
         documentDownloadType: 'both',

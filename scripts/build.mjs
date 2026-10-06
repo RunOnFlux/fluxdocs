@@ -10,7 +10,8 @@
 //   dist/fluxapi.md             the reference as markdown, for language models
 //   dist/llms.txt               index for language models (llmstxt.org)
 //   dist/sitemap.xml, robots.txt
-//   dist/assets/                Scalar bundle (versioned file name), Flux styles and script
+//   dist/assets/                Scalar bundle (versioned file name), Flux styles,
+//                               script and fonts
 //   dist/CNAME, dist/.nojekyll  GitHub Pages: custom domain, files served as they are
 //
 // scripts/serve.mjs serves dist/ the way GitHub Pages does.
@@ -18,6 +19,7 @@ import { createHash } from 'node:crypto';
 import {
   copyFileSync,
   mkdirSync,
+  readdirSync,
   readFileSync,
   rmSync,
   writeFileSync,
@@ -73,6 +75,20 @@ copyFileSync(
   `${out}/assets/${scalarFile}`,
 );
 copyFileSync('favicon.ico', `${out}/favicon.ico`);
+
+// Fonts: Gilroy is runonflux.com's own (site/fonts); Figtree and IBM Plex
+// Mono come from their pinned npm packages (OFL).
+const fonts = [
+  ...readdirSync('site/fonts').map((file) => `site/fonts/${file}`),
+  'node_modules/@fontsource-variable/figtree/files/figtree-latin-wght-normal.woff2',
+  'node_modules/@fontsource-variable/figtree/files/figtree-latin-ext-wght-normal.woff2',
+  'node_modules/@fontsource/ibm-plex-mono/files/ibm-plex-mono-latin-400-normal.woff2',
+  'node_modules/@fontsource/ibm-plex-mono/files/ibm-plex-mono-latin-600-normal.woff2',
+];
+mkdirSync(`${out}/assets/fonts`, { recursive: true });
+for (const font of fonts) {
+  copyFileSync(font, `${out}/assets/fonts/${font.split('/').pop()}`);
+}
 copyFileSync('flux_logo.png', `${out}/flux_logo.png`);
 copyFileSync('CNAME', `${out}/CNAME`);
 write(`${out}/.nojekyll`, '');

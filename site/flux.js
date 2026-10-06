@@ -87,4 +87,107 @@ window.addEventListener('ownllm-ready', function () {
     attributes: true,
     attributeFilter: ['class'],
   });
+
+  // Cmd+I (Ctrl+I elsewhere) opens and closes the assistant from anywhere.
+  var mac = /Mac|iPhone|iPad/.test(navigator.platform || navigator.userAgent);
+  document.querySelector('.flux-ask-key').textContent = mac ? '⌘I' : 'Ctrl I';
+  document.addEventListener('keydown', function (event) {
+    var modifier = mac ? event.metaKey : event.ctrlKey;
+    if (modifier && !event.shiftKey && !event.altKey && event.key === 'i') {
+      event.preventDefault();
+      window.ownllm.toggle();
+    }
+  });
+
+  askAboutEndpoints();
 });
+
+// "Ask AI" on every endpoint, next to "Copy as Markdown": asks the assistant
+// about that endpoint by method and path, so the answer starts from the
+// right page of the reference. Scalar renders endpoints as they scroll into
+// view, so new ones are decorated as they appear.
+function askAboutEndpoints() {
+  var slug = function (text) {
+    return text
+      .trim()
+      .normalize('NFC')
+      .toLowerCase()
+      .replace(/[^\p{L}\p{M}\p{N}\s_-]/gu, '')
+      .replace(/[\s_-]+/g, '-')
+      .replace(/^-+|-+$/g, '');
+  };
+  var endpoints = {};
+  var pending = false;
+
+  function decorate() {
+    pending = false;
+    document
+      .querySelectorAll('section[id^="fluxapi/tag/"]')
+      .forEach(function (section) {
+        var endpoint = endpoints[section.id];
+        if (!endpoint || section.querySelector('.flux-ask-endpoint')) return;
+        var copy = Array.prototype.find.call(
+          section.querySelectorAll('button'),
+          function (button) {
+            return /Copy as Markdown/.test(button.textContent);
+          },
+        );
+        if (!copy) return;
+        var button = document.createElement('button');
+        button.type = 'button';
+        button.className = 'flux-ask-endpoint';
+        button.innerHTML =
+          '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3l1.9 5.1L19 10l-5.1 1.9L12 17l-1.9-5.1L5 10l5.1-1.9z"/></svg>Ask AI';
+        button.setAttribute(
+          'aria-label',
+          'Ask Flux AI about ' + endpoint.method + ' ' + endpoint.path,
+        );
+        button.addEventListener('click', function () {
+          window.ownllm.ask(
+            'How do I use ' +
+              endpoint.method +
+              ' ' +
+              endpoint.path +
+              ' (' +
+              endpoint.summary +
+              ')? What does it need and what does it return?',
+          );
+        });
+        copy.parentElement.insertBefore(button, copy);
+      });
+  }
+
+  fetch(window.FLUX_SPEC_URL)
+    .then(function (response) {
+      return response.json();
+    })
+    .then(function (spec) {
+      Object.keys(spec.paths).forEach(function (path) {
+        ['get', 'post', 'put', 'patch', 'delete'].forEach(function (method) {
+          var operation = spec.paths[path][method];
+          if (!operation || !operation.operationId) return;
+          (operation.tags || []).forEach(function (tag) {
+            endpoints[
+              'fluxapi/tag/' +
+                slug(tag) +
+                '/' +
+                operation.operationId.toLowerCase()
+            ] = {
+              method: method.toUpperCase(),
+              path: path,
+              summary: operation.summary || operation.operationId,
+            };
+          });
+        });
+      });
+      decorate();
+      new MutationObserver(function () {
+        if (pending) return;
+        pending = true;
+        requestAnimationFrame(decorate);
+      }).observe(document.getElementById('app'), {
+        childList: true,
+        subtree: true,
+      });
+    });
+}

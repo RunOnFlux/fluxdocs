@@ -25,6 +25,18 @@ it answers allowlisted sites only, so the local server relays it under
 `/ownllm` (`scripts/serve.mjs`). **Connect MCP** in the sidebar installs the
 [Flux Cloud MCP server](https://github.com/RunOnFlux/flux-cloud-mcp).
 
+## Look and feel
+
+`site/flux.css` gives Scalar the Flux identity from runonflux.com: Gilroy
+headings, Figtree text, IBM Plex Mono code, the navy and blue palette in dark
+and light mode, and the blue glow over a field of hexagons from the logo.
+Figtree and IBM Plex Mono come from their pinned npm packages (OFL); Gilroy is
+the website's own copy in `site/fonts/`, under InFlux's Gilroy licence.
+
+`site/flux.js` adds what Scalar does not have: one header bar on phones,
+**Ask AI** on every endpoint (asks the assistant about that endpoint), and
+⌘I / Ctrl+I to open the assistant from anywhere.
+
 ## Commands
 
 - `npm start` - build, then serve `dist/` on port 4000

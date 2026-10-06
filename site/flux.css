@@ -1,28 +1,160 @@
-/* Flux branding and layout on top of Scalar's default theme. Scalar puts
-   .light-mode / .dark-mode on <body>, so everything here can use its colour
-   variables. Scalar's own rules are scoped with [data-v-…] attributes and
-   injected after this file, so overrides of them need one more class. */
+/* The Flux look on top of Scalar: the brand's fonts and colours (from
+   runonflux.com), its blue glow, and a hexagon motif from the logo. Scalar puts
+   .light-mode / .dark-mode on <body> and injects its own styles after this
+   file, so overrides carry one more selector than the rule they replace. */
+
+/* ---------- Fonts (self-hosted; Scalar's font CDN is off) ---------- */
+
+@font-face {
+  font-family: 'Gilroy';
+  src: url('/assets/fonts/gilroy-600-normal.woff2') format('woff2');
+  font-weight: 600;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Gilroy';
+  src: url('/assets/fonts/gilroy-700-normal.woff2') format('woff2');
+  font-weight: 700;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Figtree';
+  src: url('/assets/fonts/figtree-latin-wght-normal.woff2') format('woff2');
+  font-weight: 300 900;
+  font-display: swap;
+  unicode-range:
+    U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC,
+    U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212,
+    U+2215, U+FEFF, U+FFFD;
+}
+
+@font-face {
+  font-family: 'Figtree';
+  src: url('/assets/fonts/figtree-latin-ext-wght-normal.woff2') format('woff2');
+  font-weight: 300 900;
+  font-display: swap;
+  unicode-range:
+    U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304,
+    U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB,
+    U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+
+@font-face {
+  font-family: 'IBM Plex Mono';
+  src: url('/assets/fonts/ibm-plex-mono-latin-400-normal.woff2') format('woff2');
+  font-weight: 400;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'IBM Plex Mono';
+  src: url('/assets/fonts/ibm-plex-mono-latin-600-normal.woff2') format('woff2');
+  font-weight: 600;
+  font-display: swap;
+}
+
+/* ---------- Theme ---------- */
 
 :root {
-  --flux-blue: #2b61d1;
+  --flux-blue: #2656d7;
+  --flux-blue-2: #5679ff;
+  --flux-navy: #0c0c18;
   --flux-bar: 56px;
   --flux-gutter: 16px;
+  --flux-font-heading: 'Gilroy', 'Figtree', system-ui, sans-serif;
   --scalar-custom-header-height: var(--flux-bar);
+  --scalar-font:
+    'Figtree', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  --scalar-font-code:
+    'IBM Plex Mono', ui-monospace, SFMono-Regular, Menlo, monospace;
+  --scalar-radius: 6px;
+  --scalar-radius-lg: 10px;
+  --scalar-radius-xl: 14px;
 }
 
-.light-mode {
-  --scalar-color-accent: #2b61d1;
-  --scalar-background-accent: rgba(43, 97, 209, 0.1);
+body.light-mode {
+  --scalar-background-1: #ffffff;
+  --scalar-background-2: #f6f6f9;
+  --scalar-background-3: #ececf2;
+  --scalar-background-accent: rgba(38, 86, 215, 0.08);
+  --scalar-color-1: #0c0c18;
+  --scalar-color-2: #4a4c5c;
+  --scalar-color-3: #767887;
+  --scalar-color-accent: #2656d7;
+  --scalar-border-color: #e6e7ee;
+  --scalar-sidebar-background-1: #fafafc;
+  --scalar-sidebar-item-active-background: rgba(38, 86, 215, 0.08);
+  --scalar-sidebar-color-active: #2656d7;
+  --flux-glow: rgba(38, 86, 215, 0.1);
+  --flux-hex: rgba(38, 86, 215, 0.09);
+  --flux-glass: rgba(255, 255, 255, 0.78);
 }
 
-.dark-mode {
-  --scalar-color-accent: #7aa2ff;
-  --scalar-background-accent: rgba(122, 162, 255, 0.12);
+body.dark-mode {
+  --scalar-background-1: #0c0c18;
+  --scalar-background-2: #13131f;
+  --scalar-background-3: #1c1c2c;
+  --scalar-background-accent: rgba(86, 121, 255, 0.14);
+  --scalar-color-1: #f2f3f8;
+  --scalar-color-2: #c3c5d1;
+  --scalar-color-3: #888a94;
+  --scalar-color-accent: #6f8dff;
+  --scalar-border-color: rgba(255, 255, 255, 0.08);
+  --scalar-sidebar-background-1: #0a0a14;
+  --scalar-sidebar-item-active-background: rgba(86, 121, 255, 0.14);
+  --scalar-sidebar-color-active: #ffffff;
+  --flux-glow: rgba(38, 86, 215, 0.28);
+  --flux-hex: rgba(111, 141, 255, 0.11);
+  --flux-glass: rgba(12, 12, 24, 0.72);
+}
+
+::selection {
+  background: rgba(86, 121, 255, 0.28);
 }
 
 body {
   margin: 0;
+  position: relative;
+  isolation: isolate;
   background: var(--scalar-background-1);
+}
+
+/* The top of the page: runonflux.com's blue glow over a field of hexagons
+   from the logo, both fading out as the page goes on. They scroll away with
+   the introduction; on a deep link they are simply above the fold. The
+   hexagons are a mask, so they take the theme's colour. */
+body::before,
+body::after {
+  content: '';
+  position: absolute;
+  inset: 0 0 auto;
+  z-index: -1;
+  height: 720px;
+  pointer-events: none;
+}
+
+body::before {
+  background: radial-gradient(
+    ellipse 70% 55% at 50% 0%,
+    var(--flux-glow),
+    transparent 70%
+  );
+}
+
+body::after {
+  background: var(--flux-hex);
+  -webkit-mask:
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='27.7128' height='48' viewBox='0 0 27.7128 48'%3E%3Cpath d='M13.8564 0L27.7128 8V24L13.8564 32L0 24V8ZM13.8564 32V48' fill='none' stroke='%23000' stroke-width='1'/%3E%3C/svg%3E")
+      0 0 / 27.7128px 48px,
+    radial-gradient(ellipse 60% 70% at 50% 0%, #000, transparent 75%);
+  -webkit-mask-composite: source-in;
+  mask:
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='27.7128' height='48' viewBox='0 0 27.7128 48'%3E%3Cpath d='M13.8564 0L27.7128 8V24L13.8564 32L0 24V8ZM13.8564 32V48' fill='none' stroke='%23000' stroke-width='1'/%3E%3C/svg%3E")
+      0 0 / 27.7128px 48px,
+    radial-gradient(ellipse 60% 70% at 50% 0%, #000, transparent 75%);
+  mask-composite: intersect;
 }
 
 /* ---------- Header ---------- */
@@ -39,9 +171,27 @@ body {
   height: var(--scalar-custom-header-height);
   padding: 0 var(--flux-gutter);
   box-sizing: border-box;
-  background: var(--scalar-background-1);
+  background: var(--flux-glass);
+  -webkit-backdrop-filter: saturate(160%) blur(14px);
+  backdrop-filter: saturate(160%) blur(14px);
   border-bottom: 1px solid var(--scalar-border-color);
   font-family: var(--scalar-font, system-ui, sans-serif);
+}
+
+/* A thin Flux-blue line along the header's bottom edge, brightest in the
+   middle. */
+.flux-header::after {
+  content: '';
+  position: absolute;
+  inset: auto 0 -1px;
+  height: 1px;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(86, 121, 255, 0.55),
+    transparent
+  );
+  pointer-events: none;
 }
 
 .flux-header svg {
@@ -92,7 +242,9 @@ body {
   min-width: 0;
   color: var(--scalar-color-1);
   text-decoration: none;
-  font-size: 15px;
+  font-family: var(--flux-font-heading);
+  font-size: 16px;
+  font-weight: 600;
   white-space: nowrap;
 }
 
@@ -156,13 +308,29 @@ body {
   padding: 0 14px 0 12px;
   border: 0;
   border-radius: 999px;
-  background: var(--flux-blue);
+  background: linear-gradient(135deg, var(--flux-blue), var(--flux-blue-2));
+  box-shadow:
+    0 0 0 1px rgba(255, 255, 255, 0.08) inset,
+    0 4px 18px rgba(38, 86, 215, 0.35);
   color: #fff;
   font: inherit;
   font-size: 14px;
   font-weight: 600;
   white-space: nowrap;
   cursor: pointer;
+  transition:
+    transform 0.15s ease,
+    box-shadow 0.15s ease;
+}
+
+.flux-ask kbd {
+  margin-left: 2px;
+  padding: 1px 6px;
+  border-radius: 6px;
+  background: rgba(255, 255, 255, 0.18);
+  font: inherit;
+  font-size: 12px;
+  font-weight: 500;
 }
 
 .flux-ask svg {
@@ -177,7 +345,10 @@ body {
 }
 
 .flux-ask:hover {
-  filter: brightness(1.1);
+  transform: translateY(-1px);
+  box-shadow:
+    0 0 0 1px rgba(255, 255, 255, 0.12) inset,
+    0 6px 24px rgba(38, 86, 215, 0.5);
 }
 
 .flux-header :is(a, button):focus-visible {
@@ -244,6 +415,12 @@ body:has(.scalar-client--open) :is(.flux-menu, .flux-nav, .flux-ask) {
   }
 }
 
+@media (max-width: 999px), (hover: none) {
+  .flux-ask kbd {
+    display: none;
+  }
+}
+
 @media (max-width: 420px) {
   :root {
     --flux-gutter: 12px;
@@ -297,6 +474,124 @@ body:has(.scalar-client--open) :is(.flux-menu, .flux-nav, .flux-ask) {
   display: none;
 }
 
+/* Scalar paints the page colour on its own containers, which would hide the
+   glow and hexagons behind them; <body> already paints it. */
+body .scalar-app.scalar-api-reference,
+body .scalar-app .references-rendered {
+  background: transparent;
+}
+
+/* Headings in Gilroy, the brand's display face. */
+.scalar-app :is(h1, h2, h3, .section-header-label) {
+  font-family: var(--flux-font-heading);
+  letter-spacing: -0.01em;
+}
+
+/* The introduction as a hero: a large title in a soft gradient, the version
+   badges as Flux pills, the spec download as a button. */
+.scalar-app .introduction-section .section-header-label {
+  font-size: clamp(30px, 3.4vw, 44px);
+  font-weight: 700;
+  line-height: 1.1;
+  background: linear-gradient(
+    180deg,
+    var(--scalar-color-1) 30%,
+    var(--scalar-color-accent) 160%
+  );
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.scalar-app .introduction-section .badge {
+  border-color: rgba(86, 121, 255, 0.35);
+  background: var(--scalar-background-accent);
+  color: var(--scalar-color-accent);
+  font-weight: 600;
+}
+
+.scalar-app .introduction-section a.download-link,
+.scalar-app .introduction-section .download-container > a,
+.scalar-app .introduction-section .download-container > button {
+  display: inline-flex;
+  align-items: center;
+  padding: 6px 14px;
+  border: 1px solid var(--scalar-border-color);
+  border-radius: 999px;
+  text-decoration: none;
+  transition: border-color 0.15s ease;
+}
+
+.scalar-app .introduction-section .download-container > :is(a, button):hover {
+  border-color: var(--scalar-color-accent);
+}
+
+.scalar-app .introduction-section .download-button span {
+  text-decoration: none;
+}
+
+/* "Ask AI" on every endpoint, next to "Copy as Markdown" (flux.js). */
+.flux-ask-endpoint {
+  display: inline-flex;
+  flex: none;
+  align-items: center;
+  white-space: nowrap;
+  gap: 5px;
+  min-height: 28px;
+  padding: 0 10px;
+  border: 1px solid rgba(86, 121, 255, 0.35);
+  border-radius: 999px;
+  background: var(--scalar-background-accent);
+  color: var(--scalar-color-accent);
+  font: inherit;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition:
+    background 0.15s ease,
+    border-color 0.15s ease;
+}
+
+.flux-ask-endpoint:hover {
+  border-color: var(--scalar-color-accent);
+  background: rgba(86, 121, 255, 0.2);
+}
+
+.flux-ask-endpoint:focus-visible {
+  outline: 2px solid var(--scalar-color-accent);
+  outline-offset: 2px;
+}
+
+.flux-ask-endpoint svg {
+  width: 13px;
+  height: 13px;
+  fill: currentColor;
+}
+
+/* Until Scalar has mounted: the logo, breathing, where the page will be. */
+.flux-loading {
+  display: grid;
+  place-items: center;
+  min-height: calc(100vh - var(--flux-bar));
+}
+
+.flux-loading img {
+  animation: flux-breathe 1.6s ease-in-out infinite;
+}
+
+@keyframes flux-breathe {
+  50% {
+    transform: scale(0.92);
+    opacity: 0.55;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .flux-loading img {
+    animation: none;
+  }
+}
+
 /* Long inline code (signed-message formats, JSON examples) wraps without
    each line looking like a separate pill. */
 .scalar-app .markdown :not(pre) > code {
@@ -308,8 +603,15 @@ body:has(.scalar-client--open) :is(.flux-menu, .flux-nav, .flux-ask) {
 /* ---------- Footer ---------- */
 
 .flux-footer {
+  position: relative;
   border-top: 1px solid var(--scalar-border-color);
-  background: var(--scalar-background-2);
+  background:
+    radial-gradient(
+      ellipse 60% 120% at 50% 100%,
+      var(--flux-glow),
+      transparent 70%
+    ),
+    var(--scalar-background-2);
   color: var(--scalar-color-2);
   font-family: var(--scalar-font, system-ui, sans-serif);
   font-size: 14px;
@@ -351,7 +653,8 @@ body:has(.scalar-client--open) :is(.flux-menu, .flux-nav, .flux-ask) {
 .flux-footer h2 {
   margin: 0 0 2px;
   color: var(--scalar-color-1);
-  font-size: 13px;
+  font-family: var(--flux-font-heading);
+  font-size: 14px;
   font-weight: 600;
 }
 
