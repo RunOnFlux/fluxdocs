@@ -15,10 +15,15 @@
     "test": "redocly lint fluxapi.yaml"
   },
   "dependencies": {
-    "@redocly/cli": "^2.0.8",
-    "@scalar/api-reference": "1.72.4"
+    "@fontsource-variable/figtree": "5.3.0",
+    "@fontsource/ibm-plex-mono": "5.3.0",
+    "@redocly/cli": "2.58.1",
+    "@scalar/api-reference": "1.73.0"
   },
   "devDependencies": {
-    "js-yaml": "5.4.2"
+    "js-yaml": "5.4.3"
+  },
+  "engines": {
+    "node": "24.15.0"
   }
 }
