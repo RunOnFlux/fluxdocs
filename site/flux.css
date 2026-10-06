@@ -1,0 +1,382 @@
+/* Flux branding and layout on top of Scalar's default theme. Scalar puts
+   .light-mode / .dark-mode on <body>, so everything here can use its colour
+   variables. Scalar's own rules are scoped with [data-v-…] attributes and
+   injected after this file, so overrides of them need one more class. */
+
+:root {
+  --flux-blue: #2b61d1;
+  --flux-bar: 56px;
+  --flux-gutter: 16px;
+  --scalar-custom-header-height: var(--flux-bar);
+}
+
+.light-mode {
+  --scalar-color-accent: #2b61d1;
+  --scalar-background-accent: rgba(43, 97, 209, 0.1);
+}
+
+.dark-mode {
+  --scalar-color-accent: #7aa2ff;
+  --scalar-background-accent: rgba(122, 162, 255, 0.12);
+}
+
+body {
+  margin: 0;
+  background: var(--scalar-background-1);
+}
+
+/* ---------- Header ---------- */
+
+.flux-header {
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  display: grid;
+  grid-template-areas: 'menu brand context nav ask';
+  grid-template-columns: auto auto minmax(0, 1fr) auto auto;
+  grid-template-rows: var(--flux-bar);
+  align-items: center;
+  height: var(--scalar-custom-header-height);
+  padding: 0 var(--flux-gutter);
+  box-sizing: border-box;
+  background: var(--scalar-background-1);
+  border-bottom: 1px solid var(--scalar-border-color);
+  font-family: var(--scalar-font, system-ui, sans-serif);
+}
+
+.flux-header svg {
+  width: 18px;
+  height: 18px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+/* Only below 1000px, once flux.js has connected it to Scalar's menu. */
+.flux-menu {
+  grid-area: menu;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  margin: 0 6px 0 -8px;
+  padding: 0;
+  border: 0;
+  border-radius: 10px;
+  background: transparent;
+  color: var(--scalar-color-1);
+  cursor: pointer;
+}
+
+.flux-menu:hover {
+  background: var(--scalar-background-2);
+}
+
+.flux-menu .flux-icon-close,
+.flux-menu[aria-expanded='true'] .flux-icon-open {
+  display: none;
+}
+
+.flux-menu[aria-expanded='true'] .flux-icon-close {
+  display: block;
+}
+
+.flux-brand {
+  grid-area: brand;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-width: 0;
+  color: var(--scalar-color-1);
+  text-decoration: none;
+  font-size: 15px;
+  white-space: nowrap;
+}
+
+.flux-brand img {
+  flex: none;
+}
+
+.flux-brand strong {
+  font-weight: 700;
+}
+
+.flux-version {
+  padding: 2px 8px;
+  border-radius: 999px;
+  background: var(--scalar-background-accent);
+  color: var(--scalar-color-accent);
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.flux-context {
+  grid-area: context;
+  display: none;
+  min-width: 0;
+  margin-left: 12px;
+  overflow: hidden;
+  color: var(--scalar-color-1);
+  font-size: 14px;
+  font-weight: 600;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.flux-nav {
+  grid-area: nav;
+  display: flex;
+  gap: 4px;
+  margin-right: 12px;
+}
+
+.flux-nav a {
+  padding: 6px 10px;
+  border-radius: 8px;
+  color: var(--scalar-color-2);
+  text-decoration: none;
+  font-size: 14px;
+  white-space: nowrap;
+}
+
+.flux-nav a:hover {
+  background: var(--scalar-background-2);
+  color: var(--scalar-color-1);
+}
+
+.flux-ask {
+  grid-area: ask;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  height: 36px;
+  padding: 0 14px 0 12px;
+  border: 0;
+  border-radius: 999px;
+  background: var(--flux-blue);
+  color: #fff;
+  font: inherit;
+  font-size: 14px;
+  font-weight: 600;
+  white-space: nowrap;
+  cursor: pointer;
+}
+
+.flux-ask svg {
+  width: 16px;
+  height: 16px;
+  fill: currentColor;
+  stroke: none;
+}
+
+.flux-ask[hidden] {
+  display: none;
+}
+
+.flux-ask:hover {
+  filter: brightness(1.1);
+}
+
+.flux-header :is(a, button):focus-visible {
+  outline: 2px solid var(--scalar-color-accent);
+  outline-offset: 2px;
+}
+
+/* Scalar's API client overlay puts its own buttons in the header's corners
+   (sidebar toggle on the left on phones, close on the right); clear both
+   while the client is open. */
+body:has(.scalar-client--open) :is(.flux-menu, .flux-nav, .flux-ask) {
+  visibility: hidden;
+}
+
+/* Phones and tablets: Scalar's layout below 1000px. */
+@media (max-width: 999px) {
+  .flux-nav {
+    display: none;
+  }
+
+  /* One bar instead of two (see flux.js). */
+  body.flux-merged .t-doc__header > header {
+    display: none;
+  }
+
+  body.flux-merged .flux-menu:not([hidden]) {
+    display: inline-flex;
+  }
+
+  body.flux-merged
+    .scalar-api-reference.scalar-api-references-standalone-mobile {
+    --scalar-header-height: 0px;
+  }
+
+  body.flux-merged .flux-context {
+    display: block;
+  }
+
+  /* In a section the bar shows where you are; the logo still leads home. */
+  body.flux-merged.flux-has-context :is(.flux-brand-name, .flux-version) {
+    display: none;
+  }
+
+  /* With the menu open, the Flux links sit in a second row above it. */
+  body.flux-menu-open {
+    --scalar-custom-header-height: calc(var(--flux-bar) + 48px);
+  }
+
+  body.flux-menu-open .flux-header {
+    grid-template-areas:
+      'menu brand context context ask'
+      'nav nav nav nav nav';
+    grid-template-rows: var(--flux-bar) 48px;
+  }
+
+  body.flux-menu-open .flux-nav {
+    display: flex;
+    align-self: stretch;
+    align-items: center;
+    margin: 0 calc(-1 * var(--flux-gutter));
+    padding: 0 calc(var(--flux-gutter) - 10px);
+    overflow-x: auto;
+    border-top: 1px solid var(--scalar-border-color);
+  }
+}
+
+@media (max-width: 420px) {
+  :root {
+    --flux-gutter: 12px;
+  }
+
+  .flux-ask {
+    padding: 0 12px;
+  }
+
+  .flux-version {
+    display: none;
+  }
+}
+
+/* ---------- Scalar refinements ---------- */
+
+/* Client Libraries: a clear tab underline in the accent colour, a rounded
+   focus ring inside the tab instead of a square box on its edges, and the
+   line under the tabs labelled instead of a bare "Python requests". */
+.scalar-app .client-libraries.client-libraries__active {
+  border-bottom: 2px solid var(--scalar-color-accent);
+}
+
+.scalar-app .client-libraries.client-libraries:focus-visible {
+  box-shadow: none;
+  outline: 2px solid var(--scalar-color-accent);
+  outline-offset: -6px;
+  border-radius: 10px;
+}
+
+.scalar-app .scalar-reference-intro-clients .selected-client {
+  font-family: var(--scalar-font);
+  font-size: var(--scalar-mini, 13px);
+  color: var(--scalar-color-2);
+}
+
+.scalar-app .scalar-reference-intro-clients .selected-client::before {
+  content: 'Code examples use ';
+  color: var(--scalar-color-3);
+}
+
+/* The introduction starts closer to the header (Scalar: 90px), and its row of
+   unlabelled icons (docs, contact, licence, terms) is replaced by labelled
+   links in the footer: as bare icons they named nothing, not even to screen
+   readers. */
+.scalar-app .section.introduction-section {
+  padding-top: 48px;
+}
+
+.scalar-app .introduction-section .section-header-wrapper > .custom-scroll {
+  display: none;
+}
+
+/* Long inline code (signed-message formats, JSON examples) wraps without
+   each line looking like a separate pill. */
+.scalar-app .markdown :not(pre) > code {
+  box-decoration-break: clone;
+  -webkit-box-decoration-break: clone;
+  overflow-wrap: anywhere;
+}
+
+/* ---------- Footer ---------- */
+
+.flux-footer {
+  border-top: 1px solid var(--scalar-border-color);
+  background: var(--scalar-background-2);
+  color: var(--scalar-color-2);
+  font-family: var(--scalar-font, system-ui, sans-serif);
+  font-size: 14px;
+}
+
+.flux-footer-inner {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 32px 48px;
+  max-width: 1120px;
+  margin: 0 auto;
+  padding: 40px var(--flux-gutter) 24px;
+  box-sizing: border-box;
+}
+
+.flux-footer-about {
+  max-width: 320px;
+}
+
+.flux-footer-about p {
+  margin: 12px 0 0;
+  line-height: 1.5;
+}
+
+.flux-footer-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 32px 56px;
+}
+
+.flux-footer-links div {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  min-width: 128px;
+}
+
+.flux-footer h2 {
+  margin: 0 0 2px;
+  color: var(--scalar-color-1);
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.flux-footer-links a {
+  color: var(--scalar-color-2);
+  text-decoration: none;
+}
+
+.flux-footer-links a:hover {
+  color: var(--scalar-color-accent);
+}
+
+.flux-footer-legal {
+  max-width: 1120px;
+  margin: 0 auto;
+  padding: 16px var(--flux-gutter) 32px;
+  box-sizing: border-box;
+  border-top: 1px solid var(--scalar-border-color);
+  color: var(--scalar-color-3);
+  font-size: 13px;
+}
+
+.flux-noscript {
+  max-width: 640px;
+  margin: 48px auto;
+  padding: 0 var(--flux-gutter);
+  font-family: system-ui, sans-serif;
+}

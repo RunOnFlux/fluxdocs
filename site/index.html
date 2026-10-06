@@ -1,0 +1,258 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{{TITLE}}</title>
+    <meta name="description" content="{{DESCRIPTION}}" />
+    <meta name="robots" content="{{ROBOTS}}" />
+    <link rel="canonical" href="{{CANONICAL}}" />
+    <meta property="og:title" content="{{TITLE}}" />
+    <meta property="og:description" content="{{DESCRIPTION}}" />
+    <meta property="og:url" content="{{CANONICAL}}" />
+    <meta
+      property="og:image"
+      content="https://docs.runonflux.io/flux_logo.png"
+    />
+    <meta name="theme-color" content="#2b61d1" />
+    <link rel="icon" href="/favicon.ico" />
+    <link rel="alternate" type="text/markdown" href="/fluxapi.md" />
+    <link rel="stylesheet" href="/assets/flux.css?v={{CSS_HASH}}" />
+    <script>
+      // Scalar keeps emoji variation selectors (U+FE0E, U+FE0F) and joiners
+      // (U+200D) in heading slugs, so "🛡️ SSP Wallet" would start with an
+      // invisible character. Built from code points so no tool can turn the
+      // escapes into the invisible characters themselves.
+      var FLUX_INVISIBLE = new RegExp(
+        '[' + String.fromCharCode(0xfe0e, 0xfe0f, 0x200d) + ']',
+        'g',
+      );
+      function fluxHeadingSlug(slug) {
+        return slug.replace(FLUX_INVISIBLE, '').replace(/^-+/, '');
+      }
+
+      // Normalises the address before Scalar reads it:
+      // - GitHub Pages answers /fluxapi/x (a folder) with a redirect to
+      //   /fluxapi/x/, and Scalar does not recognise a trailing slash.
+      // - Old Redocly links keep working. Redocly served
+      //     /fluxapi/<tag>                                  -> /fluxapi/tag/<tag>
+      //     /fluxapi/<tag>/<operationid>                    -> /fluxapi/tag/<tag>/<operationid>
+      //     /fluxapi/section/flux-api-documentation/<slug>  -> /fluxapi/description/<slug>
+      //   Tag and operation slugs are generated the same way on both sides (see
+      //   generateOperationSlug below). Heading slugs are not: Redocly keeps dots
+      //   and spells "&" as "and", so headings are matched on their words alone.
+      //   The build also writes a redirect page for every old link; this covers
+      //   the ones it cannot know about.
+      (function () {
+        var base = '/fluxapi';
+        var headings = {{HEADING_SLUGS}};
+        var words = function (slug) {
+          return slug
+            .split(/[^\p{L}\p{N}]+/u)
+            .filter(function (w) {
+              return w && w !== 'and';
+            })
+            .join('-');
+        };
+        var path = location.pathname.replace(/\/+$/, '');
+        if (path !== base && path.indexOf(base + '/') !== 0) return;
+        var rest = path.slice(base.length + 1);
+        var parts = rest.split('/');
+        if (parts[0] === 'section') {
+          var old = decodeURIComponent(parts[2] || '');
+          var match = headings.filter(function (slug) {
+            return words(slug) === words(old);
+          })[0];
+          rest = old ? 'description/' + fluxHeadingSlug(match || old) : '';
+        } else if (
+          rest &&
+          !/^(tag|tag-group|description|models?|webhooks?)$/.test(parts[0])
+        ) {
+          rest = 'tag/' + rest;
+        }
+        var target = base + (rest ? '/' + rest : '');
+        if (target !== location.pathname) {
+          history.replaceState(null, '', target + location.search + location.hash);
+        }
+      })();
+    </script>
+  </head>
+  <body>
+    <header class="flux-header">
+      <button
+        type="button"
+        class="flux-menu"
+        aria-label="Open navigation"
+        aria-expanded="false"
+        hidden
+      >
+        <svg class="flux-icon-open" viewBox="0 0 24 24" aria-hidden="true">
+          <path d="M4 7h16M4 12h16M4 17h16" />
+        </svg>
+        <svg class="flux-icon-close" viewBox="0 0 24 24" aria-hidden="true">
+          <path d="M6 6l12 12M18 6L6 18" />
+        </svg>
+      </button>
+      <a class="flux-brand" href="/fluxapi" aria-label="Flux API home">
+        <img src="/flux_logo.png" alt="" width="28" height="28" />
+        <span class="flux-brand-name">Flux <strong>API</strong></span>
+        <span class="flux-version">v{{VERSION}}</span>
+      </a>
+      <span class="flux-context"></span>
+      <nav class="flux-nav" aria-label="Flux">
+        <a href="https://docs.runonflux.com/">Documentation</a>
+        <a href="https://cloud.runonflux.com/">FluxOS</a>
+        <a href="https://runonflux.com/">About Flux</a>
+        <a href="https://github.com/RunOnFlux/flux">GitHub</a>
+      </nav>
+      <button type="button" class="flux-ask" hidden>
+        <svg viewBox="0 0 24 24" aria-hidden="true">
+          <path d="M12 3l1.9 5.1L19 10l-5.1 1.9L12 17l-1.9-5.1L5 10l5.1-1.9z" />
+          <path d="M19 15l.8 2.2L22 18l-2.2.8L19 21l-.8-2.2L16 18l2.2-.8z" />
+        </svg>
+        <span>Ask AI</span>
+      </button>
+    </header>
+
+    <div id="app"></div>
+
+    <noscript>
+      <p class="flux-noscript">
+        This reference needs JavaScript. The specification is also available as
+        <a href="/fluxapi.md">markdown</a>, <a href="/fluxapi.yaml">YAML</a> and
+        <a href="/fluxapi.json">JSON</a>.
+      </p>
+    </noscript>
+
+    <footer class="flux-footer">
+      <div class="flux-footer-inner">
+        <div class="flux-footer-about">
+          <a class="flux-brand" href="/fluxapi">
+            <img src="/flux_logo.png" alt="" width="24" height="24" />
+            <span>Flux <strong>API</strong></span>
+          </a>
+          <p>
+            Reference for FluxOS {{VERSION}}, the node software behind the Flux
+            decentralized cloud.
+          </p>
+        </div>
+        <nav class="flux-footer-links" aria-label="Footer">
+          <div>
+            <h2>Resources</h2>
+            <a href="https://github.com/RunOnFlux">GitHub</a>
+            <a href="https://discord.gg/runonflux">Discord</a>
+            <a href="https://x.com/runonflux">X (Twitter)</a>
+          </div>
+          <div>
+            <h2>Documentation</h2>
+            <a href="https://docs.runonflux.com/">User guide</a>
+            <a href="https://github.com/RunOnFlux/flux">FluxOS source</a>
+            <a href="/fluxapi/description/ai-agents-and-mcp">MCP server</a>
+            <a href="/llms.txt">For AI tools (llms.txt)</a>
+          </div>
+          <div>
+            <h2>Specification</h2>
+            <a href="/fluxapi.yaml">OpenAPI YAML</a>
+            <a href="/fluxapi.json">OpenAPI JSON</a>
+            <a href="/fluxapi.md">Markdown</a>
+          </div>
+          <div>
+            <h2>Contact</h2>
+            <a href="mailto:development@runonflux.com">Flux Development Team</a>
+            <a href="https://cdn.runonflux.io/Flux_Terms_of_Service.pdf"
+              >Terms of Service</a
+            >
+            <a href="https://www.gnu.org/licenses/agpl-3.0.en.html"
+              >Licence: GNU AGPLv3</a
+            >
+          </div>
+        </nav>
+      </div>
+      <p class="flux-footer-legal">© {{YEAR}} InFlux Technologies USA LLC</p>
+    </footer>
+
+    <script src="/assets/{{SCALAR_FILE}}"></script>
+    <script>
+      Scalar.createApiReference('#app', {
+        url: '/fluxapi.json?v={{SPEC_HASH}}',
+        slug: 'fluxapi',
+        pathRouting: { basePath: '/fluxapi' },
+        // Scalar uses the return value as the whole id, "<document slug>/description/<slug>".
+        generateHeadingSlug: function (heading) {
+          return heading.slug
+            ? 'fluxapi/description/' + fluxHeadingSlug(heading.slug)
+            : 'fluxapi/';
+        },
+        // Redocly used the lowercased operationId as the operation's URL segment.
+        generateOperationSlug: function (operation) {
+          return operation.operationId
+            ? operation.operationId.toLowerCase()
+            : operation.method + operation.path;
+        },
+        layout: 'modern',
+        theme: 'default',
+        favicon: '/favicon.ico',
+        operationTitleSource: 'summary',
+        documentDownloadType: 'both',
+        defaultHttpClient: { targetKey: 'shell', clientKey: 'curl' },
+        // The languages people call this API from.
+        hiddenClients: {
+          c: true,
+          clojure: true,
+          csharp: true,
+          dart: true,
+          fsharp: true,
+          http: true,
+          java: true,
+          julia: true,
+          kotlin: true,
+          objc: true,
+          ocaml: true,
+          powershell: true,
+          r: true,
+          ruby: true,
+          rust: true,
+          swift: true,
+          // Each Client Libraries tab is tied to one client (Node.js: undici,
+          // Python: http.client); hiding that client removes the whole tab.
+          js: ['jquery', 'xhr', 'ofetch'],
+          node: ['ofetch'],
+          php: ['laravel'],
+          python: ['aiohttp'],
+        },
+        // No Scalar cloud services: no telemetry, no hosted agent.
+        telemetry: false,
+        agent: { disabled: true },
+        // "Connect MCP" in the sidebar installs the Flux Cloud MCP server in
+        // VS Code or Cursor. Without a server configured, Scalar would offer to
+        // generate one by uploading this spec to its cloud instead.
+        mcp: { name: 'flux-cloud', url: 'https://mcp.runonflux.com/mcp' },
+        showDeveloperTools: 'never',
+        showToolbar: 'never',
+      });
+    </script>
+
+    <script src="/assets/flux.js?v={{JS_HASH}}"></script>
+    <!-- Flux AI documentation assistant (self-hosted, github.com/RunOnFlux/ownllm).
+         Same widget as docs.runonflux.com; its origin is the endpoint. -->
+    <script
+      id="ownllm-widget"
+      src="https://ownllmrouter.app.runonflux.io/widget.js"
+      defer
+      data-title="Ask Flux AI"
+      data-subject="the Flux API"
+      data-assistant="the Flux API assistant"
+      data-button-hide="true"
+      data-accent="#2b61d1"
+      data-suggestions="How do I get a zelidauth header?|Which endpoint lists the apps running on a node?|Which endpoints need a specific node instead of api.runonflux.io?"
+    ></script>
+    <script>
+      // The assistant answers allowlisted sites only; a local preview
+      // (npm start) relays it through scripts/serve.mjs instead.
+      if (/^(localhost|127\.0\.0\.1)$/.test(location.hostname)) {
+        document.getElementById('ownllm-widget').dataset.endpoint =
+          location.origin + '/ownllm';
+      }
+    </script>
+  </body>
+</html>

@@ -7,14 +7,18 @@
     "type": "git",
     "url": "git://github.com/runonflux/fluxdocs.git"
   },
-  "description": "FluxOS documentation",
+  "description": "FluxOS API reference (docs.runonflux.io)",
   "scripts": {
-    "start": "redocly preview --port 4000",
-    "build": "redocly build-docs fluxapi.yaml --output docs/index.html --title \"FluxOS API Documentation\"",
-    "test": "redocly lint fluxapi.yaml",
-    "docker": "docker build -t fluxdocs . && docker run --rm -p 4000:4000 fluxdocs"
+    "start": "node scripts/build.mjs && node scripts/serve.mjs",
+    "build": "node scripts/build.mjs",
+    "preview": "node scripts/serve.mjs",
+    "test": "redocly lint fluxapi.yaml"
   },
   "dependencies": {
-    "@redocly/cli": "^2.0.8"
+    "@redocly/cli": "^2.0.8",
+    "@scalar/api-reference": "1.72.4"
+  },
+  "devDependencies": {
+    "js-yaml": "5.4.2"
   }
 }
